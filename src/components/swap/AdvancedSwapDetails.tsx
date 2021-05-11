@@ -1,5 +1,5 @@
 import React from 'react'
-import { Trade, TradeType } from '@pancakeswap-libs/sdk'
+import { Trade, TradeType } from 'taalswap-sdk'
 import { Card, CardBody, Text } from '@pancakeswap-libs/uikit'
 import useI18n from 'hooks/useI18n'
 import { Field } from '../../state/swap/actions'
@@ -56,13 +56,18 @@ function TradeSummary({ trade, allowedSlippage }: { trade: Trade; allowedSlippag
           <FormattedPriceImpact priceImpact={priceImpactWithoutFee} />
         </RowBetween>
 
+        {/* TODO: pancakeswap V2 help message looks like */}
+        {/* For each trade a 0.25% fee is paid */}
+        {/* -0.17% to LP token holders */}
+        {/* -0.03% to the Treasury */}
+        {/* -0.03% towards CAKE buyback and burn */}
         <RowBetween>
           <RowFixed>
             <Text fontSize="14px">{TranslateString(228, 'Liquidity Provider Fee')}</Text>
             <QuestionHelper
               text={TranslateString(
                 230,
-                'For each trade a 0.2% fee is paid. 0.17% goes to liquidity providers and 0.03% goes to the PancakeSwap treasury.'
+                'For each trade a 0.2% fee is paid. 0.17% goes to LP token holders, 0.03% to the Treasury and 0.05% towards CAKE buyback and burn.'
               )}
             />
           </RowFixed>
