@@ -13,8 +13,8 @@
     {
       "name": "WBNB Token",
       "symbol": "WBNB",
-      "address": "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
-      "chainId": 56,
+      "address": "0x28cE78ae1AcB29B22d63092F3Ff61939Ce537d9d",
+      "chainId": 97,
       "decimals": 18,
       "logoURI": "https://exchange.pancakeswap.finance/images/coins/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c.png"
     },
@@ -189,8 +189,8 @@
     {
       "name": "PancakeSwap Token",
       "symbol": "CAKE",
-      "address": "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
-      "chainId": 56,
+      "address": "0x7f04Eef81a6061c8631D1519498A9B28708755C8",
+      "chainId": 97,
       "decimals": 18,
       "logoURI": "https://exchange.pancakeswap.finance/images/coins/0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82.png"
     },
