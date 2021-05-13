@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
-import { Toast } from '@pancakeswap-libs/uikit'
+import { Toast } from 'taalswap-uikit'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const initialState: ToastsState = {
-  data: [],
+  data: []
 }
 
 export interface ToastsState {
@@ -34,8 +34,8 @@ export const toastsSlice = createSlice({
     },
     clear: (state: ToastsState) => {
       state.data = []
-    },
-  },
+    }
+  }
 })
 
 // Actions
