@@ -1,6 +1,6 @@
 import { ChainId, JSBI, Percent, Token, WETH } from 'taalswap-sdk'
 
-export const ROUTER_ADDRESS = '0x418Ec312B97dE6D5bdd8d688a90A717FdB12772D'
+export const ROUTER_ADDRESS = '0xb737ff4Cb36d55c412C303B7e85bcC8269772380'
 
 // a list of tokens by chain
 type ChainTokenList = {
