@@ -1,64 +1,64 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  Text,
-  Button,
-  Link,
-  Flex,
-  ExpandableLabel,
   ArrowDownIcon,
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
   ErrorIcon,
+  ExpandableLabel,
+  Flex,
+  Link,
   OpenNewIcon,
-} from '@pancakeswap-libs/uikit'
+  Text
+} from 'taalswap-uikit'
 
 const otherProjects = [
   {
     label: 'ACryptoS',
-    href: 'https://app.acryptos.com/',
+    href: 'https://app.acryptos.com/'
   },
   {
     label: 'Autofarm',
-    href: 'https://autofarm.network/',
+    href: 'https://autofarm.network/'
   },
   {
     label: 'Alpha Homora',
-    href: 'https://homora-bsc.alphafinance.io/',
+    href: 'https://homora-bsc.alphafinance.io/'
   },
   {
     label: 'Alpaca Finance',
-    href: 'https://app.alpacafinance.org/',
+    href: 'https://app.alpacafinance.org/'
   },
   {
     label: 'Beefy',
-    href: 'https://app.beefy.finance/',
+    href: 'https://app.beefy.finance/'
   },
   {
     label: 'bEARN',
-    href: 'https://bearn.fi/',
+    href: 'https://bearn.fi/'
   },
   {
     label: 'Cream Finance',
-    href: 'https://app.cream.finance/',
+    href: 'https://app.cream.finance/'
   },
   {
     label: 'Harvest',
-    href: 'https://harvest.finance/',
+    href: 'https://harvest.finance/'
   },
   {
     label: 'JetFuel',
-    href: 'https://jetfuel.finance/vaults',
+    href: 'https://jetfuel.finance/vaults'
   },
   {
     label: 'PancakeBunny',
-    href: 'https://pancakebunny.finance/',
+    href: 'https://pancakebunny.finance/'
   },
   {
     label: 'ValueDeFi',
-    href: 'https://bsc.valuedefi.io/#/',
-  },
+    href: 'https://bsc.valuedefi.io/#/'
+  }
 ]
 
 const FoldableContent = styled(CardBody)<{ isVisible: boolean }>`
@@ -72,7 +72,7 @@ const FirstCard = () => {
     <Card>
       <CardHeader>
         <Text bold>Move LP tokens to wallet</Text>
-        <Text small color="textSubtle">
+        <Text small color='textSubtle'>
           Unstake your old LP tokens from farms and other projects.
         </Text>
       </CardHeader>
@@ -80,32 +80,32 @@ const FirstCard = () => {
         <Text bold>Unstake LP tokens from old Farms</Text>
         <Card>
           <CardBody>
-            <Text mb="16px">
+            <Text mb='16px'>
               All farms will gradually switch to new farms, one-by-one. You can wait until farms switch over, or you can
               unstake in advance.
             </Text>
-            <Button as={Link} external href="https://pancakeswap.finance/farms/history" style={{ width: '100%' }}>
+            <Button as={Link} external href='https://pancakeswap.finance/farms/history' style={{ width: '100%' }}>
               Go to Farms
             </Button>
           </CardBody>
         </Card>
-        <Flex mt="24px">
-          <ErrorIcon color="warning" mr="8px" />
+        <Flex mt='24px'>
+          <ErrorIcon color='warning' mr='8px' />
           <Text>You DON’T need to unstake from Syrup Pools.</Text>
         </Flex>
-        <Flex justifyContent="center" my="24px">
-          <ArrowDownIcon color="textSubtle" />
+        <Flex justifyContent='center' my='24px'>
+          <ArrowDownIcon color='textSubtle' />
         </Flex>
         <Text bold>Unstake from other projects</Text>
         <Card>
-          <Flex justifyContent="space-between" alignItems="center" p="24px">
+          <Flex justifyContent='space-between' alignItems='center' p='24px'>
             <Text bold>Suggested projects</Text>
             <ExpandableLabel expanded={isVisible} onClick={() => setIsVisible((prev) => !prev)}>
               {isVisible ? 'Hide' : 'Details'}
             </ExpandableLabel>
           </Flex>
           <FoldableContent isVisible={isVisible}>
-            <Text mb="16px">
+            <Text mb='16px'>
               You may need to unstake any PancakeSwap LP Tokens that you’ve staked in yield aggregators or other
               projects. Here are some projects you might be using:
             </Text>
@@ -118,16 +118,16 @@ const FirstCard = () => {
                 </li>
               ))}
             </ul>
-            <Text my="16px">
+            <Text my='16px'>
               <strong>Please follow your chosen project’s social media and community</strong> to find out how they will
               handle the migration, and what you need to do.
             </Text>
-            <Text my="16px">You can also easily check the location of your LP tokens via Yieldwatch:</Text>
+            <Text my='16px'>You can also easily check the location of your LP tokens via Yieldwatch:</Text>
             <Button
-              endIcon={<OpenNewIcon color="white" />}
+              endIcon={<OpenNewIcon color='white' />}
               as={Link}
               external
-              href="https://www.yieldwatch.net/"
+              href='https://www.yieldwatch.net/'
               style={{ width: '100%' }}
             >
               Locate other LP

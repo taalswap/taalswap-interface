@@ -1,6 +1,6 @@
 import { Currency, ETHER, JSBI, TokenAmount } from 'taalswap-sdk'
 import React, { useCallback, useEffect, useState } from 'react'
-import { Button, ChevronDownIcon, AddIcon, CardBody, Text } from '@pancakeswap-libs/uikit'
+import { AddIcon, Button, CardBody, ChevronDownIcon, Text } from 'taalswap-uikit'
 import CardNav from 'components/CardNav'
 import { LightCard } from 'components/Card'
 import { AutoColumn, ColumnCenter } from 'components/Column'
@@ -47,9 +47,9 @@ export default function PoolFinder() {
     pairState === PairState.NOT_EXISTS ||
     Boolean(
       pairState === PairState.EXISTS &&
-        pair &&
-        JSBI.equal(pair.reserve0.raw, JSBI.BigInt(0)) &&
-        JSBI.equal(pair.reserve1.raw, JSBI.BigInt(0))
+      pair &&
+      JSBI.equal(pair.reserve0.raw, JSBI.BigInt(0)) &&
+      JSBI.equal(pair.reserve1.raw, JSBI.BigInt(0))
     )
 
   const position: TokenAmount | undefined = useTokenBalance(account ?? undefined, pair?.liquidityToken)
@@ -71,7 +71,7 @@ export default function PoolFinder() {
   }, [setShowSearch])
 
   const prerequisiteMessage = (
-    <LightCard padding="45px 10px">
+    <LightCard padding='45px 10px'>
       <Text style={{ textAlign: 'center' }}>
         {!account
           ? TranslateString(1174, 'Connect to a wallet to find pools')
@@ -86,21 +86,21 @@ export default function PoolFinder() {
       <AppBody>
         <FindPoolTabs />
         <CardBody>
-          <AutoColumn gap="md">
+          <AutoColumn gap='md'>
             <Button
               onClick={() => {
                 setShowSearch(true)
                 setActiveField(Fields.TOKEN0)
               }}
               startIcon={currency0 ? <CurrencyLogo currency={currency0} style={{ marginRight: '.5rem' }} /> : null}
-              endIcon={<ChevronDownIcon width="24px" color="white" />}
-              width="100%"
+              endIcon={<ChevronDownIcon width='24px' color='white' />}
+              width='100%'
             >
               {currency0 ? currency0.symbol : TranslateString(82, 'Select a Token')}
             </Button>
 
             <ColumnCenter>
-              <AddIcon color="textSubtle" />
+              <AddIcon color='textSubtle' />
             </ColumnCenter>
 
             <Button
@@ -109,8 +109,8 @@ export default function PoolFinder() {
                 setActiveField(Fields.TOKEN1)
               }}
               startIcon={currency1 ? <CurrencyLogo currency={currency1} style={{ marginRight: '.5rem' }} /> : null}
-              endIcon={<ChevronDownIcon width="24px" color="white" />}
-              width="100%"
+              endIcon={<ChevronDownIcon width='24px' color='white' />}
+              width='100%'
             >
               {currency1 ? currency1.symbol : TranslateString(82, 'Select a Token')}
             </Button>
@@ -128,20 +128,20 @@ export default function PoolFinder() {
                 hasPosition && pair ? (
                   <MinimalPositionCard pair={pair} />
                 ) : (
-                  <LightCard padding="45px 10px">
-                    <AutoColumn gap="sm" justify="center">
+                  <LightCard padding='45px 10px'>
+                    <AutoColumn gap='sm' justify='center'>
                       <Text style={{ textAlign: 'center' }}>
                         {TranslateString(212, 'You don’t have liquidity in this pool yet.')}
                       </Text>
                       <Text style={{ textAlign: 'center' }}>
-                        {TranslateString(168, "You can't add liquidity on V1")}
+                        {TranslateString(168, 'You can\'t add liquidity on V1')}
                       </Text>
                     </AutoColumn>
                   </LightCard>
                 )
               ) : validPairNoLiquidity ? (
-                <LightCard padding="45px 10px">
-                  <AutoColumn gap="sm" justify="center">
+                <LightCard padding='45px 10px'>
+                  <AutoColumn gap='sm' justify='center'>
                     <Text style={{ textAlign: 'center' }}>{TranslateString(214, 'No pool found.')}</Text>
                     <StyledInternalLink to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`}>
                       Create pool.
@@ -149,14 +149,14 @@ export default function PoolFinder() {
                   </AutoColumn>
                 </LightCard>
               ) : pairState === PairState.INVALID ? (
-                <LightCard padding="45px 10px">
-                  <AutoColumn gap="sm" justify="center">
+                <LightCard padding='45px 10px'>
+                  <AutoColumn gap='sm' justify='center'>
                     <Text style={{ textAlign: 'center' }}>{TranslateString(136, 'Invalid pair.')}</Text>
                   </AutoColumn>
                 </LightCard>
               ) : pairState === PairState.LOADING ? (
-                <LightCard padding="45px 10px">
-                  <AutoColumn gap="sm" justify="center">
+                <LightCard padding='45px 10px'>
+                  <AutoColumn gap='sm' justify='center'>
                     <Text style={{ textAlign: 'center' }}>
                       Loading
                       <Dots />

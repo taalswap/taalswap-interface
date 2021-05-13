@@ -1,19 +1,19 @@
 import { Currency, CurrencyAmount, Fraction, Percent } from 'taalswap-sdk'
 import React from 'react'
-import { Button, Text } from '@pancakeswap-libs/uikit'
+import { Button, Text } from 'taalswap-uikit'
 import { TranslateString } from 'utils/translateTextHelpers'
 import { RowBetween, RowFixed } from '../../components/Row'
 import CurrencyLogo from '../../components/CurrencyLogo'
 import { Field } from '../../state/mint/actions'
 
 export function ConfirmAddModalBottom({
-  noLiquidity,
-  price,
-  currencies,
-  parsedAmounts,
-  poolTokenPercentage,
-  onAdd,
-}: {
+                                        noLiquidity,
+                                        price,
+                                        currencies,
+                                        parsedAmounts,
+                                        poolTokenPercentage,
+                                        onAdd
+                                      }: {
   noLiquidity?: boolean
   price?: Fraction
   currencies: { [field in Field]?: Currency }
@@ -56,7 +56,7 @@ export function ConfirmAddModalBottom({
         <Text>Share of Pool:</Text>
         <Text>{noLiquidity ? '100' : poolTokenPercentage?.toSignificant(4)}%</Text>
       </RowBetween>
-      <Button mt="20px" onClick={onAdd}>
+      <Button mt='20px' onClick={onAdd}>
         {noLiquidity ? TranslateString(250, 'Create Pool & Supply') : TranslateString(252, 'Confirm Supply')}
       </Button>
     </>

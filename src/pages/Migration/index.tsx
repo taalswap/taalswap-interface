@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Heading, Card, CardHeader, CardBody, Text, Button, Link, Flex, ArrowDownIcon } from '@pancakeswap-libs/uikit'
+import { ArrowDownIcon, Button, Card, CardBody, CardHeader, Flex, Heading, Link, Text } from 'taalswap-uikit'
 import Container from 'components/Container'
 import FirstCard from './FirstCard'
 import SecondCard from './SecondCard'
@@ -19,8 +19,8 @@ const Header = styled.div`
 `
 
 const ArrowSeparator = () => (
-  <Flex justifyContent="center" my="24px">
-    <ArrowDownIcon color="textSubtle" width="24px" />
+  <Flex justifyContent='center' my='24px'>
+    <ArrowDownIcon color='textSubtle' width='24px' />
   </Flex>
 )
 
@@ -28,10 +28,10 @@ const Migration = () => {
   return (
     <>
       <Header>
-        <Heading as="h1" size="xxl" color="secondary" mb="24px">
+        <Heading as='h1' size='xxl' color='secondary' mb='24px'>
           LP Token Migration
         </Heading>
-        <Text bold fontSize="24px">
+        <Text bold fontSize='24px'>
           PancakeSwap is being upgraded! <br />
           Migrate your LP tokens to continue earning.
         </Text>
@@ -42,16 +42,16 @@ const Migration = () => {
           <ArrowSeparator />
           <SecondCard />
           <ArrowSeparator />
-          <Card mb="32px">
+          <Card mb='32px'>
             <CardHeader>
               <Text bold>Add Liquidity to new Liquidity Pools</Text>
-              <Text small color="textSubtle">
+              <Text small color='textSubtle'>
                 Stake your tokens in the updated Liquidity Pools
               </Text>
             </CardHeader>
             <CardBody>
-              <Text mb="24px">Any new liquidity you add will use the updated system by default. Simple!</Text>
-              <Button as={Link} external href="http://133.186.244.24/#/pool" style={{ width: '100%' }}>
+              <Text mb='24px'>Any new liquidity you add will use the updated system by default. Simple!</Text>
+              <Button as={Link} external href='http://localhost:3000/#/pool' style={{ width: '100%' }}>
                 Add liquidity
               </Button>
             </CardBody>
@@ -60,16 +60,16 @@ const Migration = () => {
           <Card>
             <CardHeader>
               <Text bold>Stake in New Farms</Text>
-              <Text small color="textSubtle">
+              <Text small color='textSubtle'>
                 Stake your updated LP tokens in PancakeSwap farms
               </Text>
             </CardHeader>
             <CardBody>
-              <Text mb="24px">
+              <Text mb='24px'>
                 If you are able to stake in a farm with your new LP tokens, that means it’s the updated type. Stake as
                 usual and you’re done!
               </Text>
-              <Button as={Link} external href="https://pancakeswap.finance/farms" style={{ width: '100%' }}>
+              <Button as={Link} external href='https://pancakeswap.finance/farms' style={{ width: '100%' }}>
                 Go to farms
               </Button>
             </CardBody>

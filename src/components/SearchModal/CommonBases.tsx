@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text } from '@pancakeswap-libs/uikit'
+import { Text } from 'taalswap-uikit'
 import { ChainId, Currency, currencyEquals, ETHER, Token } from 'taalswap-sdk'
 import styled from 'styled-components'
 
