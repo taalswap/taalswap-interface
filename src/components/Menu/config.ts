@@ -16,21 +16,13 @@ const config: MenuEntry[] = [
     },
     items: [
       {
-        label: 'LP Migration',
-        href: '/migrate',
-      },
-      {
         label: 'Exchange',
         href: 'http://133.186.244.24/#/swap',
       },
       {
         label: 'Liquidity',
         href: 'http://133.186.244.24/#/pool',
-      },
-      {
-        label: 'V1 Liquidity (Old)',
-        href: '/pool',
-      },
+      }
     ],
   },
   {
