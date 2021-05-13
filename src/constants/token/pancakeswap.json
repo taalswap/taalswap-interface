@@ -195,6 +195,22 @@
       "logoURI": "https://exchange.pancakeswap.finance/images/coins/0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82.png"
     },
     {
+      "name": "TaalSwap Token",
+      "symbol": "TAL",
+      "address": "0xd16431da4EafE953B4f34923CdB8d833FB1B2E7c",
+      "chainId": 97,
+      "decimals": 18,
+      "logoURI": "https://taalswap.finance/static/symbol/taalswap_coinsymbol.svg"
+    },
+    {
+      "name": "Talken",
+      "symbol": "TALK",
+      "address": "0x182b44a0e428e4349cF5D327B88239Bfe293A7Ac",
+      "chainId": 97,
+      "decimals": 18,
+      "logoURI": "https://talken.io/static/images/tokens/symbol/talk.png"
+    },
+    {
       "name": "Ankr",
       "symbol": "ANKR",
       "address": "0xf307910a4c7bbc79691fd374889b36d8531b08e3",
