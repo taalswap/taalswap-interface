@@ -51,7 +51,7 @@ const Migration = () => {
             </CardHeader>
             <CardBody>
               <Text mb="24px">Any new liquidity you add will use the updated system by default. Simple!</Text>
-              <Button as={Link} external href="http://localhost:3000/#/pool" style={{ width: '100%' }}>
+              <Button as={Link} external href="http://133.186.244.24/#/pool" style={{ width: '100%' }}>
                 Add liquidity
               </Button>
             </CardBody>
