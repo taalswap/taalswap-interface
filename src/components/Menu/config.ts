@@ -4,7 +4,7 @@ const config: MenuEntry[] = [
   {
     label: 'Home',
     icon: 'HomeIcon',
-    href: 'http://localhost:3000/',
+    href: 'http://133.186.244.24/',
   },
   {
     label: 'Trade',
@@ -21,11 +21,11 @@ const config: MenuEntry[] = [
       },
       {
         label: 'Exchange',
-        href: 'http://localhost:3000/#/swap',
+        href: 'http://133.186.244.24/#/swap',
       },
       {
         label: 'Liquidity',
-        href: 'http://localhost:3000/#/pool',
+        href: 'http://133.186.244.24/#/pool',
       },
       {
         label: 'V1 Liquidity (Old)',
