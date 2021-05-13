@@ -1,7 +1,7 @@
 import { transparentize } from 'polished'
 import React from 'react'
 import { AlertTriangle } from 'react-feather'
-import { Text } from '@pancakeswap-libs/uikit'
+import { Text } from 'taalswap-uikit'
 import styled, { css } from 'styled-components'
 import { AutoColumn } from '../Column'
 
@@ -13,14 +13,14 @@ export const ArrowWrapper = styled.div<{ clickable: boolean }>`
   padding: 2px;
 
   ${({ clickable }) =>
-    clickable
-      ? css`
+  clickable
+    ? css`
           :hover {
             cursor: pointer;
             opacity: 0.8;
           }
         `
-      : null}
+    : null}
 `
 
 export const SectionBreak = styled.div`
@@ -35,11 +35,11 @@ export const BottomGrouping = styled.div`
 
 export const ErrorText = styled(Text)<{ severity?: 0 | 1 | 2 | 3 | 4 }>`
   color: ${({ theme, severity }) =>
-    severity === 3 || severity === 4
-      ? theme.colors.failure
-      : severity === 2
-      ? theme.colors.binance
-      : severity === 1
+  severity === 3 || severity === 4
+    ? theme.colors.failure
+    : severity === 2
+    ? theme.colors.binance
+    : severity === 1
       ? theme.colors.text
       : theme.colors.success};
 `
@@ -103,6 +103,7 @@ const SwapCallbackErrorInner = styled.div`
   margin-top: -2rem;
   color: ${({ theme }) => theme.colors.failure};
   z-index: -1;
+
   p {
     padding: 0;
     margin: 0;

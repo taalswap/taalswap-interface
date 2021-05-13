@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Box, Button, Flex, Input, Text } from '@pancakeswap-libs/uikit'
+import { Box, Button, Flex, Input, Text } from 'taalswap-uikit'
 import { useUserSlippageTolerance } from 'state/user/hooks'
 import QuestionHelper from '../QuestionHelper'
 
@@ -33,7 +33,7 @@ const Options = styled.div`
 const predefinedValues = [
   { label: '0.1%', value: 0.1 },
   { label: '0.5%', value: 0.5 },
-  { label: '1%', value: 1 },
+  { label: '1%', value: 1 }
 ]
 
 type SlippageToleranceSettingsModalProps = {
@@ -74,8 +74,8 @@ const SlippageToleranceSettings = ({ translateString }: SlippageToleranceSetting
   }, [userSlippageTolerance, setError, translateString])
 
   return (
-    <Box mb="16px">
-      <Flex alignItems="center" mb="8px">
+    <Box mb='16px'>
+      <Flex alignItems='center' mb='8px'>
         <Text bold>{translateString(88, 'Slippage tolerance')}</Text>
         <QuestionHelper
           text={translateString(
@@ -98,26 +98,26 @@ const SlippageToleranceSettings = ({ translateString }: SlippageToleranceSetting
             )
           })}
         </Flex>
-        <Flex alignItems="center">
+        <Flex alignItems='center'>
           <Option>
             <Input
-              type="number"
-              scale="lg"
+              type='number'
+              scale='lg'
               step={0.1}
               min={0.1}
-              placeholder="5%"
+              placeholder='5%'
               value={value}
               onChange={handleChange}
               isWarning={error !== null}
             />
           </Option>
           <Option>
-            <Text fontSize="18px">%</Text>
+            <Text fontSize='18px'>%</Text>
           </Option>
         </Flex>
       </Options>
       {error && (
-        <Text mt="8px" color="failure">
+        <Text mt='8px' color='failure'>
           {error}
         </Text>
       )}
