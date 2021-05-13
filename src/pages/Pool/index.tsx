@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from 'react'
 import { ThemeContext } from 'styled-components'
 import { Pair } from 'taalswap-sdk'
-import { Button, CardBody, Text } from 'taalswap-uikit'
+import { Button, CardBody, Text } from '@pancakeswap-libs/uikit'
 import { Link } from 'react-router-dom'
 import CardNav from 'components/CardNav'
 import Question from 'components/QuestionHelper'
@@ -32,9 +32,10 @@ export default function Pool() {
     () => trackedTokenPairs.map((tokens) => ({ liquidityToken: toV2LiquidityToken(tokens), tokens })),
     [trackedTokenPairs]
   )
-  const liquidityTokens = useMemo(() => tokenPairsWithLiquidityTokens.map((tpwlt) => tpwlt.liquidityToken), [
-    tokenPairsWithLiquidityTokens
-  ])
+  const liquidityTokens = useMemo(
+    () => tokenPairsWithLiquidityTokens.map((tpwlt) => tpwlt.liquidityToken),
+    [tokenPairsWithLiquidityTokens]
+  )
   const [v2PairsBalances, fetchingV2PairBalances] = useTokenBalancesWithLoadingIndicator(
     account ?? undefined,
     liquidityTokens
@@ -63,14 +64,14 @@ export default function Pool() {
           title={TranslateString(262, 'Liquidity')}
           description={TranslateString(1168, 'Add liquidity to receive LP tokens')}
         >
-          <Button id='join-pool-button' as={Link} to='/add/BNB' mb='16px'>
+          <Button id="join-pool-button" as={Link} to="/add/BNB" mb="16px">
             {TranslateString(168, 'Add Liquidity')}
           </Button>
         </PageHeader>
-        <AutoColumn gap='lg' justify='center'>
+        <AutoColumn gap="lg" justify="center">
           <CardBody>
-            <AutoColumn gap='12px' style={{ width: '100%' }}>
-              <RowBetween padding='0 8px'>
+            <AutoColumn gap="12px" style={{ width: '100%' }}>
+              <RowBetween padding="0 8px">
                 <Text color={theme.colors.text}>{TranslateString(107, 'Your Liquidity')}</Text>
                 <Question
                   text={TranslateString(
@@ -81,14 +82,14 @@ export default function Pool() {
               </RowBetween>
 
               {!account ? (
-                <LightCard padding='40px'>
-                  <Text color='textDisabled' textAlign='center'>
+                <LightCard padding="40px">
+                  <Text color="textDisabled" textAlign="center">
                     {TranslateString(156, 'Connect to a wallet to view your liquidity.')}
                   </Text>
                 </LightCard>
               ) : v2IsLoading ? (
-                <LightCard padding='40px'>
-                  <Text color='textDisabled' textAlign='center'>
+                <LightCard padding="40px">
+                  <Text color="textDisabled" textAlign="center">
                     <Dots>Loading</Dots>
                   </Text>
                 </LightCard>
@@ -99,21 +100,21 @@ export default function Pool() {
                   ))}
                 </>
               ) : (
-                <LightCard padding='40px'>
-                  <Text color='textDisabled' textAlign='center'>
+                <LightCard padding="40px">
+                  <Text color="textDisabled" textAlign="center">
                     {TranslateString(104, 'No liquidity found.')}
                   </Text>
                 </LightCard>
               )}
 
               <div>
-                <Text fontSize='14px' style={{ padding: '.5rem 0 .5rem 0' }}>
-                  {TranslateString(106, 'Don\'t see a pool you joined?')}{' '}
-                  <StyledInternalLink id='import-pool-link' to='/find'>
+                <Text fontSize="14px" style={{ padding: '.5rem 0 .5rem 0' }}>
+                  {TranslateString(106, "Don't see a pool you joined?")}{' '}
+                  <StyledInternalLink id="import-pool-link" to="/find">
                     {TranslateString(108, 'Import it.')}
                   </StyledInternalLink>
                 </Text>
-                <Text fontSize='14px' style={{ padding: '.5rem 0 .5rem 0' }}>
+                <Text fontSize="14px" style={{ padding: '.5rem 0 .5rem 0' }}>
                   {TranslateString(1172, 'Or, if you staked your LP tokens in a farm, unstake them to see them here.')}
                 </Text>
               </div>
