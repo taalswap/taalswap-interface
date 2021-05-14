@@ -7,8 +7,6 @@
     "@binance-chain/bsc-connector": "^1.0.0",
     "@crowdin/crowdin-api-client": "^1.8.16",
     "@ethersproject/experimental": "^5.0.1",
-    "taalswap-sdk": "^2.2.4",
-    "taalswap-uikit": "file:../taalswap-toolkit/packages/taalswap-uikit",
     "@popperjs/core": "^2.4.4",
     "@reach/dialog": "^0.10.3",
     "@reach/portal": "^0.10.3",
@@ -62,6 +60,8 @@
     "rebass": "^4.0.7",
     "redux-localstorage-simple": "^2.3.1",
     "styled-components": "^5.2.1",
+    "taalswap-sdk": "^2.2.4",
+    "taalswap-uikit": "^0.32.6",
     "typescript": "^4.1.3"
   },
   "devDependencies": {
