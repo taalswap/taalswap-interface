@@ -3,7 +3,6 @@ import { ThemeContext } from 'styled-components'
 import { Pair } from 'taalswap-sdk'
 import { Button, CardBody, Text } from 'taalswap-uikit'
 import { Link } from 'react-router-dom'
-import CardNav from 'components/CardNav'
 import Question from 'components/QuestionHelper'
 import FullPositionCard from 'components/PositionCard'
 import { useTokenBalancesWithLoadingIndicator } from 'state/wallet/hooks'
@@ -57,7 +56,7 @@ export default function Pool() {
 
   return (
     <Container>
-      <CardNav activeIndex={1} />
+      {/* <CardNav activeIndex={1} /> */}
       <AppBody>
         <PageHeader
           title={TranslateString(262, 'Liquidity')}
