@@ -91,7 +91,7 @@ const SlippageToleranceSettings = ({ translateString }: SlippageToleranceSetting
 
             return (
               <Option key={predefinedValue}>
-                <Button variant={value === predefinedValue ? 'primary' : 'tertiary'} onClick={handleClick}>
+                <Button variant={value === predefinedValue ? 'success' : 'tertiary'} onClick={handleClick}>
                   {label}
                 </Button>
               </Option>
@@ -117,7 +117,7 @@ const SlippageToleranceSettings = ({ translateString }: SlippageToleranceSetting
         </Flex>
       </Options>
       {error && (
-        <Text mt='8px' color='failure'>
+        <Text mt='8px' color='warning'>
           {error}
         </Text>
       )}
