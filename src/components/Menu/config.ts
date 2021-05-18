@@ -26,7 +26,7 @@ const config: MenuEntry[] = [
   //   ]
   // },
   {
-    label: 'Exchange',
+    label: 'Swap',
     icon: 'TradeIcon',
     href: 'http://localhost:3000/#/swap'
   },
