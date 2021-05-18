@@ -38,7 +38,7 @@ const config: MenuEntry[] = [
   {
     label: 'Farms',
     icon: 'FarmIcon',
-    href: 'https://pancakeswap.finance/farms'
+    href: 'http://localhost:3001/farms'
   }
   // {
   //   label: 'Pools',
