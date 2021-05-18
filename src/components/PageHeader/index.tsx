@@ -31,20 +31,20 @@ const PageHeader = ({ title, description, children }: PageHeaderProps) => {
         <Details>
           <Heading mb='8px'>{title}</Heading>
           {description && (
-            <Text color='textSubtle' fontSize='14px'>
+            <Text color='#a7b2b3' fontSize='14px'>
               {description}
             </Text>
           )}
         </Details>
         <IconButton variant='text' onClick={onPresentSettings} title={TranslateString(1200, 'Settings')}>
-          <TuneIcon width='24px' color='currentColor' />
+          <TuneIcon width='24px' color='#00ab55' />
         </IconButton>
         <IconButton
           variant='text'
           onClick={onPresentRecentTransactions}
           title={TranslateString(1202, 'Recent transactions')}
         >
-          <HistoryIcon width='24px' color='currentColor' />
+          <HistoryIcon width='24px' color='#00ab55' />
         </IconButton>
       </Flex>
       {children && <Text mt='16px'>{children}</Text>}
