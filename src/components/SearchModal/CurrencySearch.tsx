@@ -59,6 +59,7 @@ export function CurrencySearch({
 
   const showETH: boolean = useMemo(() => {
     const s = searchQuery.toLowerCase().trim()
+    // TODO : eth로 바꿔야 할 부분 ?
     return s === '' || s === 'b' || s === 'bn' || s === 'bnb'
   }, [searchQuery])
 

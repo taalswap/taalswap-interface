@@ -1,4 +1,4 @@
-import { MenuEntry } from 'taalswap-uikit'
+import { MenuEntry } from 'taalswap-uikit';
 
 const config: MenuEntry[] = [
   {
@@ -6,24 +6,34 @@ const config: MenuEntry[] = [
     icon: 'HomeIcon',
     href: 'http://localhost:3000/'
   },
+  // {
+  //   label: 'Trade',
+  //   icon: 'TradeIcon',
+  //   initialOpenState: true,
+  //   // status: {
+  //   //   text: 'MIGRATE',
+  //   //   color: 'warning'
+  //   // },
+  //   items: [
+  //     {
+  //       label: 'Exchange',
+  //       href: 'http://localhost:3000/#/swap'
+  //     },
+  //     {
+  //       label: 'Liquidity',
+  //       href: 'http://localhost:3000/#/pool'
+  //     }
+  //   ]
+  // },
   {
-    label: 'Trade',
+    label: 'Exchange',
     icon: 'TradeIcon',
-    initialOpenState: true,
-    // status: {
-    //   text: 'MIGRATE',
-    //   color: 'warning'
-    // },
-    items: [
-      {
-        label: 'Exchange',
-        href: 'http://localhost:3000/#/swap'
-      },
-      {
-        label: 'Liquidity',
-        href: 'http://localhost:3000/#/pool'
-      }
-    ]
+    href: 'http://localhost:3000/#/swap'
+  },
+  {
+    label: 'Liquidity',
+    icon: 'PoolIcon',
+    href: 'http://localhost:3000/#/pool'
   },
   {
     label: 'Farms',
@@ -134,6 +144,6 @@ const config: MenuEntry[] = [
   //     }
   //   ]
   // }
-]
+];
 
-export default config
+export default config;
