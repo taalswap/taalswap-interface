@@ -65,7 +65,7 @@ function TokenWarningCard({ token }: TokenWarningCardProps) {
       <AutoRow gap='6px'>
         <AutoColumn gap='24px'>
           <CurrencyLogo currency={token} size='16px' />
-          <div></div>
+          <div />
         </AutoColumn>
         <AutoColumn gap='10px' justify='flex-start'>
           <Text>
