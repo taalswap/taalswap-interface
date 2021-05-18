@@ -177,7 +177,12 @@ const Swap = () => {
     if (!swapCallback) {
       return;
     }
-    setSwapState((prevState) => ({ ...prevState, attemptingTxn: true, swapErrorMessage: undefined, txHash: undefined }));
+    setSwapState((prevState) => ({
+      ...prevState,
+      attemptingTxn: true,
+      swapErrorMessage: undefined,
+      txHash: undefined
+    }));
     swapCallback()
       .then((hash) => {
         setSwapState((prevState) => ({
@@ -302,7 +307,7 @@ const Swap = () => {
             onDismiss={handleConfirmDismiss}
           />
           <PageHeader
-            title={TranslateString(8, 'Exchange')}
+            title={TranslateString(8, 'Swap')}
             description={TranslateString(1192, 'Trade your token on the spot')}
           />
           <CardBody>
