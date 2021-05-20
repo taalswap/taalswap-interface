@@ -72,8 +72,8 @@
     {
       "name": "Tether USD",
       "symbol": "USDT",
-      "address": "0x55d398326f99059ff775485246999027b3197955",
-      "chainId": 56,
+      "address": "0x867fa8a1668d07630E89E5b65cEb679cA5027E21",
+      "chainId": 97,
       "decimals": 18,
       "logoURI": "https://exchange.pancakeswap.finance/images/coins/0x55d398326f99059ff775485246999027b3197955.png"
     },
