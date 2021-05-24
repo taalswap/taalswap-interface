@@ -39,12 +39,12 @@ const config: MenuEntry[] = [
     label: 'Farms',
     icon: 'FarmIcon',
     href: 'http://localhost:3001/farms'
+  },
+  {
+    label: 'Pools',
+    icon: 'PoolIcon',
+    href: 'http://localhost:3001/pools'
   }
-  // {
-  //   label: 'Pools',
-  //   icon: 'PoolIcon',
-  //   href: 'https://pancakeswap.finance/pools'
-  // },
   // {
   //   label: 'Prediction',
   //   icon: 'PredictionsIcon',
