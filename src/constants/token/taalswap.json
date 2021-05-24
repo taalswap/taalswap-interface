@@ -1,0 +1,50 @@
+{
+  "name": "TaalSwap Default List",
+  "timestamp": "2021-03-17T09:56:23Z",
+  "version": {
+    "major": 2,
+    "minor": 10,
+    "patch": 0
+  },
+  "tags": {},
+  "logoURI": "http://swap.taalswap.finance/images/taalswap.png",
+  "keywords": [
+    "taalswap",
+    "default"
+  ],
+  "tokens": [
+    {
+      "name": "WETH Token",
+      "symbol": "WETH",
+      "address": "0x92EcACFC94588aa99fba837Be1a98738290E3252",
+      "chainId": 4,
+      "decimals": 18,
+      "logoURI": "https://exchange.pancakeswap.finance/images/coins/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c.png"
+    },
+    {
+      "name": "BUSD Token",
+      "symbol": "BUSD",
+      "address": "0xd16431da4EafE953B4f34923CdB8d833FB1B2E7c",
+      "chainId": 4,
+      "decimals": 18,
+      "logoURI": "https://exchange.pancakeswap.finance/images/coins/0xe9e7cea3dedca5984780bafc599bd69add087d56.png"
+    },
+    {
+      "name": "TaalSwap Token",
+      "symbol": "TAL",
+      "address": "0x94dD914019BB5E821dC1edD1e5d8bC618A251a80",
+      "chainId": 4,
+      "decimals": 18,
+      "logoURI": "http://swap.taalswap.finance/images/taalswap.png"
+    },
+    {
+      "name": "USDT Token",
+      "symbol": "USDT",
+      "address": "0xC958c2ACE36870471238319Bc29018cC549C126D",
+      "chainId": 4,
+      "decimals": 18,
+      "logoURI": "https://exchange.pancakeswap.finance/images/coins/0x55d398326f99059ff775485246999027b3197955.png"
+    }
+  ]
+}
+
