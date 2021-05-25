@@ -7,7 +7,7 @@
     "patch": 0
   },
   "tags": {},
-  "logoURI": "http://swap.taalswap.finance/images/taalswap.png",
+  "logoURI": "https://taalswap.finance/static/symbol/taalswap_coinsymbol.svg",
   "keywords": [
     "taalswap",
     "default"
@@ -35,7 +35,7 @@
       "address": "0x94dD914019BB5E821dC1edD1e5d8bC618A251a80",
       "chainId": 4,
       "decimals": 18,
-      "logoURI": "http://swap.taalswap.finance/images/taalswap.png"
+      "logoURI": "https://taalswap.finance/static/symbol/taalswap_coinsymbol.svg"
     },
     {
       "name": "USDT Token",
