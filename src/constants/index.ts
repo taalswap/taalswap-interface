@@ -1,6 +1,6 @@
 import { ChainId, JSBI, Percent, Token, WETH } from 'taalswap-sdk';
 
-export const ROUTER_ADDRESS = '0xa47e21f28171Ef32e33db96Ed6Af450Cd801e160';
+export const ROUTER_ADDRESS = '0x04d17F2606ce80Af3cf886724a7c2755AA3d9743';
 
 // a list of tokens by chain
 type ChainTokenList = {
@@ -9,7 +9,7 @@ type ChainTokenList = {
 
 export const TAL = new Token(
   ChainId.RINKEBY,
-  '0x94dD914019BB5E821dC1edD1e5d8bC618A251a80',
+  '0xe18E460d38441027b6672363d68C9088F3D773Bf',
   18,
   'TAL',
   'TaalSwap Token'
