@@ -4,7 +4,7 @@ const config: MenuEntry[] = [
   {
     label: 'Home',
     icon: 'HomeIcon',
-    href: 'http://localhost:3000/'
+    href: 'http://localhost:3001/'
   },
   // {
   //   label: 'Trade',
