@@ -17,6 +17,7 @@ const Menu: React.FC = (props) => {
   const { isDark, toggleTheme } = useTheme();
   const priceData = useGetPriceData();
   console.info('priceData : ', priceData);
+  console.info('priceData : ', TAL.address);
   const cakePriceUsd = priceData ? Number(priceData.data[TAL.address].price) : undefined;
   const profile = useGetLocalProfile();
 
