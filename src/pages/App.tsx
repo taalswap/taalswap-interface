@@ -2,7 +2,7 @@ import React, { Suspense, useEffect, useState } from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 import { Credentials, StringTranslations } from '@crowdin/crowdin-api-client'
-import { LangType, useModal } from 'taalswap-uikit'
+import { Language, useModal } from 'taalswap-uikit'
 import VersionBar from 'components/VersionBar'
 import Popups from '../components/Popups'
 import Web3ReactManager from '../components/Web3ReactManager'
@@ -55,19 +55,6 @@ export default function App() {
 
   const stringTranslationsApi = new StringTranslations(credentials)
 
-  const [hasSeenModal, setHasSeenModal] = useState(false)
-  const [onPresentUseV2ExchangeModal] = useModal(<UseV2ExchangeModal />)
-
-  useEffect(() => {
-    const showModal = () => {
-      onPresentUseV2ExchangeModal()
-      setHasSeenModal(true)
-    }
-    if (!hasSeenModal) {
-      showModal()
-    }
-  }, [onPresentUseV2ExchangeModal, hasSeenModal])
-
   const getStoredLang = (storedLangCode: string) => {
     return allLanguages.filter((language) => {
       return language.code === storedLangCode
@@ -108,7 +95,7 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLanguage])
 
-  const handleLanguageSelect = (langObject: LangType) => {
+  const handleLanguageSelect = (langObject: Language) => {
     setSelectedLanguage(langObject)
     localStorage.setItem(CACHE_KEY, langObject.code)
   }
@@ -150,7 +137,6 @@ export default function App() {
                   </Web3ReactManager>
                 </BodyWrapper>
               </Menu>
-              <VersionBar />
             </TranslationsContext.Provider>
           </LanguageContext.Provider>
         </AppWrapper>
