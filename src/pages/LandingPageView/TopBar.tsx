@@ -1,7 +1,7 @@
 import React from 'react';
 import { Target } from 'react-feather';
 import { Link } from 'taalswap-uikit';
-import Topmenu from './tabmenu'
+import Topmenu from './topmenu'
 import logo_img from './images/TAAL_Logo.png';
 
 const TopBar = () => {
