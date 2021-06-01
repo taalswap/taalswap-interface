@@ -1,11 +1,11 @@
-import { ChainId } from 'taalswap-sdk'
-import React, { useContext } from 'react'
-import { ThemeContext } from 'styled-components'
-import { Button, LinkExternal } from 'taalswap-uikit'
-import { ArrowUpCircle } from 'react-feather'
-import { AutoColumn } from '../Column'
-import { getBscScanLink } from '../../utils'
-import { Wrapper, Section, ConfirmedIcon, ContentHeader } from './helpers'
+import { ChainId } from 'taalswap-sdk';
+import React, { useContext } from 'react';
+import { ThemeContext } from 'styled-components';
+import { Button, LinkExternal } from 'taalswap-uikit';
+import { ArrowUpCircle } from 'react-feather';
+import { AutoColumn } from '../Column';
+import { getBscScanLink } from '../../utils';
+import { ConfirmedIcon, ContentHeader, Section, Wrapper } from './helpers';
 
 type TransactionSubmittedContentProps = {
   onDismiss: () => void
@@ -14,7 +14,7 @@ type TransactionSubmittedContentProps = {
 }
 
 const TransactionSubmittedContent = ({ onDismiss, chainId, hash }: TransactionSubmittedContentProps) => {
-  const theme = useContext(ThemeContext)
+  const theme = useContext(ThemeContext);
 
   return (
     <Wrapper>
@@ -23,17 +23,17 @@ const TransactionSubmittedContent = ({ onDismiss, chainId, hash }: TransactionSu
         <ConfirmedIcon>
           <ArrowUpCircle strokeWidth={0.5} size={97} color={theme.colors.primary} />
         </ConfirmedIcon>
-        <AutoColumn gap="8px" justify="center">
+        <AutoColumn gap='8px' justify='center'>
           {chainId && hash && (
-            <LinkExternal href={getBscScanLink(chainId, hash, 'transaction')}>View on BscScan</LinkExternal>
+            <LinkExternal href={getBscScanLink(chainId, hash, 'transaction')}>View on EtherScan</LinkExternal>
           )}
-          <Button onClick={onDismiss} mt="20px">
+          <Button onClick={onDismiss} mt='20px'>
             Close
           </Button>
         </AutoColumn>
       </Section>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default TransactionSubmittedContent
+export default TransactionSubmittedContent;
