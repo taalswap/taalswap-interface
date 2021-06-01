@@ -5,7 +5,10 @@ import { TAL } from '../constants';
 const useGetDocumentTitlePrice = () => {
   const priceData = useGetPriceData();
 
-  const cakePriceUsd = priceData ? parseFloat(priceData.data[TAL.address].price) : 0;
+  let cakePriceUsd = 0;
+  if (priceData !== null && priceData.data[TAL.address] !== undefined) {
+    cakePriceUsd = parseFloat(priceData.data[TAL.address].price);
+  }
 
   const cakePriceUsdString =
     Number.isNaN(cakePriceUsd) || cakePriceUsd === 0
