@@ -14,6 +14,7 @@ import PoolFinder from './PoolFinder'
 import RemoveLiquidity from './RemoveLiquidity'
 import Swap from './Swap'
 import Migration from './Migration'
+import LandingPageView from './LandingPageView'
 import { RedirectPathToSwapOnly } from './Swap/redirects'
 import { allLanguages, EN } from '../constants/localisation/languageCodes'
 import { LanguageContext } from '../hooks/LanguageContext'
@@ -49,8 +50,9 @@ export default function App() {
   const apiKey = `${process.env.REACT_APP_CROWDIN_APIKEY}`
   const projectId = parseInt(`${process.env.REACT_APP_CROWDIN_PROJECTID}`)
   const fileId = 6
+
   const credentials: Credentials = {
-    token: apiKey,
+    token: apiKey
   }
 
   const stringTranslationsApi = new StringTranslations(credentials)
@@ -111,32 +113,35 @@ export default function App() {
               selectedLanguage,
               setSelectedLanguage: handleLanguageSelect,
               translatedLanguage,
-              setTranslatedLanguage,
+              setTranslatedLanguage
             }}
           >
             <TranslationsContext.Provider value={{ translations, setTranslations }}>
+              <Switch>
+                <Route exact strict path="/" component={LandingPageView} />
               <Menu>
                 <BodyWrapper>
                   <Popups />
                   <Web3ReactManager>
                     <Switch>
-                      <Route exact strict path="/swap" component={Swap} />
-                      <Route exact strict path="/find" component={PoolFinder} />
-                      <Route exact strict path="/pool" component={Pool} />
-                      <Route exact path="/add" component={AddLiquidity} />
-                      <Route exact path="/migrate" component={Migration} />
-                      <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
+                      <Route exact strict path='/swap' component={Swap} />
+                      <Route exact strict path='/find' component={PoolFinder} />
+                      <Route exact strict path='/pool' component={Pool} />
+                      <Route exact path='/add' component={AddLiquidity} />
+                      <Route exact path='/migrate' component={Migration} />
+                      <Route exact strict path='/remove/:currencyIdA/:currencyIdB' component={RemoveLiquidity} />
 
                       {/* Redirection: These old routes are still used in the code base */}
-                      <Route exact path="/add/:currencyIdA" component={RedirectOldAddLiquidityPathStructure} />
-                      <Route exact path="/add/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />
-                      <Route exact strict path="/remove/:tokens" component={RedirectOldRemoveLiquidityPathStructure} />
+                      <Route exact path='/add/:currencyIdA' component={RedirectOldAddLiquidityPathStructure} />
+                      <Route exact path='/add/:currencyIdA/:currencyIdB' component={RedirectDuplicateTokenIds} />
+                      <Route exact strict path='/remove/:tokens' component={RedirectOldRemoveLiquidityPathStructure} />
 
                       <Route component={RedirectPathToSwapOnly} />
                     </Switch>
                   </Web3ReactManager>
                 </BodyWrapper>
               </Menu>
+              </Switch>
             </TranslationsContext.Provider>
           </LanguageContext.Provider>
         </AppWrapper>

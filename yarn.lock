@@ -19987,8 +19987,10 @@ taalswap-core@^0.1.2:
     truffle-flattener "^1.4.4"
     truffle-hdwallet-provider "^1.0.17"
 
-taalswap-sdk@../taalswap-sdk:
+taalswap-sdk@2.2.4:
   version "2.2.4"
+  resolved "https://registry.yarnpkg.com/taalswap-sdk/-/taalswap-sdk-2.2.4.tgz#068f78d78a516e27aa788493f624fe5936de6b8f"
+  integrity sha512-GNp6xJmdsf+TdXtdnStoqGNgCjucBajIXnx5QiUPFDeeNpKBsFwvRxlo75tI0T+srE71PB/0o6L5bwCpA7vD8Q==
   dependencies:
     big.js "^5.2.2"
     decimal.js-light "^2.5.0"
