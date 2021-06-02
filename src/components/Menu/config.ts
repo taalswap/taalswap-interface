@@ -4,7 +4,7 @@ const config: MenuEntry[] = [
   {
     label: 'Home',
     icon: 'HomeIcon',
-    href: 'http://localhost:3001/'
+    href: 'http://localhost:3001/',
   },
   // {
   //   label: 'Trade',
@@ -28,23 +28,25 @@ const config: MenuEntry[] = [
   {
     label: 'Swap',
     icon: 'TradeIcon',
-    href: 'http://localhost:3000/#/swap'
+    // href: 'http://localhost:3000/#/swap',
+    href: '/swap',
   },
   {
     label: 'Liquidity',
     icon: 'PoolIcon',
-    href: 'http://localhost:3000/#/pool'
+    // href: 'http://localhost:3000/#/pool',
+    href: '/pool',
   },
   {
     label: 'Farms',
     icon: 'FarmIcon',
-    href: 'http://localhost:3001/farms'
+    href: 'http://localhost:3001/farms',
   },
   {
     label: 'Pools',
     icon: 'PoolIcon',
-    href: 'http://localhost:3001/pools'
-  }
+    href: 'http://localhost:3001/pools',
+  },
   // {
   //   label: 'Prediction',
   //   icon: 'PredictionsIcon',
@@ -146,4 +148,4 @@ const config: MenuEntry[] = [
   // }
 ];
 
-export default config
+export default config;
