@@ -32,13 +32,13 @@ const config: MenuEntry[] = [
     href: '/swap',
   },
   {
-    label: 'Pools',
+    label: 'Liquidity',
     icon: 'PoolIcon',
     // href: 'http://localhost:3000/#/pool',
     href: '/pool',
   },
   {
-    label: 'Farming',
+    label: 'Farms',
     icon: 'FarmIcon',
     href: 'http://localhost:3001/farms',
   },
