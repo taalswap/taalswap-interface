@@ -74,7 +74,7 @@ export default function Pool() {
                 <Question
                   text={TranslateString(
                     1170,
-                    'When you add liquidity, you are given pool tokens that represent your share. If you don’t see a pool you joined in this list, try importing a pool below.'
+                    'When you add liquidity, you will receive LP tokens to be registered as your share in this liquidity pool.'
                   )}
                 />
               </RowBetween>
@@ -107,13 +107,13 @@ export default function Pool() {
 
               <div>
                 <Text fontSize='14px' style={{ padding: '.5rem 0 .5rem 0' }}>
-                  {TranslateString(106, 'Don\'t see a pool you joined?')}{' '}
+                  {TranslateString(106, 'Don\'t see your pool(s)?')}{' '}
                   <StyledInternalLink id='import-pool-link' to='/find'>
-                    {TranslateString(108, 'Import it.')}
+                    {TranslateString(108, 'Import here')}
                   </StyledInternalLink>
                 </Text>
                 <Text fontSize='14px' style={{ padding: '.5rem 0 .5rem 0' }}>
-                  {TranslateString(1172, 'Or, if you staked your LP tokens in a farm, unstake them to see them here.')}
+                  {TranslateString(1172, 'Your LP tokens in a farm can be moved back here by unstaking them.')}
                 </Text>
               </div>
             </AutoColumn>
