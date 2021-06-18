@@ -27,7 +27,7 @@
       "address": "0xd16431da4eafe953b4f34923cdb8d833fb1b2e7c",
       "chainId": 4,
       "decimals": 18,
-      "logoURI": "https://swap.taalswap.finance/images/coins/0xe9e7cea3dedca5984780bafc599bd69add087d56.png"
+      "logoURI": "https://swap.taalswap.finance/images/coins/0xd16431da4eafe953b4f34923cdb8d833fb1b2e7c.png"
     },
     {
       "name": "TaalSwap Token",
@@ -43,7 +43,7 @@
       "address": "0xc958c2ace36870471238319bc29018cc549c126d",
       "chainId": 4,
       "decimals": 18,
-      "logoURI": "https://swap.taalswap.finance/images/coins/0x55d398326f99059ff775485246999027b3197955.png"
+      "logoURI": "https://swap.taalswap.finance/images/coins/0xc958c2ace36870471238319bc29018cc549c126d.png"
     }
   ]
 }
