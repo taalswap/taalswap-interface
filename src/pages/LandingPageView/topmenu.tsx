@@ -12,7 +12,7 @@ const Search = () => {
       </div>
     )
   }
-  
+
   const Results = () => (
     <div className='hide_menu' id='results'>
     <span className='arrow_box'>-</span>
@@ -21,7 +21,7 @@ const Search = () => {
       <li><Link href='#/swap' style={{textDecoration:'none'}}><span className='swap_icon'>swap_icon</span>Swap</Link></li>
       <li><Link href='#/pool' style={{textDecoration:'none'}}><span className='liquidity_icon'>liquidity_icon</span>Liquidity</Link></li>
       <li><Link href='http://localhost:3001/farms' style={{textDecoration:'none'}}><span className='farms_icon'>Farms_icon</span>Farms</Link></li>
-      <li><Link href='/' style={{textDecoration:'none'}}><span className='connect_icon'>connect_icon</span>Coneect Wallet</Link></li>
+      <li><Link href='/' style={{textDecoration:'none'}}><span className='connect_icon'>connect_icon</span>Connect Wallet</Link></li>
     </ul>
     </div>
   )
