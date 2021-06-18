@@ -69,7 +69,7 @@ const Migration = () => {
                 If you are able to stake in a farm with your new LP tokens, that means it’s the updated type. Stake as
                 usual and you’re done!
               </Text>
-              <Button as={Link} external href='https://pancakeswap.finance/farms' style={{ width: '100%' }}>
+              <Button as={Link} external href='https://pools.taalswap.finance/farms' style={{ width: '100%' }}>
                 Go to farms
               </Button>
             </CardBody>
