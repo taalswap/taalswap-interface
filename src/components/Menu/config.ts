@@ -50,7 +50,7 @@ const config: MenuEntry[] = [
   // {
   //   label: 'Prediction',
   //   icon: 'PredictionsIcon',
-  //   href: 'https://pancakeswap.finance/prediction',
+  //   href: 'https://pools.taalswap.finance/prediction',
   //   status: {
   //     text: 'BETA',
   //     color: 'warning'
@@ -59,17 +59,17 @@ const config: MenuEntry[] = [
   // {
   //   label: 'Lottery',
   //   icon: 'TicketIcon',
-  //   href: 'https://pancakeswap.finance/lottery'
+  //   href: 'https://pools.taalswap.finance/lottery'
   // },
   // {
   //   label: 'Collectibles',
   //   icon: 'NftIcon',
-  //   href: 'https://pancakeswap.finance/nft'
+  //   href: 'https://pools.taalswap.finance/nft'
   // },
   // {
   //   label: 'Team Battle',
   //   icon: 'TeamBattleIcon',
-  //   href: 'https://pancakeswap.finance/competition'
+  //   href: 'https://pools.taalswap.finance/competition'
   // },
   // {
   //   label: 'Teams & Profile',
@@ -77,15 +77,15 @@ const config: MenuEntry[] = [
   //   items: [
   //     {
   //       label: 'Leaderboard',
-  //       href: 'https://pancakeswap.finance/teams'
+  //       href: 'https://pools.taalswap.finance/teams'
   //     },
   //     {
   //       label: 'Task Center',
-  //       href: 'https://pancakeswap.finance/profile/tasks'
+  //       href: 'https://pools.taalswap.finance/profile/tasks'
   //     },
   //     {
   //       label: 'Your Profile',
-  //       href: 'https://pancakeswap.finance/profile'
+  //       href: 'https://pools.taalswap.finance/profile'
   //     }
   //   ]
   // },
@@ -114,7 +114,7 @@ const config: MenuEntry[] = [
   // {
   //   label: 'IFO',
   //   icon: 'IfoIcon',
-  //   href: 'https://pancakeswap.finance/ifo'
+  //   href: 'https://pools.taalswap.finance/ifo'
   // },
   // {
   //   label: 'More',

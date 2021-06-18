@@ -198,7 +198,7 @@ const Swap = () => {
       }
 
       if (modalCountdownSecondsRemaining <= 0) {
-        window.location.href = 'https://exchange.pancakeswap.finance/#/swap';
+        window.location.href = 'https://swap.taalswap.finance/#/swap';
       }
 
       return () => {
@@ -588,7 +588,7 @@ const Swap = () => {
                     Please use{' '}
                     <StyledLink
                       external
-                      href="https://exchange.pancakeswap.finance"
+                      href="https://swap.taalswap.finance"
                     >
                       PancakeSwap V2
                     </StyledLink>{' '}
