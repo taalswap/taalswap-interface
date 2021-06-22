@@ -1,10 +1,10 @@
 import { Currency, ETHER, Token } from 'taalswap-sdk'
 import React, { KeyboardEvent, RefObject, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { Text, CloseIcon } from 'taalswap-uikit'
+import { Text, CloseIcon, useTooltip, HelpIcon } from 'taalswap-uikit';
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { FixedSizeList } from 'react-window'
-import { ThemeContext } from 'styled-components'
+import styled, { ThemeContext } from 'styled-components'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import useI18n from 'hooks/useI18n'
 import { useActiveWeb3React } from '../../hooks'
@@ -34,6 +34,10 @@ interface CurrencySearchProps {
   showCommonBases?: boolean
   onChangeList: () => void
 }
+
+const ReferenceElement = styled.div`
+  display: inline-block;
+`
 
 export function CurrencySearch({
   selectedCurrency,
@@ -135,6 +139,27 @@ export function CurrencySearch({
     [filteredSortedTokens, handleCurrencySelect, searchQuery]
   )
 
+  const TipToken = () => {
+    const TranslateString = useI18n()
+
+    const { targetRef, tooltip, tooltipVisible } = useTooltip(
+      TranslateString(
+        128,
+        'Find a token by searching for its name or symbol or by pasting its address below.'
+      ),
+      { placement: 'bottom-start', tooltipOffset: [1, 1] },
+    )
+
+    return (
+      <>
+        <ReferenceElement ref={targetRef}>
+          <HelpIcon color="textSubtle" />
+        </ReferenceElement>
+        {tooltipVisible && tooltip}
+      </>
+    )
+  }
+
   const selectedListInfo = useSelectedListInfo()
   const TranslateString = useI18n()
   return (
@@ -143,12 +168,7 @@ export function CurrencySearch({
         <RowBetween>
           <Text>
             {TranslateString(82, 'Select a token')}
-            <QuestionHelper
-              text={TranslateString(
-                128,
-                'Find a token by searching for its name or symbol or by pasting its address below.'
-              )}
-            />
+            <TipToken />
           </Text>
           <CloseIcon onClick={onDismiss} />
         </RowBetween>
