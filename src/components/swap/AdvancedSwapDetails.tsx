@@ -1,6 +1,7 @@
 import React from 'react'
 import { Trade, TradeType } from 'taalswap-sdk'
-import { Card, CardBody, Text } from 'taalswap-uikit'
+import styled from 'styled-components';
+import { Card, CardBody, HelpIcon, Text, useTooltip } from 'taalswap-uikit';
 import useI18n from 'hooks/useI18n'
 import { Field } from '../../state/swap/actions'
 import { useUserSlippageTolerance } from '../../state/user/hooks'
@@ -11,6 +12,71 @@ import { RowBetween, RowFixed } from '../Row'
 import FormattedPriceImpact from './FormattedPriceImpact'
 import { SectionBreak } from './styleds'
 import SwapRoute from './SwapRoute'
+
+const ReferenceElement = styled.div`
+  display: flex;
+`
+
+const Tip1 = () => {
+  const TranslateString = useI18n()
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(
+    TranslateString(
+      202,
+      'Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.'
+    ),
+    { placement: 'right-end', tooltipOffset: [20, 10] },
+  )
+
+  return(
+    <div>
+      <ReferenceElement ref={targetRef}>
+        <HelpIcon color="textSubtle" />
+      </ReferenceElement>
+      {tooltipVisible && tooltip}
+    </div>
+  )
+}
+
+const Tip2 = () => {
+  const TranslateString = useI18n()
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(
+    TranslateString(
+      224,
+      'The difference between the market price and estimated price due to trade size.'
+    ),
+    { placement: 'right-end', tooltipOffset: [20, 10] },
+  )
+
+  return(
+    <div>
+      <ReferenceElement ref={targetRef}>
+        <HelpIcon color="textSubtle" />
+      </ReferenceElement>
+      {tooltipVisible && tooltip}
+    </div>
+  )
+}
+
+const Tip3 = () => {
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(
+    <>
+      <Text mb="12px">For each trade a 0.25% fee is paid</Text>
+      <Text>- 0.17% to LP token holders</Text>
+      <Text>- 0.03% to the Treasury</Text>
+      <Text>- 0.05% towards TAL buyback & burn</Text>
+    </>,
+    { placement: 'right-end', tooltipOffset: [20, 10] },
+  )
+
+  return(
+    <div>
+      <ReferenceElement ref={targetRef}>
+        <HelpIcon color="textSubtle" />
+      </ReferenceElement>
+      {tooltipVisible && tooltip}
+    </div>
+  )
+}
 
 function TradeSummary({ trade, allowedSlippage }: { trade: Trade; allowedSlippage: number }) {
   const { priceImpactWithoutFee, realizedLPFee } = computeTradePriceBreakdown(trade)
@@ -26,12 +92,7 @@ function TradeSummary({ trade, allowedSlippage }: { trade: Trade; allowedSlippag
             <Text fontSize='14px'>
               {isExactIn ? TranslateString(1210, 'Minimum received') : TranslateString(220, 'Maximum sold')}
             </Text>
-            <QuestionHelper
-              text={TranslateString(
-                202,
-                'Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.'
-              )}
-            />
+            <Tip1 />
           </RowFixed>
           <RowFixed>
             <Text fontSize='14px'>
@@ -46,12 +107,7 @@ function TradeSummary({ trade, allowedSlippage }: { trade: Trade; allowedSlippag
         <RowBetween>
           <RowFixed>
             <Text fontSize='14px'>{TranslateString(226, 'Price Impact')}</Text>
-            <QuestionHelper
-              text={TranslateString(
-                224,
-                'The difference between the market price and estimated price due to trade size.'
-              )}
-            />
+            <Tip2 />
           </RowFixed>
           <FormattedPriceImpact priceImpact={priceImpactWithoutFee} />
         </RowBetween>
@@ -64,12 +120,7 @@ function TradeSummary({ trade, allowedSlippage }: { trade: Trade; allowedSlippag
         <RowBetween>
           <RowFixed>
             <Text fontSize='14px'>{TranslateString(228, 'Liquidity Provider Fee')}</Text>
-            <QuestionHelper
-              text={TranslateString(
-                230,
-                'For each trade a 0.2% fee is paid. 0.17% goes to LP token holders, 0.03% to the Treasury and 0.05% towards CAKE buyback and burn.'
-              )}
-            />
+            <Tip3 />
           </RowFixed>
           <Text fontSize='14px'>
             {realizedLPFee ? `${realizedLPFee.toSignificant(4)} ${trade.inputAmount.currency.symbol}` : '-'}
