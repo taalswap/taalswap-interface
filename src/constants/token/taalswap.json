@@ -35,7 +35,7 @@
       "address": "0xe18e460d38441027b6672363d68c9088f3d773bf",
       "chainId": 4,
       "decimals": 18,
-      "logoURI": "https://taalswap.finance/static/symbol/taalswap_coinsymbol.svg"
+      "logoURI": "https://swap.taalswap.finance/images/coins/tal.png"
     },
     {
       "name": "USDT Token",
