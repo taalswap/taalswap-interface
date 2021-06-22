@@ -1,6 +1,7 @@
 import { Trade, TradeType } from 'taalswap-sdk'
 import React, { useMemo, useState } from 'react'
-import { Button, Text } from 'taalswap-uikit'
+import styled from 'styled-components';
+import { Button, HelpIcon, Text, useTooltip } from 'taalswap-uikit';
 import { Repeat } from 'react-feather'
 
 import useI18n from 'hooks/useI18n'
@@ -16,6 +17,10 @@ import QuestionHelper from '../QuestionHelper'
 import { AutoRow, RowBetween, RowFixed } from '../Row'
 import FormattedPriceImpact from './FormattedPriceImpact'
 import { StyledBalanceMaxMini, SwapCallbackError } from './styleds'
+
+const ReferenceElement = styled.div`
+  display: inline-block;
+`
 
 export default function SwapModalFooter({
                                           trade,
@@ -38,6 +43,14 @@ export default function SwapModalFooter({
   const { priceImpactWithoutFee, realizedLPFee } = useMemo(() => computeTradePriceBreakdown(trade), [trade])
   const severity = warningSeverity(priceImpactWithoutFee)
   const TranslateString = useI18n()
+
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(
+    TranslateString(
+      202,
+      'Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.'
+    ),
+    { placement: 'top-end', tooltipOffset: [20, 10] },
+  )
 
   return (
     <>
@@ -69,12 +82,10 @@ export default function SwapModalFooter({
                 ? TranslateString(1210, 'Minimum received')
                 : TranslateString(220, 'Maximum sold')}
             </Text>
-            <QuestionHelper
-              text={TranslateString(
-                202,
-                'Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.'
-              )}
-            />
+            <ReferenceElement ref={targetRef}>
+              <HelpIcon color="textSubtle" />
+            </ReferenceElement>
+            {tooltipVisible && tooltip}
           </RowFixed>
           <RowFixed>
             <Text fontSize='14px'>
