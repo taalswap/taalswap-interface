@@ -1,5 +1,4 @@
 import React from 'react'
-
 import styled, { keyframes } from 'styled-components'
 
 const rotate = keyframes`
@@ -19,7 +18,6 @@ const StyledSVG = styled.svg<{ size: string; stroke?: string }>`
     stroke: ${({ stroke, theme }) => stroke ?? theme.colors.primary};
   }
 `
-
 /**
  * Takes in custom size and stroke for circle color, default to primary color as fill,
  * need ...rest for layered styles on top
