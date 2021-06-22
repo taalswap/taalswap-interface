@@ -44,13 +44,61 @@ export default function SwapModalFooter({
   const severity = warningSeverity(priceImpactWithoutFee)
   const TranslateString = useI18n()
 
-  const { targetRef, tooltip, tooltipVisible } = useTooltip(
-    TranslateString(
-      202,
-      'Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.'
-    ),
-    { placement: 'top-end', tooltipOffset: [20, 10] },
-  )
+  const TipReceived = () => {
+    const { targetRef, tooltip, tooltipVisible } = useTooltip(
+      TranslateString(
+        202,
+        'Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.'
+      ),
+      { placement: 'right-end', tooltipOffset: [20, 10] },
+    )
+
+    return(
+      <div>
+        <ReferenceElement ref={targetRef}>
+          <HelpIcon color="textSubtle" />
+        </ReferenceElement>
+        {tooltipVisible && tooltip}
+      </div>
+    )
+  }
+
+  const TipImpact = () => {
+    const { targetRef, tooltip, tooltipVisible } = useTooltip(
+      TranslateString(224, 'The difference between the market price and your price due to trade size.'),
+      { placement: 'right-end', tooltipOffset: [20, 10] },
+    )
+
+    return(
+      <div>
+        <ReferenceElement ref={targetRef}>
+          <HelpIcon color="textSubtle" />
+        </ReferenceElement>
+        {tooltipVisible && tooltip}
+      </div>
+    )
+  }
+
+  const TipFee = () => {
+    const { targetRef, tooltip, tooltipVisible } = useTooltip(
+      <>
+        <Text mb="12px">For each trade a 0.25% fee is paid</Text>
+        <Text>- 0.17% to LP token holders</Text>
+        <Text>- 0.03% to the Treasury</Text>
+        <Text>- 0.05% towards TAL buyback & burn</Text>
+      </>,
+      { placement: 'right-end', tooltipOffset: [20, 10] },
+    )
+
+    return(
+      <div>
+        <ReferenceElement ref={targetRef}>
+          <HelpIcon color="textSubtle" />
+        </ReferenceElement>
+        {tooltipVisible && tooltip}
+      </div>
+    )
+  }
 
   return (
     <>
@@ -82,10 +130,7 @@ export default function SwapModalFooter({
                 ? TranslateString(1210, 'Minimum received')
                 : TranslateString(220, 'Maximum sold')}
             </Text>
-            <ReferenceElement ref={targetRef}>
-              <HelpIcon color="textSubtle" />
-            </ReferenceElement>
-            {tooltipVisible && tooltip}
+            <TipReceived />
           </RowFixed>
           <RowFixed>
             <Text fontSize='14px'>
@@ -103,21 +148,14 @@ export default function SwapModalFooter({
         <RowBetween>
           <RowFixed>
             <Text fontSize='14px'>{TranslateString(226, 'Price Impact')}</Text>
-            <QuestionHelper
-              text={TranslateString(224, 'The difference between the market price and your price due to trade size.')}
-            />
+            <TipImpact />
           </RowFixed>
           <FormattedPriceImpact priceImpact={priceImpactWithoutFee} />
         </RowBetween>
         <RowBetween>
           <RowFixed>
             <Text fontSize='14px'>{TranslateString(228, 'Liquidity Provider Fee')}</Text>
-            <QuestionHelper
-              text={TranslateString(
-                999,
-                'For each trade a 0.2% fee is paid. 0.17% goes to LP token holders, 0.03% to the Treasury and 0.05% towards CAKE buyback and burn.'
-              )}
-            />
+            <TipFee />
           </RowFixed>
           <Text fontSize='14px'>
             {realizedLPFee ? `${realizedLPFee?.toSignificant(6)} ${trade.inputAmount.currency.symbol}` : '-'}
