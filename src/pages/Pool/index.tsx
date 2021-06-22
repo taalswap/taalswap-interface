@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from 'react'
-import { ThemeContext } from 'styled-components'
+import styled, { ThemeContext } from 'styled-components'
 import { Pair } from 'taalswap-sdk'
-import { Button, CardBody, Text } from 'taalswap-uikit'
+import { Button, CardBody, HelpIcon, Text, useTooltip } from 'taalswap-uikit';
 import { Link } from 'react-router-dom'
 import Question from 'components/QuestionHelper'
 import FullPositionCard from 'components/PositionCard'
@@ -19,6 +19,10 @@ import { Dots } from 'components/swap/styleds'
 import useI18n from 'hooks/useI18n'
 import PageHeader from 'components/PageHeader'
 import AppBody from '../AppBody'
+
+const ReferenceElement = styled.div`
+  display: flex;
+`
 
 export default function Pool() {
   const theme = useContext(ThemeContext)
@@ -54,6 +58,14 @@ export default function Pool() {
 
   const allV2PairsWithLiquidity = v2Pairs.map(([, pair]) => pair).filter((v2Pair): v2Pair is Pair => Boolean(v2Pair))
 
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(
+    TranslateString(
+      1170,
+      'When you add liquidity, you will receive LP tokens to be registered as your share in this liquidity pool.'
+    ),
+    { placement: 'top-end', tooltipOffset: [20, 10] },
+  )
+
   return (
     <Container>
       {/* <CardNav activeIndex={1} /> */}
@@ -71,12 +83,10 @@ export default function Pool() {
             <AutoColumn gap='12px' style={{ width: '100%' }}>
               <RowBetween padding='0 8px'>
                 <Text color={theme.colors.text}>{TranslateString(107, 'Your Liquidity')}</Text>
-                <Question
-                  text={TranslateString(
-                    1170,
-                    'When you add liquidity, you will receive LP tokens to be registered as your share in this liquidity pool.'
-                  )}
-                />
+                <ReferenceElement ref={targetRef}>
+                  <HelpIcon color="textSubtle" />
+                </ReferenceElement>
+                {tooltipVisible && tooltip}
               </RowBetween>
 
               {!account ? (
