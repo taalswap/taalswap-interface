@@ -142,7 +142,13 @@ export default function App() {
                           path="/find"
                           component={PoolFinder}
                         />
-                        <Route exact strict path="/pool" component={Pool} />
+                        {/* <Route exact strict path="/pool" component={Pool} /> */}
+                        <Route
+                          exact
+                          strict
+                          path="/liquidity"
+                          component={Pool}
+                        />
                         <Route exact path="/add" component={AddLiquidity} />
                         <Route exact path="/migrate" component={Migration} />
                         <Route

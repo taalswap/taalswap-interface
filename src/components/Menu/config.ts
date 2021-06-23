@@ -29,13 +29,13 @@ const config: MenuEntry[] = [
     label: 'Swap',
     icon: 'TradeIcon',
     // href: 'http://localhost:3000/#/swap',
-    href: '/swap',
+    href: 'http://localhost:3000/#/swap',
   },
   {
     label: 'Liquidity',
     icon: 'LiquidityIcon',
     // href: 'http://localhost:3000/#/pool',
-    href: '/pool',
+    href: 'http://localhost:3000/#/liquidity',
   },
   {
     label: 'Farms',
@@ -45,7 +45,7 @@ const config: MenuEntry[] = [
   {
     label: 'Staking',
     icon: 'PoolIcon',
-    href: 'http://localhost:3001/pools',
+    href: 'http://localhost:3001/staking',
   },
   // {
   //   label: 'Prediction',
