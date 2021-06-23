@@ -150,7 +150,7 @@ export function CurrencySearch({
               )}
             />
           </Text>
-          <CloseIcon onClick={onDismiss} />
+          <CloseIcon onClick={onDismiss} style={{width:'30px',height:'30px',cursor:'pointer'}}/>
         </RowBetween>
         <SearchInput
           type="text"
