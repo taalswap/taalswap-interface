@@ -33,7 +33,7 @@ const config: MenuEntry[] = [
   },
   {
     label: 'Liquidity',
-    icon: 'PoolIcon',
+    icon: 'LiquidityIcon',
     // href: 'http://localhost:3000/#/pool',
     href: '/pool',
   },
