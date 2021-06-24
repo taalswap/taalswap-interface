@@ -1,4 +1,5 @@
 import { CurrencyAmount, JSBI, Token, Trade } from 'taalswap-sdk';
+import { useTranslation } from 'contexts/Localization';
 import React, {
   useCallback,
   useContext,
@@ -78,6 +79,7 @@ const StyledLink = styled(Link)`
 `;
 
 const Swap = () => {
+  const { t } = useTranslation();
   const loadedUrlParams = useDefaultsFromURLSearch();
   const TranslateString = useI18n();
   const [modalCountdownSecondsRemaining, setModalCountdownSecondsRemaining] =
@@ -467,7 +469,7 @@ const Swap = () => {
             onDismiss={handleConfirmDismiss}
           />
           <PageHeader
-            title={TranslateString(8, 'Swap')}
+            title={TranslateString(8, t('Swap'))}
             description={TranslateString(1192, 'Trade your token on the spot')}
           />
           <CardBody>
@@ -586,10 +588,7 @@ const Swap = () => {
                 <Flex alignItems="center" justifyContent="center" mb="1rem">
                   <Text color="failure">
                     Please use{' '}
-                    <StyledLink
-                      external
-                      href="https://swap.taalswap.finance"
-                    >
+                    <StyledLink external href="https://swap.taalswap.finance">
                       PancakeSwap V2
                     </StyledLink>{' '}
                     to make this trade
