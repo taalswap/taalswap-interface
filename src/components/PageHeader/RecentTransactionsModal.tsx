@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import { Button, CheckmarkCircleIcon, ErrorIcon, Flex, LinkExternal, Modal, Text } from 'taalswap-uikit'
 import { useActiveWeb3React } from 'hooks'
+import { useTheme } from "styled-components";
 import { getBscScanLink } from 'utils'
 import { isTransactionRecent, useAllTransactions } from 'state/transactions/hooks'
 import { TransactionDetails } from 'state/transactions/reducer'
@@ -33,6 +34,8 @@ const getRowStatus = (sortedRecentTransaction: TransactionDetails) => {
 const RecentTransactionsModal = ({ onDismiss = defaultOnDismiss, translateString }: RecentTransactionsModalProps) => {
   const { account, chainId } = useActiveWeb3React()
   const allTransactions = useAllTransactions()
+  const theme = useTheme();
+  const btnColor = theme.isDark ? "#fff" : "#212b36";
 
   // Logic taken from Web3Status/index.tsx line 175
   const sortedRecentTransactions = useMemo(() => {
@@ -41,15 +44,21 @@ const RecentTransactionsModal = ({ onDismiss = defaultOnDismiss, translateString
   }, [allTransactions])
 
   return (
-    <Modal title={translateString(1202, 'Recent transactions')} onDismiss={onDismiss}>
+    <Modal title={translateString(1202, 'Recent transactions')} onDismiss={onDismiss} style={{position:'relative'}}>
       {!account && (
         <Flex justifyContent='center' flexDirection='column' alignItems='center'>
           <Text mb='8px' bold>
             Please connect your wallet to view your recent transactions
           </Text>
-          <Button variant='tertiary' scale='sm' onClick={onDismiss}>
-            Close
-          </Button>
+          <div style={{position:"absolute",right:"20px",top:'20px',cursor:'pointer'}}>
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" onClick={onDismiss}>
+  <g id="___Icons_ic_replace" data-name="__🥬Icons/ ic_replace" transform="translate(0 16.971) rotate(-45)">
+    <g id="_gr" data-name="#gr">
+      <path id="Path" d="M22.5,10.5h-9v-9a1.5,1.5,0,0,0-3,0v9h-9a1.5,1.5,0,0,0,0,3h9v9a1.5,1.5,0,0,0,3,0v-9h9a1.5,1.5,0,0,0,0-3Z" fill={btnColor}/>
+    </g>
+  </g>
+</svg>
+      </div>
         </Flex>
       )}
       {account && chainId && sortedRecentTransactions.length === 0 && (
@@ -57,9 +66,15 @@ const RecentTransactionsModal = ({ onDismiss = defaultOnDismiss, translateString
           <Text mb='8px' bold>
             No recent transactions
           </Text>
-          <Button variant='tertiary' scale='sm' onClick={onDismiss}>
-            Close
-          </Button>
+          <div style={{position:"absolute",right:"20px",top:'20px',cursor:'pointer'}}>
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" onClick={onDismiss}>
+  <g id="___Icons_ic_replace" data-name="__🥬Icons/ ic_replace" transform="translate(0 16.971) rotate(-45)">
+    <g id="_gr" data-name="#gr">
+      <path id="Path" d="M22.5,10.5h-9v-9a1.5,1.5,0,0,0-3,0v9h-9a1.5,1.5,0,0,0,0,3h9v9a1.5,1.5,0,0,0,3,0v-9h9a1.5,1.5,0,0,0,0-3Z" fill={btnColor}/>
+    </g>
+  </g>
+</svg>
+      </div>
         </Flex>
       )}
       {account &&
