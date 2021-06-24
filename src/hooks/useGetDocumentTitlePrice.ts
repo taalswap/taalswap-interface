@@ -1,25 +1,19 @@
 import { useEffect } from 'react';
-import useGetPriceData from './useGetPriceData';
-import { TAL } from '../constants';
+import useGetCakeBusdLpPrice from 'utils/useGetCakeBusdLpPrice'
 
 const useGetDocumentTitlePrice = () => {
-  const priceData = useGetPriceData();
+  const cakePriceBusd = useGetCakeBusdLpPrice()
 
-  let cakePriceUsd = 0;
-  if (priceData !== null && priceData.data[TAL.address] !== undefined) {
-    cakePriceUsd = parseFloat(priceData.data[TAL.address].price);
-  }
-
-  const cakePriceUsdString =
-    Number.isNaN(cakePriceUsd) || cakePriceUsd === 0
+  const cakePriceBusdString =
+    Number.isNaN(cakePriceBusd) || cakePriceBusd === 0 || !cakePriceBusd
       ? ''
-      : ` - $${cakePriceUsd.toLocaleString(undefined, {
+      : ` - $${cakePriceBusd.toLocaleString(undefined, {
         minimumFractionDigits: 3,
         maximumFractionDigits: 3
       })}`;
 
   useEffect(() => {
-    document.title = `TaalSwap${cakePriceUsdString}`;
-  }, [cakePriceUsdString]);
+      document.title = `PancakeSwap${cakePriceBusdString}`
+    }, [cakePriceBusdString])
 };
 export default useGetDocumentTitlePrice;
