@@ -11,6 +11,7 @@ import DoubleCurrencyLogo from '../DoubleLogo';
 import { RowBetween } from '../Row';
 import { Input as NumericalInput } from '../NumericalInput';
 import { useActiveWeb3React } from '../../hooks';
+import { useTranslation } from '../../contexts/Localization';
 
 const InputRow = styled.div<{ selected: boolean }>`
   display: flex;
@@ -107,8 +108,8 @@ export default function CurrencyInputPanel({
   const [modalOpen, setModalOpen] = useState(false);
   const { account } = useActiveWeb3React();
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined);
-  const TranslateString = useI18n();
-  const translatedLabel = label || TranslateString(132, 'Input');
+  const { t } = useTranslation();
+  const translatedLabel = label || t('Input');
   const handleDismissSearch = useCallback(() => {
     setModalOpen(false);
   }, [setModalOpen]);
@@ -122,7 +123,7 @@ export default function CurrencyInputPanel({
               {account && (
                 <Text onClick={onMax} fontSize='14px' style={{ display: 'inline', cursor: 'pointer' }}>
                   {!hideBalance && !!currency && selectedCurrencyBalance
-                    ? `Balance: ${selectedCurrencyBalance?.toSignificant(6)}`
+                    ? `${t('Balance')}: ${selectedCurrencyBalance?.toSignificant(6)}`
                     : ' -'}
                 </Text>
               )}
@@ -172,7 +173,7 @@ export default function CurrencyInputPanel({
                       currency.symbol.length - 5,
                       currency.symbol.length
                     )}`
-                    : currency?.symbol) || TranslateString(1196, 'Select a token')}
+                    : currency?.symbol) || t('Select a token')}
                 </Text>
               )}
               {!disableCurrencySelect && <ChevronDownIcon />}

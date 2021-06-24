@@ -3,15 +3,15 @@ import styled from 'styled-components'
 import { Card, CardBody, CardHeader, Heading, Image, Text } from 'taalswap-uikit'
 import FoldableText from 'components/FoldableText'
 import Container from 'components/Container'
-import useI18n from 'hooks/useI18n'
 import config from './config'
+import { useTranslation } from '../../contexts/Localization';
 
 const Wrapper = styled(Container)`
   background: ${({ theme }) => theme.colors.gradients.violetAlt};
 `
 
 const FAQ = () => {
-  const TranslateString = useI18n()
+  const { t } = useTranslation();
 
   return (
     <Wrapper>
@@ -33,12 +33,12 @@ const FAQ = () => {
               key={title.fallback}
               id={title.fallback}
               mb='24px'
-              title={TranslateString(title.id, title.fallback)}
+              title={t(title.fallback)}
             >
               {description.map(({ id, fallback }) => {
                 return (
                   <Text key={fallback} color='textSubtle' as='p'>
-                    {TranslateString(id, fallback)}
+                    {t(fallback)}
                   </Text>
                 )
               })}

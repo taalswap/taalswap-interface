@@ -10,7 +10,6 @@ import { RouteComponentProps } from 'react-router';
 
 import { BigNumber } from '@ethersproject/bignumber';
 import ConnectWalletButton from 'components/ConnectWalletButton';
-import useI18n from 'hooks/useI18n';
 import { AutoColumn, ColumnCenter } from '../../components/Column';
 import TransactionConfirmationModal, { ConfirmationModalContent } from '../../components/TransactionConfirmationModal';
 import CurrencyInputPanel from '../../components/CurrencyInputPanel';
@@ -41,6 +40,7 @@ import { useBurnActionHandlers, useBurnState, useDerivedBurnInfo } from '../../s
 
 import { Field } from '../../state/burn/actions';
 import { useUserDeadline, useUserSlippageTolerance } from '../../state/user/hooks';
+import { useTranslation } from '../../contexts/Localization';
 
 const OutlineCard = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.disabled};
@@ -61,7 +61,7 @@ export default function RemoveLiquidity({
                                         }: RouteComponentProps<{ currencyIdA: string; currencyIdB: string }>) {
   const [currencyA, currencyB] = [useCurrency(currencyIdA) ?? undefined, useCurrency(currencyIdB) ?? undefined];
   const { account, chainId, library } = useActiveWeb3React();
-  const TranslateString = useI18n();
+  const { t } = useTranslation();
   const [tokenA, tokenB] = useMemo(() => [wrappedCurrency(currencyA, chainId), wrappedCurrency(currencyB, chainId)], [
     currencyA,
     currencyB,
@@ -372,7 +372,7 @@ export default function RemoveLiquidity({
         {pair && (
           <>
             <RowBetween>
-              <Text color='textSubtle'>{TranslateString(1182, 'Price')}</Text>
+              <Text color='textSubtle'>{t('Price')}</Text>
               <Text>
                 1 {currencyA?.symbol} = {tokenA ? pair.priceOf(tokenA).toSignificant(6) : '-'} {currencyB?.symbol}
               </Text>
@@ -386,7 +386,7 @@ export default function RemoveLiquidity({
           </>
         )}
         <Button disabled={!(approval === ApprovalState.APPROVED || signatureData !== null)} onClick={onRemove}>
-          {TranslateString(1136, 'Confirm')}
+          {t('Confirm')}
         </Button>
       </>
     );
@@ -458,7 +458,7 @@ export default function RemoveLiquidity({
             hash={txHash || ''}
             content={() => (
               <ConfirmationModalContent
-                title={TranslateString(1156, 'You will receive')}
+                title={t('You will receive')}
                 onDismiss={handleDismissConfirmation}
                 topContent={modalHeader}
                 bottomContent={modalBottom}
@@ -477,7 +477,7 @@ export default function RemoveLiquidity({
                         setShowDetailed(!showDetailed);
                       }}
                     >
-                      {showDetailed ? TranslateString(1184, 'Simple') : TranslateString(1186, 'Detailed')}
+                      {showDetailed ? t('Simple') : t('Detailed')}
                     </ClickableText>
                   </RowBetween>
                   <Flex justifyContent='start'>
@@ -515,7 +515,7 @@ export default function RemoveLiquidity({
                           scale='sm'
                           onClick={() => onUserInput(Field.LIQUIDITY_PERCENT, '100')}
                         >
-                          {TranslateString(166, 'Max')}
+                          {t('Max')}
                         </Button>
                       </Flex>
                     </>
@@ -557,7 +557,7 @@ export default function RemoveLiquidity({
                                 currencyB === ETHER ? WETH[chainId].address : currencyIdB
                               }`}
                             >
-                              {TranslateString(1188, 'Receive WBNB')}
+                              {t('Receive WETH')}
                             </StyledInternalLink>
                           ) : oneCurrencyIsWETH ? (
                             <StyledInternalLink
@@ -565,7 +565,7 @@ export default function RemoveLiquidity({
                                 currencyA && currencyEquals(currencyA, WETH[chainId]) ? 'ETH' : currencyIdA
                               }/${currencyB && currencyEquals(currencyB, WETH[chainId]) ? 'ETH' : currencyIdB}`}
                             >
-                              {TranslateString(1190, 'Receive ETH')}
+                              {t('Receive ETH')}
                             </StyledInternalLink>
                           ) : null}
                         </RowBetween>

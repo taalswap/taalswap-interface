@@ -4,7 +4,6 @@ import { Button, Text } from 'taalswap-uikit';
 import React, { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { AlertTriangle } from 'react-feather';
-import useI18n from 'hooks/useI18n';
 import { useActiveWeb3React } from '../../hooks';
 import { useAllTokens } from '../../hooks/Tokens';
 import { getBscScanLink, shortenAddress } from '../../utils';
@@ -13,6 +12,7 @@ import CurrencyLogo from '../CurrencyLogo';
 import Modal from '../Modal';
 import { AutoRow, RowBetween } from '../Row';
 import { AutoColumn } from '../Column';
+import { useTranslation } from '../../contexts/Localization';
 
 const Wrapper = styled.div<{ error: boolean }>`
   background: ${({ theme }) => transparentize(0.6, theme.colors.tertiary)};
@@ -40,7 +40,7 @@ interface TokenWarningCardProps {
 
 function TokenWarningCard({ token }: TokenWarningCardProps) {
   const { chainId } = useActiveWeb3React();
-  const TranslateString = useI18n();
+  const { t } = useTranslation();
   const tokenSymbol = token?.symbol?.toLowerCase() ?? '';
   const tokenName = token?.name?.toLowerCase() ?? '';
 
@@ -75,7 +75,7 @@ function TokenWarningCard({ token }: TokenWarningCardProps) {
           {chainId && (
             <ExternalLink style={{ fontWeight: 400 }} href={getBscScanLink(chainId, token.address, 'token')}>
               <Text title={token.address}>
-                {shortenAddress(token.address)} {TranslateString(116, '(View on EtherScan)')}
+                {shortenAddress(token.address)} {(t('View on EtherScan'))}
               </Text>
             </ExternalLink>
           )}
@@ -96,7 +96,7 @@ export default function TokenWarningModal({
 }) {
   const [understandChecked, setUnderstandChecked] = useState(false);
   const toggleUnderstand = useCallback(() => setUnderstandChecked((uc) => !uc), []);
-  const TranslateString = useI18n();
+  const { t } = useTranslation();
 
   const handleDismiss = useCallback(() => null, []);
   return (
@@ -105,21 +105,19 @@ export default function TokenWarningModal({
         <AutoColumn gap='lg'>
           <AutoRow gap='6px'>
             <StyledWarningIcon />
-            <Text color='failure'>{TranslateString(1128, 'Token imported')}</Text>
+            <Text color='failure'>{t('Token imported')}</Text>
           </AutoRow>
           <Text>
-            {TranslateString(
-              1130,
+            {t(
               'Anyone can create a ERC token on Ethereum with any name, including creating fake versions of existing tokens and tokens that claim to represent projects that do not have a token.'
             )}
           </Text>
           <Text>
-            {TranslateString(
-              1132,
+            {t(
               'This interface can load arbitrary tokens by token addresses. Please take extra caution and do your research when interacting with arbitrary ERC tokens.'
             )}
           </Text>
-          <Text>{TranslateString(1134, 'If you purchase an arbitrary token, you may be unable to sell it back.')}</Text>
+          <Text>{t('If you purchase an arbitrary token, you may be unable to sell it back.')}</Text>
           {tokens.map((token) => {
             return <TokenWarningCard key={token.address} token={token} />;
           })}
@@ -134,7 +132,7 @@ export default function TokenWarningModal({
                   onChange={toggleUnderstand}
                 />{' '}
                 <Text as='span' ml='4px'>
-                  {TranslateString(148, 'I understand')}
+                  {t('I understand')}
                 </Text>
               </label>
             </div>
@@ -147,7 +145,7 @@ export default function TokenWarningModal({
                 onConfirm();
               }}
             >
-              {TranslateString(150, 'Continue')}
+              {t('Continue')}
             </Button>
           </RowBetween>
         </AutoColumn>

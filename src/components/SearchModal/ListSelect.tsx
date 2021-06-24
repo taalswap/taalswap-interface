@@ -4,7 +4,6 @@ import { usePopper } from 'react-popper';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, ChevronDownIcon, CloseIcon, Text } from 'taalswap-uikit';
 import styled from 'styled-components';
-import useI18n from 'hooks/useI18n';
 import { useFetchListCallback } from '../../hooks/useFetchListCallback';
 import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 import useToggle from '../../hooks/useToggle';
@@ -20,6 +19,7 @@ import ListLogo from '../ListLogo';
 import QuestionHelper from '../QuestionHelper';
 import Row, { RowBetween } from '../Row';
 import { PaddedColumn, SearchInput, Separator, SeparatorDark } from './styleds';
+import { useTranslation } from '../../contexts/Localization';
 
 const UnpaddedLinkStyledButton = styled(LinkStyledButton)`
   padding: 0;
@@ -123,7 +123,7 @@ const ListRow = memo(function ListRow({ listUrl, onBack }: { listUrl: string; on
       dispatch(removeList(listUrl));
     }
   }, [dispatch, listUrl]);
-  const TranslateString = useI18n();
+  const { t } = useTranslation();
   if (!list) return null;
 
   return (
@@ -168,7 +168,7 @@ const ListRow = memo(function ListRow({ listUrl, onBack }: { listUrl: string; on
             <div>{list && listVersionLabel(list.version)}</div>
             <SeparatorDark />
             <ExternalLink href={`https://tokenlists.org/token-list?url=${listUrl}`}>
-              {TranslateString(1206, 'View list')}
+              {t('View list')}
             </ExternalLink>
             <UnpaddedLinkStyledButton onClick={handleRemoveList} disabled={Object.keys(listsByUrl).length === 1}>
               Remove list
@@ -267,7 +267,7 @@ export function ListSelect({ onDismiss, onBack }: { onDismiss: () => void; onBac
         return 0;
       });
   }, [lists]);
-  const TranslateString = useI18n();
+  const { t } = useTranslation();
   return (
     <Column style={{ width: '100%', flex: '1 1' }}>
       <PaddedColumn>
@@ -275,7 +275,7 @@ export function ListSelect({ onDismiss, onBack }: { onDismiss: () => void; onBac
           <div>
             <ArrowLeft style={{ cursor: 'pointer' }} onClick={onBack} />
           </div>
-          <Text fontSize='20px'>{TranslateString(1208, 'Manage Lists')}</Text>
+          <Text fontSize='20px'>{t('Manage Lists')}</Text>
           <CloseIcon onClick={onDismiss} />
         </RowBetween>
       </PaddedColumn>
@@ -286,8 +286,7 @@ export function ListSelect({ onDismiss, onBack }: { onDismiss: () => void; onBac
         <Text bold>
           Add a list{' '}
           <QuestionHelper
-            text={TranslateString(
-              999,
+            text={t(
               'Token lists are an open specification for lists of ERC20 tokens. You can use any token list by entering its URL below. Beware that third party token lists can contain fake or malicious ERC20 tokens.'
             )}
           />

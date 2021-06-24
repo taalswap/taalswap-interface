@@ -3,12 +3,12 @@ import { Text } from 'taalswap-uikit'
 import { ChainId, Currency, currencyEquals, ETHER, Token } from 'taalswap-sdk'
 import styled from 'styled-components'
 
-import useI18n from 'hooks/useI18n'
 import { SUGGESTED_BASES } from '../../constants'
 import { AutoColumn } from '../Column'
 import QuestionHelper from '../QuestionHelper'
 import { AutoRow } from '../Row'
 import CurrencyLogo from '../CurrencyLogo'
+import { useTranslation } from '../../contexts/Localization';
 
 const BaseWrapper = styled.div<{ disable?: boolean }>`
   border: 1px solid ${({ theme, disable }) => (disable ? 'transparent' : theme.colors.tertiary)};
@@ -35,12 +35,12 @@ export default function CommonBases({
   selectedCurrency?: Currency | null
   onSelect: (currency: Currency) => void
 }) {
-  const TranslateString = useI18n()
+  const { t } = useTranslation();
   return (
     <AutoColumn gap="md">
       <AutoRow>
         <Text fontSize="14px">Common bases</Text>
-        <QuestionHelper text={TranslateString(1204, 'These tokens are commonly paired with other tokens.')} />
+        <QuestionHelper text={t('These tokens are commonly paired with other tokens.')} />
       </AutoRow>
       <AutoRow gap="4px">
         <BaseWrapper

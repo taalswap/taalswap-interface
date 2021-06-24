@@ -29,12 +29,12 @@ import { currencyId } from 'utils/currencyId'
 import Pane from 'components/Pane'
 import Container from 'components/Container'
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import useI18n from 'hooks/useI18n'
 import AppBody from '../AppBody'
 import { Dots, Wrapper } from '../Pool/styleds'
 import { ConfirmAddModalBottom } from './ConfirmAddModalBottom'
 import { PoolPriceBar } from './PoolPriceBar'
 import { ROUTER_ADDRESS } from '../../constants'
+import { useTranslation } from '../../contexts/Localization';
 
 export default function AddLiquidity({
                                        match: {
@@ -45,7 +45,7 @@ export default function AddLiquidity({
   const { account, chainId, library } = useActiveWeb3React()
   const currencyA = useCurrency(currencyIdA)
   const currencyB = useCurrency(currencyIdB)
-  const TranslateString = useI18n()
+  const { t } = useTranslation();
 
   const oneCurrencyIsWBNB = Boolean(
     chainId &&
@@ -302,8 +302,8 @@ export default function AddLiquidity({
               <ConfirmationModalContent
                 title={
                   noLiquidity
-                    ? TranslateString(1154, 'You are creating a pool')
-                    : TranslateString(1156, 'You will receive')
+                    ? t('You are creating a pool')
+                    : t('You will receive')
                 }
                 onDismiss={handleDismissConfirmation}
                 topContent={modalHeader}
@@ -318,12 +318,12 @@ export default function AddLiquidity({
                 <ColumnCenter>
                   <Pane>
                     <AutoColumn gap='12px'>
-                      <UIKitText>{TranslateString(1158, 'You are the first liquidity provider.')}</UIKitText>
+                      <UIKitText>{t('You are the first liquidity provider.')}</UIKitText>
                       <UIKitText>
-                        {TranslateString(1160, 'The ratio of tokens you add will set the price of this pool.')}
+                        {t('The ratio of tokens you add will set the price of this pool.')}
                       </UIKitText>
                       <UIKitText>
-                        {TranslateString(1162, 'Once you are happy with the rate click supply to review.')}
+                        {t('Once you are happy with the rate click supply to review.')}
                       </UIKitText>
                     </AutoColumn>
                   </Pane>
@@ -365,8 +365,8 @@ export default function AddLiquidity({
                     mb='2px'
                   >
                     {noLiquidity
-                      ? TranslateString(1164, 'Initial prices and pool share')
-                      : TranslateString(1166, 'Prices and pool share')}
+                      ? t('Initial prices and pool share')
+                      : t('Prices and pool share')}
                   </UIKitText>
                   <Pane>
                     <PoolPriceBar

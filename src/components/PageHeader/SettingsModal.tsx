@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'contexts/Localization';
 import { Modal } from 'taalswap-uikit'
 import { useTheme } from "styled-components";
 import SlippageToleranceSetting from './SlippageToleranceSetting'
@@ -8,18 +9,18 @@ import AudioSetting from './AudioSetting'
 
 type SettingsModalProps = {
   onDismiss?: () => void
-  translateString: (translationId: number, fallback: string) => string
 }
 
 // TODO: Fix UI Kit typings
 const defaultOnDismiss = () => null
 
-const SettingsModal = ({ onDismiss = defaultOnDismiss, translateString }: SettingsModalProps) => {
+const SettingsModal = ({ onDismiss = defaultOnDismiss }: SettingsModalProps) => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const btnColor = theme.isDark ? "#fff" : "#212b36";
 
   return (
-    <Modal title={translateString(1200, 'Settings')} onDismiss={onDismiss} style={{position:'relative'}}>
+    <Modal title={t('Settings')} onDismiss={onDismiss} style={{position:'relative'}}>
       <div style={{position:"absolute",right:"20px",top:'20px',cursor:'pointer'}}>
       <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" onClick={onDismiss}>
   <g id="___Icons_ic_replace" data-name="__🥬Icons/ ic_replace" transform="translate(0 16.971) rotate(-45)">
@@ -29,9 +30,9 @@ const SettingsModal = ({ onDismiss = defaultOnDismiss, translateString }: Settin
   </g>
 </svg>
       </div>
-      <SlippageToleranceSetting translateString={translateString} />
-      <TransactionDeadlineSetting translateString={translateString} />
-      <AudioSetting translateString={translateString} />
+      <SlippageToleranceSetting />
+      <TransactionDeadlineSetting />
+      <AudioSetting />
     </Modal>
   )
 }
