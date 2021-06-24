@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react'
 import styled from 'styled-components'
 import { Flex, Heading, HistoryIcon, IconButton, Text, TuneIcon, useModal } from 'taalswap-uikit'
-import useI18n from 'hooks/useI18n'
 import SettingsModal from './SettingsModal'
 import RecentTransactionsModal from './RecentTransactionsModal'
+import { useTranslation } from '../../contexts/Localization';
 
 interface PageHeaderProps {
   title: ReactNode
@@ -21,9 +21,9 @@ const Details = styled.div`
 `
 
 const PageHeader = ({ title, description, children }: PageHeaderProps) => {
-  const TranslateString = useI18n()
-  const [onPresentSettings] = useModal(<SettingsModal translateString={TranslateString} />)
-  const [onPresentRecentTransactions] = useModal(<RecentTransactionsModal translateString={TranslateString} />)
+  const { t } = useTranslation();
+  const [onPresentSettings] = useModal(<SettingsModal />)
+  const [onPresentRecentTransactions] = useModal(<RecentTransactionsModal />)
 
   return (
     <StyledPageHeader>
@@ -36,13 +36,13 @@ const PageHeader = ({ title, description, children }: PageHeaderProps) => {
             </Text>
           )}
         </Details>
-        <IconButton variant='text' onClick={onPresentSettings} title={TranslateString(1200, 'Settings')}>
+        <IconButton variant='text' onClick={onPresentSettings} title={t('Settings')}>
           <TuneIcon width='24px' color='#00ab55' />
         </IconButton>
         <IconButton
           variant='text'
           onClick={onPresentRecentTransactions}
-          title={TranslateString(1202, 'Recent transactions')}
+          title={t('Recent transactions')}
         >
           <HistoryIcon width='24px' color='#00ab55' />
         </IconButton>

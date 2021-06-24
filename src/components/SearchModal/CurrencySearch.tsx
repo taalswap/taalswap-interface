@@ -15,7 +15,6 @@ import { useSelector } from 'react-redux';
 import { FixedSizeList } from 'react-window';
 import styled, { ThemeContext } from 'styled-components';
 import AutoSizer from 'react-virtualized-auto-sizer';
-import useI18n from 'hooks/useI18n';
 import { useActiveWeb3React } from '../../hooks';
 import { AppState } from '../../state';
 import { useAllTokens, useToken } from '../../hooks/Tokens';
@@ -25,7 +24,6 @@ import { isAddress } from '../../utils';
 import Card from '../Card';
 import Column from '../Column';
 import ListLogo from '../ListLogo';
-import QuestionHelper from '../QuestionHelper';
 import Row, { RowBetween } from '../Row';
 import CommonBases from './CommonBases';
 import CurrencyList from './CurrencyList';
@@ -33,6 +31,7 @@ import { filterTokens } from './filtering';
 import SortButton from './SortButton';
 import { useTokenComparator } from './sorting';
 import { PaddedColumn, SearchInput, Separator } from './styleds';
+import { useTranslation } from '../../contexts/Localization';
 
 interface CurrencySearchProps {
   isOpen: boolean;
@@ -156,13 +155,10 @@ export function CurrencySearch({
   );
 
   const TipToken = () => {
-    const TranslateString = useI18n();
+    const { t } = useTranslation();
 
     const { targetRef, tooltip, tooltipVisible } = useTooltip(
-      TranslateString(
-        128,
-        'Find a token by searching for its name or symbol or by pasting its address below.'
-      ),
+      t('Find a token by searching for its name or symbol or by pasting its address below.'),
       { placement: 'bottom-start', tooltipOffset: [1, 1] }
     );
 
@@ -177,13 +173,13 @@ export function CurrencySearch({
   };
 
   const selectedListInfo = useSelectedListInfo();
-  const TranslateString = useI18n();
+  const { t } = useTranslation();
   return (
     <Column style={{ width: '100%', flex: '1 1' }}>
       <PaddedColumn gap="14px">
         <RowBetween>
           <Text fontWeight="600">
-            {TranslateString(82, 'Select a token')}
+            {t('Select a token')}
             <TipToken />
           </Text>
           <CloseIcon
@@ -209,7 +205,7 @@ export function CurrencySearch({
         )}
         <RowBetween>
           <Text fontSize="14px" fontWeight="600">
-            {TranslateString(126, 'Token name')}
+            {t('Token name')}
           </Text>
           <SortButton
             ascending={invertSearchOrder}
@@ -265,8 +261,8 @@ export function CurrencySearch({
                 id="currency-search-change-list-button"
               >
                 {selectedListInfo.current
-                  ? TranslateString(180, 'Change')
-                  : TranslateString(1152, 'Select a list')}
+                  ? t('Change')
+                  : t('Select a list')}
               </LinkStyledButton>
             </RowBetween>
           </Card>

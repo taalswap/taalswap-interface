@@ -2,7 +2,6 @@ import React from 'react'
 import { Trade, TradeType } from 'taalswap-sdk'
 import styled from 'styled-components';
 import { Card, CardBody, HelpIcon, Text, useTooltip } from 'taalswap-uikit';
-import useI18n from 'hooks/useI18n'
 import { Field } from '../../state/swap/actions'
 import { useUserSlippageTolerance } from '../../state/user/hooks'
 import { computeSlippageAdjustedAmounts, computeTradePriceBreakdown } from '../../utils/prices'
@@ -12,18 +11,16 @@ import { RowBetween, RowFixed } from '../Row'
 import FormattedPriceImpact from './FormattedPriceImpact'
 import { SectionBreak } from './styleds'
 import SwapRoute from './SwapRoute'
+import { useTranslation } from '../../contexts/Localization';
 
 const ReferenceElement = styled.div`
   display: flex;
 `
 
 const Tip1 = () => {
-  const TranslateString = useI18n()
+  const { t } = useTranslation();
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
-    TranslateString(
-      202,
-      'Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.'
-    ),
+    t('Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.'),
     { placement: 'right-end', tooltipOffset: [20, 10] },
   )
 
@@ -38,12 +35,9 @@ const Tip1 = () => {
 }
 
 const Tip2 = () => {
-  const TranslateString = useI18n()
+  const { t } = useTranslation();
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
-    TranslateString(
-      224,
-      'The difference between the market price and estimated price due to trade size.'
-    ),
+    t('The difference between the market price and estimated price due to trade size.'),
     { placement: 'right-end', tooltipOffset: [20, 10] },
   )
 
@@ -58,12 +52,13 @@ const Tip2 = () => {
 }
 
 const Tip3 = () => {
+  const { t } = useTranslation();
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
     <>
-      <Text mb="12px">For each trade a 0.25% fee is paid</Text>
-      <Text>- 0.17% to LP token holders</Text>
-      <Text>- 0.03% to the Treasury</Text>
-      <Text>- 0.05% towards TAL buyback & burn</Text>
+      <Text mb="12px">{t('For each trade a 0.25% fee is paid')}</Text>
+      <Text>{t('- 0.17% to LP token holders')}</Text>
+      <Text>{t('- 0.03% to the Treasury')}</Text>
+      <Text>{t('- 0.05% towards TAL buyback & burn')}</Text>
     </>,
     { placement: 'right-end', tooltipOffset: [20, 10] },
   )
@@ -82,7 +77,7 @@ function TradeSummary({ trade, allowedSlippage }: { trade: Trade; allowedSlippag
   const { priceImpactWithoutFee, realizedLPFee } = computeTradePriceBreakdown(trade)
   const isExactIn = trade.tradeType === TradeType.EXACT_INPUT
   const slippageAdjustedAmounts = computeSlippageAdjustedAmounts(trade, allowedSlippage)
-  const TranslateString = useI18n()
+  const { t } = useTranslation();
 
   return (
     <Card>
@@ -90,7 +85,7 @@ function TradeSummary({ trade, allowedSlippage }: { trade: Trade; allowedSlippag
         <RowBetween>
           <RowFixed>
             <Text fontSize='14px'>
-              {isExactIn ? TranslateString(1210, 'Minimum received') : TranslateString(220, 'Maximum sold')}
+              {isExactIn ? t('Minimum received') : t('Maximum sold')}
             </Text>
             <Tip1 />
           </RowFixed>
@@ -106,20 +101,14 @@ function TradeSummary({ trade, allowedSlippage }: { trade: Trade; allowedSlippag
         </RowBetween>
         <RowBetween>
           <RowFixed>
-            <Text fontSize='14px'>{TranslateString(226, 'Price Impact')}</Text>
+            <Text fontSize='14px'>{t('Price Impact')}</Text>
             <Tip2 />
           </RowFixed>
           <FormattedPriceImpact priceImpact={priceImpactWithoutFee} />
         </RowBetween>
-
-        {/* TODO: pancakeswap V2 help message looks like */}
-        {/* For each trade a 0.25% fee is paid */}
-        {/* -0.17% to LP token holders */}
-        {/* -0.03% to the Treasury */}
-        {/* -0.03% towards CAKE buyback and burn */}
         <RowBetween>
           <RowFixed>
-            <Text fontSize='14px'>{TranslateString(228, 'Liquidity Provider Fee')}</Text>
+            <Text fontSize='14px'>{t('Liquidity Provider Fee')}</Text>
             <Tip3 />
           </RowFixed>
           <Text fontSize='14px'>
@@ -137,7 +126,7 @@ export interface AdvancedSwapDetailsProps {
 
 export function AdvancedSwapDetails({ trade }: AdvancedSwapDetailsProps) {
   const [allowedSlippage] = useUserSlippageTolerance()
-  const TranslateString = useI18n()
+  const { t } = useTranslation();
   const showRoute = Boolean(trade && trade.route.path.length > 2)
 
   return (
@@ -152,10 +141,7 @@ export function AdvancedSwapDetails({ trade }: AdvancedSwapDetailsProps) {
                 <RowFixed>
                   <Text fontSize='14px'>Route</Text>
                   <QuestionHelper
-                    text={TranslateString(
-                      999,
-                      'Routing through these tokens resulted in the best price for your trade.'
-                    )}
+                    text={t('Routing through these tokens resulted in the best price for your trade.')}
                   />
                 </RowFixed>
                 <SwapRoute trade={trade} />

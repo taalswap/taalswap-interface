@@ -4,7 +4,6 @@ import styled, { ThemeContext } from 'styled-components';
 import { Pair } from 'taalswap-sdk';
 import { Button, CardBody, HelpIcon, Text, useTooltip } from 'taalswap-uikit';
 import { Link } from 'react-router-dom';
-import Question from 'components/QuestionHelper';
 import FullPositionCard from 'components/PositionCard';
 import { useTokenBalancesWithLoadingIndicator } from 'state/wallet/hooks';
 import { StyledInternalLink } from 'components/Shared';
@@ -17,7 +16,6 @@ import { useActiveWeb3React } from 'hooks';
 import { usePairs } from 'data/Reserves';
 import { toV2LiquidityToken, useTrackedTokenPairs } from 'state/user/hooks';
 import { Dots } from 'components/swap/styleds';
-import useI18n from 'hooks/useI18n';
 import PageHeader from 'components/PageHeader';
 import AppBody from '../AppBody';
 
@@ -29,7 +27,6 @@ export default function Pool() {
   const { t } = useTranslation();
   const theme = useContext(ThemeContext);
   const { account } = useActiveWeb3React();
-  const TranslateString = useI18n();
 
   // fetch the user's balances of all tracked V2 LP tokens
   const trackedTokenPairs = useTrackedTokenPairs();
@@ -70,10 +67,7 @@ export default function Pool() {
     .filter((v2Pair): v2Pair is Pair => Boolean(v2Pair));
 
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
-    TranslateString(
-      1170,
-      'When you add liquidity, you will receive LP tokens to be registered as your share in this liquidity pool.'
-    ),
+    t('When you add liquidity, you will receive LP tokens to be registered as your share in this liquidity pool.'),
     { placement: 'top-end', tooltipOffset: [20, 10] }
   );
 
@@ -82,14 +76,11 @@ export default function Pool() {
       {/* <CardNav activeIndex={1} /> */}
       <AppBody>
         <PageHeader
-          title={TranslateString(262, t('Liquidity'))}
-          description={TranslateString(
-            1168,
-            'Add liquidity to receive LP tokens'
-          )}
+          title={t('Liquidity')}
+          description={t('Add liquidity to receive LP tokens')}
         >
           <Button id="join-pool-button" as={Link} to="/add/ETH" mb="16px">
-            {TranslateString(168, 'Add Liquidity')}
+            {t('Add Liquidity')}
           </Button>
         </PageHeader>
         <AutoColumn gap="lg" justify="center">
@@ -97,7 +88,7 @@ export default function Pool() {
             <AutoColumn gap="12px" style={{ width: '100%' }}>
               <RowBetween padding="0 8px">
                 <Text color={theme.colors.text}>
-                  {TranslateString(107, 'Your Liquidity')}
+                  {t('Your Liquidity')}
                 </Text>
                 <ReferenceElement ref={targetRef}>
                   <HelpIcon color="textSubtle" />
@@ -108,10 +99,7 @@ export default function Pool() {
               {!account ? (
                 <LightCard padding="40px">
                   <Text color="textDisabled" textAlign="center">
-                    {TranslateString(
-                      156,
-                      'Connect to a wallet to view your liquidity.'
-                    )}
+                    {t('Connect to a wallet to view your liquidity.')}
                   </Text>
                 </LightCard>
               ) : v2IsLoading ? (
@@ -132,23 +120,20 @@ export default function Pool() {
               ) : (
                 <LightCard padding="40px">
                   <Text color="textDisabled" textAlign="center">
-                    {TranslateString(104, 'No liquidity found.')}
+                    {t('No liquidity found.')}
                   </Text>
                 </LightCard>
               )}
 
               <div>
                 <Text fontSize="14px" style={{ padding: '.5rem 0 .5rem 0' }}>
-                  {TranslateString(106, "Don't see your pool(s)?")}{' '}
+                  {t("Don't see your pool(s)?")}{' '}
                   <StyledInternalLink id="import-pool-link" to="/find">
-                    {TranslateString(108, 'Import here')}
+                    {t('Import here')}
                   </StyledInternalLink>
                 </Text>
                 <Text fontSize="14px" style={{ padding: '.5rem 0 .5rem 0' }}>
-                  {TranslateString(
-                    1172,
-                    'Your LP tokens in a farm can be moved back here by unstaking them.'
-                  )}
+                  {t('Your LP tokens in a farm can be moved back here by unstaking them.')}
                 </Text>
               </div>
             </AutoColumn>

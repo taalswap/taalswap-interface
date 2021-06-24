@@ -17,10 +17,10 @@ import {
 } from 'state/transactions/hooks';
 import { TransactionDetails } from 'state/transactions/reducer';
 import Loader from 'components/Loader';
+import { useTranslation } from '../../contexts/Localization';
 
 type RecentTransactionsModalProps = {
   onDismiss?: () => void;
-  translateString: (translationId: number, fallback: string) => string;
 };
 
 // TODO: Fix UI Kit typings
@@ -44,9 +44,9 @@ const getRowStatus = (sortedRecentTransaction: TransactionDetails) => {
 };
 
 const RecentTransactionsModal = ({
-  onDismiss = defaultOnDismiss,
-  translateString,
+  onDismiss = defaultOnDismiss
 }: RecentTransactionsModalProps) => {
+  const { t } = useTranslation();
   const { account, chainId } = useActiveWeb3React();
   const allTransactions = useAllTransactions();
   const theme = useTheme();
@@ -60,7 +60,7 @@ const RecentTransactionsModal = ({
 
   return (
     <Modal
-      title={translateString(1202, 'Recent transactions')}
+      title={t('Recent transactions')}
       onDismiss={onDismiss}
       style={{ position: 'relative' }}
     >

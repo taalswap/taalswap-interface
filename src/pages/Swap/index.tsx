@@ -25,7 +25,6 @@ import Card, { GreyCard } from 'components/Card';
 import { AutoColumn } from 'components/Column';
 import ConfirmSwapModal from 'components/swap/ConfirmSwapModal';
 import CurrencyInputPanel from 'components/CurrencyInputPanel';
-import CardNav from 'components/CardNav';
 import { AutoRow, RowBetween } from 'components/Row';
 import AdvancedSwapDetailsDropdown from 'components/swap/AdvancedSwapDetailsDropdown';
 import confirmPriceImpactWithoutFee from 'components/swap/confirmPriceImpactWithoutFee';
@@ -67,7 +66,6 @@ import { LinkStyledButton } from 'components/Shared';
 import { maxAmountSpend } from 'utils/maxAmountSpend';
 import { computeTradePriceBreakdown, warningSeverity } from 'utils/prices';
 import Loader from 'components/Loader';
-import useI18n from 'hooks/useI18n';
 import PageHeader from 'components/PageHeader';
 import ConnectWalletButton from 'components/ConnectWalletButton';
 import V2ExchangeRedirectModal from 'components/V2ExchangeRedirectModal';
@@ -81,7 +79,6 @@ const StyledLink = styled(Link)`
 const Swap = () => {
   const { t } = useTranslation();
   const loadedUrlParams = useDefaultsFromURLSearch();
-  const TranslateString = useI18n();
   const [modalCountdownSecondsRemaining, setModalCountdownSecondsRemaining] =
     useState(5);
   const [disableSwap, setDisableSwap] = useState(false);
@@ -469,16 +466,16 @@ const Swap = () => {
             onDismiss={handleConfirmDismiss}
           />
           <PageHeader
-            title={TranslateString(8, t('Swap'))}
-            description={TranslateString(1192, 'Trade your token on the spot')}
+            title={t('Swap')}
+            description={t('Trade your token on the spot')}
           />
           <CardBody>
             <AutoColumn gap="md">
               <CurrencyInputPanel
                 label={
                   independentField === Field.OUTPUT && !showWrap && trade
-                    ? TranslateString(194, 'From (estimated)')
-                    : TranslateString(76, 'From')
+                    ? t('From (estimated)')
+                    : t('From')
                 }
                 value={formattedAmounts[Field.INPUT]}
                 showMaxButton={!atMaxAmountInput}
@@ -522,8 +519,8 @@ const Swap = () => {
                 onUserInput={handleTypeOutput}
                 label={
                   independentField === Field.INPUT && !showWrap && trade
-                    ? TranslateString(196, 'To (estimated)')
-                    : TranslateString(80, 'To')
+                    ? t('To (estimated)')
+                    : t('To')
                 }
                 showMaxButton={false}
                 currency={currencies[Field.OUTPUT]}
@@ -562,7 +559,7 @@ const Swap = () => {
                     {Boolean(trade) && (
                       <RowBetween align="center">
                         <Text fontSize="14px">
-                          {TranslateString(1182, 'Price')}
+                          {t('Price')}
                         </Text>
                         <TradePrice
                           price={trade?.executionPrice}
@@ -574,7 +571,7 @@ const Swap = () => {
                     {allowedSlippage !== INITIAL_ALLOWED_SLIPPAGE && (
                       <RowBetween align="center">
                         <Text fontSize="14px">
-                          {TranslateString(88, 'Slippage Tolerance')}
+                          {t('Slippage Tolerance')}
                         </Text>
                         <Text fontSize="14px">{allowedSlippage / 100}%</Text>
                       </RowBetween>
@@ -613,10 +610,7 @@ const Swap = () => {
               ) : noRoute && userHasSpecifiedInputOutput ? (
                 <GreyCard style={{ textAlign: 'center' }}>
                   <Text mb="4px">
-                    {TranslateString(
-                      1194,
-                      'Insufficient liquidity for this trade.'
-                    )}
+                    {t('Insufficient liquidity for this trade.')}
                   </Text>
                 </GreyCard>
               ) : showApproveFlow ? (

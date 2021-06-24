@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { Button, HelpIcon, Text, useTooltip } from 'taalswap-uikit';
 import { Repeat } from 'react-feather'
 
-import useI18n from 'hooks/useI18n'
 import { Field } from '../../state/swap/actions'
 import {
   computeSlippageAdjustedAmounts,
@@ -13,10 +12,10 @@ import {
   warningSeverity
 } from '../../utils/prices'
 import { AutoColumn } from '../Column'
-import QuestionHelper from '../QuestionHelper'
 import { AutoRow, RowBetween, RowFixed } from '../Row'
 import FormattedPriceImpact from './FormattedPriceImpact'
 import { StyledBalanceMaxMini, SwapCallbackError } from './styleds'
+import { useTranslation } from '../../contexts/Localization';
 
 const ReferenceElement = styled.div`
   display: inline-block;
@@ -42,14 +41,11 @@ export default function SwapModalFooter({
   ])
   const { priceImpactWithoutFee, realizedLPFee } = useMemo(() => computeTradePriceBreakdown(trade), [trade])
   const severity = warningSeverity(priceImpactWithoutFee)
-  const TranslateString = useI18n()
+  const { t } = useTranslation();
 
   const TipReceived = () => {
     const { targetRef, tooltip, tooltipVisible } = useTooltip(
-      TranslateString(
-        202,
-        'Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.'
-      ),
+     t('Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.'),
       { placement: 'right-end', tooltipOffset: [20, 10] },
     )
 
@@ -65,7 +61,7 @@ export default function SwapModalFooter({
 
   const TipImpact = () => {
     const { targetRef, tooltip, tooltipVisible } = useTooltip(
-      TranslateString(224, 'The difference between the market price and your price due to trade size.'),
+      t('The difference between the market price and your price due to trade size.'),
       { placement: 'right-end', tooltipOffset: [20, 10] },
     )
 
@@ -82,10 +78,10 @@ export default function SwapModalFooter({
   const TipFee = () => {
     const { targetRef, tooltip, tooltipVisible } = useTooltip(
       <>
-        <Text mb="12px">For each trade a 0.25% fee is paid</Text>
-        <Text>- 0.17% to LP token holders</Text>
-        <Text>- 0.03% to the Treasury</Text>
-        <Text>- 0.05% towards TAL buyback & burn</Text>
+        <Text mb="12px">{t('For each trade a 0.25% fee is paid')}</Text>
+        <Text>{t('- 0.17% to LP token holders')}</Text>
+        <Text>{t('- 0.03% to the Treasury')}</Text>
+        <Text>{t('- 0.05% towards TAL buyback & burn')}</Text>
       </>,
       { placement: 'right-end', tooltipOffset: [20, 10] },
     )
@@ -127,8 +123,8 @@ export default function SwapModalFooter({
           <RowFixed>
             <Text fontSize='14px'>
               {trade.tradeType === TradeType.EXACT_INPUT
-                ? TranslateString(1210, 'Minimum received')
-                : TranslateString(220, 'Maximum sold')}
+                ? t('Minimum received')
+                : t('Maximum sold')}
             </Text>
             <TipReceived />
           </RowFixed>
@@ -147,14 +143,14 @@ export default function SwapModalFooter({
         </RowBetween>
         <RowBetween>
           <RowFixed>
-            <Text fontSize='14px'>{TranslateString(226, 'Price Impact')}</Text>
+            <Text fontSize='14px'>{t('Price Impact')}</Text>
             <TipImpact />
           </RowFixed>
           <FormattedPriceImpact priceImpact={priceImpactWithoutFee} />
         </RowBetween>
         <RowBetween>
           <RowFixed>
-            <Text fontSize='14px'>{TranslateString(228, 'Liquidity Provider Fee')}</Text>
+            <Text fontSize='14px'>{t('Liquidity Provider Fee')}</Text>
             <TipFee />
           </RowFixed>
           <Text fontSize='14px'>
@@ -172,7 +168,7 @@ export default function SwapModalFooter({
           id='confirm-swap-or-send'
           width='100%'
         >
-          {severity > 2 ? 'Swap Anyway' : 'Confirm Swap'}
+          {severity > 2 ? t('Swap Anyway') : t('Confirm Swap')}
         </Button>
 
         {swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}

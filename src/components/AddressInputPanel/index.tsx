@@ -8,6 +8,7 @@ import { ExternalLink } from '../Shared';
 import { AutoColumn } from '../Column';
 import { RowBetween } from '../Row';
 import { getBscScanLink } from '../../utils';
+import { useTranslation } from '../../contexts/Localization';
 
 const InputPanel = styled.div`
   display: flex;
@@ -82,7 +83,7 @@ export default function AddressInputPanel({
   onChange: (value: string) => void
 }) {
   const { chainId } = useActiveWeb3React();
-  const TranslateString = useI18n();
+  const { t } = useTranslation();
   const { address, loading, name } = useENS(value);
 
   const handleInput = useCallback(
@@ -103,11 +104,11 @@ export default function AddressInputPanel({
           <AutoColumn gap='md'>
             <RowBetween>
               <Text color='textSubtle' fontWeight={500} fontSize='14px'>
-                {TranslateString(1138, 'Recipient')}
+                {t('Recipient')}
               </Text>
               {address && chainId && (
                 <ExternalLink href={getBscScanLink(chainId, name ?? address, 'address')} style={{ fontSize: '14px' }}>
-                  {TranslateString(116, '(View on EtherScan)')}
+                  {(t('View on EtherScan'))}
                 </ExternalLink>
               )}
             </RowBetween>
@@ -118,7 +119,7 @@ export default function AddressInputPanel({
               autoCorrect='off'
               autoCapitalize='off'
               spellCheck='false'
-              placeholder={TranslateString(1140, 'Wallet Address or ENS name')}
+              placeholder={t('Wallet Address or ENS name')}
               error={error}
               pattern='^(0x[a-fA-F0-9]{40})$'
               onChange={handleInput}

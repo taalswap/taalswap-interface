@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'contexts/Localization';
 import styled from 'styled-components'
-import { Box, Flex, Input, Text } from 'taalswap-uikit'
+import { Box, Flex, HelpIcon, Input, Text, useTooltip } from 'taalswap-uikit';
 import { useUserDeadline } from 'state/user/hooks'
-import QuestionHelper from '../QuestionHelper'
 
 const Field = styled.div`
   align-items: center;
@@ -12,12 +12,12 @@ const Field = styled.div`
     max-width: 100px;
   }
 `
+const ReferenceElement = styled.div`
+  display: inline-block;
+`;
 
-type TransactionDeadlineSettingModalProps = {
-  translateString: (translationId: number, fallback: string) => string
-}
-
-const TransactionDeadlineSetting = ({ translateString }: TransactionDeadlineSettingModalProps) => {
+const TransactionDeadlineSetting = () => {
+  const { t } = useTranslation();
   const [deadline, setDeadline] = useUserDeadline()
   const [value, setValue] = useState(deadline / 60) // deadline in minutes
   const [error, setError] = useState<string | null>(null)
@@ -35,20 +35,26 @@ const TransactionDeadlineSetting = ({ translateString }: TransactionDeadlineSett
         setDeadline(rawValue)
         setError(null)
       } else {
-        setError(translateString(1150, 'Enter a valid deadline'))
+        setError(t('Enter a valid deadline'))
       }
     } catch {
-      setError(translateString(1150, 'Enter a valid deadline'))
+      setError(t('Enter a valid deadline'))
     }
-  }, [value, setError, setDeadline, translateString])
+  }, [value, setError, setDeadline, t])
+
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(
+    t('Your transaction will revert if it is pending for more than this long.'),
+    { placement: 'bottom-start', tooltipOffset: [1, 1] }
+  );
 
   return (
     <Box mb='16px'>
       <Flex alignItems='center' mb='8px'>
-        <Text bold>{translateString(90, 'Transaction deadline')}</Text>
-        <QuestionHelper
-          text={translateString(188, 'Your transaction will revert if it is pending for more than this long.')}
-        />
+        <Text bold>{t('Transaction deadline')}</Text>
+        <ReferenceElement ref={targetRef}>
+          <HelpIcon color="textSubtle" />
+        </ReferenceElement>
+        {tooltipVisible && tooltip}
       </Flex>
       <Field>
         <Input type='number' step='1' min='1' value={value} onChange={handleChange} />

@@ -3,9 +3,8 @@ import styled from 'styled-components';
 import { Link as HistoryLink } from 'react-router-dom';
 import { ArrowLeft } from 'react-feather';
 import { RowBetween } from 'components/Row';
-import QuestionHelper from 'components/QuestionHelper';
-import useI18n from 'hooks/useI18n';
 import { HelpIcon, useTooltip } from 'taalswap-uikit';
+import { useTranslation } from '../../contexts/Localization';
 
 const ReferenceElement = styled.div`
   display: flex;
@@ -29,13 +28,9 @@ const StyledArrowLeft = styled(ArrowLeft)`
 `;
 
 const TipFind = () => {
-  const TranslateString = useI18n();
-
+  const { t } = useTranslation();
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
-    TranslateString(
-      256,
-      'Use this tool to find pairs that do not automatically appear in the interface.'
-    ),
+   t('Use this tool to find pairs that do not automatically appear in the interface.'),
     { placement: 'top-end', tooltipOffset: [20, 10] }
   );
 
@@ -50,7 +45,7 @@ const TipFind = () => {
 };
 
 export function FindPoolTabs() {
-  const TranslateString = useI18n();
+  const { t } = useTranslation();
   return (
     <Tabs>
       <RowBetween style={{ padding: '1rem' }}>
@@ -58,7 +53,7 @@ export function FindPoolTabs() {
         <HistoryLink to="/liquidity">
           <StyledArrowLeft />
         </HistoryLink>
-        <ActiveText>Import Pool</ActiveText>
+        <ActiveText>{t('Import Pool')}</ActiveText>
         <TipFind />
       </RowBetween>
     </Tabs>
@@ -66,17 +61,10 @@ export function FindPoolTabs() {
 }
 
 const TipAdding = ({ adding }: { adding: boolean }) => {
-  const TranslateString = useI18n();
-
+  const { t } = useTranslation();
   const text = adding
-    ? TranslateString(
-        264,
-        'When you add liquidity, you are given pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time.'
-      )
-    : TranslateString(
-        266,
-        'Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive.'
-      );
+    ? t('When you add liquidity, you are given pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time.')
+    : t('Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive.');
 
   const { targetRef, tooltip, tooltipVisible } = useTooltip(text, {
     placement: 'top-end',
@@ -94,7 +82,7 @@ const TipAdding = ({ adding }: { adding: boolean }) => {
 };
 
 export function AddRemoveTabs({ adding }: { adding: boolean }) {
-  const TranslateString = useI18n();
+  const { t } = useTranslation();
   return (
     <Tabs>
       <RowBetween style={{ padding: '1rem' }}>
@@ -104,9 +92,8 @@ export function AddRemoveTabs({ adding }: { adding: boolean }) {
         </HistoryLink>
         <ActiveText>
           {adding
-            ? TranslateString(258, 'Add')
-            : TranslateString(260, 'Remove')}{' '}
-          Liquidity
+            ? t('Add Liquidity')
+            : t('Remove Liquidity')}
         </ActiveText>
         <TipAdding adding={adding} />
       </RowBetween>
