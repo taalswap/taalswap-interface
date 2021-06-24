@@ -1,43 +1,52 @@
-import { Currency, ETHER, Token } from 'taalswap-sdk'
-import React, { KeyboardEvent, RefObject, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { Currency, ETHER, Token } from 'taalswap-sdk';
+import React, {
+  KeyboardEvent,
+  RefObject,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Text, CloseIcon, useTooltip, HelpIcon } from 'taalswap-uikit';
-import { useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
-import { FixedSizeList } from 'react-window'
-import styled, { ThemeContext } from 'styled-components'
-import AutoSizer from 'react-virtualized-auto-sizer'
-import useI18n from 'hooks/useI18n'
-import { useActiveWeb3React } from '../../hooks'
-import { AppState } from '../../state'
-import { useAllTokens, useToken } from '../../hooks/Tokens'
-import { useSelectedListInfo } from '../../state/lists/hooks'
-import { LinkStyledButton } from '../Shared'
-import { isAddress } from '../../utils'
-import Card from '../Card'
-import Column from '../Column'
-import ListLogo from '../ListLogo'
-import QuestionHelper from '../QuestionHelper'
-import Row, { RowBetween } from '../Row'
-import CommonBases from './CommonBases'
-import CurrencyList from './CurrencyList'
-import { filterTokens } from './filtering'
-import SortButton from './SortButton'
-import { useTokenComparator } from './sorting'
-import { PaddedColumn, SearchInput, Separator } from './styleds'
+import { useSelector } from 'react-redux';
+// import { useTranslation } from 'react-i18next'
+import { FixedSizeList } from 'react-window';
+import styled, { ThemeContext } from 'styled-components';
+import AutoSizer from 'react-virtualized-auto-sizer';
+import useI18n from 'hooks/useI18n';
+import { useActiveWeb3React } from '../../hooks';
+import { AppState } from '../../state';
+import { useAllTokens, useToken } from '../../hooks/Tokens';
+import { useSelectedListInfo } from '../../state/lists/hooks';
+import { LinkStyledButton } from '../Shared';
+import { isAddress } from '../../utils';
+import Card from '../Card';
+import Column from '../Column';
+import ListLogo from '../ListLogo';
+import QuestionHelper from '../QuestionHelper';
+import Row, { RowBetween } from '../Row';
+import CommonBases from './CommonBases';
+import CurrencyList from './CurrencyList';
+import { filterTokens } from './filtering';
+import SortButton from './SortButton';
+import { useTokenComparator } from './sorting';
+import { PaddedColumn, SearchInput, Separator } from './styleds';
 
 interface CurrencySearchProps {
-  isOpen: boolean
-  onDismiss: () => void
-  selectedCurrency?: Currency | null
-  onCurrencySelect: (currency: Currency) => void
-  otherSelectedCurrency?: Currency | null
-  showCommonBases?: boolean
-  onChangeList: () => void
+  isOpen: boolean;
+  onDismiss: () => void;
+  selectedCurrency?: Currency | null;
+  onCurrencySelect: (currency: Currency) => void;
+  otherSelectedCurrency?: Currency | null;
+  showCommonBases?: boolean;
+  onChangeList: () => void;
 }
 
 const ReferenceElement = styled.div`
   display: inline-block;
-`
+`;
 
 export function CurrencySearch({
   selectedCurrency,
@@ -48,107 +57,114 @@ export function CurrencySearch({
   isOpen,
   onChangeList,
 }: CurrencySearchProps) {
-  const { t } = useTranslation()
-  const { chainId } = useActiveWeb3React()
-  const theme = useContext(ThemeContext)
+  // const { t } = useTranslation()
+  const { chainId } = useActiveWeb3React();
+  const theme = useContext(ThemeContext);
 
-  const fixedList = useRef<FixedSizeList>()
-  const [searchQuery, setSearchQuery] = useState<string>('')
-  const [invertSearchOrder, setInvertSearchOrder] = useState<boolean>(false)
-  const allTokens = useAllTokens()
+  const fixedList = useRef<FixedSizeList>();
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [invertSearchOrder, setInvertSearchOrder] = useState<boolean>(false);
+  const allTokens = useAllTokens();
 
   // if they input an address, use it
-  const isAddressSearch = isAddress(searchQuery)
-  const searchToken = useToken(searchQuery)
+  const isAddressSearch = isAddress(searchQuery);
+  const searchToken = useToken(searchQuery);
 
   const showETH: boolean = useMemo(() => {
-    const s = searchQuery.toLowerCase().trim()
-    return s === '' || s === 'b' || s === 'bn' || s === 'bnb'
-  }, [searchQuery])
+    const s = searchQuery.toLowerCase().trim();
+    return s === '' || s === 'b' || s === 'bn' || s === 'bnb';
+  }, [searchQuery]);
 
-  const tokenComparator = useTokenComparator(invertSearchOrder)
+  const tokenComparator = useTokenComparator(invertSearchOrder);
 
-  const audioPlay = useSelector<AppState, AppState['user']['audioPlay']>((state) => state.user.audioPlay)
+  const audioPlay = useSelector<AppState, AppState['user']['audioPlay']>(
+    (state) => state.user.audioPlay
+  );
 
   const filteredTokens: Token[] = useMemo(() => {
-    if (isAddressSearch) return searchToken ? [searchToken] : []
-    return filterTokens(Object.values(allTokens), searchQuery)
-  }, [isAddressSearch, searchToken, allTokens, searchQuery])
+    if (isAddressSearch) return searchToken ? [searchToken] : [];
+    return filterTokens(Object.values(allTokens), searchQuery);
+  }, [isAddressSearch, searchToken, allTokens, searchQuery]);
 
   const filteredSortedTokens: Token[] = useMemo(() => {
-    if (searchToken) return [searchToken]
-    const sorted = filteredTokens.sort(tokenComparator)
+    if (searchToken) return [searchToken];
+    const sorted = filteredTokens.sort(tokenComparator);
     const symbolMatch = searchQuery
       .toLowerCase()
       .split(/\s+/)
-      .filter((s) => s.length > 0)
-    if (symbolMatch.length > 1) return sorted
+      .filter((s) => s.length > 0);
+    if (symbolMatch.length > 1) return sorted;
 
     return [
       ...(searchToken ? [searchToken] : []),
       // sort any exact symbol matches first
-      ...sorted.filter((token) => token.symbol?.toLowerCase() === symbolMatch[0]),
-      ...sorted.filter((token) => token.symbol?.toLowerCase() !== symbolMatch[0]),
-    ]
-  }, [filteredTokens, searchQuery, searchToken, tokenComparator])
+      ...sorted.filter(
+        (token) => token.symbol?.toLowerCase() === symbolMatch[0]
+      ),
+      ...sorted.filter(
+        (token) => token.symbol?.toLowerCase() !== symbolMatch[0]
+      ),
+    ];
+  }, [filteredTokens, searchQuery, searchToken, tokenComparator]);
 
   const handleCurrencySelect = useCallback(
     (currency: Currency) => {
-      onCurrencySelect(currency)
-      onDismiss()
+      onCurrencySelect(currency);
+      onDismiss();
       if (audioPlay) {
-        const audio = document.getElementById('bgMusic') as HTMLAudioElement
+        const audio = document.getElementById('bgMusic') as HTMLAudioElement;
         if (audio) {
-          audio.play()
+          audio.play();
         }
       }
     },
     [onDismiss, onCurrencySelect, audioPlay]
-  )
+  );
 
   // clear the input on open
   useEffect(() => {
-    if (isOpen) setSearchQuery('')
-  }, [isOpen])
+    if (isOpen) setSearchQuery('');
+  }, [isOpen]);
 
   // manage focus on modal show
-  const inputRef = useRef<HTMLInputElement>()
+  const inputRef = useRef<HTMLInputElement>();
   const handleInput = useCallback((event) => {
-    const input = event.target.value
-    const checksummedInput = isAddress(input)
-    setSearchQuery(checksummedInput || input)
-    fixedList.current?.scrollTo(0)
-  }, [])
+    const input = event.target.value;
+    const checksummedInput = isAddress(input);
+    setSearchQuery(checksummedInput || input);
+    fixedList.current?.scrollTo(0);
+  }, []);
 
   const handleEnter = useCallback(
     (e: KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter') {
-        const s = searchQuery.toLowerCase().trim()
+        const s = searchQuery.toLowerCase().trim();
         if (s === 'bnb') {
-          handleCurrencySelect(ETHER)
+          handleCurrencySelect(ETHER);
         } else if (filteredSortedTokens.length > 0) {
           if (
-            filteredSortedTokens[0].symbol?.toLowerCase() === searchQuery.trim().toLowerCase() ||
+            filteredSortedTokens[0].symbol?.toLowerCase() ===
+              searchQuery.trim().toLowerCase() ||
             filteredSortedTokens.length === 1
           ) {
-            handleCurrencySelect(filteredSortedTokens[0])
+            handleCurrencySelect(filteredSortedTokens[0]);
           }
         }
       }
     },
     [filteredSortedTokens, handleCurrencySelect, searchQuery]
-  )
+  );
 
   const TipToken = () => {
-    const TranslateString = useI18n()
+    const TranslateString = useI18n();
 
     const { targetRef, tooltip, tooltipVisible } = useTooltip(
       TranslateString(
         128,
         'Find a token by searching for its name or symbol or by pasting its address below.'
       ),
-      { placement: 'bottom-start', tooltipOffset: [1, 1] },
-    )
+      { placement: 'bottom-start', tooltipOffset: [1, 1] }
+    );
 
     return (
       <>
@@ -157,36 +173,48 @@ export function CurrencySearch({
         </ReferenceElement>
         {tooltipVisible && tooltip}
       </>
-    )
-  }
+    );
+  };
 
-  const selectedListInfo = useSelectedListInfo()
-  const TranslateString = useI18n()
+  const selectedListInfo = useSelectedListInfo();
+  const TranslateString = useI18n();
   return (
     <Column style={{ width: '100%', flex: '1 1' }}>
       <PaddedColumn gap="14px">
         <RowBetween>
-          <Text fontWeight='600'>
+          <Text fontWeight="600">
             {TranslateString(82, 'Select a token')}
             <TipToken />
           </Text>
-          <CloseIcon onClick={onDismiss} style={{width:'30px',height:'30px',cursor:'pointer'}}/>
+          <CloseIcon
+            onClick={onDismiss}
+            style={{ width: '30px', height: '30px', cursor: 'pointer' }}
+          />
         </RowBetween>
         <SearchInput
           type="text"
           id="token-search-input"
-          placeholder={t('tokenSearchPlaceholder')}
+          // placeholder={t('tokenSearchPlaceholder')}
           value={searchQuery}
           ref={inputRef as RefObject<HTMLInputElement>}
           onChange={handleInput}
           onKeyDown={handleEnter}
         />
         {showCommonBases && (
-          <CommonBases chainId={chainId} onSelect={handleCurrencySelect} selectedCurrency={selectedCurrency} />
+          <CommonBases
+            chainId={chainId}
+            onSelect={handleCurrencySelect}
+            selectedCurrency={selectedCurrency}
+          />
         )}
         <RowBetween>
-          <Text fontSize="14px" fontWeight='600'>{TranslateString(126, 'Token name')}</Text>
-          <SortButton ascending={invertSearchOrder} toggleSortOrder={() => setInvertSearchOrder((iso) => !iso)} />
+          <Text fontSize="14px" fontWeight="600">
+            {TranslateString(126, 'Token name')}
+          </Text>
+          <SortButton
+            ascending={invertSearchOrder}
+            toggleSortOrder={() => setInvertSearchOrder((iso) => !iso)}
+          />
         </RowBetween>
       </PaddedColumn>
 
@@ -222,22 +250,30 @@ export function CurrencySearch({
                       alt={`${selectedListInfo.current.name} list logo`}
                     />
                   ) : null}
-                  <Text id="currency-search-selected-list-name">{selectedListInfo.current.name}</Text>
+                  <Text id="currency-search-selected-list-name">
+                    {selectedListInfo.current.name}
+                  </Text>
                 </Row>
               ) : null}
               <LinkStyledButton
-                style={{ fontWeight: 500, color: theme.colors.textSubtle, fontSize: 16 }}
+                style={{
+                  fontWeight: 500,
+                  color: theme.colors.textSubtle,
+                  fontSize: 16,
+                }}
                 onClick={onChangeList}
                 id="currency-search-change-list-button"
               >
-                {selectedListInfo.current ? TranslateString(180, 'Change') : TranslateString(1152, 'Select a list')}
+                {selectedListInfo.current
+                  ? TranslateString(180, 'Change')
+                  : TranslateString(1152, 'Select a list')}
               </LinkStyledButton>
             </RowBetween>
           </Card>
         </>
       )}
     </Column>
-  )
+  );
 }
 
-export default CurrencySearch
+export default CurrencySearch;
