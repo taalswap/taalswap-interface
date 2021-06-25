@@ -1,8 +1,9 @@
 import { MenuEntry } from 'taalswap-uikit';
+import { ContextApi } from 'contexts/Localization/types';
 
-const config: MenuEntry[] = [
+const config: (t: ContextApi['t']) => MenuEntry[] = (t) => [
   {
-    label: 'Home',
+    label: t('Home'),
     icon: 'HomeIcon',
     href: 'http://localhost:3001/',
   },
@@ -26,24 +27,24 @@ const config: MenuEntry[] = [
   //   ]
   // },
   {
-    label: 'Swap',
+    label: t('Swap'),
     icon: 'TradeIcon',
     // href: 'http://localhost:3000/#/swap',
     href: 'http://localhost:3000/#/swap',
   },
   {
-    label: 'Liquidity',
+    label: t('Liquidity'),
     icon: 'LiquidityIcon',
     // href: 'http://localhost:3000/#/pool',
     href: 'http://localhost:3000/#/liquidity',
   },
   {
-    label: 'Farms',
+    label: t('Farms'),
     icon: 'FarmIcon',
     href: 'http://localhost:3001/farms',
   },
   {
-    label: 'Staking',
+    label: t('Staking'),
     icon: 'PoolIcon',
     href: 'http://localhost:3001/staking',
   },
