@@ -48,6 +48,12 @@ const config: (t: ContextApi['t']) => MenuEntry[] = (t) => [
     icon: 'PoolIcon',
     href: 'http://localhost:3001/staking',
   },
+  {
+    label: t('Info'),
+    icon: 'InfoIcon',
+    // href: '/pools',
+    href: 'https://taalswap.info/home',
+  },
   // {
   //   label: 'Prediction',
   //   icon: 'PredictionsIcon',
