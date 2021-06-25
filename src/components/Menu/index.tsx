@@ -7,7 +7,7 @@ import { useTranslation } from 'contexts/Localization';
 import useTheme from 'hooks/useTheme';
 import useGetLocalProfile from 'hooks/useGetLocalProfile';
 import useAuth from 'hooks/useAuth';
-import useGetCakeBusdLpPrice from 'utils/useGetCakeBusdLpPrice'
+import useGetCakeBusdLpPrice from 'utils/useGetCakeBusdLpPrice';
 import links from './config';
 
 const Menu: React.FC = (props) => {
@@ -15,12 +15,12 @@ const Menu: React.FC = (props) => {
   const { login, logout } = useAuth();
   const { currentLanguage, setLanguage, t } = useTranslation();
   const { isDark, toggleTheme } = useTheme();
-  const cakeBusdPrice = useGetCakeBusdLpPrice()
+  const cakeBusdPrice = useGetCakeBusdLpPrice();
   const profile = useGetLocalProfile();
 
   return (
     <UikitMenu
-      links={links}
+      links={links(t)}
       account={account as string}
       login={login}
       logout={logout}
