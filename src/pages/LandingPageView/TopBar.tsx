@@ -4,9 +4,11 @@ import { Target } from 'react-feather';
 import { Link } from 'taalswap-uikit';
 import Topmenu from './topmenu';
 import logo_img from './images/TAAL_Logo.png';
+import { useTranslation } from '../../contexts/Localization';
 
 const TopBar = () => {
   const { account } = useWeb3React();
+  const { t } = useTranslation();
 
   console.log(account);
   return (
@@ -51,7 +53,7 @@ const TopBar = () => {
           </Link>
         </div>
         <div>
-          <input type="button" value="Connect Wallet" className="connect_btn" />
+          <input type="button" value={t('Connect Wallet')} className="connect_btn" />
         </div>
       </div>
       <div className="mobile_menu" style={{ cursor: 'pointer' }}>

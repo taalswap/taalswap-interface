@@ -16,6 +16,7 @@ import { SwapState } from './reducer'
 
 import { useUserSlippageTolerance } from '../user/hooks'
 import { computeSlippageAdjustedAmounts } from '../../utils/prices'
+import { useTranslation } from '../../contexts/Localization';
 
 export function useSwapState(): AppState['swap'] {
   return useSelector<AppState, AppState['swap']>((state) => state.swap)
@@ -113,7 +114,7 @@ export function useDerivedSwapInfo(): {
   inputError?: string
 } {
   const { account } = useActiveWeb3React()
-
+  const { t } = useTranslation();
   const {
     independentField,
     typedValue,
@@ -152,20 +153,20 @@ export function useDerivedSwapInfo(): {
 
   let inputError: string | undefined
   if (!account) {
-    inputError = 'Connect Wallet'
+    inputError = t('Connect Wallet')
   }
 
   if (!parsedAmount) {
-    inputError = inputError ?? 'Enter an amount'
+    inputError = inputError ?? t('Enter an amount')
   }
 
   if (!currencies[Field.INPUT] || !currencies[Field.OUTPUT]) {
-    inputError = inputError ?? 'Select a token'
+    inputError = inputError ?? t('Select a token')
   }
 
   const formattedTo = isAddress(to)
   if (!to || !formattedTo) {
-    inputError = inputError ?? 'Enter a recipient'
+    inputError = inputError ?? t('Enter a recipient')
   } else if (
     BAD_RECIPIENT_ADDRESSES.indexOf(formattedTo) !== -1 ||
     (bestTradeExactIn && involvesAddress(bestTradeExactIn, formattedTo)) ||
