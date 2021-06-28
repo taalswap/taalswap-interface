@@ -52,6 +52,8 @@
   "Routing through these tokens resulted in the best price for your trade.": "이러한 토큰을 통해 라우팅하면 거래에 가장 적합한 가격이 산출되었습니다.",
   "Connect to a wallet to find pools": "지갑에 연결하여 풀 찾기",
   "Select a token to find your liquidity.": "유동성을 찾으려면 토큰을 선택하십시오.",
+  "Enter a recipient": "수취인을 입력하세요.",
+  "Invalid recipient": "수취인이 부정확합니다.",
   "Select a Token": "토큰 선택",
   "Pool found!": "풀 발견!",
   "You don’t have liquidity in this pool yet.": "아직이 풀에 유동성이 없습니다.",
@@ -259,6 +261,7 @@
   "Home": "홈",
   "Trade": "거래",
   "Farms": "팜 (Farms)",
+  "Farms Menu": "팜",
   "Farming": "파밍",
   "Pools": "풀",
   "Staking": "스테이킹",
@@ -267,6 +270,7 @@
   "IFO": "IFO",
   "More": "자세히",
   "Liquidity": "유동성 (Liquidity)",
+  "Liquidity Menu": "유동성",
   "Overview": "개요",
   "Token": "토큰",
   "Pairs": "쌍",
@@ -660,7 +664,7 @@
   "Set Position": "포지션 설정",
   "Insufficient BNB balance": "BNB 잔액 부족",
   "A minimum amount of %num% %token% is required": "%num% %token%의 최소 액수가 필요합니다",
-  "Enter an amount": "액수 입력",
+  "Enter an amount": "금액을 입력하세요",
   "You won’t be able to remove or change your position once you enter it.": "포지션을 입력한 후에는 이 포지션을 제거하거나 변경할 수 없게 됩니다.",
   "Prize Pool": "상금 풀",
   "Winnings collected!": "상금 수집함!",
@@ -907,5 +911,6 @@
   "These pools are no longer distributing rewards. Please unstake your tokens.": "해당 풀은 더 이상 리워드를 배분하지 않습니다. 토큰을 예치 취소하세요.",
   "Max. stake per user": "사용자당 최대 예치",
   "You have claimed your rewards!": "리워드를 이미 클레임했습니다!",
-  "Swap": "교환"
+  "Swap": "토큰 교환 (Swap)",
+  "Swap Menu": "교환"
 }
