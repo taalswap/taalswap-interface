@@ -15,6 +15,7 @@ import { useTranslation } from '../../contexts/Localization';
 
 const ReferenceElement = styled.div`
   display: flex;
+  margin-left: 0.3rem;
 `
 
 const Tip1 = () => {
@@ -129,6 +130,11 @@ export function AdvancedSwapDetails({ trade }: AdvancedSwapDetailsProps) {
   const { t } = useTranslation();
   const showRoute = Boolean(trade && trade.route.path.length > 2)
 
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(
+    t('Routing through these tokens resulted in the best price for your trade.'),
+    { placement: 'top-end', tooltipOffset: [20, 10] }
+  );
+
   return (
     <AutoColumn gap='md'>
       {trade && (
@@ -140,9 +146,10 @@ export function AdvancedSwapDetails({ trade }: AdvancedSwapDetailsProps) {
               <AutoColumn style={{ padding: '0 24px' }}>
                 <RowFixed>
                   <Text fontSize='14px'>Route</Text>
-                  <QuestionHelper
-                    text={t('Routing through these tokens resulted in the best price for your trade.')}
-                  />
+                  <ReferenceElement ref={targetRef}>
+                    <HelpIcon color="textSubtle" />
+                  </ReferenceElement>
+                  {tooltipVisible && tooltip}
                 </RowFixed>
                 <SwapRoute trade={trade} />
               </AutoColumn>

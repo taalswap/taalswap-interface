@@ -39,6 +39,7 @@ const predefinedValues = [
 
 const ReferenceElement = styled.div`
   display: inline-block;
+  margin-left: 0.3rem;
 `;
 
 const SlippageToleranceSettings = () => {
