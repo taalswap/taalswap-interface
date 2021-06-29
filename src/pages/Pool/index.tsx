@@ -21,6 +21,7 @@ import AppBody from '../AppBody';
 
 const ReferenceElement = styled.div`
   display: flex;
+  margin-left: 0.3rem;
 `;
 
 export default function Pool() {
