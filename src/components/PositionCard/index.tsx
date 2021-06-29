@@ -68,8 +68,8 @@ export function MinimalPositionCard({ pair, showUnwrapped = false }: PositionCar
             <AutoColumn gap="12px">
               <FixedHeightRow>
                 <RowFixed>
-                  <Text style={{ textTransform: 'uppercase', fontWeight: 600 }} fontSize="14px" color="textSubtle">
-                    LP Tokens in your Wallet
+                  <Text style={{ fontWeight: 600 }} fontSize="14px" color="textSubtle">
+                    {t('LP tokens in your Wallet')}
                   </Text>
                 </RowFixed>
               </FixedHeightRow>
