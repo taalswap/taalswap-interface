@@ -18,7 +18,7 @@ import RemoveLiquidity from './RemoveLiquidity';
 import Swap from './Swap';
 import Migration from './Migration';
 // import LandingPageView from './LandingPageView';
-import { RedirectPathToSwapOnly } from './Swap/redirects';
+import { RedirectPathToSwapOnly, RedirectSwapTokenIds } from './Swap/redirects';
 import { allLanguages, EN } from '../constants/localisation/languageCodes';
 import { LanguageContext } from '../hooks/LanguageContext';
 import { TranslationsContext } from '../hooks/TranslationsContext';
@@ -164,6 +164,12 @@ export default function App() {
                         strict
                         path="/remove/:tokens"
                         component={RedirectOldRemoveLiquidityPathStructure}
+                      />
+
+                      <Route
+                        exact
+                        path="/swap/:currencyIdA/:currencyIdB"
+                        component={RedirectSwapTokenIds}
                       />
 
                       <Route component={RedirectPathToSwapOnly} />

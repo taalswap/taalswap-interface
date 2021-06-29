@@ -86,12 +86,8 @@ function Swap({
 }: RouteComponentProps<{ currencyIdA?: string; currencyIdB?: string }>) {
   const currencyA = useCurrency(currencyIdA);
   const currencyB = useCurrency(currencyIdB);
-  const [connectedLandingFlag, setConnectedLandingFlag] = useState(
-    currencyA !== undefined && currencyB !== undefined
-  );
-  console.log(connectedLandingFlag);
-  console.log(currencyA);
-  console.log(currencyB);
+  const [currencyAFlag, setCurrencyAFlag] = useState(currencyA !== undefined);
+  const [currencyBFlag, setCurrencyBFlag] = useState(currencyB !== undefined);
   const { t } = useTranslation();
   const loadedUrlParams = useDefaultsFromURLSearch();
   const [modalCountdownSecondsRemaining, setModalCountdownSecondsRemaining] =
@@ -269,6 +265,15 @@ function Swap({
     [onUserInput]
   );
 
+  useEffect(() => {
+    if (currencyAFlag && currencyA !== undefined && currencyA !== null) {
+      onCurrencySelection(Field.INPUT, currencyA);
+    }
+
+    if (currencyBFlag && currencyB !== undefined && currencyB !== null) {
+      onCurrencySelection(Field.OUTPUT, currencyB);
+    }
+  }, [currencyAFlag, currencyBFlag, currencyA, currencyB, onCurrencySelection]);
   // if (currencyA !== null && currencyA !== undefined) {
   //   onCurrencySelection(Field.INPUT, currencyA);
   // }
@@ -422,6 +427,7 @@ function Swap({
 
   const handleInputSelect = useCallback(
     (inputCurrency) => {
+      setCurrencyAFlag(false);
       setHasPoppedModal(false);
       setInterruptRedirectCountdown(false);
       setApprovalSubmitted(false); // reset 2 step UI for approvals
@@ -445,6 +451,7 @@ function Swap({
 
   const handleOutputSelect = useCallback(
     (outputCurrency) => {
+      setCurrencyBFlag(false);
       setHasPoppedModal(false);
       setInterruptRedirectCountdown(false);
       onCurrencySelection(Field.OUTPUT, outputCurrency);
@@ -505,9 +512,7 @@ function Swap({
                 value={formattedAmounts[Field.INPUT]}
                 showMaxButton={!atMaxAmountInput}
                 // currency={currencies[Field.INPUT]}
-                currency={
-                  currencyA === undefined ? currencies[Field.INPUT] : currencyA
-                }
+                currency={currencyAFlag ? currencyA : currencies[Field.INPUT]}
                 onUserInput={handleTypeInput}
                 onMax={handleMaxInput}
                 onCurrencySelect={handleInputSelect}
@@ -552,9 +557,7 @@ function Swap({
                 }
                 showMaxButton={false}
                 // currency={currencies[Field.OUTPUT]}
-                currency={
-                  currencyB === undefined ? currencies[Field.OUTPUT] : currencyB
-                }
+                currency={currencyBFlag ? currencyB : currencies[Field.OUTPUT]}
                 onCurrencySelect={handleOutputSelect}
                 otherCurrency={currencies[Field.INPUT]}
                 id="swap-currency-output"
