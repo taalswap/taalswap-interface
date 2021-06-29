@@ -8,6 +8,7 @@ import { useTranslation } from '../../contexts/Localization';
 
 const ReferenceElement = styled.div`
   display: flex;
+  margin-left: 0.3rem;
 `;
 
 const Tabs = styled.div`

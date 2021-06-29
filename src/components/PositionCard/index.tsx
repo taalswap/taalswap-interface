@@ -17,6 +17,7 @@ import CurrencyLogo from '../CurrencyLogo'
 import DoubleCurrencyLogo from '../DoubleLogo'
 import { RowBetween, RowFixed } from '../Row'
 import { Dots } from '../swap/styleds'
+import { useTranslation } from '../../contexts/Localization';
 
 export const FixedHeightRow = styled(RowBetween)`
   height: 24px;
@@ -39,7 +40,7 @@ interface PositionCardProps {
 
 export function MinimalPositionCard({ pair, showUnwrapped = false }: PositionCardProps) {
   const { account } = useActiveWeb3React()
-
+  const { t } = useTranslation()
   const currency0 = showUnwrapped ? pair.token0 : unwrappedToken(pair.token0)
   const currency1 = showUnwrapped ? pair.token1 : unwrappedToken(pair.token1)
 

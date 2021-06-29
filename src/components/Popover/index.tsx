@@ -22,6 +22,7 @@ const PopoverContainer = styled.div<{ show: boolean }>`
 
 const ReferenceElement = styled.div`
   display: inline-block;
+  margin-left: 0.3rem;
 `
 
 const Arrow = styled.div`
