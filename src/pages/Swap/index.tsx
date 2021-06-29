@@ -19,6 +19,7 @@ import {
   Link,
   Flex,
 } from 'taalswap-uikit';
+import { RouteComponentProps } from 'react-router-dom';
 import styled, { ThemeContext } from 'styled-components';
 import AddressInputPanel from 'components/AddressInputPanel';
 import Card, { GreyCard } from 'components/Card';
@@ -76,7 +77,21 @@ const StyledLink = styled(Link)`
   color: ${({ theme }) => theme.colors.failure};
 `;
 
-const Swap = () => {
+// const Swap = () => {
+function Swap({
+  match: {
+    params: { currencyIdA, currencyIdB },
+  },
+  history,
+}: RouteComponentProps<{ currencyIdA?: string; currencyIdB?: string }>) {
+  const currencyA = useCurrency(currencyIdA);
+  const currencyB = useCurrency(currencyIdB);
+  const [connectedLandingFlag, setConnectedLandingFlag] = useState(
+    currencyA !== undefined && currencyB !== undefined
+  );
+  console.log(connectedLandingFlag);
+  console.log(currencyA);
+  console.log(currencyB);
   const { t } = useTranslation();
   const loadedUrlParams = useDefaultsFromURLSearch();
   const [modalCountdownSecondsRemaining, setModalCountdownSecondsRemaining] =
@@ -142,7 +157,7 @@ const Swap = () => {
     parsedAmount,
     currencies,
     inputError: swapInputError,
-  } = useDerivedSwapInfo();
+  } = useDerivedSwapInfo(currencyA ?? undefined, currencyB ?? undefined);
   const {
     wrapType,
     execute: onWrap,
@@ -248,10 +263,19 @@ const Swap = () => {
   );
   const handleTypeOutput = useCallback(
     (value: string) => {
+      console.log(value);
       onUserInput(Field.OUTPUT, value);
     },
     [onUserInput]
   );
+
+  // if (currencyA !== null && currencyA !== undefined) {
+  //   onCurrencySelection(Field.INPUT, currencyA);
+  // }
+
+  // if (currencyB !== null && currencyB !== undefined) {
+  //   onCurrencySelection(Field.OUTPUT, currencyA);
+  // }
 
   // modal and loading
   const [
@@ -402,6 +426,7 @@ const Swap = () => {
       setInterruptRedirectCountdown(false);
       setApprovalSubmitted(false); // reset 2 step UI for approvals
       onCurrencySelection(Field.INPUT, inputCurrency);
+      console.log(inputCurrency);
       if (inputCurrency.symbol === 'SYRUP') {
         checkForWarning(inputCurrency.symbol, 'Selling');
       }
@@ -479,7 +504,10 @@ const Swap = () => {
                 }
                 value={formattedAmounts[Field.INPUT]}
                 showMaxButton={!atMaxAmountInput}
-                currency={currencies[Field.INPUT]}
+                // currency={currencies[Field.INPUT]}
+                currency={
+                  currencyA === undefined ? currencies[Field.INPUT] : currencyA
+                }
                 onUserInput={handleTypeInput}
                 onMax={handleMaxInput}
                 onCurrencySelect={handleInputSelect}
@@ -523,7 +551,10 @@ const Swap = () => {
                     : t('To')
                 }
                 showMaxButton={false}
-                currency={currencies[Field.OUTPUT]}
+                // currency={currencies[Field.OUTPUT]}
+                currency={
+                  currencyB === undefined ? currencies[Field.OUTPUT] : currencyB
+                }
                 onCurrencySelect={handleOutputSelect}
                 otherCurrency={currencies[Field.INPUT]}
                 id="swap-currency-output"
@@ -558,9 +589,7 @@ const Swap = () => {
                   <AutoColumn gap="4px">
                     {Boolean(trade) && (
                       <RowBetween align="center">
-                        <Text fontSize="14px">
-                          {t('Price')}
-                        </Text>
+                        <Text fontSize="14px">{t('Price')}</Text>
                         <TradePrice
                           price={trade?.executionPrice}
                           showInverted={showInverted}
@@ -570,9 +599,7 @@ const Swap = () => {
                     )}
                     {allowedSlippage !== INITIAL_ALLOWED_SLIPPAGE && (
                       <RowBetween align="center">
-                        <Text fontSize="14px">
-                          {t('Slippage Tolerance')}
-                        </Text>
+                        <Text fontSize="14px">{t('Slippage Tolerance')}</Text>
                         <Text fontSize="14px">{allowedSlippage / 100}%</Text>
                       </RowBetween>
                     )}
@@ -719,6 +746,6 @@ const Swap = () => {
       <AdvancedSwapDetailsDropdown trade={trade} />
     </Container>
   );
-};
+}
 
 export default Swap;
