@@ -45,6 +45,7 @@ interface CurrencySearchProps {
 
 const ReferenceElement = styled.div`
   display: inline-block;
+  margin-left: 0.3rem;
 `;
 
 export function CurrencySearch({
