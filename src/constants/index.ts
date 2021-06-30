@@ -1,6 +1,6 @@
 import { ChainId, JSBI, Percent, Token, WETH } from 'taalswap-sdk';
 
-export const ROUTER_ADDRESS = '0x04d17F2606ce80Af3cf886724a7c2755AA3d9743';
+export const ROUTER_ADDRESS = '0x10e1e3871b76e2e55012e387a578f16e367b51d0';
 
 // a list of tokens by chain
 type ChainTokenList = {
@@ -8,17 +8,18 @@ type ChainTokenList = {
 }
 
 export const TAL = new Token(
-  ChainId.RINKEBY,
-  '0xe18E460d38441027b6672363d68C9088F3D773Bf',
+  ChainId.ROPSTEN,
+  '0x78a24accf5f557b004c1313b2cad2e85c345d971',
   18,
   'TAL',
   'TaalSwap Token'
 );
 // export const WETH = new Token(ChainId.RINKEBY, '0x92EcACFC94588aa99fba837Be1a98738290E3252', 18, 'WETH', 'Wrapped ETH');
 // export const DAI = new Token(ChainId.MAINNET, '0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3', 18, 'DAI', 'Dai Stablecoin');
-export const BUSD = new Token(ChainId.RINKEBY, '0xd16431da4EafE953B4f34923CdB8d833FB1B2E7c', 18, 'BUSD', 'Binance USD');
+// export const BUSD = new Token(ChainId.RINKEBY, '0xd16431da4EafE953B4f34923CdB8d833FB1B2E7c', 18, 'BUSD', 'Binance USD');
 // export const BTCB = new Token(ChainId.MAINNET, '0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c', 18, 'BTCB', 'Binance BTC');
-export const USDT = new Token(ChainId.RINKEBY, '0xC958c2ACE36870471238319Bc29018cC549C126D', 18, 'USDT', 'Tether USD');
+export const USDT = new Token(ChainId.ROPSTEN, '0x897ad6a487bd9b490d537b3860860863ae414f1e', 18, 'USDT', 'Tether USD');
+export const USDC = new Token(ChainId.ROPSTEN, '0x9c8fa1ee532f8afe9f2e27f06fd836f3c9572f71', 18, 'USDC', 'USD Coin');
 // export const UST = new Token(
 //   ChainId.MAINNET,
 //   '0x23396cF899Ca06c4472205fC903bDB4de249D6fC',
@@ -43,7 +44,7 @@ const WETH_ONLY: ChainTokenList = {
 // used to construct intermediary pairs for trading
 export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   ...WETH_ONLY,
-  [ChainId.RINKEBY]: [...WETH_ONLY[ChainId.RINKEBY], BUSD, USDT]
+  [ChainId.ROPSTEN]: [...WETH_ONLY[ChainId.ROPSTEN], USDC, USDT]
   // [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, BUSD, BTCB, USDT, UST, ETH]
 };
 
@@ -52,29 +53,29 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
  * tokens.
  */
 export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: Token[] } } = {
-  [ChainId.RINKEBY]: {}
+  [ChainId.ROPSTEN]: {}
 };
 
 // used for display in the default list when adding liquidity
 export const SUGGESTED_BASES: ChainTokenList = {
   ...WETH_ONLY,
-  [ChainId.RINKEBY]: [...WETH_ONLY[ChainId.RINKEBY], BUSD, USDT]
+  [ChainId.ROPSTEN]: [...WETH_ONLY[ChainId.ROPSTEN], USDC, USDT]
   // [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, BUSD, USDT]
 };
 
 // used to construct the list of all pairs we consider by default in the frontend
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   ...WETH_ONLY,
-  [ChainId.RINKEBY]: [...WETH_ONLY[ChainId.RINKEBY], BUSD, USDT]
+  [ChainId.ROPSTEN]: [...WETH_ONLY[ChainId.ROPSTEN], USDC, USDT]
   // [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, BUSD, BTCB, USDT]
 };
 
 export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } = {
   // [ChainId.MAINNET]: [
-  [ChainId.RINKEBY]: [
-    [TAL, WETH[ChainId.RINKEBY]],
+  [ChainId.ROPSTEN]: [
+    [TAL, WETH[ChainId.ROPSTEN]],
     // [CAKE, WBNB],
-    [BUSD, USDT]
+    [USDC, USDT]
     // [DAI, USDT]
   ]
 };
