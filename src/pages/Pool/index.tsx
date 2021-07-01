@@ -19,6 +19,7 @@ import { Dots } from 'components/swap/styleds'
 import useI18n from 'hooks/useI18n'
 import PageHeader from 'components/PageHeader'
 import AppBody from '../AppBody'
+import Teaser from '../LandingPageView/Teaser_page';
 
 export default function Pool() {
   const theme = useContext(ThemeContext)
@@ -56,6 +57,7 @@ export default function Pool() {
 
   return (
     <Container>
+      <Teaser />
       {/* <CardNav activeIndex={1} /> */}
       <AppBody>
         <PageHeader

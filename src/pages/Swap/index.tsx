@@ -38,6 +38,7 @@ import PageHeader from 'components/PageHeader'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import V2ExchangeRedirectModal from 'components/V2ExchangeRedirectModal'
 import AppBody from '../AppBody'
+import Teaser from '../LandingPageView/Teaser_page';
 
 const StyledLink = styled(Link)`
   display: inline;
@@ -341,6 +342,7 @@ const Swap = () => {
 
   return (
     <Container>
+      <Teaser />
       <TokenWarningModal
         isOpen={urlLoadedTokens.length > 0 && !dismissTokenWarning}
         tokens={urlLoadedTokens}
