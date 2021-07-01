@@ -135,10 +135,43 @@ export default function App() {
                   <Popups />
                   <Web3ReactManager>
                     <Switch>
+                      {/* 임시 라우팅 시작 */}
+                      {/* <Route
+                        exact
+                        path="/swap"
+                        component={() => {
+                          window.location.assign('http://localhost:3001');
+                          return null;
+                        }}
+                      />
+                      <Route
+                        exact
+                        path="/liquidity"
+                        component={() => {
+                          window.location.assign('http://localhost:3001');
+                          return null;
+                        }}
+                      />
+                      <Route
+                        exact
+                        strict
+                        path="/swap/:isAdmin"
+                        component={Swap}
+                      />
+                      <Route
+                        exact
+                        strict
+                        path="/liquidity/:isAdmin"
+                        component={Pool}
+                      /> */}
+                      {/* 임시 라우팅 끝 */}
+
+                      {/* 정식 라우팅 시작 */}
                       <Route exact strict path="/swap" component={Swap} />
-                      <Route exact strict path="/find" component={PoolFinder} />
-                      {/* <Route exact strict path="/pool" component={Pool} /> */}
                       <Route exact strict path="/liquidity" component={Pool} />
+                      {/* 정식 라우팅 끝 */}
+
+                      <Route exact strict path="/find" component={PoolFinder} />
                       <Route exact path="/add" component={AddLiquidity} />
                       <Route exact path="/migrate" component={Migration} />
                       <Route
