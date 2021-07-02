@@ -16,32 +16,32 @@
     {
       "name": "WETH Token",
       "symbol": "WETH",
-      "address": "0x92ecacfc94588aa99fba837be1a98738290e3252",
-      "chainId": 4,
+      "address": "0x46884d7849223e057226a69e5f8215d6ff1b8bd6",
+      "chainId": 3,
       "decimals": 18,
       "logoURI": "https://swap.taalswap.finance/images/coins/weth.png"
     },
     {
-      "name": "BUSD Token",
-      "symbol": "BUSD",
-      "address": "0xd16431da4eafe953b4f34923cdb8d833fb1b2e7c",
-      "chainId": 4,
+      "name": "USDC Token",
+      "symbol": "USDC",
+      "address": "0x9c8fa1ee532f8afe9f2e27f06fd836f3c9572f71",
+      "chainId": 3,
       "decimals": 18,
-      "logoURI": "https://swap.taalswap.finance/images/coins/0xd16431da4eafe953b4f34923cdb8d833fb1b2e7c.png"
+      "logoURI": "https://swap.taalswap.finance/images/coins/0x9c8fa1ee532f8afe9f2e27f06fd836f3c9572f71.png"
     },
     {
       "name": "TaalSwap Token",
       "symbol": "TAL",
-      "address": "0xe18e460d38441027b6672363d68c9088f3d773bf",
-      "chainId": 4,
+      "address": "0x78a24accf5f557b004c1313b2cad2e85c345d971",
+      "chainId": 3,
       "decimals": 18,
       "logoURI": "https://swap.taalswap.finance/images/coins/tal.png"
     },
     {
       "name": "USDT Token",
       "symbol": "USDT",
-      "address": "0xc958c2ace36870471238319bc29018cc549c126d",
-      "chainId": 4,
+      "address": "0x897ad6a487bd9b490d537b3860860863ae414f1e",
+      "chainId": 3,
       "decimals": 18,
       "logoURI": "https://swap.taalswap.finance/images/coins/0xc958c2ace36870471238319bc29018cc549c126d.png"
     }
