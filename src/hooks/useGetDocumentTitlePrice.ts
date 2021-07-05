@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-// import useGetCakeBusdLpPrice from 'utils/useGetCakeBusdLpPrice';
+import useGetCakeBusdLpPrice from 'utils/useGetCakeBusdLpPrice';
 import useGetPriceData from './useGetPriceData';
 
 const useGetDocumentTitlePrice = () => {
-  // const cakePriceBusd = useGetCakeBusdLpPrice();
-  let cakePriceBusd = parseFloat('0.0');
+  const cakePriceBusd = useGetCakeBusdLpPrice();
+  let talPriceUsdc = parseFloat('0.0');
   const priceData = useGetPriceData();
 
   if (priceData) {
@@ -12,7 +12,7 @@ const useGetDocumentTitlePrice = () => {
     Object.entries(priceData.data).find(([token, item]) => {
       switch (token.toLowerCase()) {
         case '0x1e94361329257647669dde7dc8c869624aa424ea':
-          cakePriceBusd = parseFloat(item.price);
+          talPriceUsdc = parseFloat(item.price);
           break;
       }
     });
