@@ -44,6 +44,14 @@
       "chainId": 3,
       "decimals": 18,
       "logoURI": "https://swap.taalswap.finance/images/coins/0x897ad6a487bd9b490d537b3860860863ae414f1e.png"
+    },
+    {
+      "name": "Talken",
+      "symbol": "TALK",
+      "address": "0xce052e71e31c8a061172ddb700553b6ef23b03c7",
+      "chainId": 3,
+      "decimals": 18,
+      "logoURI": "https://swap.taalswap.finance/images/coins/talk.png"
     }
   ]
 }
