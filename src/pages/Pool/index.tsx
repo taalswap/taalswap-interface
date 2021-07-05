@@ -18,6 +18,7 @@ import { toV2LiquidityToken, useTrackedTokenPairs } from 'state/user/hooks';
 import { Dots } from 'components/swap/styleds';
 import PageHeader from 'components/PageHeader';
 import AppBody from '../AppBody';
+import Teaser from '../LandingPageView/Teaser_page';
 
 const ReferenceElement = styled.div`
   display: flex;
@@ -74,6 +75,7 @@ export default function Pool() {
 
   return (
     <Container>
+      {/*<Teaser />*/}
       {/* <CardNav activeIndex={1} /> */}
       <AppBody>
         <PageHeader

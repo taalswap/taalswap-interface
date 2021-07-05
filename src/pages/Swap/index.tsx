@@ -1,76 +1,44 @@
 import { CurrencyAmount, JSBI, Token, Trade } from 'taalswap-sdk';
-import { useTranslation } from 'contexts/Localization';
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  useRef,
-} from 'react';
-import { ArrowDown } from 'react-feather';
-import {
-  CardBody,
-  ArrowDownIcon,
-  Button,
-  IconButton,
-  Text,
-  useModal,
-  Link,
-  Flex,
-} from 'taalswap-uikit';
-import { RouteComponentProps } from 'react-router-dom';
-import styled, { ThemeContext } from 'styled-components';
-import AddressInputPanel from 'components/AddressInputPanel';
-import Card, { GreyCard } from 'components/Card';
-import { AutoColumn } from 'components/Column';
-import ConfirmSwapModal from 'components/swap/ConfirmSwapModal';
-import CurrencyInputPanel from 'components/CurrencyInputPanel';
-import { AutoRow, RowBetween } from 'components/Row';
-import AdvancedSwapDetailsDropdown from 'components/swap/AdvancedSwapDetailsDropdown';
-import confirmPriceImpactWithoutFee from 'components/swap/confirmPriceImpactWithoutFee';
-import {
-  ArrowWrapper,
-  BottomGrouping,
-  SwapCallbackError,
-  Wrapper,
-} from 'components/swap/styleds';
-import TradePrice from 'components/swap/TradePrice';
-import TokenWarningModal from 'components/TokenWarningModal';
-import SyrupWarningModal from 'components/SyrupWarningModal';
-import SafeMoonWarningModal from 'components/SafeMoonWarningModal';
-import ProgressSteps from 'components/ProgressSteps';
-import Container from 'components/Container';
+import React, { useCallback, useContext, useEffect, useMemo, useState, useRef } from 'react'
+import { ArrowDown } from 'react-feather'
+import { CardBody, ArrowDownIcon, Button, IconButton, Text, useModal, Link, Flex } from 'taalswap-uikit'
+import styled, { ThemeContext } from 'styled-components'
+import AddressInputPanel from 'components/AddressInputPanel'
+import Card, { GreyCard } from 'components/Card'
+import { AutoColumn } from 'components/Column'
+import ConfirmSwapModal from 'components/swap/ConfirmSwapModal'
+import CurrencyInputPanel from 'components/CurrencyInputPanel'
+import CardNav from 'components/CardNav'
+import { AutoRow, RowBetween } from 'components/Row'
+import AdvancedSwapDetailsDropdown from 'components/swap/AdvancedSwapDetailsDropdown'
+import confirmPriceImpactWithoutFee from 'components/swap/confirmPriceImpactWithoutFee'
+import { ArrowWrapper, BottomGrouping, SwapCallbackError, Wrapper } from 'components/swap/styleds'
+import TradePrice from 'components/swap/TradePrice'
+import TokenWarningModal from 'components/TokenWarningModal'
+import SyrupWarningModal from 'components/SyrupWarningModal'
+import SafeMoonWarningModal from 'components/SafeMoonWarningModal'
+import ProgressSteps from 'components/ProgressSteps'
+import Container from 'components/Container'
 
-import { INITIAL_ALLOWED_SLIPPAGE } from 'constants/index';
-import { useActiveWeb3React } from 'hooks';
-import { useCurrency } from 'hooks/Tokens';
-import {
-  ApprovalState,
-  useApproveCallbackFromTrade,
-} from 'hooks/useApproveCallback';
-import { useSwapCallback } from 'hooks/useSwapCallback';
-import useWrapCallback, { WrapType } from 'hooks/useWrapCallback';
-import { Field } from 'state/swap/actions';
-import {
-  useDefaultsFromURLSearch,
-  useDerivedSwapInfo,
-  useSwapActionHandlers,
-  useSwapState,
-} from 'state/swap/hooks';
-import {
-  useExpertModeManager,
-  useUserDeadline,
-  useUserSlippageTolerance,
-} from 'state/user/hooks';
-import { LinkStyledButton } from 'components/Shared';
-import { maxAmountSpend } from 'utils/maxAmountSpend';
-import { computeTradePriceBreakdown, warningSeverity } from 'utils/prices';
-import Loader from 'components/Loader';
-import PageHeader from 'components/PageHeader';
-import ConnectWalletButton from 'components/ConnectWalletButton';
-import V2ExchangeRedirectModal from 'components/V2ExchangeRedirectModal';
-import AppBody from '../AppBody';
+import { INITIAL_ALLOWED_SLIPPAGE } from 'constants/index'
+import { useActiveWeb3React } from 'hooks'
+import { useCurrency } from 'hooks/Tokens'
+import { ApprovalState, useApproveCallbackFromTrade } from 'hooks/useApproveCallback'
+import { useSwapCallback } from 'hooks/useSwapCallback'
+import useWrapCallback, { WrapType } from 'hooks/useWrapCallback'
+import { Field } from 'state/swap/actions'
+import { useDefaultsFromURLSearch, useDerivedSwapInfo, useSwapActionHandlers, useSwapState } from 'state/swap/hooks'
+import { useExpertModeManager, useUserDeadline, useUserSlippageTolerance } from 'state/user/hooks'
+import { LinkStyledButton } from 'components/Shared'
+import { maxAmountSpend } from 'utils/maxAmountSpend'
+import { computeTradePriceBreakdown, warningSeverity } from 'utils/prices'
+import Loader from 'components/Loader'
+import useI18n from 'hooks/useI18n'
+import PageHeader from 'components/PageHeader'
+import ConnectWalletButton from 'components/ConnectWalletButton'
+import V2ExchangeRedirectModal from 'components/V2ExchangeRedirectModal'
+import AppBody from '../AppBody'
+import Teaser from '../LandingPageView/Teaser_page';
 
 const StyledLink = styled(Link)`
   display: inline;
@@ -259,7 +227,7 @@ function Swap({
   );
   const handleTypeOutput = useCallback(
     (value: string) => {
-      console.log(value);
+
       onUserInput(Field.OUTPUT, value);
     },
     [onUserInput]
@@ -467,6 +435,7 @@ function Swap({
 
   return (
     <Container>
+      {/*<Teaser />*/}
       <TokenWarningModal
         isOpen={urlLoadedTokens.length > 0 && !dismissTokenWarning}
         tokens={urlLoadedTokens}
