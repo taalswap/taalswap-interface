@@ -69,13 +69,15 @@ export default function Pool() {
     .filter((v2Pair): v2Pair is Pair => Boolean(v2Pair));
 
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
-    t('When you add liquidity, you will receive LP tokens to be registered as your share in this liquidity pool.'),
+    t(
+      'When you add liquidity, you will receive LP tokens to be registered as your share in this liquidity pool.'
+    ),
     { placement: 'top-end', tooltipOffset: [20, 10] }
   );
 
   return (
     <Container>
-      {/*<Teaser />*/}
+      {/* <Teaser /> */}
       {/* <CardNav activeIndex={1} /> */}
       <AppBody>
         <PageHeader
@@ -90,9 +92,7 @@ export default function Pool() {
           <CardBody>
             <AutoColumn gap="12px" style={{ width: '100%' }}>
               <RowBetween padding="0 8px">
-                <Text color={theme.colors.text}>
-                  {t('Your Liquidity')}
-                </Text>
+                <Text color={theme.colors.text}>{t('Your Liquidity')}</Text>
                 <ReferenceElement ref={targetRef}>
                   <HelpIcon color="textSubtle" />
                 </ReferenceElement>
@@ -136,7 +136,9 @@ export default function Pool() {
                   </StyledInternalLink>
                 </Text>
                 <Text fontSize="14px" style={{ padding: '.5rem 0 .5rem 0' }}>
-                  {t('Your LP tokens in a farm can be moved back here by unstaking them.')}
+                  {t(
+                    'Your LP tokens in a farm can be moved back here by unstaking them.'
+                  )}
                 </Text>
               </div>
             </AutoColumn>
