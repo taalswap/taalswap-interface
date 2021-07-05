@@ -1,5 +1,4 @@
 import { CurrencyAmount, JSBI, Token, Trade } from 'taalswap-sdk';
-import { useTranslation } from 'contexts/Localization';
 import React, {
   useCallback,
   useContext,
@@ -8,6 +7,7 @@ import React, {
   useState,
   useRef,
 } from 'react';
+import { useTranslation } from 'contexts/Localization';
 import { ArrowDown } from 'react-feather';
 import {
   CardBody,
@@ -26,6 +26,7 @@ import Card, { GreyCard } from 'components/Card';
 import { AutoColumn } from 'components/Column';
 import ConfirmSwapModal from 'components/swap/ConfirmSwapModal';
 import CurrencyInputPanel from 'components/CurrencyInputPanel';
+import CardNav from 'components/CardNav';
 import { AutoRow, RowBetween } from 'components/Row';
 import AdvancedSwapDetailsDropdown from 'components/swap/AdvancedSwapDetailsDropdown';
 import confirmPriceImpactWithoutFee from 'components/swap/confirmPriceImpactWithoutFee';
@@ -67,10 +68,12 @@ import { LinkStyledButton } from 'components/Shared';
 import { maxAmountSpend } from 'utils/maxAmountSpend';
 import { computeTradePriceBreakdown, warningSeverity } from 'utils/prices';
 import Loader from 'components/Loader';
+import useI18n from 'hooks/useI18n';
 import PageHeader from 'components/PageHeader';
 import ConnectWalletButton from 'components/ConnectWalletButton';
 import V2ExchangeRedirectModal from 'components/V2ExchangeRedirectModal';
 import AppBody from '../AppBody';
+import Teaser from '../LandingPageView/Teaser_page';
 
 const StyledLink = styled(Link)`
   display: inline;
@@ -259,7 +262,6 @@ function Swap({
   );
   const handleTypeOutput = useCallback(
     (value: string) => {
-      console.log(value);
       onUserInput(Field.OUTPUT, value);
     },
     [onUserInput]
@@ -467,6 +469,7 @@ function Swap({
 
   return (
     <Container>
+      {/* <Teaser /> */}
       <TokenWarningModal
         isOpen={urlLoadedTokens.length > 0 && !dismissTokenWarning}
         tokens={urlLoadedTokens}
