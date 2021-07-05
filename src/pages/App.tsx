@@ -212,12 +212,6 @@ export default function App() {
                             path="/remove/:tokens"
                             component={RedirectOldRemoveLiquidityPathStructure}
                           />
-
-                          <Route
-                            exact
-                            path="/swap/:currencyIdA/:currencyIdB"
-                            component={RedirectSwapTokenIds}
-                          />
                         </>
                       )}
                       {/* <Route component={RedirectPathToSwapOnly} /> */}
