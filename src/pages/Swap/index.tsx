@@ -356,7 +356,7 @@ function Swap({
   const handleSwap = useCallback(() => {
     if (
       priceImpactWithoutFee &&
-      !confirmPriceImpactWithoutFee(priceImpactWithoutFee)
+      !confirmPriceImpactWithoutFee(priceImpactWithoutFee, storedLangCode)
     ) {
       return;
     }
@@ -386,7 +386,7 @@ function Swap({
           txHash: undefined,
         }));
       });
-  }, [priceImpactWithoutFee, swapCallback, setSwapState]);
+  }, [priceImpactWithoutFee, swapCallback, setSwapState, storedLangCode]);
 
   // errors
   const [showInverted, setShowInverted] = useState<boolean>(false);
