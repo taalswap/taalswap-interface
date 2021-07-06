@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import TeaserImg from './images/teaser_img.png'
 import CheckIcon from './images/check_icon.png'
@@ -7,7 +7,7 @@ const TeaserWrapper = styled.div`
   height: 100%;
   display: block;
   width: 100%;
-  position: absolute;
+  position: fixed;
   background-color: rgba(0, 0, 0, 0.8);
   z-index:9999;
 `;
@@ -21,6 +21,19 @@ const TeaserBox = styled.div`
 `;
 
 const Teaser: React.FC = () => {
+    useEffect(() => {
+        document.body.style.cssText = `
+          position: fixed; 
+          top: -${window.scrollY}px;
+          overflow-y: scroll;
+          width: 100%;`;
+        return () => {
+          const scrollY = document.body.style.top;
+          document.body.style.cssText = '';
+          window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+        };
+      }, []);
+
     return (
         <TeaserWrapper className='teaser_wrap'>
             <TeaserBox>
