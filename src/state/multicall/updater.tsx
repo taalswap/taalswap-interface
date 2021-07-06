@@ -37,7 +37,6 @@ async function fetchChunk(
       chunk.map((obj) => [obj.address, obj.callData])
     )
   } catch (error) {
-    alert(error)
     console.info('Failed to fetch chunk inside retry', error)
     throw error
   }
