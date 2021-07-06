@@ -104,5 +104,9 @@
   "Waiting for confirmation": "Waiting for confirmation",
   "Confirm this transaction in your wallet": "Confirm this transaction in your wallet",
   "Supply": "Supply",
-  "Deposited": "Deposited"
+  "Deposited": "Deposited",
+  "Max": "MAX",
+  "Approving": "Approving",
+  "Rates": "Rates",
+  "Share of Pool": "Share of Pool"
 }

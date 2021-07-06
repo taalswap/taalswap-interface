@@ -812,7 +812,7 @@ export default function RemoveLiquidity({
                       mr="8px"
                     >
                       {approval === ApprovalState.PENDING ? (
-                        <Dots>Approving</Dots>
+                        <Dots>{t('Approving')}</Dots>
                       ) : approval === ApprovalState.APPROVED ||
                         signatureData !== null ? (
                         t('Approved')
