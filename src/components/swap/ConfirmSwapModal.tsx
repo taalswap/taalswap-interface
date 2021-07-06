@@ -25,6 +25,8 @@ function tradeMeaningfullyDiffers(tradeA: Trade, tradeB: Trade): boolean {
   );
 }
 
+const CACHE_KEY = 'pancakeswap_language';
+
 export default function ConfirmSwapModal({
   trade,
   originalTrade,
@@ -51,7 +53,7 @@ export default function ConfirmSwapModal({
   onDismiss: () => void;
 }) {
   const { t } = useTranslation();
-
+  const storedLangCode = localStorage.getItem(CACHE_KEY);
   const showAcceptChanges = useMemo(
     () =>
       Boolean(
@@ -85,11 +87,24 @@ export default function ConfirmSwapModal({
   }, [allowedSlippage, onConfirm, showAcceptChanges, swapErrorMessage, trade]);
 
   // text to show while loading
-  const pendingText = `Swapping ${trade?.inputAmount?.toSignificant(6)} ${
-    trade?.inputAmount?.currency?.symbol
-  } for ${trade?.outputAmount?.toSignificant(6)} ${
-    trade?.outputAmount?.currency?.symbol
-  }`;
+  // const pendingText = `Swapping ${trade?.inputAmount?.toSignificant(6)} ${
+  //   trade?.inputAmount?.currency?.symbol
+  // } for ${trade?.outputAmount?.toSignificant(6)} ${
+  //   trade?.outputAmount?.currency?.symbol
+  // }`;
+
+  const pendingText =
+    storedLangCode === 'ko-KR'
+      ? `${trade?.inputAmount?.toSignificant(6)} ${
+          trade?.inputAmount?.currency?.symbol
+        }${t('FromA')} ${trade?.outputAmount?.toSignificant(6)} ${
+          trade?.outputAmount?.currency?.symbol
+        }${t('ToB')} `
+      : `Swapping ${trade?.inputAmount?.toSignificant(6)} ${
+          trade?.inputAmount?.currency?.symbol
+        } for ${trade?.outputAmount?.toSignificant(6)} ${
+          trade?.outputAmount?.currency?.symbol
+        }`;
 
   const confirmationContent = useCallback(
     () =>
