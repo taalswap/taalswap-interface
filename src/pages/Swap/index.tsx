@@ -469,7 +469,7 @@ function Swap({
 
   return (
     <Container>
-      <Teaser />
+      {/* <Teaser /> */}
       <TokenWarningModal
         isOpen={urlLoadedTokens.length > 0 && !dismissTokenWarning}
         tokens={urlLoadedTokens}
@@ -668,9 +668,9 @@ function Swap({
                       </AutoRow>
                     ) : approvalSubmitted &&
                       approval === ApprovalState.APPROVED ? (
-                      'Approved'
+                      t('Approved')
                     ) : (
-                      `Approve ${currencies[Field.INPUT]?.symbol}`
+                      t(`Approve ${currencies[Field.INPUT]?.symbol}`)
                     )}
                   </Button>
                   <Button
@@ -735,7 +735,7 @@ function Swap({
                 >
                   {swapInputError ||
                     (priceImpactSeverity > 3 && !isExpertMode
-                      ? `Price Impact Too High`
+                      ? t(`Price Impact Too High`)
                       : `Swap${priceImpactSeverity > 2 ? ' Anyway' : ''}`)}
                 </Button>
               )}
