@@ -700,7 +700,7 @@ function Swap({
                     }
                   >
                     {priceImpactSeverity > 3 && !isExpertMode
-                      ? `Price Impact High`
+                      ? t('Price Impact Too High')
                       : `Swap${priceImpactSeverity > 2 ? ' Anyway' : ''}`}
                   </Button>
                 </RowBetween>
