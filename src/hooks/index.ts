@@ -24,12 +24,10 @@ export function useEagerConnect() {
       const hasSignedIn = window.localStorage.getItem(connectorLocalStorageKey)
       if (isAuthorized && hasSignedIn) {
         activate(injected, undefined, true).catch((error) => {
-          alert(error)
           setTried(true)
         })
       } else if (isMobile && window.ethereum && hasSignedIn) {
         activate(injected, undefined, true).catch((error) => {
-          alert(error)
           setTried(true)
         })
       } else {
