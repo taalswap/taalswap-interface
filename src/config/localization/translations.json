@@ -108,5 +108,8 @@
   "Max": "MAX",
   "Approving": "Approving",
   "Rates": "Rates",
-  "Share of Pool": "Share of Pool"
+  "Share of Pool": "Share of Pool",
+  "Output is estimated. You will receive at least ": "Output is estimated. You will receive at least ",
+  " or the transaction will revert.": " or the transaction will revert.",
+  "Input is estimated. You will sell at most ": "Input is estimated. You will sell at most "
 }

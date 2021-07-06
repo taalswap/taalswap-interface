@@ -922,5 +922,10 @@
   "Supply": "제공하기",
   "Deposited": "예치금액",
   "Rates": "교환비율",
-  "Share of Pool": "풀 점유율"
+  "Share of Pool": "풀 점유율",
+  "Output is estimated. You will receive at least ": "추정 결과값입니다. 수령하게 될 최소량은 ",
+  " or the transaction will revert.": " 이며, 그렇지 않을 경우 거래가 취소됩니다.",
+  "Input is estimated. You will sell at most ": "추정 결과값입니다. 판매하게 될 최대수량은 ",
+  "FromA": "를(을)",
+  "ToB": "로 교환함"
 }
