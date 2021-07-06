@@ -56,6 +56,8 @@ import { PoolPriceBar } from './PoolPriceBar';
 import { ROUTER_ADDRESS } from '../../constants';
 import { useTranslation } from '../../contexts/Localization';
 
+const CACHE_KEY = 'pancakeswap_language';
+
 export default function AddLiquidity({
   match: {
     params: { currencyIdA, currencyIdB },
@@ -66,6 +68,7 @@ export default function AddLiquidity({
   const currencyA = useCurrency(currencyIdA);
   const currencyB = useCurrency(currencyIdB);
   const { t } = useTranslation();
+  const storedLangCode = localStorage.getItem(CACHE_KEY);
 
   const oneCurrencyIsWBNB = Boolean(
     chainId &&
@@ -281,9 +284,9 @@ export default function AddLiquidity({
           padding="8px 0 0 0 "
           style={{ fontStyle: 'italic' }}
         >
-          {`Output is estimated. If the price changes by more than ${
+          {`${t('Output is estimated. If the price changes by more than')} ${
             allowedSlippage / 100
-          }% your transaction will revert.`}
+          }${t('% your transaction will revert.')}`}
         </UIKitText>
       </AutoColumn>
     );
@@ -302,13 +305,26 @@ export default function AddLiquidity({
     );
   };
 
-  const pendingText = `Supplying ${parsedAmounts[
-    Field.CURRENCY_A
-  ]?.toSignificant(6)} ${
-    currencies[Field.CURRENCY_A]?.symbol
-  } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)} ${
-    currencies[Field.CURRENCY_B]?.symbol
-  }`;
+  // const pendingText = `Supplying ${parsedAmounts[
+  //   Field.CURRENCY_A
+  // ]?.toSignificant(6)} ${
+  //   currencies[Field.CURRENCY_A]?.symbol
+  // } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)} ${
+  //   currencies[Field.CURRENCY_B]?.symbol
+  // }`;
+
+  const pendingText =
+    storedLangCode === 'ko-KR'
+      ? `${parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)} ${
+          currencies[Field.CURRENCY_A]?.symbol
+        }${t('Aand')} ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)} ${
+          currencies[Field.CURRENCY_B]?.symbol
+        }${t('SupplyB')}`
+      : `Supplying ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)} ${
+          currencies[Field.CURRENCY_A]?.symbol
+        } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)} ${
+          currencies[Field.CURRENCY_B]?.symbol
+        }`;
 
   const handleCurrencyASelect = useCallback(
     (currA: Currency) => {
