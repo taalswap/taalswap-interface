@@ -931,5 +931,6 @@
   "Output is estimated. If the price changes by more than": "추정 결과값입니다. ",
   "% your transaction will revert.": "% 이상의 가격변동이 있을 경우 거래가 취소됩니다.",
   "Aand": "와(과)",
-  "SupplyB": "를(을) 제공함"
+  "SupplyB": "를(을) 제공함",
+  "AddB": "를(을) 추가"
 }
