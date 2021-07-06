@@ -42,17 +42,21 @@ const Teaser: React.FC = () => {
                 <ul style={{textAlign:'left',marginTop:'30px'}}>
                     <li style={{listStyle:'none',display:'flex',alignItems:'flex-start'}}>
                         <img src={CheckIcon} alt="checkIcon" style={{width:'10%',maxWidth:'40px'}}/>
-                        <span style={{color:'#fff',fontSize:'1.5vw',marginLeft:'10px',lineHeight:'130%'}}>Liquidity providing starts at 12:00 PM on July 7, 2021</span>
+                        <span style={{color:'#fff',fontSize:'1.5vw',marginLeft:'10px',lineHeight:'130%'}}>Liquidity providing starts at 12:00 PM (UTC+9) on July 7, 2021</span>
                     </li>
                     <li style={{listStyle:'none',display:'flex',alignItems:'flex-start',marginTop:'10px'}}>
                         <img src={CheckIcon} alt="checkIcon" style={{width:'10%',maxWidth:'40px'}}/>
-                        <span style={{color:'#fff',fontSize:'1.5vw',marginLeft:'10px',lineHeight:'130%'}}>Rewarding starts from Block # 12,784.890 (First block generation expected
-                        at 12:00 PM on July 8, 2021.
+                        <span style={{color:'#fff',fontSize:'1.5vw',marginLeft:'10px',lineHeight:'130%'}}>Rewarding starts from Block # 12,784.560 (First block generation expected
+                        at 12:00 PM (UTC+9) on July 8, 2021.)
                         </span>
                     </li>
                     <li style={{listStyle:'none',display:'flex',alignItems:'flex-start',marginTop:'10px'}}>
                         <img src={CheckIcon} alt="checkIcon" style={{width:'10%',maxWidth:'40px'}}/>
                         <span style={{color:'#fff',fontSize:'1.5vw',marginLeft:'10px',lineHeight:'130%'}}>Partnership : <a href="./" style={{color:'#FFC107'}}>Register here</a></span>
+                    </li>
+                    <li style={{listStyle:'none',display:'flex',alignItems:'flex-start',marginTop:'10px'}}>
+                        <img src={CheckIcon} alt="checkIcon" style={{width:'10%',maxWidth:'40px'}}/>
+                        <span style={{color:'#fff',fontSize:'1.5vw',marginLeft:'10px',lineHeight:'130%'}}>For detailed information, please visit TaalSwap docs page <a href="./" style={{color:'#FFC107'}}>here</a>.</span>
                     </li>
                 </ul>
             </TeaserBox>
