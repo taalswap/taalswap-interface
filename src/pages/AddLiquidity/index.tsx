@@ -222,11 +222,20 @@ export default function AddLiquidity({
           setAttemptingTxn(false);
 
           addTransaction(response, {
-            summary: `Add ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(
-              3
-            )} ${currencies[Field.CURRENCY_A]?.symbol} and ${parsedAmounts[
-              Field.CURRENCY_B
-            ]?.toSignificant(3)} ${currencies[Field.CURRENCY_B]?.symbol}`,
+            summary:
+              storedLangCode === 'ko-KR'
+                ? `${parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)} ${
+                    currencies[Field.CURRENCY_A]?.symbol
+                  }${t('Aand')} ${parsedAmounts[
+                    Field.CURRENCY_B
+                  ]?.toSignificant(3)} ${
+                    currencies[Field.CURRENCY_B]?.symbol
+                  }${t('AddB')}`
+                : `Add ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)} ${
+                    currencies[Field.CURRENCY_A]?.symbol
+                  } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)} ${
+                    currencies[Field.CURRENCY_B]?.symbol
+                  }`,
           });
 
           setTxHash(response.hash);
