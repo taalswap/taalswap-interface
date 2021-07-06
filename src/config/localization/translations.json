@@ -111,5 +111,7 @@
   "Share of Pool": "Share of Pool",
   "Output is estimated. You will receive at least ": "Output is estimated. You will receive at least ",
   " or the transaction will revert.": " or the transaction will revert.",
-  "Input is estimated. You will sell at most ": "Input is estimated. You will sell at most "
+  "Input is estimated. You will sell at most ": "Input is estimated. You will sell at most ",
+  "Output is estimated. If the price changes by more than": "Output is estimated. If the price changes by more than",
+  "% your transaction will revert.": "% your transaction will revert."
 }
