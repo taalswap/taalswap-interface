@@ -75,6 +75,8 @@ import V2ExchangeRedirectModal from 'components/V2ExchangeRedirectModal';
 import AppBody from '../AppBody';
 import Teaser from '../LandingPageView/Teaser_page';
 
+const CACHE_KEY = 'pancakeswap_language';
+
 const StyledLink = styled(Link)`
   display: inline;
   color: ${({ theme }) => theme.colors.failure};
@@ -92,6 +94,7 @@ function Swap({
   const [currencyAFlag, setCurrencyAFlag] = useState(currencyA !== undefined);
   const [currencyBFlag, setCurrencyBFlag] = useState(currencyB !== undefined);
   const { t } = useTranslation();
+  const storedLangCode = localStorage.getItem(CACHE_KEY);
   const loadedUrlParams = useDefaultsFromURLSearch();
   const [modalCountdownSecondsRemaining, setModalCountdownSecondsRemaining] =
     useState(5);
@@ -664,13 +667,15 @@ function Swap({
                   >
                     {approval === ApprovalState.PENDING ? (
                       <AutoRow gap="6px" justify="center">
-                        Approving <Loader stroke="white" />
+                        {t('Approving')} <Loader stroke="white" />
                       </AutoRow>
                     ) : approvalSubmitted &&
                       approval === ApprovalState.APPROVED ? (
                       t('Approved')
+                    ) : storedLangCode === 'ko-KR' ? (
+                      t(`${currencies[Field.INPUT]?.symbol} ${t('Approve')}`)
                     ) : (
-                      t(`Approve ${currencies[Field.INPUT]?.symbol}`)
+                      t(`${t('Approve')} ${currencies[Field.INPUT]?.symbol}`)
                     )}
                   </Button>
                   <Button
@@ -701,7 +706,10 @@ function Swap({
                   >
                     {priceImpactSeverity > 3 && !isExpertMode
                       ? t('Price Impact Too High')
-                      : `Swap${priceImpactSeverity > 2 ? ' Anyway' : ''}`}
+                      : // : `Swap${priceImpactSeverity > 2 ? ' Anyway' : ''}`}
+                      priceImpactSeverity > 2
+                      ? t('Swap Anyway')
+                      : t('Swap')}
                   </Button>
                 </RowBetween>
               ) : (
@@ -736,7 +744,11 @@ function Swap({
                   {swapInputError ||
                     (priceImpactSeverity > 3 && !isExpertMode
                       ? t(`Price Impact Too High`)
-                      : `Swap${priceImpactSeverity > 2 ? ' Anyway' : ''}`)}
+                      : //  : `Swap${priceImpactSeverity > 2 ? ' Anyway' : ''}`)}
+
+                      priceImpactSeverity > 2
+                      ? t('Swap Anyway')
+                      : t('Swap'))}
                 </Button>
               )}
               {showApproveFlow && (
