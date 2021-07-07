@@ -469,7 +469,6 @@ function Swap({
 
   return (
     <Container>
-      <Teaser />
       <TokenWarningModal
         isOpen={urlLoadedTokens.length > 0 && !dismissTokenWarning}
         tokens={urlLoadedTokens}
