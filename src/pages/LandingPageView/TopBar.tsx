@@ -6,6 +6,11 @@ import Topmenu from './topmenu';
 import logo_img from './images/TAAL_Logo.png';
 import { useTranslation } from '../../contexts/Localization';
 
+const frontendBaseUrl =
+  process.env.REACT_APP_FRONTEND || 'http://localhost:3001';
+const interfaceBaseUrl =
+  process.env.REACT_APP_INTERFACE || 'http://localhost:3000';
+
 const TopBar = () => {
   const { account } = useWeb3React();
   const { t } = useTranslation();
@@ -14,14 +19,16 @@ const TopBar = () => {
   return (
     <div className="tabbar_wrap">
       <div>
-        <Link href="http://localhost:3001/">
+        {/* <Link href="http://localhost:3001/"> */}
+        <Link href={`${frontendBaseUrl}`}>
           <img src={logo_img} alt="logo_img" className="top_logo" />
         </Link>
       </div>
       <div className="top_menu">
         <div>
           <Link
-            href="http://localhost:3001/"
+            // href="http://localhost:3001/"
+            href={`${frontendBaseUrl}`}
             style={{ color: '#212b36', textDecoration: 'none' }}
           >
             Home
@@ -29,7 +36,7 @@ const TopBar = () => {
         </div>
         <div style={{ marginLeft: '30px' }}>
           <Link
-            href="#/swap"
+            href={`${interfaceBaseUrl}/#/swap`}
             style={{ color: '#212b36', textDecoration: 'none' }}
           >
             Swap
@@ -38,7 +45,7 @@ const TopBar = () => {
         <div style={{ marginLeft: '30px' }}>
           <Link
             // href="#/pool"
-            href="#/liquidity"
+            href={`${interfaceBaseUrl}/#/liquidity`}
             style={{ color: '#212b36', textDecoration: 'none' }}
           >
             Liquidity
@@ -46,14 +53,18 @@ const TopBar = () => {
         </div>
         <div style={{ marginLeft: '30px' }}>
           <Link
-            href="http://localhost:3001/farms"
+            href={`${frontendBaseUrl}/farms`}
             style={{ color: '#212b36', textDecoration: 'none' }}
           >
             Farms
           </Link>
         </div>
         <div>
-          <input type="button" value={t('Connect Wallet')} className="connect_btn" />
+          <input
+            type="button"
+            value={t('Connect Wallet')}
+            className="connect_btn"
+          />
         </div>
       </div>
       <div className="mobile_menu" style={{ cursor: 'pointer' }}>
