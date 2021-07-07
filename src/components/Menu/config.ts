@@ -1,11 +1,16 @@
 import { MenuEntry } from 'taalswap-uikit';
 import { ContextApi } from 'contexts/Localization/types';
 
+const frontendBaseUrl =
+  process.env.REACT_APP_FRONTEND || 'http://localhost:3001';
+const interfaceBaseUrl =
+  process.env.REACT_APP_INTERFACE || 'http://localhost:3000';
+
 const config: (t: ContextApi['t']) => MenuEntry[] = (t) => [
   {
     label: t('Home'),
     icon: 'HomeIcon',
-    href: 'http://localhost:3001/',
+    href: `${frontendBaseUrl}`,
   },
   // {
   //   label: 'Trade',
@@ -30,23 +35,25 @@ const config: (t: ContextApi['t']) => MenuEntry[] = (t) => [
     label: t('Swap Menu'),
     icon: 'TradeIcon',
     // href: 'http://localhost:3000/#/swap',
-    href: 'http://localhost:3000/#/swap',
+    href: `${interfaceBaseUrl}/#/swap`,
   },
   {
     label: t('Liquidity Menu'),
     icon: 'LiquidityIcon',
-    // href: 'http://localhost:3000/#/pool',
-    href: 'http://localhost:3000/#/liquidity',
+    // href: 'http://localhost:3000/#/liquidity',
+    href: `${interfaceBaseUrl}/#/liquidity`,
   },
   {
     label: t('Farms Menu'),
     icon: 'FarmIcon',
-    href: 'http://localhost:3001/farms',
+    // href: 'http://localhost:3001/farms',
+    href: `${frontendBaseUrl}/farms`,
   },
   {
     label: t('Staking'),
     icon: 'PoolIcon',
-    href: 'http://localhost:3001/staking',
+    // href: 'http://localhost:3001/staking',
+    href: `${frontendBaseUrl}/staking`,
   },
   {
     label: t('Info'),

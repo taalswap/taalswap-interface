@@ -16,6 +16,9 @@ import FirstCard from './FirstCard';
 import SecondCard from './SecondCard';
 import FAQ from './FAQ';
 
+const interfaceBaseUrl =
+  process.env.REACT_APP_INTERFACE || 'http://localhost:3000';
+
 const Wrapper = styled.div`
   max-width: 436px;
   width: 100%;
@@ -69,7 +72,8 @@ const Migration = () => {
               <Button
                 as={Link}
                 external
-                href="http://localhost:3000/#/liquidity"
+                // href="http://localhost:3000/#/liquidity"
+                href={`${interfaceBaseUrl}/#/liquidity`}
                 style={{ width: '100%' }}
               >
                 Add liquidity
