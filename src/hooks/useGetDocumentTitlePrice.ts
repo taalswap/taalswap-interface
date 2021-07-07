@@ -11,7 +11,7 @@ const useGetDocumentTitlePrice = () => {
     // eslint-disable-next-line array-callback-return
     Object.entries(priceData.data).find(([token, item]) => {
       switch (token.toLowerCase()) {
-        case '0x2ccdf53b17cce1c1c37bdd0ff0f8320e8cea34ed':
+        case '0x90a4a420732907b3c38b11058f9aa02b3f4121df':
           cakePriceBusd = parseFloat(item.price);
           break;
       }
