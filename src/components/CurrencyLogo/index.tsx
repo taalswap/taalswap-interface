@@ -9,9 +9,8 @@ import CoinLogo from '../pancake/CoinLogo'
 const getTokenLogoURL = (address: string) => {
   if (address.toLowerCase() === '0x90a4a420732907b3c38b11058f9aa02b3f4121df') {
     return (`https://swap.taalswap.finance/images/coins/${address}.png`)
-  } else {
-    return (`https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`)
   }
+  return (`https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`)
 }
 
 const StyledBnbLogo = styled.img<{ size: string }>`
