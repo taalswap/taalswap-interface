@@ -1,80 +1,87 @@
-import { Trade, TradeType } from 'taalswap-sdk'
-import React, { useMemo, useState } from 'react'
+import { Trade, TradeType } from 'taalswap-sdk';
+import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { Button, HelpIcon, Text, useTooltip } from 'taalswap-uikit';
-import { Repeat } from 'react-feather'
+import { Repeat } from 'react-feather';
 
-import { Field } from '../../state/swap/actions'
+import { Field } from '../../state/swap/actions';
 import {
   computeSlippageAdjustedAmounts,
   computeTradePriceBreakdown,
   formatExecutionPrice,
-  warningSeverity
-} from '../../utils/prices'
-import { AutoColumn } from '../Column'
-import { AutoRow, RowBetween, RowFixed } from '../Row'
-import FormattedPriceImpact from './FormattedPriceImpact'
-import { StyledBalanceMaxMini, SwapCallbackError } from './styleds'
+  warningSeverity,
+} from '../../utils/prices';
+import { AutoColumn } from '../Column';
+import { AutoRow, RowBetween, RowFixed } from '../Row';
+import FormattedPriceImpact from './FormattedPriceImpact';
+import { StyledBalanceMaxMini, SwapCallbackError } from './styleds';
 import { useTranslation } from '../../contexts/Localization';
 
 const ReferenceElement = styled.div`
   display: inline-block;
   margin-left: 0.3rem;
-`
+`;
 
 export default function SwapModalFooter({
-                                          trade,
-                                          onConfirm,
-                                          allowedSlippage,
-                                          swapErrorMessage,
-                                          disabledConfirm
-                                        }: {
-  trade: Trade
-  allowedSlippage: number
-  onConfirm: () => void
-  swapErrorMessage: string | undefined
-  disabledConfirm: boolean
+  trade,
+  onConfirm,
+  allowedSlippage,
+  swapErrorMessage,
+  disabledConfirm,
+}: {
+  trade: Trade;
+  allowedSlippage: number;
+  onConfirm: () => void;
+  swapErrorMessage: string | undefined;
+  disabledConfirm: boolean;
 }) {
-  const [showInverted, setShowInverted] = useState<boolean>(false)
-  const slippageAdjustedAmounts = useMemo(() => computeSlippageAdjustedAmounts(trade, allowedSlippage), [
-    allowedSlippage,
-    trade
-  ])
-  const { priceImpactWithoutFee, realizedLPFee } = useMemo(() => computeTradePriceBreakdown(trade), [trade])
-  const severity = warningSeverity(priceImpactWithoutFee)
+  const [showInverted, setShowInverted] = useState<boolean>(false);
+  const slippageAdjustedAmounts = useMemo(
+    () => computeSlippageAdjustedAmounts(trade, allowedSlippage),
+    [allowedSlippage, trade]
+  );
+  const { priceImpactWithoutFee, realizedLPFee } = useMemo(
+    () => computeTradePriceBreakdown(trade),
+    [trade]
+  );
+  const severity = warningSeverity(priceImpactWithoutFee);
   const { t } = useTranslation();
 
   const TipReceived = () => {
     const { targetRef, tooltip, tooltipVisible } = useTooltip(
-     t('Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.'),
-      { placement: 'right-end', tooltipOffset: [20, 10] },
-    )
+      t(
+        'Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.'
+      ),
+      { placement: 'right-end', tooltipOffset: [20, 10] }
+    );
 
-    return(
+    return (
       <div>
         <ReferenceElement ref={targetRef}>
           <HelpIcon color="textSubtle" />
         </ReferenceElement>
         {tooltipVisible && tooltip}
       </div>
-    )
-  }
+    );
+  };
 
   const TipImpact = () => {
     const { targetRef, tooltip, tooltipVisible } = useTooltip(
-      t('The difference between the market price and your price due to trade size.'),
-      { placement: 'right-end', tooltipOffset: [20, 10] },
-    )
+      t(
+        'The difference between the market price and your price due to trade size.'
+      ),
+      { placement: 'right-end', tooltipOffset: [20, 10] }
+    );
 
-    return(
+    return (
       <div>
         <ReferenceElement ref={targetRef}>
           <HelpIcon color="textSubtle" />
         </ReferenceElement>
         {tooltipVisible && tooltip}
       </div>
-    )
-  }
+    );
+  };
 
   const TipFee = () => {
     const { targetRef, tooltip, tooltipVisible } = useTooltip(
@@ -84,37 +91,39 @@ export default function SwapModalFooter({
         <Text>{t('- 0.03% to the Treasury')}</Text>
         <Text>{t('- 0.05% towards TAL buyback & burn')}</Text>
       </>,
-      { placement: 'right-end', tooltipOffset: [20, 10] },
-    )
+      { placement: 'right-end', tooltipOffset: [20, 10] }
+    );
 
-    return(
+    return (
       <div>
         <ReferenceElement ref={targetRef}>
           <HelpIcon color="textSubtle" />
         </ReferenceElement>
         {tooltipVisible && tooltip}
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <>
-      <AutoColumn gap='0px'>
-        <RowBetween align='center'>
-          <Text fontSize='14px'>Price</Text>
+      <AutoColumn gap="0px">
+        <RowBetween align="center">
+          <Text fontSize="14px">Price</Text>
           <Text
-            fontSize='14px'
+            fontSize="14px"
             style={{
               justifyContent: 'center',
               alignItems: 'center',
               display: 'flex',
               textAlign: 'right',
               paddingLeft: '8px',
-              fontWeight: 500
+              fontWeight: 500,
             }}
           >
             {formatExecutionPrice(trade, showInverted)}
-            <StyledBalanceMaxMini onClick={() => setShowInverted(!showInverted)}>
+            <StyledBalanceMaxMini
+              onClick={() => setShowInverted(!showInverted)}
+            >
               <Repeat size={14} />
             </StyledBalanceMaxMini>
           </Text>
@@ -122,7 +131,7 @@ export default function SwapModalFooter({
 
         <RowBetween>
           <RowFixed>
-            <Text fontSize='14px'>
+            <Text fontSize="14px">
               {trade.tradeType === TradeType.EXACT_INPUT
                 ? t('Minimum received')
                 : t('Maximum sold')}
@@ -130,12 +139,12 @@ export default function SwapModalFooter({
             <TipReceived />
           </RowFixed>
           <RowFixed>
-            <Text fontSize='14px'>
+            <Text fontSize="14px">
               {trade.tradeType === TradeType.EXACT_INPUT
                 ? slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(4) ?? '-'
                 : slippageAdjustedAmounts[Field.INPUT]?.toSignificant(4) ?? '-'}
             </Text>
-            <Text fontSize='14px' marginLeft='4px'>
+            <Text fontSize="14px" marginLeft="4px">
               {trade.tradeType === TradeType.EXACT_INPUT
                 ? trade.outputAmount.currency.symbol
                 : trade.inputAmount.currency.symbol}
@@ -144,18 +153,22 @@ export default function SwapModalFooter({
         </RowBetween>
         <RowBetween>
           <RowFixed>
-            <Text fontSize='14px'>{t('Price Impact')}</Text>
+            <Text fontSize="14px">{t('Price Impact')}</Text>
             <TipImpact />
           </RowFixed>
           <FormattedPriceImpact priceImpact={priceImpactWithoutFee} />
         </RowBetween>
         <RowBetween>
           <RowFixed>
-            <Text fontSize='14px'>{t('Liquidity Provider Fee')}</Text>
+            <Text fontSize="14px">{t('Liquidity Provider Fee')}</Text>
             <TipFee />
           </RowFixed>
-          <Text fontSize='14px'>
-            {realizedLPFee ? `${realizedLPFee?.toSignificant(6)} ${trade.inputAmount.currency.symbol}` : '-'}
+          <Text fontSize="14px">
+            {realizedLPFee
+              ? `${realizedLPFee?.toSignificant(6)} ${
+                  trade.inputAmount.currency.symbol
+                }`
+              : '-'}
           </Text>
         </RowBetween>
       </AutoColumn>
@@ -165,15 +178,17 @@ export default function SwapModalFooter({
           onClick={onConfirm}
           disabled={disabledConfirm}
           variant={severity > 2 ? 'danger' : 'primary'}
-          mt='10px'
-          id='confirm-swap-or-send'
-          width='100%'
+          mt="10px"
+          id="confirm-swap-or-send"
+          width="100%"
         >
           {severity > 2 ? t('Swap Anyway') : t('Confirm Swap')}
         </Button>
 
-        {swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}
+        {swapErrorMessage ? (
+          <SwapCallbackError error={swapErrorMessage} />
+        ) : null}
       </AutoRow>
     </>
-  )
+  );
 }

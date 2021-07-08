@@ -46,6 +46,9 @@ const BodyWrapper = styled.div`
 
 const CACHE_KEY = 'pancakeswap_language';
 
+const frontendBaseUrl =
+  process.env.REACT_APP_FRONTEND || 'http://localhost:3001';
+
 export default function App() {
   const [selectedLanguage, setSelectedLanguage] = useState<any>(undefined);
   const [translatedLanguage, setTranslatedLanguage] = useState<any>(undefined);
@@ -141,7 +144,7 @@ export default function App() {
                             exact
                             path="/swap"
                             component={() => {
-                              window.location.assign('http://localhost:3001');
+                              window.location.assign(`${frontendBaseUrl}`);
                               return null;
                             }}
                           />
@@ -149,7 +152,7 @@ export default function App() {
                             exact
                             path="/liquidity"
                             component={() => {
-                              window.location.assign('http://localhost:3001');
+                              window.location.assign(`${frontendBaseUrl}`);
                               return null;
                             }}
                           />
