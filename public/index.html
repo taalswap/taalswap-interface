@@ -14,11 +14,6 @@
         j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
         f.parentNode.insertBefore(j, f);
       })(window, document, 'script', 'dataLayer', '%REACT_APP_GTAG%');
-
-      function postCrossDomainMessage(msg) {
-        var win = document.getElementById('ifr');
-        win.contentWindow.postMessage(msg, "https://taalswap.finance/");
-      }
     </script>
     <!-- Links -->
     <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -75,7 +70,6 @@
     />
   </head>
   <body>
-    <iframe style="display:none;" src="https://taalswap.finance/getlocalstorage.html" id="ifr"></iframe>
     <!-- GTAG (noscript) -->
     <noscript>
       <iframe
@@ -86,9 +80,9 @@
       ></iframe>
     </noscript>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-<!--    <audio id="bgMusic">-->
-<!--      <source src="swap.mp3" type="audio/mp3" />-->
-<!--    </audio>-->
+    <!--    <audio id="bgMusic">-->
+    <!--      <source src="swap.mp3" type="audio/mp3" />-->
+    <!--    </audio>-->
     <div id="root"></div>
     <div id="portal-root"></div>
   </body>
