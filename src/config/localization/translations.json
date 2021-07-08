@@ -98,5 +98,20 @@
   "priceChange": "Expected price slippage",
   "forAtLeast": "for at least ",
   "toleranceExplanation": "Lowering this limit decreases your risk of frontrunning. However, this makes more likely that your transaction will fail due to normal price movements.",
-  "tokenSearchPlaceholder": "Search name or paste address"
+  "tokenSearchPlaceholder": "Search name or paste address",
+  "Price Impact Too High": "Price Impact Too High",
+  "Transaction submitted": "Transaction submitted",
+  "Waiting for confirmation": "Waiting for confirmation",
+  "Confirm this transaction in your wallet": "Confirm this transaction in your wallet",
+  "Supply": "Supply",
+  "Deposited": "Deposited",
+  "Max": "MAX",
+  "Approving": "Approving",
+  "Rates": "Rates",
+  "Share of Pool": "Share of Pool",
+  "Output is estimated. You will receive at least ": "Output is estimated. You will receive at least ",
+  " or the transaction will revert.": " or the transaction will revert.",
+  "Input is estimated. You will sell at most ": "Input is estimated. You will sell at most ",
+  "Output is estimated. If the price changes by more than": "Output is estimated. If the price changes by more than",
+  "% your transaction will revert.": "% your transaction will revert."
 }

@@ -77,6 +77,7 @@ export default function Pool() {
 
   return (
     <Container>
+      {/* <Teaser /> */}
       {/* <CardNav activeIndex={1} /> */}
       <AppBody>
         <PageHeader

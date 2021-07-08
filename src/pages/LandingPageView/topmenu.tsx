@@ -3,6 +3,11 @@ import { Target } from 'react-feather';
 import { Link } from 'taalswap-uikit';
 import { useTranslation } from '../../contexts/Localization';
 
+const frontendBaseUrl =
+  process.env.REACT_APP_FRONTEND || 'http://localhost:3001';
+const interfaceBaseUrl =
+  process.env.REACT_APP_INTERFACE || 'http://localhost:3000';
+
 const Search = () => {
   const [showResults, setShowResults] = React.useState(false);
   const onClick = () => setShowResults(true);
@@ -26,18 +31,24 @@ const Results = () => {
           </Link>
         </li>
         <li>
-          <Link href="#/swap" style={{ textDecoration: 'none' }}>
+          <Link
+            href={`${interfaceBaseUrl}/#/swap`}
+            style={{ textDecoration: 'none' }}
+          >
             <span className="swap_icon">swap_icon</span>Swap
           </Link>
         </li>
         <li>
-          <Link href="#/liquidity" style={{ textDecoration: 'none' }}>
+          <Link
+            href={`${interfaceBaseUrl}/#/liquidity`}
+            style={{ textDecoration: 'none' }}
+          >
             <span className="liquidity_icon">liquidity_icon</span>Liquidity
           </Link>
         </li>
         <li>
           <Link
-            href="http://localhost:3001/farms"
+            href={`${frontendBaseUrl}/farms`}
             style={{ textDecoration: 'none' }}
           >
             <span className="farms_icon">Farms_icon</span>Farms
@@ -45,12 +56,13 @@ const Results = () => {
         </li>
         <li>
           <Link href="/" style={{ textDecoration: 'none' }}>
-            <span className="connect_icon">connect_icon</span>{t('Connect Wallet')}
+            <span className="connect_icon">connect_icon</span>
+            {t('Connect Wallet')}
           </Link>
         </li>
       </ul>
     </div>
-  )
+  );
 };
 
 export default Search;
