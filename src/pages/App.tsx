@@ -44,7 +44,8 @@ const BodyWrapper = styled.div`
   }
 `;
 
-const CACHE_KEY = 'pancakeswap_language';
+// const CACHE_KEY = 'pancakeswap_language';
+const CACHE_KEY = 'taalswap_language';
 
 const frontendBaseUrl =
   process.env.REACT_APP_FRONTEND || 'http://localhost:3001';
