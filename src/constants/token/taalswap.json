@@ -44,6 +44,22 @@
       "chainId": 1,
       "decimals": 6,
       "logoURI": "https://swap.taalswap.finance/images/coins/usdt.png"
+    },
+    {
+      "name": "TENA Token",
+      "symbol": "TENA",
+      "address": "0x086b00cf35e8873636384cd2b424c39ae875a8a9",
+      "chainId": 1,
+      "decimals": 18,
+      "logoURI": "https://swap.taalswap.finance/images/coins/0x086b00cf35e8873636384cd2b424c39ae875a8a9.png"
+    },
+    {
+      "name": "PANTHEON X TOKEN",
+      "symbol": "XPN",
+      "address": "0x3b9e094d56103611f0acefdab43182347ba60df4",
+      "chainId": 1,
+      "decimals": 18,
+      "logoURI": "https://swap.taalswap.finance/images/coins/0x3b9e094d56103611f0acefdab43182347ba60df4.png"
     }
   ]
 }
