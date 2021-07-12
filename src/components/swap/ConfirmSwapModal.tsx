@@ -25,7 +25,8 @@ function tradeMeaningfullyDiffers(tradeA: Trade, tradeB: Trade): boolean {
   );
 }
 
-const CACHE_KEY = 'pancakeswap_language';
+// const CACHE_KEY = 'pancakeswap_language';
+const CACHE_KEY = 'taalswap_language';
 
 export default function ConfirmSwapModal({
   trade,
