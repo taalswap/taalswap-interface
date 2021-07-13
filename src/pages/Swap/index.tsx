@@ -75,7 +75,8 @@ import V2ExchangeRedirectModal from 'components/V2ExchangeRedirectModal';
 import AppBody from '../AppBody';
 import Teaser from '../LandingPageView/Teaser_page';
 
-const CACHE_KEY = 'pancakeswap_language';
+// const CACHE_KEY = 'pancakeswap_language';
+const CACHE_KEY = 'taalswap_language';
 
 const StyledLink = styled(Link)`
   display: inline;
@@ -507,6 +508,7 @@ function Swap({
             title={t('Swap')}
             description={t('Trade your token on the spot')}
           />
+
           <CardBody>
             <AutoColumn gap="md">
               <CurrencyInputPanel
@@ -616,6 +618,7 @@ function Swap({
                 </Card>
               )}
             </AutoColumn>
+
             <BottomGrouping>
               {disableSwap && (
                 <Flex alignItems="center" justifyContent="center" mb="1rem">

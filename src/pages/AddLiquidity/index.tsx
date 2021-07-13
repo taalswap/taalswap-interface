@@ -56,7 +56,8 @@ import { PoolPriceBar } from './PoolPriceBar';
 import { ROUTER_ADDRESS } from '../../constants';
 import { useTranslation } from '../../contexts/Localization';
 
-const CACHE_KEY = 'pancakeswap_language';
+// const CACHE_KEY = 'pancakeswap_language';
+const CACHE_KEY = 'taalswap_language';
 
 export default function AddLiquidity({
   match: {
