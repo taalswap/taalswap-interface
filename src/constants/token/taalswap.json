@@ -54,12 +54,28 @@
       "logoURI": "https://swap.taalswap.finance/images/coins/0x086b00cf35e8873636384cd2b424c39ae875a8a9.png"
     },
     {
-      "name": "PANTHEON X TOKEN",
+      "name": "PANTHEON X Token",
       "symbol": "XPN",
       "address": "0x3b9e094d56103611f0acefdab43182347ba60df4",
       "chainId": 1,
       "decimals": 18,
       "logoURI": "https://swap.taalswap.finance/images/coins/0x3b9e094d56103611f0acefdab43182347ba60df4.png"
+    },
+    {
+      "name": "12Ships Token",
+      "symbol": "TSHP",
+      "address": "0x525794473f7ab5715c81d06d10f52d11cc052804",
+      "chainId": 1,
+      "decimals": 18,
+      "logoURI": "https://swap.taalswap.finance/images/coins/0x525794473f7ab5715c81d06d10f52d11cc052804.png"
+    },
+    {
+      "name": "12Ships",
+      "symbol": "DVP",
+      "address": "0x8e30ea2329d95802fd804f4291220b0e2f579812",
+      "chainId": 1,
+      "decimals": 18,
+      "logoURI": "https://swap.taalswap.finance/images/coins/0x8e30ea2329d95802fd804f4291220b0e2f579812.png"
     }
   ]
 }
