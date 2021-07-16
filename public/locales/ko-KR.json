@@ -60,7 +60,7 @@
   "Pool found!": "풀 발견!",
   "You don’t have liquidity in this pool yet.": "아직이 풀에 유동성이 없습니다.",
   "No pool found.": "관련 풀이 없음.",
-  "Invalid pair.": "비정상 페어.",
+  "Invalid pair.": "페어를 선택하세요.",
   "Find a token by searching for its name or symbol or by pasting its address below.": "이름이나 기호를 검색하거나 아래에 주소를 붙여 넣어 토큰을 찾습니다.",
   "Select a token": "토큰 선택",
   "Token name": "토큰명",
