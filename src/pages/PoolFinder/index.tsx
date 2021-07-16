@@ -150,7 +150,7 @@ export default function PoolFinder() {
               ) : pairState === PairState.INVALID ? (
                 <LightCard padding='45px 10px'>
                   <AutoColumn gap='sm' justify='center'>
-                    <Text style={{ textAlign: 'center' }}>{t('Invalid pair.')}</Text>
+                    <Text style={{ textAlign: 'center' }}>{t('Invalid pair')}</Text>
                   </AutoColumn>
                 </LightCard>
               ) : pairState === PairState.LOADING ? (
