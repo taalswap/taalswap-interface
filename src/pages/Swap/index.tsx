@@ -273,10 +273,12 @@ function Swap({
 
   useEffect(() => {
     if (currencyAFlag && currencyA !== undefined && currencyA !== null) {
+      setCurrencyAFlag(false);
       onCurrencySelection(Field.INPUT, currencyA);
     }
 
     if (currencyBFlag && currencyB !== undefined && currencyB !== null) {
+      setCurrencyBFlag(false);
       onCurrencySelection(Field.OUTPUT, currencyB);
     }
   }, [currencyAFlag, currencyBFlag, currencyA, currencyB, onCurrencySelection]);
