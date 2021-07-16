@@ -55,12 +55,17 @@ const config: (t: ContextApi['t']) => MenuEntry[] = (t) => [
   //   // href: 'http://localhost:3001/staking',
   //   href: `${frontendBaseUrl}/staking`,
   // },
-  // {
-  //   label: t('Info'),
-  //   icon: 'InfoIcon',
-  //   // href: '/pools',
-  //   href: 'https://taalswap.info/home',
-  // },
+  {
+    label: t('Info'),
+    icon: 'InfoIcon',
+    // href: '/pools',
+    href: 'https://taalswap.info/home',
+  },
+  {
+    label: t('Partnership'),
+    icon: 'TeamBattleIcon',
+    href: 'https://docs.google.com/forms/d/e/1FAIpQLSf6UYO1Olnt1Mevz8Ap5sXSd2T8J2UGKxOBT5Z-hzKF7CYhSg/viewform',
+  },
 
   // {
   //   label: 'Prediction',
