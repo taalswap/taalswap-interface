@@ -540,6 +540,7 @@ function Swap({
                       onClick={() => {
                         setApprovalSubmitted(false); // reset 2 step UI for approvals
                         onSwitchTokens();
+                        console.log('-----');
                       }}
                       style={{ borderRadius: '50%' }}
                       scale="sm"
