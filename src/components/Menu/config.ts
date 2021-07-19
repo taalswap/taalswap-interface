@@ -58,7 +58,8 @@ const config: (t: ContextApi['t']) => MenuEntry[] = (t) => [
   {
     label: t('Info'),
     icon: 'InfoIcon',
-    href: 'https://taalswap.info/home',
+    // href: 'https://taalswap.info/home',
+    href: `${frontendBaseUrl}`,
   },
   {
     label: t('Partnership'),
