@@ -9,12 +9,14 @@ import useIsWindowVisible from '../../hooks/useIsWindowVisible'
 import { addPopup } from '../application/actions'
 import { AppDispatch, AppState } from '../index'
 import { acceptListUpdate } from './actions'
+import { NETWORK_CHAIN_ID } from '../../connectors';
+import { NetworkContextName } from '../../constants';
 
 export default function Updater(): null {
   const { library } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
   const { chainId } = useActiveWeb3React()
-  const lists = useSelector<AppState, AppState['lists']['chain']['byUrl']>((state) => state.lists[chainId ?? '1'].byUrl)
+  const lists = useSelector<AppState, AppState['lists']['byUrl']>((state) => state.lists.byUrl)
 
   const isWindowVisible = useIsWindowVisible()
 

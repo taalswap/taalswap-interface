@@ -3,34 +3,34 @@ import { useCurrency } from 'hooks/Tokens'
 import { useTradeExactIn } from 'hooks/Trades'
 import { tryParseAmount } from 'state/swap/hooks'
 import { useActiveWeb3React } from 'hooks'
-import { TAL, USDC } from '../constants';
+import { TAL_ADDRESS, USDC_ADDRESS } from '../constants';
+import { NETWORK_CHAIN_ID } from '../connectors';
 
 const useGetCakeBusdLpPrice = () => {
-  const { chainId } = useActiveWeb3React()
   // const talAddress = '0x90a4a420732907b3c38b11058f9aa02b3f4121df'
   // const usdcAddress = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
   let taalAddress
   let usdcAddress
-  switch(chainId) {
+  switch(NETWORK_CHAIN_ID) {
     case 1:
-      taalAddress = TAL[ChainId.MAINNET];
-      usdcAddress = USDC[ChainId.MAINNET];
+      taalAddress = TAL_ADDRESS[ChainId.MAINNET];
+      usdcAddress = USDC_ADDRESS[ChainId.MAINNET];
       break;
     case 3:
-      taalAddress = TAL[ChainId.ROPSTEN];
-      usdcAddress = USDC[ChainId.ROPSTEN];
+      taalAddress = TAL_ADDRESS[ChainId.ROPSTEN];
+      usdcAddress = USDC_ADDRESS[ChainId.ROPSTEN];
       break;
     case 4:
-      taalAddress = TAL[ChainId.RINKEBY];
-      usdcAddress = USDC[ChainId.RINKEBY];
+      taalAddress = TAL_ADDRESS[ChainId.RINKEBY];
+      usdcAddress = USDC_ADDRESS[ChainId.RINKEBY];
       break;
     case 8217:
-      taalAddress = TAL[ChainId.KLAYTN];
-      usdcAddress = USDC[ChainId.KLAYTN];
+      taalAddress = TAL_ADDRESS[ChainId.KLAYTN];
+      usdcAddress = USDC_ADDRESS[ChainId.KLAYTN];
       break;
     case 1001:
-      taalAddress = TAL[ChainId.BAOBAB];
-      usdcAddress = USDC[ChainId.BAOBAB];
+      taalAddress = TAL_ADDRESS[ChainId.BAOBAB];
+      usdcAddress = USDC_ADDRESS[ChainId.BAOBAB];
       break;
   }
 

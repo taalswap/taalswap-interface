@@ -4,14 +4,14 @@ import { useActiveWeb3React } from 'hooks'
 import { ChainId } from 'taalswap-sdk';
 import useGetPriceData from './useGetPriceData';
 import { TAL } from '../constants';
+import { NETWORK_CHAIN_ID } from '../connectors';
 
 const useGetDocumentTitlePrice = () => {
-  const { chainId } = useActiveWeb3React();
   // const cakePriceBusd = useGetCakeBusdLpPrice();
   let cakePriceBusd = parseFloat('0.0');
   const priceData = useGetPriceData();
   let taalAddress
-  switch(chainId) {
+  switch(NETWORK_CHAIN_ID) {
     case 1:
       taalAddress = TAL[ChainId.MAINNET];
       break;

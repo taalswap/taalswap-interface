@@ -15,7 +15,6 @@ const TopBar = () => {
   const { account } = useWeb3React();
   const { t } = useTranslation();
 
-  console.log(account);
   return (
     <div className="tabbar_wrap">
       <div>

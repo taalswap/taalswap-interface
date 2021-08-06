@@ -89,7 +89,7 @@ function listUrlRowHTMLId(listUrl: string) {
 
 const ListRow = memo(function ListRow({ listUrl, onBack }: { listUrl: string; onBack: () => void }) {
   const { chainId } = useActiveWeb3React()
-  const listsByUrl = useSelector<AppState, AppState['lists']['chain']['byUrl']>((state) => state.lists[chainId ?? '1'].byUrl);
+  const listsByUrl = useSelector<AppState, AppState['lists']['byUrl']>((state) => state.lists.byUrl);
   const selectedListUrl = useSelectedListUrl();
   const dispatch = useDispatch<AppDispatch>();
   const { current: list, pendingUpdate: pending } = listsByUrl[listUrl];
@@ -214,7 +214,7 @@ export function ListSelect({ onDismiss, onBack }: { onDismiss: () => void; onBac
   const { chainId } = useActiveWeb3React()
 
   const dispatch = useDispatch<AppDispatch>();
-  const lists = useSelector<AppState, AppState['lists']['chain']['byUrl']>((state) => state.lists[chainId ?? '1'].byUrl);
+  const lists = useSelector<AppState, AppState['lists']['byUrl']>((state) => state.lists.byUrl);
   const adding = Boolean(lists[listUrlInput]?.loadingRequestId);
   const [addError, setAddError] = useState<string | null>(null);
 

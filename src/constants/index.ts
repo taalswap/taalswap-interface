@@ -59,6 +59,14 @@ export const TAL = {
   )
 }
 
+export const TAL_ADDRESS = {
+  [ChainId.MAINNET]: '0x90a4a420732907b3c38b11058f9aa02b3f4121df',
+  [ChainId.ROPSTEN]: '0xebd87e7c13b3aca572665140b6b12349112f0ce0',
+  [ChainId.RINKEBY]: '0x92ecacfc94588aa99fba837be1a98738290e3252',
+  [ChainId.KLAYTN]: '0x92ecacfc94588aa99fba837be1a98738290e3252',
+  [ChainId.BAOBAB]: '0x92ecacfc94588aa99fba837be1a98738290e3252'
+}
+
 // export const WETH = new Token(ChainId.RINKEBY, '0x92EcACFC94588aa99fba837Be1a98738290E3252', 18, 'WETH', 'Wrapped ETH');
 // export const DAI = new Token(ChainId.MAINNET, '0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3', 18, 'DAI', 'Dai Stablecoin');
 // export const BUSD = new Token(ChainId.RINKEBY, '0xd16431da4EafE953B4f34923CdB8d833FB1B2E7c', 18, 'BUSD', 'Binance USD');
@@ -140,6 +148,14 @@ export const USDC = {
     'USDC',
     'USD Coin'
   )
+}
+
+export const USDC_ADDRESS = {
+  [ChainId.MAINNET]: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+  [ChainId.ROPSTEN]: '0x9c8fa1ee532f8afe9f2e27f06fd836f3c9572f71',
+  [ChainId.RINKEBY]: '0x92ecacfc94588aa99fba837be1a98738290e3252',
+  [ChainId.KLAYTN]: '0x92ecacfc94588aa99fba837be1a98738290e3252',
+  [ChainId.BAOBAB]: '0x92ecacfc94588aa99fba837be1a98738290e3252'
 }
 
 // export const UST = new Token(

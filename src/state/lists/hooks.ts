@@ -3,7 +3,6 @@ import { Tags, TokenInfo, TokenList } from '@uniswap/token-lists';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { AppState } from '../index';
-import { useActiveWeb3React } from '../../hooks';
 
 type TagDetails = Tags[keyof Tags]
 
@@ -76,8 +75,7 @@ export function listToTokenMap(list: TokenList): TokenAddressMap {
 }
 
 export function useTokenList(url: string | undefined): TokenAddressMap {
-  const { chainId } = useActiveWeb3React()
-  const lists = useSelector<AppState, AppState['lists']['chain']['byUrl']>(state => state.lists[chainId ?? '1'].byUrl);
+  const lists = useSelector<AppState, AppState['lists']['byUrl']>(state => state.lists.byUrl);
   return useMemo(() => {
     if (!url) return EMPTY_LIST;
     const current = lists[url]?.current;
@@ -92,8 +90,7 @@ export function useTokenList(url: string | undefined): TokenAddressMap {
 }
 
 export function useSelectedListUrl(): string | undefined {
-  const { chainId } = useActiveWeb3React()
-  return useSelector<AppState, AppState['lists']['chain']['selectedListUrl']>(state => state.lists[chainId ?? '1'].selectedListUrl);
+  return useSelector<AppState, AppState['lists']['selectedListUrl']>(state => state.lists.selectedListUrl);
 }
 
 export function useSelectedTokenList(): TokenAddressMap {
@@ -102,8 +99,7 @@ export function useSelectedTokenList(): TokenAddressMap {
 
 export function useSelectedListInfo(): { current: TokenList | null; pending: TokenList | null; loading: boolean } {
   const selectedUrl = useSelectedListUrl();
-  const { chainId } = useActiveWeb3React()
-  const listsByUrl = useSelector<AppState, AppState['lists']['chain']['byUrl']>(state => state.lists[chainId ?? '1'].byUrl);
+  const listsByUrl = useSelector<AppState, AppState['lists']['byUrl']>(state => state.lists.byUrl);
   const list = selectedUrl ? listsByUrl[selectedUrl] : undefined;
   return {
     current: list?.current ?? null,
@@ -114,8 +110,7 @@ export function useSelectedListInfo(): { current: TokenList | null; pending: Tok
 
 // returns all downloaded current lists
 export function useAllLists(): TokenList[] {
-  const { chainId } = useActiveWeb3React()
-  const lists = useSelector<AppState, AppState['lists']['chain']['byUrl']>(state => state.lists[chainId ?? '1'].byUrl);
+  const lists = useSelector<AppState, AppState['lists']['byUrl']>(state => state.lists.byUrl);
 
   return useMemo(
     () =>
