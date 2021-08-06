@@ -18,13 +18,15 @@ export function isAddress(value: any): string | false {
 }
 
 const ETH_PREFIXES: { [chainId in ChainId]: string } = {
-  1: '',
-  3: 'ropsten.',
-  4: 'rinkeby.'
+  1: 'etherscan.io',
+  3: 'ropsten.etherscan.io',
+  4: 'rinkeby.etherscan.io',
+  8217: 'scope.klaytn.com',
+  1001: 'baobab.scope.klaytn.com'
 };
 
 export function getBscScanLink(chainId: ChainId, data: string, type: 'transaction' | 'token' | 'address'): string {
-  const prefix = `https://${ETH_PREFIXES[chainId] || ETH_PREFIXES[ChainId.MAINNET]}etherscan.io`;
+  const prefix = `https://${ETH_PREFIXES[chainId] || ETH_PREFIXES[ChainId.MAINNET]}`;
 
   switch (type) {
     case 'transaction': {
@@ -89,8 +91,8 @@ export function getContract(address: string, ABI: any, library: Web3Provider, ac
 }
 
 // account is optional
-export function getRouterContract(_: number, library: Web3Provider, account?: string): Contract {
-  return getContract(ROUTER_ADDRESS, IUniswapV2Router02ABI, library, account);
+export function getRouterContract(chainId: number, library: Web3Provider, account?: string): Contract {
+  return getContract(ROUTER_ADDRESS[chainId], IUniswapV2Router02ABI, library, account);
 }
 
 export function escapeRegExp(string: string): string {

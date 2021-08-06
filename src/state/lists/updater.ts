@@ -1,6 +1,7 @@
 import { getVersionUpgrade, minVersionBump, VersionUpgrade } from '@uniswap/token-lists'
 import { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { ChainId } from 'taalswap-sdk';
 import { useActiveWeb3React } from '../../hooks'
 import { useFetchListCallback } from '../../hooks/useFetchListCallback'
 import useInterval from '../../hooks/useInterval'
@@ -12,7 +13,8 @@ import { acceptListUpdate } from './actions'
 export default function Updater(): null {
   const { library } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
-  const lists = useSelector<AppState, AppState['lists']['byUrl']>((state) => state.lists.byUrl)
+  const { chainId } = useActiveWeb3React()
+  const lists = useSelector<AppState, AppState['lists']['chain']['byUrl']>((state) => state.lists[chainId ?? '1'].byUrl)
 
   const isWindowVisible = useIsWindowVisible()
 

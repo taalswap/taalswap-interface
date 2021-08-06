@@ -1,6 +1,6 @@
 import { MaxUint256 } from '@ethersproject/constants'
 import { TransactionResponse } from '@ethersproject/providers'
-import { Trade, TokenAmount, CurrencyAmount, ETHER } from 'taalswap-sdk'
+import { Trade, TokenAmount, CurrencyAmount, ETHER, ChainId } from 'taalswap-sdk';
 import { useCallback, useMemo } from 'react'
 import { ROUTER_ADDRESS } from '../constants'
 import { useTokenAllowance } from '../data/Allowances'
@@ -10,6 +10,7 @@ import { computeSlippageAdjustedAmounts } from '../utils/prices'
 import { calculateGasMargin } from '../utils'
 import { useTokenContract } from './useContract'
 import { useActiveWeb3React } from './index'
+import getRouterAddress from '../utils/getRouterAddress';
 
 export enum ApprovalState {
   UNKNOWN,
@@ -100,9 +101,11 @@ export function useApproveCallback(
 
 // wraps useApproveCallback in the context of a swap
 export function useApproveCallbackFromTrade(trade?: Trade, allowedSlippage = 0) {
+  const { chainId } = useActiveWeb3React()
+  const routerAddress = getRouterAddress(chainId);
   const amountToApprove = useMemo(
     () => (trade ? computeSlippageAdjustedAmounts(trade, allowedSlippage)[Field.INPUT] : undefined),
     [trade, allowedSlippage]
   )
-  return useApproveCallback(amountToApprove, ROUTER_ADDRESS)
+  return useApproveCallback(amountToApprove, routerAddress)
 }

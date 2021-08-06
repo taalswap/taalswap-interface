@@ -3,7 +3,7 @@ import styled, { ThemeContext } from 'styled-components';
 import { splitSignature } from '@ethersproject/bytes';
 import { Contract } from '@ethersproject/contracts';
 import { TransactionResponse } from '@ethersproject/providers';
-import { Currency, currencyEquals, ETHER, Percent, WETH } from 'taalswap-sdk';
+import { ChainId, Currency, currencyEquals, ETHER, Percent, WETH } from 'taalswap-sdk';
 import { Button, Flex, Text } from 'taalswap-uikit';
 import { ArrowDown, Plus } from 'react-feather';
 import { RouteComponentProps } from 'react-router';
@@ -57,6 +57,7 @@ import {
   useUserSlippageTolerance,
 } from '../../state/user/hooks';
 import { useTranslation } from '../../contexts/Localization';
+import getRouterAddress from '../../utils/getRouterAddress';
 
 const OutlineCard = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.disabled};
@@ -141,6 +142,8 @@ export default function RemoveLiquidity({
     pair?.liquidityToken?.address
   );
 
+  const routerAddress = getRouterAddress(chainId);
+
   // allowance handling
   const [signatureData, setSignatureData] =
     useState<{ v: number; r: string; s: string; deadline: number } | null>(
@@ -148,7 +151,7 @@ export default function RemoveLiquidity({
     );
   const [approval, approveCallback] = useApproveCallback(
     parsedAmounts[Field.LIQUIDITY],
-    ROUTER_ADDRESS
+    routerAddress
   );
 
   async function onAttemptToApprove() {
@@ -183,7 +186,7 @@ export default function RemoveLiquidity({
     ];
     const message = {
       owner: account,
-      spender: ROUTER_ADDRESS,
+      spender: routerAddress,
       value: liquidityAmount.raw.toString(),
       nonce: nonce.toHexString(),
       deadline: deadlineForSignature,

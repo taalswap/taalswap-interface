@@ -2,6 +2,7 @@ import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { ArrowLeft } from 'react-feather';
 import { usePopper } from 'react-popper';
 import { useDispatch, useSelector } from 'react-redux';
+import { ChainId } from 'taalswap-sdk';
 import { Button, ChevronDownIcon, CloseIcon, Text } from 'taalswap-uikit';
 import styled from 'styled-components';
 import { useFetchListCallback } from '../../hooks/useFetchListCallback';
@@ -20,6 +21,7 @@ import QuestionHelper from '../QuestionHelper';
 import Row, { RowBetween } from '../Row';
 import { PaddedColumn, SearchInput, Separator, SeparatorDark } from './styleds';
 import { useTranslation } from '../../contexts/Localization';
+import { useActiveWeb3React } from '../../hooks';
 
 const UnpaddedLinkStyledButton = styled(LinkStyledButton)`
   padding: 0;
@@ -86,7 +88,8 @@ function listUrlRowHTMLId(listUrl: string) {
 }
 
 const ListRow = memo(function ListRow({ listUrl, onBack }: { listUrl: string; onBack: () => void }) {
-  const listsByUrl = useSelector<AppState, AppState['lists']['byUrl']>((state) => state.lists.byUrl);
+  const { chainId } = useActiveWeb3React()
+  const listsByUrl = useSelector<AppState, AppState['lists']['chain']['byUrl']>((state) => state.lists[chainId ?? '1'].byUrl);
   const selectedListUrl = useSelectedListUrl();
   const dispatch = useDispatch<AppDispatch>();
   const { current: list, pendingUpdate: pending } = listsByUrl[listUrl];
@@ -208,9 +211,10 @@ const ListContainer = styled.div`
 
 export function ListSelect({ onDismiss, onBack }: { onDismiss: () => void; onBack: () => void }) {
   const [listUrlInput, setListUrlInput] = useState<string>('');
+  const { chainId } = useActiveWeb3React()
 
   const dispatch = useDispatch<AppDispatch>();
-  const lists = useSelector<AppState, AppState['lists']['byUrl']>((state) => state.lists.byUrl);
+  const lists = useSelector<AppState, AppState['lists']['chain']['byUrl']>((state) => state.lists[chainId ?? '1'].byUrl);
   const adding = Boolean(lists[listUrlInput]?.loadingRequestId);
   const [addError, setAddError] = useState<string | null>(null);
 

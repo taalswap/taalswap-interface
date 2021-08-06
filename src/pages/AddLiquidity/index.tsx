@@ -2,11 +2,12 @@ import React, { useCallback, useState } from 'react';
 import { BigNumber } from '@ethersproject/bignumber';
 import { TransactionResponse } from '@ethersproject/providers';
 import {
+  ChainId,
   Currency,
   currencyEquals,
   ETHER,
   TokenAmount,
-  WETH,
+  WETH
 } from 'taalswap-sdk';
 import { AddIcon, Button, CardBody, Text as UIKitText } from 'taalswap-uikit';
 import { RouteComponentProps } from 'react-router-dom';
@@ -55,6 +56,7 @@ import { ConfirmAddModalBottom } from './ConfirmAddModalBottom';
 import { PoolPriceBar } from './PoolPriceBar';
 import { ROUTER_ADDRESS } from '../../constants';
 import { useTranslation } from '../../contexts/Localization';
+import getRouterAddress from '../../utils/getRouterAddress';
 
 // const CACHE_KEY = 'pancakeswap_language';
 const CACHE_KEY = 'taalswap_language';
@@ -135,14 +137,16 @@ export default function AddLiquidity({
     };
   }, {});
 
+  const routerAddress = getRouterAddress(chainId);
+
   // check whether the user has approved the router on the tokens
   const [approvalA, approveACallback] = useApproveCallback(
     parsedAmounts[Field.CURRENCY_A],
-    ROUTER_ADDRESS
+    routerAddress
   );
   const [approvalB, approveBCallback] = useApproveCallback(
     parsedAmounts[Field.CURRENCY_B],
-    ROUTER_ADDRESS
+    routerAddress
   );
 
   const addTransaction = useTransactionAdder();

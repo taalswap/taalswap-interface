@@ -1,3 +1,4 @@
+import { ChainId } from 'taalswap-sdk';
 import { TokenList } from '@uniswap/token-lists';
 import schema from '@uniswap/token-lists/src/tokenlist.schema.json';
 import Ajv from 'ajv';
@@ -8,6 +9,10 @@ import uriToHttp from './uriToHttp';
 // bakeryswap defaultTokenJson
 import { DEFAULT_TOKEN_LIST_URL } from '../constants/lists';
 import defaultTokenJson from '../constants/token/taalswap.json';
+import ropstenTokenJson from '../constants/token/taalswap-ropsten.json';
+import rinkebyTokenJson from '../constants/token/taalswap-rinkeby.json';
+import klaytnTokenJson from '../constants/token/taalswap-klaytn.json';
+import baobabTokenJson from '../constants/token/taalswap-baobab.json';
 
 const tokenListValidator = new Ajv({ allErrors: true }).compile(schema);
 
@@ -20,8 +25,17 @@ export default async function getTokenList(
   listUrl: string,
   resolveENSContentHash: (ensName: string) => Promise<string>
 ): Promise<TokenList> {
-  if (listUrl === DEFAULT_TOKEN_LIST_URL) {
-    return defaultTokenJson;
+  switch(listUrl) {
+    case DEFAULT_TOKEN_LIST_URL[ChainId.MAINNET]:
+      return defaultTokenJson;
+    case DEFAULT_TOKEN_LIST_URL[ChainId.ROPSTEN]:
+      return ropstenTokenJson;
+    case DEFAULT_TOKEN_LIST_URL[ChainId.RINKEBY]:
+      return rinkebyTokenJson;
+    case DEFAULT_TOKEN_LIST_URL[ChainId.KLAYTN]:
+      return klaytnTokenJson;
+    case DEFAULT_TOKEN_LIST_URL[ChainId.BAOBAB]:
+      return baobabTokenJson;
   }
   const parsedENS = parseENSAddress(listUrl);
 
