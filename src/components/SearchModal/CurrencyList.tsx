@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, currencyEquals, ETHER, Token } from 'taalswap-sdk'
+import { Currency, CurrencyAmount, currencyEquals, ETHER, KLAYTN, Token } from 'taalswap-sdk'
 import React, { CSSProperties, MutableRefObject, useCallback, useMemo } from 'react'
 import { FixedSizeList } from 'react-window'
 import styled from 'styled-components'
@@ -18,7 +18,7 @@ import Loader from '../Loader'
 import { isTokenOnList } from '../../utils'
 
 function currencyKey(currency: Currency): string {
-  return currency instanceof Token ? currency.address : currency === ETHER ? 'ETHER' : ''
+  return currency instanceof Token ? currency.address : currency === ETHER ? 'ETHER' : currency === KLAYTN ? 'KLAYTN' : ''
 }
 
 const StyledBalanceText = styled(Text)`
@@ -169,7 +169,10 @@ export default function CurrencyList({
   fixedListRef?: MutableRefObject<FixedSizeList | undefined>
   showETH: boolean
 }) {
-  const itemData = useMemo(() => (showETH ? [Currency.ETHER, ...currencies] : [...currencies]), [currencies, showETH])
+  const { chainId } = useActiveWeb3React()
+  let CURRENCY = Currency.ETHER
+  if (chainId && chainId > 1000) CURRENCY = Currency.KLAYTN
+  const itemData = useMemo(() => (showETH ? [CURRENCY, ...currencies] : [...currencies]), [currencies, showETH, CURRENCY])
 
   const Row = useCallback(
     ({ data, index, style }) => {

@@ -1,14 +1,15 @@
-import React from 'react'
-import { Text } from 'taalswap-uikit'
-import { ChainId, Currency, currencyEquals, ETHER, Token } from 'taalswap-sdk'
-import styled from 'styled-components'
+import React from 'react';
+import { Text } from 'taalswap-uikit';
+import { ChainId, Currency, currencyEquals, ETHER, KLAYTN, Token } from 'taalswap-sdk';
+import styled from 'styled-components';
 
-import { SUGGESTED_BASES } from '../../constants'
-import { AutoColumn } from '../Column'
-import QuestionHelper from '../QuestionHelper'
-import { AutoRow } from '../Row'
-import CurrencyLogo from '../CurrencyLogo'
+import { SUGGESTED_BASES } from '../../constants';
+import { AutoColumn } from '../Column';
+import QuestionHelper from '../QuestionHelper';
+import { AutoRow } from '../Row';
+import CurrencyLogo from '../CurrencyLogo';
 import { useTranslation } from '../../contexts/Localization';
+import { useActiveWeb3React } from '../../hooks';
 
 const BaseWrapper = styled.div<{ disable?: boolean }>`
   border: 1px solid ${({ theme, disable }) => (disable ? 'transparent' : theme.colors.tertiary)};
@@ -36,6 +37,9 @@ export default function CommonBases({
   onSelect: (currency: Currency) => void
 }) {
   const { t } = useTranslation();
+  let CURRENCY = ETHER
+  if (chainId && chainId > 1000) CURRENCY = KLAYTN
+
   return (
     <AutoColumn gap="md">
       <AutoRow>
@@ -45,13 +49,23 @@ export default function CommonBases({
       <AutoRow gap="4px">
         <BaseWrapper
           onClick={() => {
-            if (!selectedCurrency || !currencyEquals(selectedCurrency, ETHER)) {
-              onSelect(ETHER)
+            if (!selectedCurrency || !currencyEquals(selectedCurrency, ETHER) || !currencyEquals(selectedCurrency, KLAYTN)) {
+              switch(chainId) {
+                case ChainId.MAINNET :
+                case ChainId.ROPSTEN :
+                case ChainId.RINKEBY :
+                  onSelect(ETHER)
+                  break;
+                case ChainId.KLAYTN:
+                case ChainId.BAOBAB:
+                  onSelect(KLAYTN)
+                  break;
+              }
             }
           }}
-          disable={selectedCurrency === ETHER}
+          disable={selectedCurrency === ETHER || selectedCurrency === KLAYTN}
         >
-          <CurrencyLogo currency={ETHER} style={{ marginRight: 8 }} />
+          <CurrencyLogo currency={CURRENCY} style={{ marginRight: 8 }} />
           <Text>ETH</Text>
         </BaseWrapper>
         {(chainId ? SUGGESTED_BASES[chainId] : []).map((token: Token) => {

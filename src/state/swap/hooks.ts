@@ -3,6 +3,7 @@ import {
   Currency,
   CurrencyAmount,
   ETHER,
+  KLAYTN,
   JSBI,
   Token,
   TokenAmount,
@@ -54,6 +55,8 @@ export function useSwapActionHandlers(): {
               ? currency.address
               : currency === ETHER
               ? 'ETH'
+              : currency === KLAYTN
+              ? 'KLAY'
               : '',
         })
       );

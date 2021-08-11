@@ -108,6 +108,38 @@
       "chainId": 3,
       "decimals": 18,
       "logoURI": "https://swap.taalswap.finance/images/coins/usdt.png"
+    },
+    {
+      "name": "Wraapped KLAY",
+      "symbol": "WKLAY",
+      "address": "0xf223e26b018ae1917e84dd73b515620e36a75596",
+      "chainId": 1001,
+      "decimals": 18,
+      "logoURI": "https://swap.taalswap.finance/images/coins/weth.png"
+    },
+    {
+      "name": "Klaytn Dai",
+      "symbol": "KDAI",
+      "address": "0xa76639d69cfdbff27abf1d0abc22d5e30e73a07f",
+      "chainId": 1001,
+      "decimals": 18,
+      "logoURI": "https://swap.taalswap.finance/images/coins/usdc.png"
+    },
+    {
+      "name": "TaalSwap Token",
+      "symbol": "TAL",
+      "address": "0xe8e2f5117297f3a330fd06fac88928b63bb84b09",
+      "chainId": 1001,
+      "decimals": 18,
+      "logoURI": "https://swap.taalswap.finance/images/coins/tal.png"
+    },
+    {
+      "name": "Orbit Bridge Klaytn USD Tether",
+      "symbol": "KUSDT",
+      "address": "0xc63f4d520544913daecc535fef2d78885db9a850",
+      "chainId": 1001,
+      "decimals": 18,
+      "logoURI": "https://swap.taalswap.finance/images/coins/usdt.png"
     }
   ]
 }

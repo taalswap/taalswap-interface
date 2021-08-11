@@ -1,4 +1,4 @@
-import { Currency, ETHER, JSBI, TokenAmount } from 'taalswap-sdk';
+import { Currency, ETHER, KLAYTN, JSBI, TokenAmount } from 'taalswap-sdk';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   AddIcon,
@@ -30,12 +30,15 @@ enum Fields {
 }
 
 export default function PoolFinder() {
-  const { account } = useActiveWeb3React();
+  const { account, chainId } = useActiveWeb3React();
 
   const [showSearch, setShowSearch] = useState<boolean>(false);
   const [activeField, setActiveField] = useState<number>(Fields.TOKEN1);
 
-  const [currency0, setCurrency0] = useState<Currency | null>(ETHER);
+  // const [currency0, setCurrency0] = useState<Currency | null>(ETHER);
+  let CURRENCY = ETHER
+  if (chainId && chainId > 1000) CURRENCY = KLAYTN
+  const [currency0, setCurrency0] = useState<Currency | null>(CURRENCY);
   const [currency1, setCurrency1] = useState<Currency | null>(null);
 
   const [pairState, pair] = usePair(

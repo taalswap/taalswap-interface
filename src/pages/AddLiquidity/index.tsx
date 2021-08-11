@@ -6,6 +6,7 @@ import {
   Currency,
   currencyEquals,
   ETHER,
+  KLAYTN,
   TokenAmount,
   WETH
 } from 'taalswap-sdk';
@@ -180,8 +181,8 @@ export default function AddLiquidity({
     let method: (...args: any) => Promise<TransactionResponse>;
     let args: Array<string | string[] | number>;
     let value: BigNumber | null;
-    if (currencyA === ETHER || currencyB === ETHER) {
-      const tokenBIsBNB = currencyB === ETHER;
+    if ((currencyA === ETHER || currencyA === KLAYTN) || (currencyB === ETHER || currencyB === KLAYTN)) {
+      const tokenBIsBNB = (currencyB === ETHER || currencyB === KLAYTN);
       estimate = router.estimateGas.addLiquidityETH;
       method = router.addLiquidityETH;
       args = [
