@@ -84,11 +84,20 @@ const StyledLink = styled(Link)`
   color: ${({ theme }) => theme.colors.failure};
 `;
 
-export const SwapBody = styled(UICard)`
+const SwapBody = styled(UICard)`
   position: relative;
   max-width: 900px;
   width: 100%;
   z-index: 5;
+`;
+
+const InputPanelBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  ${({ theme }) => theme.mediaQueries.sm} {
+    flex-direction: row;
+  }
+  // width: 100%;
 `;
 
 // const Swap = () => {
@@ -519,9 +528,9 @@ function Swap({
             description={t('Trade your token on the spot')}
           />
 
-          <CardBody style={{ border: '1px solid red' }}>
+          <CardBody>
             <div>
-              <div style={{ display: 'flex' }}>
+              <InputPanelBody>
                 <CurrencyInputPanel
                   label={
                     independentField === Field.OUTPUT && !showWrap && trade
@@ -540,7 +549,7 @@ function Swap({
                 />
                 <AutoColumn
                   justify="space-between"
-                  style={{ border: '1px solid black', margin: '0px 10px' }}
+                  style={{ margin: '0px 10px' }}
                 >
                   <AutoRow
                     justify={isExpertMode ? 'space-between' : 'center'}
@@ -587,7 +596,7 @@ function Swap({
                   otherCurrency={currencies[Field.INPUT]}
                   id="swap-currency-output"
                 />
-              </div>
+              </InputPanelBody>
               {recipient !== null && !showWrap ? (
                 <>
                   <AutoRow
