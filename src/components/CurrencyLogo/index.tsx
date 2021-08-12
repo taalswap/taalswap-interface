@@ -7,7 +7,7 @@ import Logo from '../Logo'
 import CoinLogo from '../pancake/CoinLogo'
 
 const getTokenLogoURL = (address: string) => {
-  if (address.toLowerCase() === '0x90a4a420732907b3c38b11058f9aa02b3f4121df') {
+  if (address.toLowerCase() === '0x7e6bd46f4ddc58370c0435d496ef7fcc5fe1751d') {
     return (`https://swap.taalswap.finance/images/coins/${address}.png`)
   }
   return (`https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`)
