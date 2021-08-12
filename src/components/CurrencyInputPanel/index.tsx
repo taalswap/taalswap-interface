@@ -19,6 +19,7 @@ const InputRow = styled.div<{ selected: boolean }>`
   align-items: center;
   padding: ${({ selected }) =>
     selected ? '0.75rem 0.5rem 0.75rem 1rem' : '0.75rem 0.75rem 0.75rem 1rem'};
+  width: 400px;
 `;
 const CurrencySelect = styled.button<{ selected: boolean }>`
   align-items: center;
