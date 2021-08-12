@@ -8,7 +8,14 @@ import {
   TokenAmount,
   WETH,
 } from 'taalswap-sdk';
-import { AddIcon, Button, CardBody, Text as UIKitText } from 'taalswap-uikit';
+import styled from 'styled-components';
+import {
+  AddIcon,
+  Button,
+  CardBody,
+  Text as UIKitText,
+  Card as UICard,
+} from 'taalswap-uikit';
 import { RouteComponentProps } from 'react-router-dom';
 import { LightCard } from 'components/Card';
 import { AutoColumn, ColumnCenter } from 'components/Column';
@@ -58,6 +65,22 @@ import { useTranslation } from '../../contexts/Localization';
 
 // const CACHE_KEY = 'pancakeswap_language';
 const CACHE_KEY = 'taalswap_language';
+
+const AddLiquidetyBody = styled(UICard)`
+  position: relative;
+  max-width: 900px;
+  width: 100%;
+  z-index: 5;
+`;
+
+const InputPanelBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  ${({ theme }) => theme.mediaQueries.md} {
+    flex-direction: row;
+  }
+`;
 
 export default function AddLiquidity({
   match: {
@@ -375,7 +398,7 @@ export default function AddLiquidity({
   return (
     <Container>
       {/* <CardNav activeIndex={1} /> */}
-      <AppBody>
+      <AddLiquidetyBody>
         <AddRemoveTabs adding />
         <Wrapper>
           <TransactionConfirmationModal
@@ -420,33 +443,40 @@ export default function AddLiquidity({
                   </Pane>
                 </ColumnCenter>
               )}
-              <CurrencyInputPanel
-                value={formattedAmounts[Field.CURRENCY_A]}
-                onUserInput={onFieldAInput}
-                onMax={() => {
-                  onFieldAInput(maxAmounts[Field.CURRENCY_A]?.toExact() ?? '');
-                }}
-                onCurrencySelect={handleCurrencyASelect}
-                showMaxButton={!atMaxAmounts[Field.CURRENCY_A]}
-                currency={currencies[Field.CURRENCY_A]}
-                id="add-liquidity-input-tokena"
-                showCommonBases={false}
-              />
-              <ColumnCenter>
-                <AddIcon color="textSubtle" />
-              </ColumnCenter>
-              <CurrencyInputPanel
-                value={formattedAmounts[Field.CURRENCY_B]}
-                onUserInput={onFieldBInput}
-                onCurrencySelect={handleCurrencyBSelect}
-                onMax={() => {
-                  onFieldBInput(maxAmounts[Field.CURRENCY_B]?.toExact() ?? '');
-                }}
-                showMaxButton={!atMaxAmounts[Field.CURRENCY_B]}
-                currency={currencies[Field.CURRENCY_B]}
-                id="add-liquidity-input-tokenb"
-                showCommonBases={false}
-              />
+              <InputPanelBody>
+                <CurrencyInputPanel
+                  value={formattedAmounts[Field.CURRENCY_A]}
+                  onUserInput={onFieldAInput}
+                  onMax={() => {
+                    onFieldAInput(
+                      maxAmounts[Field.CURRENCY_A]?.toExact() ?? ''
+                    );
+                  }}
+                  onCurrencySelect={handleCurrencyASelect}
+                  showMaxButton={!atMaxAmounts[Field.CURRENCY_A]}
+                  currency={currencies[Field.CURRENCY_A]}
+                  id="add-liquidity-input-tokena"
+                  showCommonBases={false}
+                />
+
+                <AddIcon margin="10px 10px" color="textSubtle" />
+
+                <CurrencyInputPanel
+                  value={formattedAmounts[Field.CURRENCY_B]}
+                  onUserInput={onFieldBInput}
+                  onCurrencySelect={handleCurrencyBSelect}
+                  onMax={() => {
+                    onFieldBInput(
+                      maxAmounts[Field.CURRENCY_B]?.toExact() ?? ''
+                    );
+                  }}
+                  showMaxButton={!atMaxAmounts[Field.CURRENCY_B]}
+                  currency={currencies[Field.CURRENCY_B]}
+                  id="add-liquidity-input-tokenb"
+                  showCommonBases={false}
+                />
+              </InputPanelBody>
+
               {currencies[Field.CURRENCY_A] &&
                 currencies[Field.CURRENCY_B] &&
                 pairState !== PairState.INVALID && (
@@ -550,15 +580,34 @@ export default function AddLiquidity({
                   </Button>
                 </AutoColumn>
               )}
+              {pair && !noLiquidity && pairState !== PairState.INVALID ? (
+                <AutoColumn
+                  style={{
+                    minWidth: '20rem',
+                    marginTop: '1rem',
+                  }}
+                >
+                  <MinimalPositionCard
+                    showUnwrapped={oneCurrencyIsWBNB}
+                    pair={pair}
+                  />
+                </AutoColumn>
+              ) : null}
             </AutoColumn>
           </CardBody>
         </Wrapper>
-      </AppBody>
-      {pair && !noLiquidity && pairState !== PairState.INVALID ? (
-        <AutoColumn style={{ minWidth: '20rem', marginTop: '1rem' }}>
+      </AddLiquidetyBody>
+      {/* {pair && !noLiquidity && pairState !== PairState.INVALID ? (
+        <AutoColumn
+          style={{
+            minWidth: '20rem',
+            marginTop: '1rem',
+            border: '1px solid red',
+          }}
+        >
           <MinimalPositionCard showUnwrapped={oneCurrencyIsWBNB} pair={pair} />
         </AutoColumn>
-      ) : null}
+      ) : null} */}
     </Container>
   );
 }
