@@ -9,7 +9,7 @@ type ChainTokenList = {
 
 export const TAL = new Token(
   ChainId.MAINNET,
-  '0x90a4a420732907b3c38b11058f9aa02b3f4121df',
+  '0x7e6bd46f4ddc58370c0435d496ef7fcc5fe1751d',
   18,
   'TAL',
   'TaalSwap Token'
