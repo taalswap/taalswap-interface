@@ -13,12 +13,14 @@ import {
   Card as UICard,
   CardBody,
   ArrowDownIcon,
+  ArrowForwardIcon,
   Button,
   IconButton,
   Text,
   useModal,
   Link,
   Flex,
+  useMatchBreakpoints,
 } from 'taalswap-uikit';
 import { RouteComponentProps } from 'react-router-dom';
 import styled, { ThemeContext } from 'styled-components';
@@ -94,7 +96,7 @@ const SwapBody = styled(UICard)`
 const InputPanelBody = styled.div`
   display: flex;
   flex-direction: column;
-  ${({ theme }) => theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.md} {
     flex-direction: row;
   }
   // width: 100%;
@@ -107,6 +109,7 @@ function Swap({
   },
   history,
 }: RouteComponentProps<{ currencyIdA?: string; currencyIdB?: string }>) {
+  const { isSm, isXs, isMd } = useMatchBreakpoints();
   const currencyA = useCurrency(currencyIdA);
   const currencyB = useCurrency(currencyIdB);
   const [currencyAFlag, setCurrencyAFlag] = useState(currencyA !== undefined);
@@ -566,7 +569,11 @@ function Swap({
                         style={{ borderRadius: '50%' }}
                         scale="sm"
                       >
-                        <ArrowDownIcon color="#00ab55" width="24px" />
+                        {isXs || isSm || isMd ? (
+                          <ArrowDownIcon color="#00ab55" width="24px" />
+                        ) : (
+                          <ArrowForwardIcon color="#00ab55" width="24px" />
+                        )}
                       </IconButton>
                     </ArrowWrapper>
                     {recipient === null && !showWrap && isExpertMode ? (
@@ -599,10 +606,7 @@ function Swap({
               </InputPanelBody>
               {recipient !== null && !showWrap ? (
                 <>
-                  <AutoRow
-                    justify="space-between"
-                    style={{ padding: '0 1rem' }}
-                  >
+                  <AutoRow justify="space-between">
                     <ArrowWrapper clickable={false}>
                       <ArrowDown size="16" color={theme.colors.textSubtle} />
                     </ArrowWrapper>
@@ -643,7 +647,9 @@ function Swap({
                   </AutoColumn>
                 </Card>
               )}
-              <AdvancedSwapDetailsDropdown trade={trade} />
+              {trade !== undefined ? (
+                <AdvancedSwapDetailsDropdown trade={trade} />
+              ) : null}
             </div>
 
             <BottomGrouping>
