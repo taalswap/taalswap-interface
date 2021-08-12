@@ -532,125 +532,128 @@ function Swap({
           />
 
           <CardBody>
-            <div>
-              <InputPanelBody>
-                <CurrencyInputPanel
-                  label={
-                    independentField === Field.OUTPUT && !showWrap && trade
-                      ? t('From (estimated)')
-                      : t('From')
-                  }
-                  value={formattedAmounts[Field.INPUT]}
-                  showMaxButton={!atMaxAmountInput}
-                  // currency={currencies[Field.INPUT]}
-                  currency={currencyAFlag ? currencyA : currencies[Field.INPUT]}
-                  onUserInput={handleTypeInput}
-                  onMax={handleMaxInput}
-                  onCurrencySelect={handleInputSelect}
-                  otherCurrency={currencies[Field.OUTPUT]}
-                  id="swap-currency-input"
-                />
-                <AutoColumn
-                  justify="space-between"
-                  style={{ margin: '0px 10px' }}
+            <InputPanelBody>
+              <CurrencyInputPanel
+                label={
+                  independentField === Field.OUTPUT && !showWrap && trade
+                    ? t('From (estimated)')
+                    : t('From')
+                }
+                value={formattedAmounts[Field.INPUT]}
+                showMaxButton={!atMaxAmountInput}
+                // currency={currencies[Field.INPUT]}
+                currency={currencyAFlag ? currencyA : currencies[Field.INPUT]}
+                onUserInput={handleTypeInput}
+                onMax={handleMaxInput}
+                onCurrencySelect={handleInputSelect}
+                otherCurrency={currencies[Field.OUTPUT]}
+                id="swap-currency-input"
+              />
+              <AutoColumn
+                justify="space-between"
+                style={{ margin: '0px 10px' }}
+              >
+                <AutoRow
+                  justify={isExpertMode ? 'space-between' : 'center'}
+                  style={{ padding: '0 1rem' }}
                 >
-                  <AutoRow
-                    justify={isExpertMode ? 'space-between' : 'center'}
-                    style={{ padding: '0 1rem' }}
-                  >
-                    <ArrowWrapper clickable>
-                      <IconButton
-                        variant="tertiary"
-                        onClick={() => {
-                          setApprovalSubmitted(false); // reset 2 step UI for approvals
-                          onSwitchTokens();
-                          console.log('-----');
-                        }}
-                        style={{ borderRadius: '50%' }}
-                        scale="sm"
-                      >
-                        {isXs || isSm || isMd ? (
-                          <ArrowDownIcon color="#00ab55" width="24px" />
-                        ) : (
-                          <ArrowForwardIcon color="#00ab55" width="24px" />
-                        )}
-                      </IconButton>
-                    </ArrowWrapper>
-                    {recipient === null && !showWrap && isExpertMode ? (
-                      <LinkStyledButton
-                        id="add-recipient-button"
-                        onClick={() => onChangeRecipient('')}
-                      >
-                        + Add a send (optional)
-                      </LinkStyledButton>
-                    ) : null}
-                  </AutoRow>
-                </AutoColumn>
-                <CurrencyInputPanel
-                  value={formattedAmounts[Field.OUTPUT]}
-                  onUserInput={handleTypeOutput}
-                  label={
-                    independentField === Field.INPUT && !showWrap && trade
-                      ? t('To (estimated)')
-                      : t('To')
-                  }
-                  showMaxButton={false}
-                  // currency={currencies[Field.OUTPUT]}
-                  currency={
-                    currencyBFlag ? currencyB : currencies[Field.OUTPUT]
-                  }
-                  onCurrencySelect={handleOutputSelect}
-                  otherCurrency={currencies[Field.INPUT]}
-                  id="swap-currency-output"
-                />
-              </InputPanelBody>
-              {recipient !== null && !showWrap ? (
-                <>
-                  <AutoRow justify="space-between">
-                    <ArrowWrapper clickable={false}>
-                      <ArrowDown size="16" color={theme.colors.textSubtle} />
-                    </ArrowWrapper>
-                    <LinkStyledButton
-                      id="remove-recipient-button"
-                      onClick={() => onChangeRecipient(null)}
+                  <ArrowWrapper clickable>
+                    <IconButton
+                      variant="tertiary"
+                      onClick={() => {
+                        setApprovalSubmitted(false); // reset 2 step UI for approvals
+                        onSwitchTokens();
+                        console.log('-----');
+                      }}
+                      style={{ borderRadius: '50%' }}
+                      scale="sm"
                     >
-                      - Remove send
+                      {isXs || isSm || isMd ? (
+                        <ArrowDownIcon color="#00ab55" width="24px" />
+                      ) : (
+                        <ArrowForwardIcon color="#00ab55" width="24px" />
+                      )}
+                    </IconButton>
+                  </ArrowWrapper>
+                  {recipient === null && !showWrap && isExpertMode ? (
+                    <LinkStyledButton
+                      id="add-recipient-button"
+                      onClick={() => onChangeRecipient('')}
+                    >
+                      + Add a send (optional)
                     </LinkStyledButton>
-                  </AutoRow>
-                  <AddressInputPanel
-                    id="recipient"
-                    value={recipient}
-                    onChange={onChangeRecipient}
-                  />
-                </>
-              ) : null}
+                  ) : null}
+                </AutoRow>
+              </AutoColumn>
+              <CurrencyInputPanel
+                value={formattedAmounts[Field.OUTPUT]}
+                onUserInput={handleTypeOutput}
+                label={
+                  independentField === Field.INPUT && !showWrap && trade
+                    ? t('To (estimated)')
+                    : t('To')
+                }
+                showMaxButton={false}
+                // currency={currencies[Field.OUTPUT]}
+                currency={currencyBFlag ? currencyB : currencies[Field.OUTPUT]}
+                onCurrencySelect={handleOutputSelect}
+                otherCurrency={currencies[Field.INPUT]}
+                id="swap-currency-output"
+              />
+            </InputPanelBody>
+            {recipient !== null && !showWrap ? (
+              <>
+                <AutoRow justify="space-between">
+                  <ArrowWrapper clickable={false}>
+                    <ArrowDown size="16" color={theme.colors.textSubtle} />
+                  </ArrowWrapper>
+                  <LinkStyledButton
+                    id="remove-recipient-button"
+                    onClick={() => onChangeRecipient(null)}
+                  >
+                    - Remove send
+                  </LinkStyledButton>
+                </AutoRow>
+                <AddressInputPanel
+                  id="recipient"
+                  value={recipient}
+                  onChange={onChangeRecipient}
+                />
+              </>
+            ) : null}
 
-              {showWrap ? null : (
-                <Card padding=".25rem .75rem 0 .75rem" borderRadius="20px">
-                  <AutoColumn gap="4px">
-                    {Boolean(trade) && (
-                      <RowBetween align="center">
-                        <Text fontSize="14px">{t('Price')}</Text>
-                        <TradePrice
-                          price={trade?.executionPrice}
-                          showInverted={showInverted}
-                          setShowInverted={setShowInverted}
-                        />
-                      </RowBetween>
-                    )}
-                    {allowedSlippage !== INITIAL_ALLOWED_SLIPPAGE && (
-                      <RowBetween align="center">
-                        <Text fontSize="14px">{t('Slippage Tolerance')}</Text>
-                        <Text fontSize="14px">{allowedSlippage / 100}%</Text>
-                      </RowBetween>
-                    )}
-                  </AutoColumn>
-                </Card>
-              )}
-              {trade !== undefined ? (
-                <AdvancedSwapDetailsDropdown trade={trade} />
-              ) : null}
-            </div>
+            {showWrap ? null : (
+              <Card
+                style={{
+                  marginTop: '1rem',
+                  padding: '.25rem .75rem 0 .75rem',
+                  borderRadius: '20px',
+                }}
+              >
+                <AutoColumn gap="4px">
+                  {Boolean(trade) && (
+                    <RowBetween align="center">
+                      <Text fontSize="14px">{t('Price')}</Text>
+                      <TradePrice
+                        price={trade?.executionPrice}
+                        showInverted={showInverted}
+                        setShowInverted={setShowInverted}
+                      />
+                    </RowBetween>
+                  )}
+                  {allowedSlippage !== INITIAL_ALLOWED_SLIPPAGE && (
+                    <RowBetween align="center">
+                      <Text fontSize="14px">{t('Slippage Tolerance')}</Text>
+                      <Text fontSize="14px">{allowedSlippage / 100}%</Text>
+                    </RowBetween>
+                  )}
+                </AutoColumn>
+              </Card>
+            )}
+
+            {trade !== undefined ? (
+              <AdvancedSwapDetailsDropdown trade={trade} />
+            ) : null}
 
             <BottomGrouping>
               {disableSwap && (

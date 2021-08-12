@@ -68,6 +68,7 @@ export const StyledBalanceMaxMini = styled.button`
     background-color: ${({ theme }) => theme.colors.tertiary};
     outline: none;
   }
+  z-index: 10;
 `;
 
 // styles
