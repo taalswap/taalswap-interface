@@ -194,8 +194,8 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   // [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, BUSD, BTCB, USDT, UST, ETH]
   [ChainId.ROPSTEN]: [...WETH_ONLY[ChainId.ROPSTEN], USDC[ChainId.ROPSTEN], USDT[ChainId.ROPSTEN]],
   [ChainId.RINKEBY]: [...WETH_ONLY[ChainId.RINKEBY], USDC[ChainId.RINKEBY], USDT[ChainId.RINKEBY]],
-  [ChainId.KLAYTN]: [...WETH_ONLY[ChainId.KLAYTN], USDC[ChainId.KLAYTN], USDT[ChainId.KLAYTN]],
-  [ChainId.BAOBAB]: [...WETH_ONLY[ChainId.BAOBAB], USDC[ChainId.BAOBAB], USDT[ChainId.BAOBAB]]
+  [ChainId.KLAYTN]: [...WETH_ONLY[ChainId.KLAYTN], KDAI[ChainId.KLAYTN], USDT[ChainId.KLAYTN]],
+  [ChainId.BAOBAB]: [...WETH_ONLY[ChainId.BAOBAB], KDAI[ChainId.BAOBAB], USDT[ChainId.BAOBAB]]
 };
 
 /**
