@@ -51,7 +51,8 @@ export default function CurrencyLogo({
 
   if (currency === ETHER) {
     return <StyledBnbLogo src="/images/coins/eth.png" size={size} style={style} />
-  } else if (currency === KLAYTN) {
+  }
+  if (currency === KLAYTN) {
     return <StyledBnbLogo src="/images/coins/klay.png" size={size} style={style} />
   }
 
