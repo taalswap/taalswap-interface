@@ -13,7 +13,6 @@ function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
 
   // Base tokens for building intermediary trading routes
   const bases: Token[] = useMemo(() => (chainId ? BASES_TO_CHECK_TRADES_AGAINST[chainId] : []), [chainId])
-  console.log('=====>', bases)
   // All pairs from base tokens
   const basePairs: [Token, Token][] = useMemo(
     () =>

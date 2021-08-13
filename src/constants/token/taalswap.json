@@ -115,7 +115,7 @@
       "address": "0xf223e26b018ae1917e84dd73b515620e36a75596",
       "chainId": 1001,
       "decimals": 18,
-      "logoURI": "https://swap.taalswap.finance/images/coins/klay.png"
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/4256.png"
     },
     {
       "name": "Klaytn Dai",
@@ -123,7 +123,7 @@
       "address": "0xa76639d69cfdbff27abf1d0abc22d5e30e73a07f",
       "chainId": 1001,
       "decimals": 18,
-      "logoURI": "https://swap.taalswap.finance/images/coins/kdai.png"
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/4943.png"
     },
     {
       "name": "TaalSwap Token",
@@ -139,7 +139,7 @@
       "address": "0xc63f4d520544913daecc535fef2d78885db9a850",
       "chainId": 1001,
       "decimals": 18,
-      "logoURI": "https://swap.taalswap.finance/images/coins/usdt.png"
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
     }
   ]
 }
