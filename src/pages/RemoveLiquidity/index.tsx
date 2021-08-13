@@ -558,6 +558,25 @@ export default function RemoveLiquidity({
       liquidityPercentChangeCallback
     );
 
+  let ethStr
+  let receivedEthStr
+  let receivedWethStr
+  switch(chainId) {
+    case ChainId.MAINNET:
+    case ChainId.ROPSTEN:
+    case ChainId.RINKEBY:
+      ethStr = 'ETH'
+      receivedEthStr = 'Receive ETH'
+      receivedWethStr = 'Receive WETH'
+      break;
+    case ChainId.KLAYTN:
+    case ChainId.BAOBAB:
+      ethStr = 'KLAY'
+      receivedEthStr = 'Receive KLAY'
+      receivedWethStr = 'Receive WKLAY'
+      break
+  }
+
   return (
     <Container>
       <AppBody>
@@ -704,23 +723,23 @@ export default function RemoveLiquidity({
                                   : currencyIdB
                               }`}
                             >
-                              {t('Receive WETH')}
+                              {t(receivedWethStr)}
                             </StyledInternalLink>
                           ) : oneCurrencyIsWETH ? (
                             <StyledInternalLink
                               to={`/remove/${
                                 currencyA &&
                                 currencyEquals(currencyA, WETH[chainId])
-                                  ? 'ETH'
+                                  ? ethStr
                                   : currencyIdA
                               }/${
                                 currencyB &&
                                 currencyEquals(currencyB, WETH[chainId])
-                                  ? 'ETH'
+                                  ? ethStr
                                   : currencyIdB
                               }`}
                             >
-                              {t('Receive ETH')}
+                              {t(receivedEthStr)}
                             </StyledInternalLink>
                           ) : null}
                         </RowBetween>

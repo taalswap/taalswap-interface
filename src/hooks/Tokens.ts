@@ -1,5 +1,5 @@
 import { parseBytes32String } from '@ethersproject/strings'
-import { Currency, ETHER, Token, currencyEquals } from 'taalswap-sdk'
+import { Currency, ETHER, Token, currencyEquals, KLAYTN } from 'taalswap-sdk';
 import { useMemo } from 'react'
 import { useSelectedTokenList } from '../state/lists/hooks'
 import { NEVER_RELOAD, useSingleCallResult } from '../state/multicall/hooks'
@@ -103,7 +103,7 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
 }
 
 export function useCurrency(currencyId: string | undefined): Currency | null | undefined {
-  const isBNB = currencyId?.toUpperCase() === 'ETH'
+  const isBNB = currencyId?.toUpperCase() === 'ETH' || currencyId?.toUpperCase() === 'KLAY'
   const token = useToken(isBNB ? undefined : currencyId)
-  return isBNB ? ETHER : token
+  return isBNB ? currencyId?.toUpperCase() === 'ETH' ? ETHER : KLAYTN : token
 }

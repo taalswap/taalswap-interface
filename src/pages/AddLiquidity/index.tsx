@@ -81,6 +81,19 @@ export default function AddLiquidity({
   );
   const expertMode = useIsExpertMode();
 
+  let ethStr
+  switch(chainId) {
+    case ChainId.MAINNET:
+    case ChainId.ROPSTEN:
+    case ChainId.RINKEBY:
+      ethStr = 'ETH'
+      break;
+    case ChainId.KLAYTN:
+    case ChainId.BAOBAB:
+      ethStr = 'KLAY'
+      break
+  }
+
   // mint state
   const { independentField, typedValue, otherTypedValue } = useMintState();
   const {
@@ -362,10 +375,10 @@ export default function AddLiquidity({
           history.push(`/add/${newCurrencyIdB}`);
         }
       } else {
-        history.push(`/add/${currencyIdA || 'ETH'}/${newCurrencyIdB}`);
+        history.push(`/add/${currencyIdA || ethStr}/${newCurrencyIdB}`);
       }
     },
-    [currencyIdA, history, currencyIdB]
+    [currencyIdA, history, currencyIdB, ethStr]
   );
 
   const handleDismissConfirmation = useCallback(() => {

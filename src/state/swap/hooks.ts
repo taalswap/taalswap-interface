@@ -247,6 +247,7 @@ function parseCurrencyFromURLParameter(urlParam: any): string {
     const valid = isAddress(urlParam);
     if (valid) return valid;
     if (urlParam.toUpperCase() === 'ETH') return 'ETH';
+    if (urlParam.toUpperCase() === 'KLAY') return 'KLAY';
     if (valid === false) return 'ETH';
   }
   return '';

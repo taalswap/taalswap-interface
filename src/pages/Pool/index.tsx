@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'contexts/Localization';
 import styled, { ThemeContext } from 'styled-components';
-import { Pair } from 'taalswap-sdk';
+import { ChainId, Pair } from 'taalswap-sdk';
 import { Button, CardBody, HelpIcon, Text, useTooltip } from 'taalswap-uikit';
 import { Link } from 'react-router-dom';
 import FullPositionCard from 'components/PositionCard';
@@ -18,7 +18,6 @@ import { toV2LiquidityToken, useTrackedTokenPairs } from 'state/user/hooks';
 import { Dots } from 'components/swap/styleds';
 import PageHeader from 'components/PageHeader';
 import AppBody from '../AppBody';
-import Teaser from '../LandingPageView/Teaser_page';
 
 const ReferenceElement = styled.div`
   display: flex;
@@ -28,7 +27,7 @@ const ReferenceElement = styled.div`
 export default function Pool() {
   const { t } = useTranslation();
   const theme = useContext(ThemeContext);
-  const { account } = useActiveWeb3React();
+  const { account, chainId } = useActiveWeb3React();
 
   // fetch the user's balances of all tracked V2 LP tokens
   const trackedTokenPairs = useTrackedTokenPairs();
@@ -75,6 +74,19 @@ export default function Pool() {
     { placement: 'top-end', tooltipOffset: [20, 10] }
   );
 
+  let CURRENCY
+  switch(chainId) {
+    case ChainId.MAINNET:
+    case ChainId.ROPSTEN:
+    case ChainId.RINKEBY:
+      CURRENCY = '/add/ETH'
+      break;
+    case ChainId.KLAYTN:
+    case ChainId.BAOBAB:
+      CURRENCY = '/add/KLAY'
+      break
+  }
+
   return (
     <Container>
       {/* <Teaser /> */}
@@ -84,7 +96,7 @@ export default function Pool() {
           title={t('Liquidity')}
           description={t('Add liquidity to receive LP tokens')}
         >
-          <Button id="join-pool-button" as={Link} to="/add/ETH" mb="16px">
+          <Button id="join-pool-button" as={Link} to={CURRENCY} mb="16px">
             {t('Add Liquidity')}
           </Button>
         </PageHeader>

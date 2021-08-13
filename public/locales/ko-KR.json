@@ -49,6 +49,8 @@
   "Detailed": "상세",
   "Receive WETH": "WETH 수신",
   "Receive ETH": "ETH 수신",
+  "Receive WKLAY": "WKLAY 수신",
+  "Receive KLAY": "KLAY 수신",
   "LP tokens in your Wallet": "내 지갑의 LP 토큰들",
   "Routing through these tokens resulted in the best price for your trade.": "아래 토큰을 교환 경로로 선택하면 거래에 가장 적합한 가격이 산출됩니다.",
   "Use this tool to find pairs that do not automatically appear in the interface.": "유동성 인터페이스에 자동으로 나타나지 않는 토큰페어를 찾기 위해 사용하세요.",
