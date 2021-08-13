@@ -99,7 +99,7 @@ const InputPanelBody = styled.div`
   ${({ theme }) => theme.mediaQueries.md} {
     flex-direction: row;
   }
-  // width: 100%;
+  // width: 10%;
 `;
 
 // const Swap = () => {
