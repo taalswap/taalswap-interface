@@ -136,7 +136,7 @@
     {
       "name": "Orbit Bridge Klaytn USD Tether",
       "symbol": "KUSDT",
-      "address": "0xc63f4d520544913daecc535fef2d78885db9a850",
+      "address": "0x06cb1c92cc93d617aed37811783708ac6370cca5",
       "chainId": 1001,
       "decimals": 18,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
