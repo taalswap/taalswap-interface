@@ -32,7 +32,7 @@
     {
       "name": "TaalSwap Token",
       "symbol": "TAL",
-      "address": "0x90a4a420732907b3c38b11058f9aa02b3f4121df",
+      "address": "0x7e6bd46f4ddc58370c0435d496ef7fcc5fe1751d",
       "chainId": 1,
       "decimals": 18,
       "logoURI": "https://swap.taalswap.finance/images/coins/tal.png"

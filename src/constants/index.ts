@@ -16,7 +16,7 @@ type ChainTokenList = {
 
 // export const TAL = new Token(
 //   ChainId.MAINNET,
-//   '0x90a4a420732907b3c38b11058f9aa02b3f4121df',
+//   '0x7e6bd46f4ddc58370c0435d496ef7fcc5fe1751d',
 //   18,
 //   'TAL',
 //   'TaalSwap Token'
@@ -24,7 +24,7 @@ type ChainTokenList = {
 export const TAL = {
   [ChainId.MAINNET]: new Token(
     ChainId.MAINNET,
-    '0x90a4a420732907b3c38b11058f9aa02b3f4121df',
+    '0x7e6bd46f4ddc58370c0435d496ef7fcc5fe1751d',
     18,
     'TAL',
     'TaalSwap Token'
@@ -60,7 +60,7 @@ export const TAL = {
 }
 
 export const TAL_ADDRESS = {
-  [ChainId.MAINNET]: '0x90a4a420732907b3c38b11058f9aa02b3f4121df',
+  [ChainId.MAINNET]: '0x7e6bd46f4ddc58370c0435d496ef7fcc5fe1751d',
   [ChainId.ROPSTEN]: '0xebd87e7c13b3aca572665140b6b12349112f0ce0',
   [ChainId.RINKEBY]: '0x92ecacfc94588aa99fba837be1a98738290e3252',
   [ChainId.KLAYTN]: '0x92ecacfc94588aa99fba837be1a98738290e3252',
