@@ -12,20 +12,23 @@ const useGetDocumentTitlePrice = () => {
   const priceData = useGetPriceData();
   let taalAddress
   switch(NETWORK_CHAIN_ID) {
-    case 1:
+    case ChainId.MAINNET:
       taalAddress = TAL[ChainId.MAINNET];
       break;
-    case 3:
+    case ChainId.ROPSTEN:
       taalAddress = TAL[ChainId.ROPSTEN];
       break;
-    case 4:
+    case ChainId.RINKEBY:
       taalAddress = TAL[ChainId.RINKEBY];
       break;
-    case 8217:
+    case ChainId.KLAYTN:
       taalAddress = TAL[ChainId.KLAYTN];
       break;
-    case 1001:
+    case ChainId.BAOBAB:
       taalAddress = TAL[ChainId.BAOBAB];
+      break;
+    default:
+      taalAddress = TAL[ChainId.MAINNET];
       break;
   }
 

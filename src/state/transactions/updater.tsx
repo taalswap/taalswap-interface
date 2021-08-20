@@ -30,7 +30,7 @@ export default function Updater(): null {
   const { chainId, library } = useActiveWeb3React()
 
   const lastBlockNumber = useBlockNumber()
-
+  console.log('== Updater lastBlockNumber --> ', lastBlockNumber)
   const dispatch = useDispatch<AppDispatch>()
   const state = useSelector<AppState, AppState['transactions']>((s) => s.transactions)
 

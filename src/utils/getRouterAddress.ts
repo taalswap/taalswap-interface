@@ -5,19 +5,19 @@ export default function getRouterAddress(chain: any): string {
   let routerAddress;
 
   switch (chain) {
-    case '1':
+    case ChainId.MAINNET:
       routerAddress = ROUTER_ADDRESS[ChainId.MAINNET]
       break;
-    case '3':
+    case ChainId.ROPSTEN:
       routerAddress = ROUTER_ADDRESS[ChainId.ROPSTEN]
       break;
-    case '4':
+    case ChainId.RINKEBY:
       routerAddress = ROUTER_ADDRESS[ChainId.RINKEBY]
       break;
-    case '8217':
+    case ChainId.KLAYTN:
       routerAddress = ROUTER_ADDRESS[ChainId.KLAYTN]
       break;
-    case '1001':
+    case ChainId.BAOBAB:
       routerAddress = ROUTER_ADDRESS[ChainId.BAOBAB]
       break;
     default:

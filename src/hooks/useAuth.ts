@@ -12,15 +12,23 @@ import {
 import { connectorLocalStorageKey, ConnectorNames } from 'taalswap-uikit'
 import useToast from 'hooks/useToast'
 import { connectorsByName } from 'connectors'
+import { setupNetwork } from 'utils/wallet'
+import getChainId from '../utils/getChainId'
 
 const useAuth = () => {
   const { activate, deactivate } = useWeb3React()
   const { toastError } = useToast()
 
-  const login = useCallback((connectorID: ConnectorNames) => {
+  const login = useCallback(async (connectorID: ConnectorNames) => {
+    console.log(window.localStorage.getItem("chainId"))
+    const chainId = getChainId()
+    const refresh = window.localStorage.getItem("refresh")
     const connector = connectorsByName[connectorID]
+
     if (connector) {
-      activate(connector, async (error: Error) => {
+      console.log('!!!!!!!!!!!!!!!!!!!!!!!!!', chainId, refresh)
+      if (refresh === 'true') await setupNetwork(chainId)
+      await activate(connector, async (error: Error) => {
         window.localStorage.removeItem(connectorLocalStorageKey)
         if (error instanceof UnsupportedChainIdError) {
           toastError('Unsupported Chain Id', 'Unsupported Chain Id Error. Check your chain Id.')
@@ -39,6 +47,11 @@ const useAuth = () => {
           toastError(error.name, error.message)
         }
       })
+
+      if (refresh === 'true') {
+        window.location.reload()
+        window.localStorage.setItem("refresh", 'false')
+      }
     } else {
       toastError('Can\'t find connector', 'The connector config is wrong')
     }

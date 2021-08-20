@@ -12,23 +12,23 @@ const useGetCakeBusdLpPrice = () => {
   let taalAddress
   let usdcAddress
   switch(NETWORK_CHAIN_ID) {
-    case 1:
+    case ChainId.MAINNET:
       taalAddress = TAL_ADDRESS[ChainId.MAINNET];
       usdcAddress = USDC_ADDRESS[ChainId.MAINNET];
       break;
-    case 3:
+    case ChainId.ROPSTEN:
       taalAddress = TAL_ADDRESS[ChainId.ROPSTEN];
       usdcAddress = USDC_ADDRESS[ChainId.ROPSTEN];
       break;
-    case 4:
+    case ChainId.RINKEBY:
       taalAddress = TAL_ADDRESS[ChainId.RINKEBY];
       usdcAddress = USDC_ADDRESS[ChainId.RINKEBY];
       break;
-    case 8217:
+    case ChainId.KLAYTN:
       taalAddress = TAL_ADDRESS[ChainId.KLAYTN];
       usdcAddress = USDC_ADDRESS[ChainId.KLAYTN];
       break;
-    case 1001:
+    case ChainId.BAOBAB:
       taalAddress = TAL_ADDRESS[ChainId.BAOBAB];
       usdcAddress = USDC_ADDRESS[ChainId.BAOBAB];
       break;

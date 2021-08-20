@@ -4,6 +4,7 @@ import { InjectedConnector } from '@web3-react/injected-connector';
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 import { BscConnector } from '@binance-chain/bsc-connector';
+import { ChainId } from 'taalswap-sdk';
 import { NetworkConnector } from './NetworkConnector';
 
 const NETWORK_URL = process.env.REACT_APP_NETWORK_URL;
@@ -29,11 +30,15 @@ export const injected = new InjectedConnector({
   supportedChainIds: [1, 3, 4, 8217, 1001]
 });
 
-export const bscConnector = new BscConnector({ supportedChainIds: [1, 3, 4, 8217, 1001] });
+export const bscConnector = new BscConnector({ supportedChainIds: [] });
 
 // mainnet only
 export const walletconnect = new WalletConnectConnector({
-  rpc: { [NETWORK_CHAIN_ID]: NETWORK_URL },
+  rpc: {
+    [NETWORK_CHAIN_ID]: NETWORK_URL,
+    [ChainId.KLAYTN]: 'https://kaikas.cypress.klaytn.net:8651/',
+    [ChainId.BAOBAB]: 'https://api.baobab.klaytn.net:8651'
+  },
   bridge: 'https://bridge.walletconnect.org',
   qrcode: true,
   pollingInterval: 15000
