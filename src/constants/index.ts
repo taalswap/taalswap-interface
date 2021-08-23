@@ -83,8 +83,8 @@ export const USDT = {
   ),
   [ChainId.ROPSTEN]: new Token(
     ChainId.ROPSTEN,
-    '0x897ad6a487bd9b490d537b3860860863ae414f1e',
-    18,
+    '0x66b007ea82040320eff7d37bf31a2f7086c27d11',
+    6,
     'USDT',
     'Tether USD'
   ),
@@ -122,8 +122,8 @@ export const USDC = {
   ),
   [ChainId.ROPSTEN]: new Token(
     ChainId.ROPSTEN,
-    '0x9c8fa1ee532f8afe9f2e27f06fd836f3c9572f71',
-    18,
+    '0x2e3aa7718a95a48424c086e6f594c04624a798de',
+    6,
     'USDC',
     'USD Coin'
   ),

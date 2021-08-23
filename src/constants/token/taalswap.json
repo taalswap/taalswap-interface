@@ -88,9 +88,9 @@
     {
       "name": "USDC Token",
       "symbol": "USDC",
-      "address": "0x9c8fa1ee532f8afe9f2e27f06fd836f3c9572f71",
+      "address": "0x2e3aa7718a95a48424c086e6f594c04624a798de",
       "chainId": 3,
-      "decimals": 18,
+      "decimals": 6,
       "logoURI": "https://swap.taalswap.finance/images/coins/usdc.png"
     },
     {
@@ -104,9 +104,9 @@
     {
       "name": "USDT Token",
       "symbol": "USDT",
-      "address": "0x897ad6a487bd9b490d537b3860860863ae414f1e",
+      "address": "0x66b007ea82040320eff7d37bf31a2f7086c27d11",
       "chainId": 3,
-      "decimals": 18,
+      "decimals": 6,
       "logoURI": "https://swap.taalswap.finance/images/coins/usdt.png"
     },
     {
