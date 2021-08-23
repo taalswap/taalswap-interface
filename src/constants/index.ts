@@ -4,8 +4,8 @@ import { ChainId, JSBI, Percent, Token, WETH } from 'taalswap-sdk';
 export const ROUTER_ADDRESS = {
   [ChainId.MAINNET]: '0x913cf96b805221e1631de21cd22b7a93099c00b7',
   [ChainId.ROPSTEN]: '0x43807616f5c7d51a9c83f63e6740f76349669800',
-  [ChainId.RINKEBY]: '0xded8b52643c126e996fc1fea9f0c053338bc7e72',
-  [ChainId.KLAYTN]: '0xded8b52643c126e996fc1fea9f0c053338bc7e72',
+  [ChainId.RINKEBY]: '0x43807616f5C7d51a9c83F63e6740f76349669800',
+  [ChainId.KLAYTN]: '0x553d68b23635893166f4ee5cc185d0cf99aa811f',
   [ChainId.BAOBAB]: '0x553d68b23635893166f4ee5cc185d0cf99aa811f'
 }
 
