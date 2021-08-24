@@ -31,6 +31,7 @@ const Menu: React.FC = (props) => {
       setLang={setLanguage}
       cakePriceUsd={cakeBusdPrice}
       profile={profile}
+      blockchain={process.env.REACT_APP_CHAIN_ID ?? "1"}
       {...props}
     />
   );
