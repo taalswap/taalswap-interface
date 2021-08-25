@@ -108,7 +108,7 @@ export default function AddressInputPanel({
               </Text>
               {address && chainId && (
                 <ExternalLink href={getBscScanLink(chainId, name ?? address, 'address')} style={{ fontSize: '14px' }}>
-                  {(t('View on EtherScan'))}
+                  {chainId > 1000 ? (t('View on Scope')) : (t('View on Etherscan'))}
                 </ExternalLink>
               )}
             </RowBetween>

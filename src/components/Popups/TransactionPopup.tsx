@@ -41,7 +41,7 @@ export default function TransactionPopup({
         </Text>
         {chainId && (
           <ExternalLink href={getBscScanLink(chainId, hash, 'transaction')}>
-            {t('View on EtherScan')}
+            {chainId > 1000 ? t('View on Scope') : t('View on Etherscan')}
           </ExternalLink>
         )}
       </AutoColumn>
