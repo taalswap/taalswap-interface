@@ -88,12 +88,6 @@ export default function Pool() {
     ),
     { placement: 'top-end', tooltipOffset: [20, 10] }
   );
-  const { targetRef, tooltip, tooltipVisible } = useTooltip(
-    t(
-      'When you add liquidity, you will receive LP tokens to be registered as your share in this liquidity pool.'
-    ),
-    { placement: 'top-end', tooltipOffset: [20, 10] }
-  );
 
   let CURRENCY
   switch(chainId) {
@@ -119,7 +113,7 @@ export default function Pool() {
         <AppBody>
           <AutoColumn gap="lg" justify="center">
             <CardBody style={{ width: '100%' }}>
-              <Button id="join-pool-button" as={Link} to="/add/ETH" mb="16px">
+              <Button id="join-pool-button" as={Link} to={CURRENCY} mb="16px">
                 {t('Add Liquidity')}
               </Button>
 
