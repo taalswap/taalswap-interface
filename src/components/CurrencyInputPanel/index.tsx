@@ -13,6 +13,7 @@ import { Input as NumericalInput } from '../NumericalInput';
 import { useActiveWeb3React } from '../../hooks';
 import { useTranslation } from '../../contexts/Localization';
 
+
 const InputRow = styled.div<{ selected: boolean }>`
   display: flex;
   flex-flow: row nowrap;
@@ -71,8 +72,8 @@ const InputPanel = styled.div<{ hideInput?: boolean }>`
 `;
 const Container = styled.div<{ hideInput: boolean }>`
   border-radius: 8px;
-  background-color: ${({ theme }) => theme.colors.input};
-  box-shadow: ${({ theme }) => theme.shadows.inset};
+  background-color: ${({ theme }) => theme.colors.tertiary};
+  // box-shadow: ${({ theme }) => theme.shadows.inset};
   border: 1px solid rgb(74 74 104 / 10%);
 `;
 
@@ -122,9 +123,9 @@ export default function CurrencyInputPanel({
   }, [setModalOpen]);
   return (
     <InputPanel id={id}>
-      <Container hideInput={hideInput}>
+      <Container hideInput={hideInput} style={{ padding:'24px 10px' }}>
         {!hideInput && (
-          <LabelRow>
+          <LabelRow >
             <RowBetween>
               <Text fontSize="14px">{translatedLabel}</Text>
               {account && (
@@ -144,7 +145,7 @@ export default function CurrencyInputPanel({
           </LabelRow>
         )}
         <InputRow
-          style={hideInput ? { padding: '0', borderRadius: '8px' } : {}}
+          style={hideInput ? { padding: '0', borderRadius: '8px' } : { marginTop: '10px' }}
           selected={disableCurrencySelect}
         >
           {!hideInput && (
@@ -155,9 +156,10 @@ export default function CurrencyInputPanel({
                 onUserInput={(val) => {
                   onUserInput(val);
                 }}
+                style={{}}
               />
               {account && currency && showMaxButton && label !== 'To' && (
-                <Button onClick={onMax} scale="sm" variant="text">
+                <Button onClick={onMax} scale="sm" variant="text" style={{ color: '#1890FF' }}>
                   {t('Max')}
                 </Button>
               )}
