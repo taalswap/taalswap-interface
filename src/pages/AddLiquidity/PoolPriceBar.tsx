@@ -18,22 +18,22 @@ export function PoolPriceBar({
   price?: Price
 }) {
   return (
-    <AutoColumn gap='md'>
-      <AutoRow justify='space-around' gap='4px'>
-        <AutoColumn justify='center'>
-          <Text>{price?.toSignificant(6) ?? '-'}</Text>
+    <AutoColumn gap='md' style={{ paddingTop: '15px', paddingBottom: '15px' }}>
+      <AutoRow justify='center' gap='4px'>
+        <AutoColumn justify='center' style={{ minWidth: "150px" }}>
+          <Text fontSize='18px' fontWeight='700'>{price?.toSignificant(6) ?? '-'}</Text>
           <Text fontSize='14px' color='textSubtle' pt={1}>
             {currencies[Field.CURRENCY_B]?.symbol} per {currencies[Field.CURRENCY_A]?.symbol}
           </Text>
         </AutoColumn>
-        <AutoColumn justify='center'>
-          <Text>{price?.invert()?.toSignificant(6) ?? '-'}</Text>
+        <AutoColumn justify='center' style={{ minWidth: "150px" }}>
+          <Text fontSize='18px' fontWeight='700'>{price?.invert()?.toSignificant(6) ?? '-'}</Text>
           <Text fontSize='14px' color='textSubtle' pt={1}>
             {currencies[Field.CURRENCY_A]?.symbol} per {currencies[Field.CURRENCY_B]?.symbol}
           </Text>
         </AutoColumn>
-        <AutoColumn justify='center'>
-          <Text>
+        <AutoColumn justify='center' style={{ minWidth: "150px" }}>
+          <Text fontSize='18px' fontWeight='700'>
             {noLiquidity && price
               ? '100'
               : (poolTokenPercentage?.lessThan(ONE_BIPS) ? '<0.01' : poolTokenPercentage?.toFixed(2)) ?? '0'}
