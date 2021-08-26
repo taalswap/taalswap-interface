@@ -23,6 +23,20 @@ import Teaser from '../LandingPageView/Teaser_page';
 const ReferenceElement = styled.div`
   display: flex;
   margin-left: 0.3rem;
+  margin-right:auto;
+`;
+
+const CardBodyWrap = styled.div`
+  text-align: center;
+  background-color: ${({ theme }) => theme.colors.tertiary};
+  border:1px solid transparent;
+  border-radius: 16px;
+  overflow:hidden;
+
+    & div{
+      background-color: ${({ theme }) => theme.colors.tertiary};
+      border-color:transparent;
+    }
 `;
 
 export default function Pool() {
@@ -79,17 +93,17 @@ export default function Pool() {
     <Container>
       {/* <Teaser /> */}
       {/* <CardNav activeIndex={1} /> */}
-      <AppBody>
-        <PageHeader
+      <PageHeader
           title={t('Liquidity')}
           description={t('Add liquidity to receive LP tokens')}
         >
-          <Button id="join-pool-button" as={Link} to="/add/ETH" mb="16px">
-            {t('Add Liquidity')}
-          </Button>
-        </PageHeader>
+        <Button id="join-pool-button" as={Link} to="/add/ETH" mb="16px">
+          {t('Add Liquidity')}
+        </Button>
+      </PageHeader>
+      <AppBody>
         <AutoColumn gap="lg" justify="center">
-          <CardBody>
+          <CardBody style={{ width:'100%', }}>
             <AutoColumn gap="12px" style={{ width: '100%' }}>
               <RowBetween padding="0 8px">
                 <Text color={theme.colors.text}>{t('Your Liquidity')}</Text>
@@ -98,49 +112,50 @@ export default function Pool() {
                 </ReferenceElement>
                 {tooltipVisible && tooltip}
               </RowBetween>
+              <CardBodyWrap>
+                {!account ? (
+                  <LightCard padding="2.8rem 2.8rem 0rem 2.8rem">
+                    <Text color="textDisabled" textAlign="center">
+                      {t('Connect to a wallet to view your liquidity.')}
+                    </Text>
+                  </LightCard>
+                ) : v2IsLoading ? (
+                  <LightCard padding="2.8rem 2.8rem 0rem 2.8rem">
+                    <Text color="textDisabled" textAlign="center">
+                      <Dots>Loading</Dots>
+                    </Text>
+                  </LightCard>
+                ) : allV2PairsWithLiquidity?.length > 0 ? (
+                  <>
+                    {allV2PairsWithLiquidity.map((v2Pair) => (
+                      <FullPositionCard
+                        key={v2Pair.liquidityToken.address}
+                        pair={v2Pair}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <LightCard padding= "2.8rem 2.8rem 0rem 2.8rem" >
+                    <Text color="textDisabled" textAlign="center">
+                      {t('No liquidity found.')}
+                    </Text>
+                  </LightCard>
+                )}
 
-              {!account ? (
-                <LightCard padding="40px">
-                  <Text color="textDisabled" textAlign="center">
-                    {t('Connect to a wallet to view your liquidity.')}
+                <div style={{ padding: '1.8rem 0rem 2.8rem 0rem'}}>
+                  <Text fontSize="14px" style={{ padding: '.5rem 0 .5rem 0' }}>
+                    {t("Don't see your pool(s)?")}{' '}
+                    <StyledInternalLink id="import-pool-link" to="/find">
+                      {t('Import here')}
+                    </StyledInternalLink>
                   </Text>
-                </LightCard>
-              ) : v2IsLoading ? (
-                <LightCard padding="40px">
-                  <Text color="textDisabled" textAlign="center">
-                    <Dots>Loading</Dots>
+                  <Text fontSize="14px" style={{ padding: '.5rem 0 .5rem 0' }}>
+                    {t(
+                      'Your LP tokens in a farm can be moved back here by unstaking them.'
+                    )}
                   </Text>
-                </LightCard>
-              ) : allV2PairsWithLiquidity?.length > 0 ? (
-                <>
-                  {allV2PairsWithLiquidity.map((v2Pair) => (
-                    <FullPositionCard
-                      key={v2Pair.liquidityToken.address}
-                      pair={v2Pair}
-                    />
-                  ))}
-                </>
-              ) : (
-                <LightCard padding="40px">
-                  <Text color="textDisabled" textAlign="center">
-                    {t('No liquidity found.')}
-                  </Text>
-                </LightCard>
-              )}
-
-              <div>
-                <Text fontSize="14px" style={{ padding: '.5rem 0 .5rem 0' }}>
-                  {t("Don't see your pool(s)?")}{' '}
-                  <StyledInternalLink id="import-pool-link" to="/find">
-                    {t('Import here')}
-                  </StyledInternalLink>
-                </Text>
-                <Text fontSize="14px" style={{ padding: '.5rem 0 .5rem 0' }}>
-                  {t(
-                    'Your LP tokens in a farm can be moved back here by unstaking them.'
-                  )}
-                </Text>
-              </div>
+                </div>
+              </CardBodyWrap>
             </AutoColumn>
           </CardBody>
         </AutoColumn>
