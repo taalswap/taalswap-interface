@@ -52,7 +52,7 @@ export const TAL = {
   ),
   [ChainId.BAOBAB]: new Token(
     ChainId.BAOBAB,
-    '0xe8e2f5117297f3a330fd06fac88928b63bb84b09',
+    '0xfc1bfd38fdef95af8b6e1de944cbf57abcbcee10',
     18,
     'KTAL',
     'TaalSwap Token'
@@ -64,7 +64,7 @@ export const TAL_ADDRESS = {
   [ChainId.ROPSTEN]: '0xebd87e7c13b3aca572665140b6b12349112f0ce0',
   [ChainId.RINKEBY]: '0x92ecacfc94588aa99fba837be1a98738290e3252',
   [ChainId.KLAYTN]: '0x92ecacfc94588aa99fba837be1a98738290e3252',
-  [ChainId.BAOBAB]: '0xe8e2f5117297f3a330fd06fac88928b63bb84b09'
+  [ChainId.BAOBAB]: '0xfc1bfd38fdef95af8b6e1de944cbf57abcbcee10'
 }
 
 // export const WETH = new Token(ChainId.RINKEBY, '0x92EcACFC94588aa99fba837Be1a98738290E3252', 18, 'WETH', 'Wrapped ETH');

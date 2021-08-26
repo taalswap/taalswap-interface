@@ -128,7 +128,7 @@
     {
       "name": "TaalSwap Token",
       "symbol": "KTAL",
-      "address": "0xe8e2f5117297f3a330fd06fac88928b63bb84b09",
+      "address": "0xfc1bfd38fdef95af8b6e1de944cbf57abcbcee10",
       "chainId": 1001,
       "decimals": 18,
       "logoURI": "https://swap.taalswap.finance/images/coins/tal.png"
