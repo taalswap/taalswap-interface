@@ -8,15 +8,16 @@ const StyledInput = styled.input<{ error?: boolean; fontSize?: string; align?: s
   position: relative;
   font-weight: 500;
   outline: none;
-  border: none;
+  border: 1px solid transparent;
+  border-radius:3px;
   flex: 1 1 auto;
-  background-color: transparent;
+  background-color:  ${({ theme }) => theme.colors.input};
   font-size: 16px;
   text-align: ${({ align }) => align && align};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 0px;
+  padding: 3px 10px;
   -webkit-appearance: textfield;
 
   ::-webkit-search-decoration {

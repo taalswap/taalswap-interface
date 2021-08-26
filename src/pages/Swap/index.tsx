@@ -10,14 +10,17 @@ import React, {
 import { useTranslation } from 'contexts/Localization';
 import { ArrowDown } from 'react-feather';
 import {
+  Card as UICard,
   CardBody,
   ArrowDownIcon,
+  ArrowForwardIcon,
   Button,
   IconButton,
   Text,
   useModal,
   Link,
   Flex,
+  useMatchBreakpoints,
 } from 'taalswap-uikit';
 import { RouteComponentProps } from 'react-router-dom';
 import styled, { ThemeContext } from 'styled-components';
@@ -83,6 +86,22 @@ const StyledLink = styled(Link)`
   color: ${({ theme }) => theme.colors.failure};
 `;
 
+const SwapBody = styled(UICard)`
+  position: relative;
+  max-width: 1070px;
+  width: 100%;
+  z-index: 5;
+`;
+
+const InputPanelBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  ${({ theme }) => theme.mediaQueries.md} {
+    flex-direction: row;
+  }
+  // width: 10%;
+`;
+
 // const Swap = () => {
 function Swap({
   match: {
@@ -90,6 +109,7 @@ function Swap({
   },
   history,
 }: RouteComponentProps<{ currencyIdA?: string; currencyIdB?: string }>) {
+  const { isSm, isXs, isMd } = useMatchBreakpoints();
   const currencyA = useCurrency(currencyIdA);
   const currencyB = useCurrency(currencyIdB);
   const [currencyAFlag, setCurrencyAFlag] = useState(currencyA !== undefined);
@@ -440,6 +460,7 @@ function Swap({
       setInterruptRedirectCountdown(false);
       setApprovalSubmitted(false); // reset 2 step UI for approvals
       onCurrencySelection(Field.INPUT, inputCurrency);
+      console.log(inputCurrency);
       if (inputCurrency.symbol === 'SYRUP') {
         checkForWarning(inputCurrency.symbol, 'Selling');
       }
@@ -490,7 +511,11 @@ function Swap({
         onConfirm={handleConfirmWarning}
       />
       {/* <CardNav /> */}
-      <AppBody>
+      <PageHeader
+          title={t('Swap')}
+          description={t('Trade your token on the spot')}
+        />
+      <SwapBody>
         <Wrapper id="swap-page">
           <ConfirmSwapModal
             isOpen={showConfirm}
@@ -505,13 +530,8 @@ function Swap({
             swapErrorMessage={swapErrorMessage}
             onDismiss={handleConfirmDismiss}
           />
-          <PageHeader
-            title={t('Swap')}
-            description={t('Trade your token on the spot')}
-          />
-
           <CardBody>
-            <AutoColumn gap="md">
+            <InputPanelBody>
               <CurrencyInputPanel
                 label={
                   independentField === Field.OUTPUT && !showWrap && trade
@@ -528,7 +548,10 @@ function Swap({
                 otherCurrency={currencies[Field.OUTPUT]}
                 id="swap-currency-input"
               />
-              <AutoColumn justify="space-between">
+              <AutoColumn
+                justify="space-between"
+                style={{ margin: '0px 10px' }}
+              >
                 <AutoRow
                   justify={isExpertMode ? 'space-between' : 'center'}
                   style={{ padding: '0 1rem' }}
@@ -539,11 +562,16 @@ function Swap({
                       onClick={() => {
                         setApprovalSubmitted(false); // reset 2 step UI for approvals
                         onSwitchTokens();
+                        console.log('-----');
                       }}
                       style={{ borderRadius: '50%' }}
                       scale="sm"
                     >
-                      <ArrowDownIcon color="#00ab55" width="24px" />
+                      {isXs || isSm || isMd ? (
+                        <ArrowDownIcon color="#00ab55" width="24px" />
+                      ) : (
+                        <ArrowForwardIcon color="#00ab55" width="24px" />
+                      )}
                     </IconButton>
                   </ArrowWrapper>
                   {recipient === null && !showWrap && isExpertMode ? (
@@ -571,58 +599,67 @@ function Swap({
                 otherCurrency={currencies[Field.INPUT]}
                 id="swap-currency-output"
               />
-
-              {recipient !== null && !showWrap ? (
-                <>
-                  <AutoRow
-                    justify="space-between"
-                    style={{ padding: '0 1rem' }}
+            </InputPanelBody>
+            {recipient !== null && !showWrap ? (
+              <>
+                <AutoRow justify="space-between">
+                  <ArrowWrapper clickable={false}>
+                    <ArrowDown size="16" color={theme.colors.textSubtle} />
+                  </ArrowWrapper>
+                  <LinkStyledButton
+                    id="remove-recipient-button"
+                    onClick={() => onChangeRecipient(null)}
                   >
-                    <ArrowWrapper clickable={false}>
-                      <ArrowDown size="16" color={theme.colors.textSubtle} />
-                    </ArrowWrapper>
-                    <LinkStyledButton
-                      id="remove-recipient-button"
-                      onClick={() => onChangeRecipient(null)}
-                    >
-                      - Remove send
-                    </LinkStyledButton>
-                  </AutoRow>
-                  <AddressInputPanel
-                    id="recipient"
-                    value={recipient}
-                    onChange={onChangeRecipient}
-                  />
-                </>
-              ) : null}
+                    - Remove send
+                  </LinkStyledButton>
+                </AutoRow>
+                <AddressInputPanel
+                  id="recipient"
+                  value={recipient}
+                  onChange={onChangeRecipient}
+                />
+              </>
+            ) : null}
 
-              {showWrap ? null : (
-                <Card padding=".25rem .75rem 0 .75rem" borderRadius="20px">
-                  <AutoColumn gap="4px">
-                    {Boolean(trade) && (
-                      <RowBetween align="center">
-                        <Text fontSize="14px">{t('Price')}</Text>
-                        <TradePrice
-                          price={trade?.executionPrice}
-                          showInverted={showInverted}
-                          setShowInverted={setShowInverted}
-                        />
-                      </RowBetween>
-                    )}
-                    {allowedSlippage !== INITIAL_ALLOWED_SLIPPAGE && (
-                      <RowBetween align="center">
-                        <Text fontSize="14px">{t('Slippage Tolerance')}</Text>
-                        <Text fontSize="14px">{allowedSlippage / 100}%</Text>
-                      </RowBetween>
-                    )}
-                  </AutoColumn>
-                </Card>
-              )}
-            </AutoColumn>
+            {showWrap ? null : (
+              <Card
+                style={{
+                  /* marginTop: '1rem', */
+                  padding: '.25rem  0 .75rem',
+                  borderRadius: '20px',
+                  maxWidth: '540px',
+                  margin: '1rem auto 0',
+                  lineHeight: '1.2',
+                }}
+              >
+                <AutoColumn gap="4px">
+                  {Boolean(trade) && (
+                    <RowBetween align="center">
+                      <Text fontSize="14px">{t('Price')}</Text>
+                      <TradePrice
+                        price={trade?.executionPrice}
+                        showInverted={showInverted}
+                        setShowInverted={setShowInverted}
+                      />
+                    </RowBetween>
+                  )}
+                  {allowedSlippage !== INITIAL_ALLOWED_SLIPPAGE && (
+                    <RowBetween align="center">
+                      <Text fontSize="14px">{t('Slippage Tolerance')}</Text>
+                      <Text fontSize="14px">{allowedSlippage / 100}%</Text>
+                    </RowBetween>
+                  )}
+                </AutoColumn>
+              </Card>
+            )}
+
+            {trade !== undefined ? (
+              <AdvancedSwapDetailsDropdown trade={trade} />
+            ) : null}
 
             <BottomGrouping>
               {disableSwap && (
-                <Flex alignItems="center" justifyContent="center" mb="1rem">
+                <Flex alignItems="center"  mb="1rem">
                   <Text color="failure">
                     Please use{' '}
                     <StyledLink external href="https://swap.taalswap.finance">
@@ -764,8 +801,8 @@ function Swap({
             </BottomGrouping>
           </CardBody>
         </Wrapper>
-      </AppBody>
-      <AdvancedSwapDetailsDropdown trade={trade} />
+      </SwapBody>
+      {/* <AdvancedSwapDetailsDropdown trade={trade} /> */}
     </Container>
   );
 }

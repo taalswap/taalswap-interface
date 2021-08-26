@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import styled from 'styled-components'
-import { Flex, Heading, HistoryIcon, IconButton, Text, TuneIcon, useModal } from 'taalswap-uikit'
+import { BackgroundImage, Flex, Heading, HistoryIcon, IconButton, Text, TuneIcon, useModal } from 'taalswap-uikit'
 import SettingsModal from './SettingsModal'
 import RecentTransactionsModal from './RecentTransactionsModal'
 import { useTranslation } from '../../contexts/Localization';
@@ -12,8 +12,10 @@ interface PageHeaderProps {
 }
 /* to do */
 const StyledPageHeader = styled.div`
-  border-bottom: 1px solid ${({ theme }) => theme.colors.disabled};
-  padding: 24px;
+  border-bottom: 0px solid ${({ theme }) => theme.colors.disabled};
+  padding: 0px 0px 24px 0px;
+  width: 100%;
+  max-width:1070px;
 `
 
 const Details = styled.div`
@@ -39,11 +41,7 @@ const PageHeader = ({ title, description, children }: PageHeaderProps) => {
         <IconButton variant='text' onClick={onPresentSettings} title={t('Settings')}>
           <TuneIcon width='24px' color='#00ab55' />
         </IconButton>
-        <IconButton
-          variant='text'
-          onClick={onPresentRecentTransactions}
-          title={t('Recent transactions')}
-        >
+        <IconButton variant='text' onClick={onPresentRecentTransactions} title={t('Recent transactions')}>
           <HistoryIcon width='24px' color='#00ab55' />
         </IconButton>
       </Flex>
