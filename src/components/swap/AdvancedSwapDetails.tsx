@@ -99,8 +99,8 @@ function TradeSummary({
 
   return (
     <Card>
-      <CardBody>
-        <RowBetween>
+      <CardBody style={{ maxWidth:'550px', paddingLeft:'0',  paddingRight:'0', margin: '0 auto' }}>
+        <RowBetween style={{ padding: '.25rem 0', }} >
           <RowFixed>
             <Text fontSize="14px">
               {isExactIn ? t('Minimum received') : t('Maximum sold')}
@@ -119,14 +119,14 @@ function TradeSummary({
             </Text>
           </RowFixed>
         </RowBetween>
-        <RowBetween>
+        <RowBetween style={{ padding: '.25rem 0', }}>
           <RowFixed>
             <Text fontSize="14px">{t('Price Impact')}</Text>
             <Tip2 />
           </RowFixed>
           <FormattedPriceImpact priceImpact={priceImpactWithoutFee} />
         </RowBetween>
-        <RowBetween>
+        <RowBetween style={{ padding: '.25rem 0', }}>
           <RowFixed>
             <Text fontSize="14px">{t('Liquidity Provider Fee')}</Text>
             <Tip3 />
@@ -168,8 +168,8 @@ export function AdvancedSwapDetails({ trade }: AdvancedSwapDetailsProps) {
             <TradeSummary trade={trade} allowedSlippage={allowedSlippage} />
             {showRoute && (
               <>
-                <SectionBreak />
-                <AutoColumn style={{ padding: '0 24px' }}>
+                <SectionBreak style={{ backgroundColor:"transparent" }}/>
+                <AutoColumn style={{ padding: '0 24px'}}>
                   <RowFixed>
                     <Text fontSize="14px">Route</Text>
                     <ReferenceElement ref={targetRef}>
@@ -177,7 +177,7 @@ export function AdvancedSwapDetails({ trade }: AdvancedSwapDetailsProps) {
                     </ReferenceElement>
                     {tooltipVisible && tooltip}
                   </RowFixed>
-                  <SwapRoute trade={trade} />
+                  <SwapRoute trade={trade}/>
                 </AutoColumn>
               </>
             )}

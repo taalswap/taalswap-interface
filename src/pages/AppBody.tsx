@@ -4,7 +4,7 @@ import { Card } from 'taalswap-uikit';
 
 export const BodyWrapper = styled(Card)`
   position: relative;
-  max-width: 436px;
+  max-width: 1070px;
   width: 100%;
   z-index: 5;
 `;

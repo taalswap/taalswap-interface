@@ -50,6 +50,7 @@ import {
   calculateSlippageAmount,
   getRouterContract,
 } from 'utils';
+import PageHeader from 'components/PageHeader';
 import { maxAmountSpend } from 'utils/maxAmountSpend';
 import { wrappedCurrency } from 'utils/wrappedCurrency';
 import { currencyId } from 'utils/currencyId';
@@ -63,12 +64,13 @@ import { PoolPriceBar } from './PoolPriceBar';
 import { ROUTER_ADDRESS } from '../../constants';
 import { useTranslation } from '../../contexts/Localization';
 
+
 // const CACHE_KEY = 'pancakeswap_language';
 const CACHE_KEY = 'taalswap_language';
 
 const AddLiquidetyBody = styled(UICard)`
   position: relative;
-  max-width: 900px;
+  max-width: 1070px;
   width: 100%;
   z-index: 5;
 `;
@@ -398,6 +400,10 @@ export default function AddLiquidity({
   return (
     <Container>
       {/* <CardNav activeIndex={1} /> */}
+      <PageHeader
+        title={t('Liquidity')}
+        description={t('Add liquidity to receive LP tokens')}
+      />
       <AddLiquidetyBody>
         <AddRemoveTabs adding />
         <Wrapper>
@@ -459,7 +465,7 @@ export default function AddLiquidity({
                   showCommonBases={false}
                 />
 
-                <AddIcon margin="10px 10px" color="textSubtle" />
+                <AddIcon margin="10px 10px" color="textSubtle" style={{ width:"2.188rem" , padding: "5px", border:"1px solid transparent", borderRadius: "4px" ,backgroundColor:"#F3F5F7"}} />
 
                 <CurrencyInputPanel
                   value={formattedAmounts[Field.CURRENCY_B]}
@@ -484,8 +490,8 @@ export default function AddLiquidity({
                     <UIKitText
                       style={{ textTransform: 'uppercase', fontWeight: 600 }}
                       color="textSubtle"
-                      fontSize="12px"
-                      mb="2px"
+                      fontSize="16px"
+                      mb="10px"
                     >
                       {noLiquidity
                         ? t('Initial prices and pool share')

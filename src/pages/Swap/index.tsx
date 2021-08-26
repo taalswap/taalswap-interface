@@ -88,7 +88,7 @@ const StyledLink = styled(Link)`
 
 const SwapBody = styled(UICard)`
   position: relative;
-  max-width: 900px;
+  max-width: 1070px;
   width: 100%;
   z-index: 5;
 `;
@@ -511,6 +511,10 @@ function Swap({
         onConfirm={handleConfirmWarning}
       />
       {/* <CardNav /> */}
+      <PageHeader
+          title={t('Swap')}
+          description={t('Trade your token on the spot')}
+        />
       <SwapBody>
         <Wrapper id="swap-page">
           <ConfirmSwapModal
@@ -526,11 +530,6 @@ function Swap({
             swapErrorMessage={swapErrorMessage}
             onDismiss={handleConfirmDismiss}
           />
-          <PageHeader
-            title={t('Swap')}
-            description={t('Trade your token on the spot')}
-          />
-
           <CardBody>
             <InputPanelBody>
               <CurrencyInputPanel
@@ -625,9 +624,12 @@ function Swap({
             {showWrap ? null : (
               <Card
                 style={{
-                  marginTop: '1rem',
-                  padding: '.25rem .75rem 0 .75rem',
+                  /* marginTop: '1rem', */
+                  padding: '.25rem  0 .75rem',
                   borderRadius: '20px',
+                  maxWidth: '540px',
+                  margin: '1rem auto 0',
+                  lineHeight: '1.2',
                 }}
               >
                 <AutoColumn gap="4px">
@@ -657,7 +659,7 @@ function Swap({
 
             <BottomGrouping>
               {disableSwap && (
-                <Flex alignItems="center" justifyContent="center" mb="1rem">
+                <Flex alignItems="center"  mb="1rem">
                   <Text color="failure">
                     Please use{' '}
                     <StyledLink external href="https://swap.taalswap.finance">
