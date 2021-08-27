@@ -6,7 +6,7 @@ export const ROUTER_ADDRESS = {
   [ChainId.ROPSTEN]: '0x43807616f5c7d51a9c83f63e6740f76349669800',
   [ChainId.RINKEBY]: '0x43807616f5C7d51a9c83F63e6740f76349669800',
   [ChainId.KLAYTN]: '0x553d68b23635893166f4ee5cc185d0cf99aa811f',
-  [ChainId.BAOBAB]: '0x48cb54a7ed82311ef6725187a799f979a272c561'
+  [ChainId.BAOBAB]: '0xF532e0589D477DB6D36591612B0ee42D038019C2'
 }
 
 // a list of tokens by chain
@@ -52,7 +52,7 @@ export const TAL = {
   ),
   [ChainId.BAOBAB]: new Token(
     ChainId.BAOBAB,
-    '0xfc1bfd38fdef95af8b6e1de944cbf57abcbcee10',
+    '0x6C27d9F6C4067212797794CD931596C2917F7Bf7',
     18,
     'KTAL',
     'TaalSwap Token'
@@ -64,7 +64,7 @@ export const TAL_ADDRESS = {
   [ChainId.ROPSTEN]: '0xebd87e7c13b3aca572665140b6b12349112f0ce0',
   [ChainId.RINKEBY]: '0x92ecacfc94588aa99fba837be1a98738290e3252',
   [ChainId.KLAYTN]: '0x92ecacfc94588aa99fba837be1a98738290e3252',
-  [ChainId.BAOBAB]: '0xfc1bfd38fdef95af8b6e1de944cbf57abcbcee10'
+  [ChainId.BAOBAB]: '0x6C27d9F6C4067212797794CD931596C2917F7Bf7'
 }
 
 // export const WETH = new Token(ChainId.RINKEBY, '0x92EcACFC94588aa99fba837Be1a98738290E3252', 18, 'WETH', 'Wrapped ETH');
