@@ -25,9 +25,12 @@ const ContainerRow = styled.div<{ error: boolean }>`
   justify-content: center;
   align-items: center;
   border-radius: 1.25rem;
-  border: 1px solid ${({ error, theme }) => (error ? theme.colors.failure : theme.colors.invertedContrast)};
-  transition: border-color 300ms ${({ error }) => (error ? 'step-end' : 'step-start')},
-  color 500ms ${({ error }) => (error ? 'step-end' : 'step-start')};
+  border: 1px solid
+    ${({ error, theme }) =>
+      error ? theme.colors.failure : theme.colors.invertedContrast};
+  transition: border-color 300ms
+      ${({ error }) => (error ? 'step-end' : 'step-start')},
+    color 500ms ${({ error }) => (error ? 'step-end' : 'step-start')};
   background-color: ${({ theme }) => theme.colors.invertedContrast};
 `;
 
@@ -44,7 +47,8 @@ const Input = styled.input<{ error?: boolean }>`
   width: 0;
   background-color: ${({ theme }) => theme.colors.invertedContrast};
   transition: color 300ms ${({ error }) => (error ? 'step-end' : 'step-start')};
-  color: ${({ error, theme }) => (error ? theme.colors.failure : theme.colors.primary)};
+  color: ${({ error, theme }) =>
+    error ? theme.colors.failure : theme.colors.primary};
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 500;
@@ -72,10 +76,10 @@ const Input = styled.input<{ error?: boolean }>`
 `;
 
 export default function AddressInputPanel({
-                                            id,
-                                            value,
-                                            onChange
-                                          }: {
+  id,
+  value,
+  onChange
+}: {
   id?: string
   // the typed string value
   value: string
@@ -107,21 +111,24 @@ export default function AddressInputPanel({
                 {t('Recipient')}
               </Text>
               {address && chainId && (
-                <ExternalLink href={getBscScanLink(chainId, name ?? address, 'address')} style={{ fontSize: '14px' }}>
+                <ExternalLink
+                    href={getBscScanLink(chainId, name ?? address, 'address')}
+                    style={{ fontSize: '14px' }}
+                >
                   {chainId > 1000 ? (t('View on Scope')) : (t('View on Etherscan'))}
                 </ExternalLink>
               )}
             </RowBetween>
             <Input
-              className='recipient-address-input'
-              type='text'
-              autoComplete='off'
-              autoCorrect='off'
-              autoCapitalize='off'
-              spellCheck='false'
+              className="recipient-address-input"
+              type="text"
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="off"
+              spellCheck="false"
               placeholder={t('Wallet Address or ENS name')}
               error={error}
-              pattern='^(0x[a-fA-F0-9]{40})$'
+              pattern="^(0x[a-fA-F0-9]{40})$"
               onChange={handleInput}
               value={value}
             />

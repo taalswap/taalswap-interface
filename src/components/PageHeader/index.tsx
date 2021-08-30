@@ -4,6 +4,9 @@ import { BackgroundImage, Flex, Heading, HistoryIcon, IconButton, Text, TuneIcon
 import SettingsModal from './SettingsModal'
 import RecentTransactionsModal from './RecentTransactionsModal'
 import { useTranslation } from '../../contexts/Localization';
+import OptionIcon from "../../pages/Swap/images/option_icon.svg";
+import Disclosure from "../../pages/Swap/images/disclosure.svg"
+
 
 interface PageHeaderProps {
   title: ReactNode
@@ -39,10 +42,12 @@ const PageHeader = ({ title, description, children }: PageHeaderProps) => {
           )}
         </Details>
         <IconButton variant='text' onClick={onPresentSettings} title={t('Settings')}>
-          <TuneIcon width='24px' color='#00ab55' />
+          {/* <TuneIcon width='24px' color='#00ab55' /> */}
+          <img src={ OptionIcon } alt="option_icon" className="" />
         </IconButton>
         <IconButton variant='text' onClick={onPresentRecentTransactions} title={t('Recent transactions')}>
-          <HistoryIcon width='24px' color='#00ab55' />
+          {/* <HistoryIcon width='24px' color='#00ab55' /> */}
+          <img src={ Disclosure } alt="option_icon" className="" />
         </IconButton>
       </Flex>
       {children && <Text mt='16px'>{children}</Text>}

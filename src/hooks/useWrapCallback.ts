@@ -5,11 +5,12 @@ import { useTransactionAdder } from '../state/transactions/hooks';
 import { useCurrencyBalance } from '../state/wallet/hooks';
 import { useActiveWeb3React } from './index';
 import { useWETHContract } from './useContract';
+import { useTranslation } from '../contexts/Localization';
 
 export enum WrapType {
   NOT_APPLICABLE,
   WRAP,
-  UNWRAP
+  UNWRAP,
 }
 
 const NOT_APPLICABLE = { wrapType: WrapType.NOT_APPLICABLE };
@@ -23,13 +24,21 @@ export default function useWrapCallback(
   inputCurrency: Currency | undefined,
   outputCurrency: Currency | undefined,
   typedValue: string | undefined
-): { wrapType: WrapType; execute?: undefined | (() => Promise<void>); inputError?: string } {
+): {
+    wrapType: WrapType;
+    execute?: undefined | (() => Promise<void>);
+    inputError?: string
+} {
   const { chainId, account } = useActiveWeb3React();
   const wethContract = useWETHContract();
   const balance = useCurrencyBalance(account ?? undefined, inputCurrency);
   // we can always parse the amount typed as the input currency, since wrapping is 1:1
-  const inputAmount = useMemo(() => tryParseAmount(typedValue, inputCurrency), [inputCurrency, typedValue]);
+  const inputAmount = useMemo(
+      () => tryParseAmount(typedValue, inputCurrency),
+      [inputCurrency, typedValue]
+  );
   const addTransaction = useTransactionAdder();
+  const { t } = useTranslation();
 
   let wrapStr
   let unWrapStr
@@ -54,45 +63,76 @@ export default function useWrapCallback(
   }
 
   return useMemo(() => {
-    if (!wethContract || !chainId || !inputCurrency || !outputCurrency) return NOT_APPLICABLE;
+    if (!wethContract || !chainId || !inputCurrency || !outputCurrency)
+        return NOT_APPLICABLE;
 
-    const sufficientBalance = inputAmount && balance && !balance.lessThan(inputAmount);
+    const sufficientBalance =
+        inputAmount && balance && !balance.lessThan(inputAmount);
 
-    if ((inputCurrency === ETHER || inputCurrency === KLAYTN) && currencyEquals(WETH[chainId], outputCurrency)) {
+    if ((inputCurrency === ETHER || inputCurrency === KLAYTN) &&
+        currencyEquals(WETH[chainId], outputCurrency))
+    {
       return {
         wrapType: WrapType.WRAP,
         execute:
           sufficientBalance && inputAmount
             ? async () => {
               try {
-                const txReceipt = await wethContract.deposit({ value: `0x${inputAmount.raw.toString(16)}` });
-                addTransaction(txReceipt, { summary: `Wrap ${inputAmount.toSignificant(6)} ${wrapStr}` });
+                const txReceipt = await wethContract.deposit({
+                    value: `0x${inputAmount.raw.toString(16)}`
+                });
+                addTransaction(txReceipt, {
+                    summary: `Wrap ${inputAmount.toSignificant(6)} ${wrapStr}`
+                });
               } catch (error) {
                 console.error('Could not deposit', error);
               }
             }
             : undefined,
-        inputError: sufficientBalance ? undefined : `Insufficient ${ethStr} balance`
+        inputError: sufficientBalance
+            ? undefined
+            : t('Insufficient %symbol% balance', ethStr),
       };
     }
-    if (currencyEquals(WETH[chainId], inputCurrency) && (outputCurrency === ETHER || outputCurrency === KLAYTN)) {
+    if (
+        currencyEquals(WETH[chainId], inputCurrency) &&
+        (outputCurrency === ETHER || outputCurrency === KLAYTN))
+    {
       return {
         wrapType: WrapType.UNWRAP,
         execute:
           sufficientBalance && inputAmount
             ? async () => {
               try {
-                const txReceipt = await wethContract.withdraw(`0x${inputAmount.raw.toString(16)}`);
-                addTransaction(txReceipt, { summary: `Unwrap ${inputAmount.toSignificant(6)} ${unWrapStr}` });
+                const txReceipt = await wethContract.withdraw(
+                    `0x${inputAmount.raw.toString(16)}`
+                );
+                addTransaction(txReceipt, {
+                    summary: `Unwrap ${inputAmount.toSignificant(
+                        6
+                    )} ${unWrapStr}`
+                });
               } catch (error) {
                 console.error('Could not withdraw', error);
               }
             }
             : undefined,
-        inputError: sufficientBalance ? undefined : `Insufficient ${wethStr} balance`
+        inputError: sufficientBalance
+            ? undefined
+            : t('Insufficient %symbol% balance', ethStr),
       };
     }
     return NOT_APPLICABLE;
 
-  }, [wethContract, chainId, inputCurrency, outputCurrency, inputAmount, balance, addTransaction, ethStr, unWrapStr, wethStr, wrapStr]);
+  }, [wethContract,
+      chainId,
+      inputCurrency,
+      outputCurrency,
+      inputAmount,
+      balance,
+      addTransaction,
+      ethStr,
+      unWrapStr,
+      wethStr,
+      wrapStr]);
 }

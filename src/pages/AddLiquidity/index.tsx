@@ -414,6 +414,10 @@ export default function AddLiquidity({
     setTxHash('');
   }, [onFieldAInput, txHash]);
 
+    const getSymbol = (str: string | undefined) => {
+        return str !== undefined ? str : '';
+    };
+
   return (
     <Container>
       {/* <CardNav activeIndex={1} /> */}
@@ -482,7 +486,17 @@ export default function AddLiquidity({
                   showCommonBases={false}
                 />
 
-                <AddIcon margin="10px 10px" color="textSubtle" style={{ width:"2.188rem" , padding: "5px", border:"1px solid transparent", borderRadius: "4px" ,backgroundColor:"#F3F5F7"}} />
+                <AddIcon
+                  margin="10px 10px"
+                  color="textSubtle"
+                  style={{
+                    width: '2.188rem',
+                    padding: '5px',
+                    border: '1px solid transparent',
+                    borderRadius: '4px',
+                    backgroundColor: '#F3F5F7',
+                  }}
+                />
 
                 <CurrencyInputPanel
                   value={formattedAmounts[Field.CURRENCY_B]}
@@ -548,10 +562,20 @@ export default function AddLiquidity({
                           >
                             {approvalA === ApprovalState.PENDING ? (
                               <Dots>
-                                Approving {currencies[Field.CURRENCY_A]?.symbol}
+                                {/* Approving {currencies[Field.CURRENCY_A]?.symbol} */}
+                                {t('Approving %symbol%', {
+                                  symbol: getSymbol(
+                                    currencies[Field.CURRENCY_A]?.symbol
+                                  ),
+                                })}
                               </Dots>
                             ) : (
-                              `Approve ${currencies[Field.CURRENCY_A]?.symbol}`
+                              // `Approve ${currencies[Field.CURRENCY_A]?.symbol}`
+                              t('Approve %symbol%', {
+                                symbol: getSymbol(
+                                  currencies[Field.CURRENCY_A]?.symbol
+                                ),
+                              })
                             )}
                           </Button>
                         )}
@@ -568,10 +592,20 @@ export default function AddLiquidity({
                           >
                             {approvalB === ApprovalState.PENDING ? (
                               <Dots>
-                                Approving {currencies[Field.CURRENCY_B]?.symbol}
+                                {/* Approving {currencies[Field.CURRENCY_B]?.symbol} */}
+                                {t('Approving %symbol%', {
+                                  symbol: getSymbol(
+                                    currencies[Field.CURRENCY_B]?.symbol
+                                  ),
+                                })}
                               </Dots>
                             ) : (
-                              `Approve ${currencies[Field.CURRENCY_B]?.symbol}`
+                              // `Approve ${currencies[Field.CURRENCY_B]?.symbol}`
+                              t('Approve %symbol%', {
+                                symbol: getSymbol(
+                                  currencies[Field.CURRENCY_B]?.symbol
+                                ),
+                              })
                             )}
                           </Button>
                         )}

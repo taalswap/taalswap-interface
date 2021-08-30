@@ -35,7 +35,7 @@ const StyledWarningIcon = styled(AlertTriangle)`
 `;
 
 interface TokenWarningCardProps {
-  token?: Token
+  token?: Token;
 }
 
 function TokenWarningCard({ token }: TokenWarningCardProps) {
@@ -54,7 +54,10 @@ function TokenWarningCard({ token }: TokenWarningCardProps) {
       if (userToken.equals(token)) {
         return false;
       }
-      return userToken.symbol?.toLowerCase() === tokenSymbol || userToken.name?.toLowerCase() === tokenName;
+      return (
+          userToken.symbol?.toLowerCase() === tokenSymbol ||
+          userToken.name?.toLowerCase() === tokenName
+        );
     });
   }, [token, chainId, allTokens, tokenSymbol, tokenName]);
 
@@ -62,18 +65,21 @@ function TokenWarningCard({ token }: TokenWarningCardProps) {
 
   return (
     <Wrapper error={duplicateNameOrSymbol}>
-      <AutoRow gap='6px'>
-        <AutoColumn gap='24px'>
-          <CurrencyLogo currency={token} size='16px' />
+      <AutoRow gap="6px">
+        <AutoColumn gap="24px">
+          <CurrencyLogo currency={token} size="16px" />
         </AutoColumn>
-        <AutoColumn gap='10px' justify='flex-start'>
+        <AutoColumn gap="10px" justify="flex-start">
           <Text>
             {token && token.name && token.symbol && token.name !== token.symbol
               ? `${token.name} (${token.symbol})`
               : token.name || token.symbol}{' '}
           </Text>
           {chainId && (
-            <ExternalLink style={{ fontWeight: 400 }} href={getBscScanLink(chainId, token.address, 'token')}>
+            <ExternalLink
+                style={{ fontWeight: 400 }}
+                href={getBscScanLink(chainId, token.address, 'token')}
+            >
               <Text title={token.address}>
                 {shortenAddress(token.address)} {chainId > 1000 ? (t('View on Scope')) : (t('View on Etherscan'))}
               </Text>
@@ -86,16 +92,19 @@ function TokenWarningCard({ token }: TokenWarningCardProps) {
 }
 
 export default function TokenWarningModal({
-                                            isOpen,
-                                            tokens,
-                                            onConfirm
-                                          }: {
+  isOpen,
+  tokens,
+  onConfirm
+}: {
   isOpen: boolean
   tokens: Token[]
   onConfirm: () => void
 }) {
   const [understandChecked, setUnderstandChecked] = useState(false);
-  const toggleUnderstand = useCallback(() => setUnderstandChecked((uc) => !uc), []);
+  const toggleUnderstand = useCallback(
+      () => setUnderstandChecked((uc) => !uc),
+      []
+  );
   const { t } = useTranslation();
 
   const handleDismiss = useCallback(() => null, []);
@@ -117,13 +126,20 @@ export default function TokenWarningModal({
               'This interface can load arbitrary tokens by token addresses. Please take extra caution and do your research when interacting with arbitrary ERC tokens.'
             )}
           </Text>
-          <Text>{t('If you purchase an arbitrary token, you may be unable to sell it back.')}</Text>
+          <Text>
+            {t(
+              'If you purchase an arbitrary token, you may be unable to sell it back.'
+            )}
+          </Text>
           {tokens.map((token) => {
             return <TokenWarningCard key={token.address} token={token} />;
           })}
           <RowBetween>
             <div>
-              <label htmlFor='understand-checkbox' style={{ cursor: 'pointer', userSelect: 'none' }}>
+              <label
+                  htmlFor='understand-checkbox'
+                  style={{ cursor: 'pointer', userSelect: 'none' }}
+              >
                 <input
                   id='understand-checkbox'
                   type='checkbox'

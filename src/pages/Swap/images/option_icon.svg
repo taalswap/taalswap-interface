@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="23" height="17" viewBox="0 0 23 17">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #00ab55;
+      }
+    </style>
+  </defs>
+  <g id="IdSwap" data-name="IdSwap" transform="translate(-1284 -241)">
+    <rect data-name="" class="cls-1" width="10" height="3" rx="1.5" transform="translate(1284 243)"/>
+    <circle data-name="" class="cls-1" cx="3.5" cy="3.5" r="3.5" transform="translate(1296 241)"/>
+    <rect data-name="" class="cls-1" width="10" height="3" rx="1.5" transform="translate(1297 243)"/>
+    <rect data-name="" class="cls-1" width="10" height="3" rx="1.5" transform="translate(1307 256) rotate(180)"/>
+    <circle data-name="" class="cls-1" cx="3.5" cy="3.5" r="3.5" transform="translate(1295 258) rotate(180)"/>
+    <rect data-name="" class="cls-1" width="10" height="3" rx="1.5" transform="translate(1294 256) rotate(180)"/>
+  </g>
+</svg>
