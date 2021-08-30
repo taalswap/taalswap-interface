@@ -17,19 +17,20 @@ export function PoolPriceBar({
   poolTokenPercentage?: Percent
   price?: Price
 }) {
+    const chainId = parseInt(window.localStorage.getItem("chainId") ?? "1")
   return (
     <AutoColumn gap='md' style={{ paddingTop: '15px', paddingBottom: '15px' }}>
       <AutoRow justify='center' gap='4px'>
         <AutoColumn justify='center' style={{ minWidth: "150px" }}>
           <Text fontSize='18px' fontWeight='700'>{price?.toSignificant(6) ?? '-'}</Text>
           <Text fontSize='14px' color='textSubtle' pt={1}>
-            {currencies[Field.CURRENCY_B]?.symbol} per {currencies[Field.CURRENCY_A]?.symbol}
+            {currencies[Field.CURRENCY_B]?.symbol === 'ETH' ? chainId > 1000 ? 'KLAY' : currencies[Field.CURRENCY_B]?.symbol : currencies[Field.CURRENCY_B]?.symbol} per {currencies[Field.CURRENCY_A]?.symbol === 'ETH' ? chainId > 1000 ? 'KLAY' : currencies[Field.CURRENCY_A]?.symbol : currencies[Field.CURRENCY_A]?.symbol}
           </Text>
         </AutoColumn>
         <AutoColumn justify='center' style={{ minWidth: "150px" }}>
           <Text fontSize='18px' fontWeight='700'>{price?.invert()?.toSignificant(6) ?? '-'}</Text>
           <Text fontSize='14px' color='textSubtle' pt={1}>
-            {currencies[Field.CURRENCY_A]?.symbol} per {currencies[Field.CURRENCY_B]?.symbol}
+              {currencies[Field.CURRENCY_A]?.symbol === 'ETH' ? chainId > 1000 ? 'KLAY' : currencies[Field.CURRENCY_A]?.symbol : currencies[Field.CURRENCY_A]?.symbol} per {currencies[Field.CURRENCY_B]?.symbol === 'ETH' ? chainId > 1000 ? 'KLAY' : currencies[Field.CURRENCY_B]?.symbol : currencies[Field.CURRENCY_B]?.symbol}
           </Text>
         </AutoColumn>
         <AutoColumn justify='center' style={{ minWidth: "150px" }}>

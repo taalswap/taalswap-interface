@@ -104,6 +104,13 @@ export default function SwapModalFooter({
     );
   };
 
+  const chainId = parseInt(window.localStorage.getItem("chainId") ?? "1")
+  let FEE = 'ETH'
+  if (trade.inputAmount.currency.symbol === 'ETH') {
+    if (chainId > 1000) FEE = 'KLAY'
+  } else {
+    FEE = trade.inputAmount.currency.symbol ?? ''
+  }
   return (
     <>
       <AutoColumn gap="0px">
@@ -166,7 +173,7 @@ export default function SwapModalFooter({
           <Text fontSize="14px">
             {realizedLPFee
               ? `${realizedLPFee?.toSignificant(6)} ${
-                  trade.inputAmount.currency.symbol
+                  FEE
                 }`
               : '-'}
           </Text>

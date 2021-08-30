@@ -231,9 +231,15 @@ export function useDerivedSwapInfo(
 
   if (balanceIn && amountIn && balanceIn.lessThan(amountIn)) {
     // inputError = `Insufficient ${amountIn.currency.symbol} balance`;
+    const chainId = parseInt(window.localStorage.getItem("chainId") ?? "1")
+    let SYMBOL = 'ETH'
+    if (amountIn.currency.symbol === 'ETH') {
+      if (chainId > 1000) SYMBOL = 'KLAY'
+    } else {
+      SYMBOL = amountIn.currency.symbol ?? ''
+    }
     inputError = t(`Insufficient %symbol% balance`, {
-      symbol:
-          amountIn.currency.symbol !== undefined ? amountIn.currency.symbol : '',
+      symbol: SYMBOL
     });
   }
 

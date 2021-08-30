@@ -133,6 +133,6 @@ export default function useWrapCallback(
       addTransaction,
       ethStr,
       unWrapStr,
-      wethStr,
-      wrapStr]);
+      wrapStr,
+      t]);
 }

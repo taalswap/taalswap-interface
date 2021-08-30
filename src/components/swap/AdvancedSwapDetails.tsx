@@ -97,6 +97,13 @@ function TradeSummary({
   );
   const { t } = useTranslation();
 
+  const chainId = parseInt(window.localStorage.getItem("chainId") ?? "1")
+  let FEE = 'ETH'
+  if (trade.inputAmount.currency.symbol === 'ETH') {
+    if (chainId > 1000) FEE = 'KLAY'
+  } else {
+    FEE = trade.inputAmount.currency.symbol ?? ''
+  }
   return (
     <Card>
       <CardBody style={{ maxWidth:'550px', paddingLeft:'0',  paddingRight:'0', margin: '0 auto' }}>
@@ -134,7 +141,7 @@ function TradeSummary({
           <Text fontSize="14px">
             {realizedLPFee
               ? `${realizedLPFee.toSignificant(4)} ${
-                  trade.inputAmount.currency.symbol
+                  FEE
                 }`
               : '-'}
           </Text>
