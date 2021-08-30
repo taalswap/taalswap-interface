@@ -6,6 +6,7 @@ import { useWeb3React as useWeb3ReactCore } from '@web3-react/core'
 import { Web3ReactContextInterface } from '@web3-react/core/dist/types'
 import { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
+import { setupNetwork } from 'utils/wallet'
 import { injected } from '../connectors'
 import { NetworkContextName } from '../constants'
 
@@ -18,15 +19,20 @@ export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> & 
 export function useEagerConnect() {
   const { activate, active } = useWeb3ReactCore() // specifically using useWeb3ReactCore because of what this hook does
   const [tried, setTried] = useState(false)
+  const defaultChain = process.env.REACT_APP_CHAIN_ID ?? '1'
+  const chainIdStr = window.localStorage.getItem("chainId") ?? defaultChain
+  const chainId = parseInt(chainIdStr, 10)
 
-  useEffect(() => {
-    injected.isAuthorized().then((isAuthorized) => {
+  useEffect( () => {
+    injected.isAuthorized().then(async (isAuthorized) => {
       const hasSignedIn = window.localStorage.getItem(connectorLocalStorageKey)
       if (isAuthorized && hasSignedIn) {
+        await setupNetwork(chainId)
         activate(injected, undefined, true).catch((error) => {
           setTried(true)
         })
       } else if (isMobile && window.ethereum && hasSignedIn) {
+        await setupNetwork(chainId)
         activate(injected, undefined, true).catch((error) => {
           setTried(true)
         })
@@ -34,7 +40,7 @@ export function useEagerConnect() {
         setTried(true)
       }
     })
-  }, [activate]) // intentionally only running on mount (make sure it's only mounted once :))
+  }, [activate, chainId]) // intentionally only running on mount (make sure it's only mounted once :))
 
   // if the connection worked, wait until we get confirmation of that to flip the flag
   useEffect(() => {
