@@ -6,6 +6,7 @@ import { useActiveWeb3React } from '../../hooks'
 import { useMulticallContract } from '../../hooks/useContract'
 import { isAddress } from '../../utils'
 import { useSingleContractMultipleData, useMultipleContractSingleData } from '../multicall/hooks'
+import getChainId from "../../utils/getChainId";
 
 /**
  * Returns a map of the given addresses to their eventually consistent ETH balances.
@@ -35,8 +36,9 @@ export function useETHBalances(
   return useMemo(
     () =>
       addresses.reduce<{ [address: string]: CurrencyAmount }>((memo, address, i) => {
+        const chainId = getChainId()
         const value = results?.[i]?.result?.[0]
-        if (value) memo[address] = CurrencyAmount.ether(JSBI.BigInt(value.toString()))
+        if (value) memo[address] = chainId > 1000 ? CurrencyAmount.klaytn(JSBI.BigInt(value.toString())) : CurrencyAmount.ether(JSBI.BigInt(value.toString()))
         return memo
       }, {}),
     [addresses, results]

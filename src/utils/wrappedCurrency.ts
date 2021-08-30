@@ -15,8 +15,8 @@ export function wrappedCurrencyAmount(
 
 export function unwrappedToken(token: Token): Currency {
   if (token.equals(WETH[token.chainId])) {
-    if (token.chainId <= 1000) return ETHER;
-    return KLAYTN;
+    if (token.chainId > 1000) return KLAYTN;
+    return ETHER;
   }
   return token
 }

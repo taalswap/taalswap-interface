@@ -9,7 +9,6 @@ import { BASE_BSC_SCAN_URL } from '../config'
 export const setupNetwork = async (chainId: number) => {
   const provider = (window as Window).ethereum
   if (provider && provider.request) {
-    console.log('=====>', chainId)
     try {
       await provider.request({
         method: 'wallet_switchEthereumChain',

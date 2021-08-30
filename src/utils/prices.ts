@@ -8,6 +8,7 @@ import {
 
 import { Field } from '../state/swap/actions'
 import { basisPointsToPercent } from './index'
+import getChainId from "./getChainId";
 
 // V2 changes fee from 0.20 to 0.25%
 const BASE_FEE = new Percent(JSBI.BigInt(25), JSBI.BigInt(10000))
@@ -37,12 +38,16 @@ export function computeTradePriceBreakdown(
     ? new Percent(priceImpactWithoutFeeFraction?.numerator, priceImpactWithoutFeeFraction?.denominator)
     : undefined
 
+  const chainId = getChainId()
+
   // the amount of the input that accrues to LPs
   const realizedLPFeeAmount =
     realizedLPFee &&
     trade &&
     (trade.inputAmount instanceof TokenAmount
       ? new TokenAmount(trade.inputAmount.token, realizedLPFee.multiply(trade.inputAmount.raw).quotient)
+      : chainId > 1000
+      ? CurrencyAmount.klaytn(realizedLPFee.multiply(trade.inputAmount.raw).quotient)
       : CurrencyAmount.ether(realizedLPFee.multiply(trade.inputAmount.raw).quotient))
 
   return { priceImpactWithoutFee: priceImpactWithoutFeePercent, realizedLPFee: realizedLPFeeAmount }
