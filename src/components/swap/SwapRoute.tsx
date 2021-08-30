@@ -19,13 +19,21 @@ export default memo(function SwapRoute({ trade }: { trade: Trade }) {
     >
       {trade.route.path.map((token, i, path) => {
         const isLastItem: boolean = i === path.length - 1
+        let SYMBOL
+        if (token.symbol === 'WKLAY') {
+          SYMBOL = 'KLAY'
+        } else if (token.symbol === 'WETH') {
+          SYMBOL = 'ETH'
+        } else {
+          SYMBOL = token.symbol
+        }
         return (
           // eslint-disable-next-line react/no-array-index-key
           <Fragment key={i}>
             <Flex my='0.5rem' alignItems='center' justifyContent='center' style={{ flexShrink: 0, minWidth:'145px', }}>
               <CurrencyLogo currency={token} size='1.5rem' />
               <Text fontSize='14px' color='text' ml='0.5rem'>
-                {token.symbol}
+                {SYMBOL}
               </Text>
             </Flex>
             {isLastItem ? null : <ChevronRight color='textSubtle' />}
