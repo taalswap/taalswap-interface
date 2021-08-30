@@ -20,13 +20,11 @@ const useAuth = () => {
   const { toastError } = useToast()
 
   const login = useCallback(async (connectorID: ConnectorNames) => {
-    console.log(window.localStorage.getItem("chainId"))
     const chainId = getChainId()
     const refresh = window.localStorage.getItem("refresh")
     const connector = connectorsByName[connectorID]
 
     if (connector) {
-      console.log('!!!!!!!!!!!!!!!!!!!!!!!!!', chainId, refresh)
       if (refresh === 'true') await setupNetwork(chainId)
       await activate(connector, async (error: Error) => {
         window.localStorage.removeItem(connectorLocalStorageKey)

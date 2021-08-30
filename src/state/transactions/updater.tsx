@@ -59,7 +59,7 @@ export default function Updater(): null {
             .getTransactionReceipt(hash)
             .then((receipt) => {
               if (receipt) {
-                console.log(receipt)
+                // console.log(receipt)
                 dispatch(
                   finalizeTransaction({
                     chainId,
@@ -103,7 +103,7 @@ export default function Updater(): null {
             .getTransactionReceipt(hash)
             .then((receipt) => {
               if (receipt) {
-                console.log(receipt)
+                // console.log(receipt)
                 dispatch(
                   finalizeTransaction({
                     chainId,
