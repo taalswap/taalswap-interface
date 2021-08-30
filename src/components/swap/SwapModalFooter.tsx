@@ -104,18 +104,18 @@ export default function SwapModalFooter({
     );
   };
 
-  const chainId = parseInt(window.localStorage.getItem("chainId") ?? "1")
-  let FEE = 'ETH'
+  const chainId = parseInt(window.localStorage.getItem('chainId') ?? '1');
+  let FEE = 'ETH';
   if (trade.inputAmount.currency.symbol === 'ETH') {
-    if (chainId > 1000) FEE = 'KLAY'
+    if (chainId > 1000) FEE = 'KLAY';
   } else {
-    FEE = trade.inputAmount.currency.symbol ?? ''
+    FEE = trade.inputAmount.currency.symbol ?? '';
   }
   return (
     <>
       <AutoColumn gap="0px">
         <RowBetween align="center">
-          <Text fontSize="14px">Price</Text>
+          <Text fontSize="14px">{t('SwapPrice')}</Text>
           <Text
             fontSize="14px"
             style={{
@@ -171,11 +171,7 @@ export default function SwapModalFooter({
             <TipFee />
           </RowFixed>
           <Text fontSize="14px">
-            {realizedLPFee
-              ? `${realizedLPFee?.toSignificant(6)} ${
-                  FEE
-                }`
-              : '-'}
+            {realizedLPFee ? `${realizedLPFee?.toSignificant(6)} ${FEE}` : '-'}
           </Text>
         </RowBetween>
       </AutoColumn>

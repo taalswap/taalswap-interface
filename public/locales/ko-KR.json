@@ -6,6 +6,7 @@
   "To (estimated)": "교환 받을 토큰 (예측)",
   "To": "교환 받을 토큰",
   "Price": "가격",
+  "SwapPrice": "교환 가격",
   "Slippage Tolerance": "허용 슬리피지",
   "Insufficient liquidity for this trade.": "유동성이 충분하지 않음.",
   "Enter a valid slippage percentage": "유효한 슬리피지 %를 입력하세요.",
@@ -940,5 +941,10 @@
   "Aand": "와(과)",
   "SupplyB": "를(을) 제공함",
   "AddB": "를(을) 추가",
-  "Partnership": "파트너십"
+  "Partnership": "파트너십",
+  "%symbol1% per %symbol2%": "%symbol2% 대비 %symbol1% 가격",
+  "Pooled %symbol%": "풀에 예치된 %symbol%",
+  "Your pool tokens": "LP 토큰 갯수",
+  "Your pool share": "품 점유율",
+  "Amount": "토큰량"
 }

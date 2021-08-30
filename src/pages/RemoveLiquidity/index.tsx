@@ -3,7 +3,15 @@ import styled, { ThemeContext } from 'styled-components';
 import { splitSignature } from '@ethersproject/bytes';
 import { Contract } from '@ethersproject/contracts';
 import { TransactionResponse } from '@ethersproject/providers';
-import { ChainId, Currency, currencyEquals, ETHER, KLAYTN, Percent, WETH } from 'taalswap-sdk';
+import {
+  ChainId,
+  Currency,
+  currencyEquals,
+  ETHER,
+  KLAYTN,
+  Percent,
+  WETH,
+} from 'taalswap-sdk';
 import { Button, Flex, Text } from 'taalswap-uikit';
 import { ArrowDown, Plus } from 'react-feather';
 import { RouteComponentProps } from 'react-router';
@@ -272,8 +280,9 @@ export default function RemoveLiquidity({
     const liquidityAmount = parsedAmounts[Field.LIQUIDITY];
     if (!liquidityAmount) throw new Error('missing liquidity amount');
 
-    const currencyBIsETH = (currencyB === ETHER || currencyB === KLAYTN);
-    const oneCurrencyIsETH = (currencyA === ETHER || currencyA === KLAYTN) || currencyBIsETH;
+    const currencyBIsETH = currencyB === ETHER || currencyB === KLAYTN;
+    const oneCurrencyIsETH =
+      currencyA === ETHER || currencyA === KLAYTN || currencyBIsETH;
     const deadlineFromNow = Math.ceil(Date.now() / 1000) + deadline;
 
     if (!tokenA || !tokenB) throw new Error('could not wrap');
@@ -514,7 +523,11 @@ export default function RemoveLiquidity({
     [onUserInput]
   );
 
-  const oneCurrencyIsETH = (currencyA === ETHER || currencyA === KLAYTN) || (currencyB === ETHER || currencyB === KLAYTN);
+  const oneCurrencyIsETH =
+    currencyA === ETHER ||
+    currencyA === KLAYTN ||
+    currencyB === ETHER ||
+    currencyB === KLAYTN;
   const oneCurrencyIsWETH = Boolean(
     chainId &&
       ((currencyA && currencyEquals(WETH[chainId], currencyA)) ||
@@ -558,23 +571,23 @@ export default function RemoveLiquidity({
       liquidityPercentChangeCallback
     );
 
-  let ethStr
-  let receivedEthStr
-  let receivedWethStr
-  switch(chainId) {
+  let ethStr;
+  let receivedEthStr;
+  let receivedWethStr;
+  switch (chainId) {
     case ChainId.MAINNET:
     case ChainId.ROPSTEN:
     case ChainId.RINKEBY:
-      ethStr = 'ETH'
-      receivedEthStr = 'Receive ETH'
-      receivedWethStr = 'Receive WETH'
+      ethStr = 'ETH';
+      receivedEthStr = 'Receive ETH';
+      receivedWethStr = 'Receive WETH';
       break;
     case ChainId.KLAYTN:
     case ChainId.BAOBAB:
-      ethStr = 'KLAY'
-      receivedEthStr = 'Receive KLAY'
-      receivedWethStr = 'Receive WKLAY'
-      break
+      ethStr = 'KLAY';
+      receivedEthStr = 'Receive KLAY';
+      receivedWethStr = 'Receive WKLAY';
+      break;
   }
 
   return (
@@ -602,7 +615,7 @@ export default function RemoveLiquidity({
               <OutlineCard>
                 <AutoColumn>
                   <RowBetween>
-                    <Text>Amount</Text>
+                    <Text>{t('Amount')}</Text>
                     <ClickableText
                       onClick={() => {
                         setShowDetailed(!showDetailed);
@@ -714,11 +727,11 @@ export default function RemoveLiquidity({
                           {oneCurrencyIsETH ? (
                             <StyledInternalLink
                               to={`/remove/${
-                                (currencyA === ETHER || currencyA === KLAYTN)
+                                currencyA === ETHER || currencyA === KLAYTN
                                   ? WETH[chainId].address
                                   : currencyIdA
                               }/${
-                                (currencyB === ETHER || currencyB === KLAYTN)
+                                currencyB === ETHER || currencyB === KLAYTN
                                   ? WETH[chainId].address
                                   : currencyIdB
                               }`}
@@ -797,7 +810,7 @@ export default function RemoveLiquidity({
               {pair && (
                 <div style={{ padding: '24px' }}>
                   <Flex justifyContent="space-between" mb="8px">
-                    Price:
+                    {t('Price')}:
                     <div>
                       1 {currencyA?.symbol} ={' '}
                       {tokenA ? pair.priceOf(tokenA).toSignificant(6) : '-'}{' '}
@@ -859,7 +872,7 @@ export default function RemoveLiquidity({
                           : 'primary'
                       }
                     >
-                      {error || 'Remove'}
+                      {error || t('Remove')}
                     </Button>
                   </RowBetween>
                 )}

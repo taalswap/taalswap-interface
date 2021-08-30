@@ -9,6 +9,7 @@
   "To (estimated)": "To (estimated)",
   "To": "To",
   "Price": "Price",
+  "SwapPrice": "Price",
   "Slippage Tolerance": "Slippage Tolerance",
   "Insufficient liquidity for this trade.": "Insufficient liquidity for this trade.",
   "noWallet": "No Binance Smart Chain wallet found",
@@ -118,5 +119,10 @@
   "Output is estimated. If the price changes by more than": "Output is estimated. If the price changes by more than",
   "% your transaction will revert.": "% your transaction will revert.",
   "Invalid pair": "Select a pair",
-  "Insufficient %symbol% balance": "Insufficient %symbol% balance"
+  "Insufficient %symbol% balance": "Insufficient %symbol% balance",
+  "%symbol1% per %symbol2%": "%symbol1% per %symbol2%",
+  "Pooled %symbol%": "Pooled %symbol%",
+  "Your pool tokens": "Your pool tokens",
+  "Your pool share": "Your pool share",
+  "Amount": "Amount"
 }
