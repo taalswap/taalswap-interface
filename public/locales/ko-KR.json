@@ -945,6 +945,6 @@
   "%symbol1% per %symbol2%": "%symbol2% 대비 %symbol1% 가격",
   "Pooled %symbol%": "풀에 예치된 %symbol%",
   "Your pool tokens": "LP 토큰 갯수",
-  "Your pool share": "품 점유율",
+  "Your pool share": "풀 점유율",
   "Amount": "토큰량"
 }
