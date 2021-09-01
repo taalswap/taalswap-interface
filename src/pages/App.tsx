@@ -181,7 +181,7 @@ export default function App() {
                           />
                           <Route
                             exact
-                            path="/swap/:currencyIdA/:currencyIdB"
+                            path="/swap/:chainId/:currencyIdA/:currencyIdB"
                             component={RedirectSwapTokenIds}
                           />
                           <Route
@@ -207,7 +207,7 @@ export default function App() {
                           />
                           <Route
                             exact
-                            path="/add/:currencyIdA/:currencyIdB"
+                            path="/add/:chainId/:currencyIdA/:currencyIdB"
                             component={RedirectDuplicateTokenIds}
                           />
                           <Route
