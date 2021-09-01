@@ -36,8 +36,8 @@ export default function PoolFinder() {
   const [activeField, setActiveField] = useState<number>(Fields.TOKEN1);
 
   // const [currency0, setCurrency0] = useState<Currency | null>(ETHER);
-  let CURRENCY = ETHER
-  if (chainId && chainId > 1000) CURRENCY = KLAYTN
+  let CURRENCY = ETHER;
+  if (chainId && chainId > 1000) CURRENCY = KLAYTN;
   const [currency0, setCurrency0] = useState<Currency | null>(CURRENCY);
   const [currency1, setCurrency1] = useState<Currency | null>(null);
 
@@ -174,7 +174,7 @@ export default function PoolFinder() {
                         )}`}
                       >
                         <Text style={{ textAlign: 'center' }}>
-                          {t('Add Liquidity')}
+                          {t('Doing Add Liquidity')}
                         </Text>
                       </StyledInternalLink>
                     </AutoColumn>
