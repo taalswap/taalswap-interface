@@ -39,38 +39,44 @@ const useAuth = () => {
     const chainId = getChainId()
     const refresh = window.localStorage.getItem("refresh")
     const connector = connectorsByName[connectorID]
-    let hasSetup = true
+    let changeNet = true
 
     if (connector) {
       if (refresh === 'true') {
-        hasSetup = await setupNetwork(chainId)
-        console.log('######################', hasSetup)
+        changeNet = await setupNetwork(chainId)
       }
       await activate(connector, async (error: Error) => {
-        window.localStorage.removeItem(connectorLocalStorageKey)
+        // window.localStorage.removeItem(connectorLocalStorageKey)
         if (error instanceof UnsupportedChainIdError) {
-          toastError('Unsupported Chain Id', 'Unsupported Chain Id Error. Check your chain Id.')
-        } else if (error instanceof NoEthereumProviderError || error instanceof NoBscProviderError) {
-          toastError('Provider Error', 'No provider was found')
-        } else if (
-          error instanceof UserRejectedRequestErrorInjected ||
-          error instanceof UserRejectedRequestErrorWalletConnect
-        ) {
-          if (connector instanceof WalletConnectConnector) {
-            const walletConnector = connector as WalletConnectConnector
-            walletConnector.walletConnectProvider = null
+          // toastError('Unsupported Chain Id', 'Unsupported Chain Id Error. Check your chain Id.')
+          const hasSetup = await setupNetwork(chainId)
+          if (hasSetup) {
+            activate(connector)
           }
-          toastError('Authorization Error', 'Please authorize to access your account')
         } else {
-          toastError(error.name, error.message)
+          window.localStorage.removeItem(connectorLocalStorageKey)
+          if (error instanceof NoEthereumProviderError || error instanceof NoBscProviderError) {
+            toastError('Provider Error', 'No provider was found')
+          } else if (
+              error instanceof UserRejectedRequestErrorInjected ||
+              error instanceof UserRejectedRequestErrorWalletConnect
+          ) {
+            if (connector instanceof WalletConnectConnector) {
+              const walletConnector = connector as WalletConnectConnector
+              walletConnector.walletConnectProvider = null
+            }
+            toastError('Authorization Error', 'Please authorize to access your account')
+          } else {
+            toastError(error.name, error.message)
+          }
         }
       })
 
-      if (refresh === 'true' && hasSetup) {
+      if (refresh === 'true' && changeNet) {
         window.location.href = getNewURL()
         window.localStorage.setItem("refresh", 'false')
       }
-      if (!hasSetup) {
+      if (!changeNet) {
         console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
         recoverChainId()
       }
