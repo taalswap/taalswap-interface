@@ -16,7 +16,7 @@ export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> & 
   return context.active ? context : contextNetwork
 }
 
-export function useEagerConnect() {
+export function useEagerConnectOld() {
   const { activate, active } = useWeb3ReactCore() // specifically using useWeb3ReactCore because of what this hook does
   const [tried, setTried] = useState(false)
   const defaultChain = process.env.REACT_APP_CHAIN_ID ?? '1'
@@ -57,6 +57,7 @@ export function useEagerConnect() {
 
   return tried
 }
+
 
 /**
  * Use for network and injected - logs user in

@@ -26,6 +26,7 @@ import UseV2ExchangeModal from '../components/UseV2ExchangeModal';
 
 import Menu from '../components/Menu';
 import useGetDocumentTitlePrice from '../hooks/useGetDocumentTitlePrice';
+import useEagerConnect from "../hooks/useEagerConnect";
 
 const AppWrapper = styled.div`
   display: flex;
@@ -115,6 +116,7 @@ export default function App() {
     localStorage.setItem(CACHE_KEY, langObject.code);
   };
 
+  useEagerConnect()
   useGetDocumentTitlePrice();
 
   return (
@@ -137,7 +139,7 @@ export default function App() {
               <Menu>
                 <BodyWrapper>
                   <Popups />
-                  <Web3ReactManager>
+                  {/* <Web3ReactManager> */}
                     <Switch>
                       {process.env.REACT_APP_SITE_STOP === 'true' ? (
                         <>
@@ -220,7 +222,7 @@ export default function App() {
                       )}
                       {/* <Route component={RedirectPathToSwapOnly} /> */}
                     </Switch>
-                  </Web3ReactManager>
+                  {/* </Web3ReactManager> */}
                 </BodyWrapper>
               </Menu>
             </Switch>
