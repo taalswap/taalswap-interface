@@ -15,6 +15,21 @@ import { connectorsByName } from 'connectors'
 import { setupNetwork } from 'utils/wallet'
 import getChainId from '../utils/getChainId'
 
+const getNewURL = () => {
+  const url = new URL(window.location.href)
+  let newUrl
+  console.log(url.port)
+  if (window.location.href.includes('/add/')) {             // http://localhost:3000/#/1001/add/KLAY/0x6C27d9F6C4067212797794CD931596C2917F7Bf7
+    newUrl = `http://${url.hostname}:${url.port}${url.pathname}#/liquidity`
+  } else if (window.location.href.includes('/swap/')) {     // http://localhost:3000/#/3/swap/0xdAC17F958D2ee523a2206206994597C13D831ec7/ETH
+    newUrl = `http://${url.hostname}:${url.port}${url.pathname}#/swap`
+  } else {
+    newUrl = window.location.href
+  }
+  console.log(newUrl)
+  return newUrl
+}
+
 const useAuth = () => {
   const { activate, deactivate } = useWeb3React()
   const { toastError } = useToast()
@@ -25,7 +40,10 @@ const useAuth = () => {
     const connector = connectorsByName[connectorID]
 
     if (connector) {
-      if (refresh === 'true') await setupNetwork(chainId)
+      if (refresh === 'true') {
+        await setupNetwork(chainId)
+        // await changePage()
+      }
       await activate(connector, async (error: Error) => {
         window.localStorage.removeItem(connectorLocalStorageKey)
         if (error instanceof UnsupportedChainIdError) {
@@ -47,7 +65,20 @@ const useAuth = () => {
       })
 
       if (refresh === 'true') {
-        window.location.reload()
+        // // http://localhost:3000/#/add/KLAY/0x6C27d9F6C4067212797794CD931596C2917F7Bf7
+        // const url = new URL(window.location.href)
+        // let newUrl
+        // console.log(url.port)
+        // if (window.location.href.includes('/add/')) {             // http://localhost:3000/#/1001/add/KLAY/0x6C27d9F6C4067212797794CD931596C2917F7Bf7
+        //   newUrl = `https://${url.hostname}:${url.port}${url.pathname}#/swap`
+        // } else if (window.location.href.includes('/swap/')) {     // http://localhost:3000/#/3/swap/0xdAC17F958D2ee523a2206206994597C13D831ec7/ETH
+        //   newUrl = `https://${url.hostname}:${url.port}${url.pathname}#/liquidity`
+        // } else {
+        //   newUrl = window.location.href
+        // }
+        // window.location.reload(newUrl)
+        // window.location.reload()
+        window.location.href = getNewURL()  // 'http://localhost:3000/#/swap'
         window.localStorage.setItem("refresh", 'false')
       }
     } else {
