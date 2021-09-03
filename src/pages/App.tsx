@@ -26,7 +26,6 @@ import UseV2ExchangeModal from '../components/UseV2ExchangeModal';
 
 import Menu from '../components/Menu';
 import useGetDocumentTitlePrice from '../hooks/useGetDocumentTitlePrice';
-import useEagerConnect from "../hooks/useEagerConnect";
 
 const AppWrapper = styled.div`
   display: flex;
@@ -116,7 +115,6 @@ export default function App() {
     localStorage.setItem(CACHE_KEY, langObject.code);
   };
 
-  useEagerConnect()
   useGetDocumentTitlePrice();
 
   return (

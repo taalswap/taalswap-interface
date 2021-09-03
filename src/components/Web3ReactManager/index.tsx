@@ -3,7 +3,7 @@ import { useWeb3React } from '@web3-react/core';
 import styled from 'styled-components';
 
 import { network } from '../../connectors';
-import { useEagerConnectOld, useInactiveListener } from '../../hooks';
+import { useEagerConnect, useInactiveListener } from '../../hooks';
 import { NetworkContextName } from '../../constants';
 import Loader from '../Loader';
 
@@ -31,7 +31,7 @@ export default function Web3ReactManager({
   } = useWeb3React(NetworkContextName);
 
   // try to eagerly connect to an injected provider, if it exists and has granted access already
-  const triedEager = useEagerConnectOld();
+  const triedEager = useEagerConnect();
 
   // after eagerly trying injected, if the network connect ever isn't active or in an error state, activate itd
   useEffect(() => {
