@@ -137,7 +137,7 @@ export default function App() {
               <Menu>
                 <BodyWrapper>
                   <Popups />
-                  {/* <Web3ReactManager> */}
+                   <Web3ReactManager>
                     <Switch>
                       {process.env.REACT_APP_SITE_STOP === 'true' ? (
                         <>
@@ -220,7 +220,7 @@ export default function App() {
                       )}
                       {/* <Route component={RedirectPathToSwapOnly} /> */}
                     </Switch>
-                  {/* </Web3ReactManager> */}
+                   </Web3ReactManager>
                 </BodyWrapper>
               </Menu>
             </Switch>
