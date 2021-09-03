@@ -14,6 +14,7 @@ import useToast from 'hooks/useToast'
 import { connectorsByName } from 'connectors'
 import { setupNetwork } from 'utils/wallet'
 import getChainId from '../utils/getChainId'
+import recoverChainId from "../utils/recoverChainId";
 
 const getNewURL = () => {
   const url = new URL(window.location.href)
@@ -38,11 +39,12 @@ const useAuth = () => {
     const chainId = getChainId()
     const refresh = window.localStorage.getItem("refresh")
     const connector = connectorsByName[connectorID]
+    let hasSetup = true
 
     if (connector) {
       if (refresh === 'true') {
-        await setupNetwork(chainId)
-        // await changePage()
+        hasSetup = await setupNetwork(chainId)
+        console.log('######################', hasSetup)
       }
       await activate(connector, async (error: Error) => {
         window.localStorage.removeItem(connectorLocalStorageKey)
@@ -64,9 +66,13 @@ const useAuth = () => {
         }
       })
 
-      if (refresh === 'true') {
+      if (refresh === 'true' && hasSetup) {
         window.location.href = getNewURL()
         window.localStorage.setItem("refresh", 'false')
+      }
+      if (!hasSetup) {
+        console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        recoverChainId()
       }
     } else {
       toastError('Can\'t find connector', 'The connector config is wrong')
@@ -74,7 +80,13 @@ const useAuth = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return { login, logout: deactivate }
+  const logout = useCallback(() => {
+    deactivate()
+    window.localStorage.removeItem('chainId')
+    window.localStorage.removeItem('prevChainId')
+  }, [deactivate])
+
+  return { login, logout }
 }
 
 export default useAuth
