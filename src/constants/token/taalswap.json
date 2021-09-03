@@ -140,6 +140,38 @@
       "chainId": 1001,
       "decimals": 18,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
+    },
+    {
+      "name": "Wraapped KLAY",
+      "symbol": "WKLAY",
+      "address": "0x67fd18cc70a7f8c26508c59c906b39b2a079866d",
+      "chainId": 8217,
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/4256.png"
+    },
+    {
+      "name": "Klaytn Dai",
+      "symbol": "KDAI",
+      "address": "0x5c74070fdea071359b86082bd9f9b3deaafbe32b",
+      "chainId": 8217,
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/4943.png"
+    },
+    {
+      "name": "TaalSwap Token",
+      "symbol": "KTAL",
+      "address": "0x90a4a420732907b3c38b11058f9aa02b3f4121df",
+      "chainId": 8217,
+      "decimals": 18,
+      "logoURI": "https://swap.taalswap.finance/images/coins/tal.png"
+    },
+    {
+      "name": "Orbit Bridge Klaytn USD Tether",
+      "symbol": "KUSDT",
+      "address": "0xcee8faf64bb97a73bb51e115aa89c17ffa8dd167",
+      "chainId": 8217,
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
     }
   ]
 }
