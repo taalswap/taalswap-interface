@@ -38,6 +38,7 @@ export default function PoolFinder() {
   // const [currency0, setCurrency0] = useState<Currency | null>(ETHER);
   let CURRENCY = ETHER;
   if (chainId && chainId > 1000) CURRENCY = KLAYTN;
+  const curChainId = localStorage.getItem('chainId');
   const [currency0, setCurrency0] = useState<Currency | null>(CURRENCY);
   const [currency1, setCurrency1] = useState<Currency | null>(null);
 
@@ -169,9 +170,9 @@ export default function PoolFinder() {
                         {t('You don’t have liquidity in this pool yet.')}
                       </Text>
                       <StyledInternalLink
-                        to={`/add/${currencyId(currency0)}/${currencyId(
-                          currency1
-                        )}`}
+                        to={`/add/${curChainId}/${currencyId(
+                          currency0
+                        )}/${currencyId(currency1)}`}
                       >
                         <Text style={{ textAlign: 'center' }}>
                           {t('Doing Add Liquidity')}
@@ -187,9 +188,9 @@ export default function PoolFinder() {
                       {t('No pool found.')}
                     </Text>
                     <StyledInternalLink
-                      to={`/add/${currencyId(currency0)}/${currencyId(
-                        currency1
-                      )}`}
+                      to={`/add/${curChainId}/${currencyId(
+                        currency0
+                      )}/${currencyId(currency1)}`}
                     >
                       Create pool.
                     </StyledInternalLink>

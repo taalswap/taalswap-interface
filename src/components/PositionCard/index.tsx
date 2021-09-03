@@ -157,6 +157,7 @@ export default function FullPositionCard({
   const currency0 = unwrappedToken(pair.token0);
   const currency1 = unwrappedToken(pair.token1);
 
+  const chainId = localStorage.getItem('chainId');
   const [showMore, setShowMore] = useState(false);
 
   const userPoolBalance = useTokenBalance(
@@ -294,7 +295,9 @@ export default function FullPositionCard({
               {removeOnly && (
                 <Button
                   as={Link}
-                  to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`}
+                  to={`/add/${chainId}/${currencyId(currency0)}/${currencyId(
+                    currency1
+                  )}`}
                   style={{ width: '100%' }}
                 >
                   Add

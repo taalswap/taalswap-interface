@@ -97,6 +97,7 @@ export default function AddLiquidity({
   const currencyB = useCurrency(currencyIdB);
   const { t } = useTranslation();
   const storedLangCode = localStorage.getItem(CACHE_KEY);
+  const curChainId = localStorage.getItem('chainId');
 
   const oneCurrencyIsWBNB = Boolean(
     chainId &&
@@ -105,17 +106,17 @@ export default function AddLiquidity({
   );
   const expertMode = useIsExpertMode();
 
-  let ethStr
-  switch(chainId) {
+  let ethStr;
+  switch (chainId) {
     case ChainId.MAINNET:
     case ChainId.ROPSTEN:
     case ChainId.RINKEBY:
-      ethStr = 'ETH'
+      ethStr = 'ETH';
       break;
     case ChainId.KLAYTN:
     case ChainId.BAOBAB:
-      ethStr = 'KLAY'
-      break
+      ethStr = 'KLAY';
+      break;
   }
 
   // mint state
@@ -218,8 +219,13 @@ export default function AddLiquidity({
     let method: (...args: any) => Promise<TransactionResponse>;
     let args: Array<string | string[] | number>;
     let value: BigNumber | null;
-    if ((currencyA === ETHER || currencyA === KLAYTN) || (currencyB === ETHER || currencyB === KLAYTN)) {
-      const tokenBIsBNB = (currencyB === ETHER || currencyB === KLAYTN);
+    if (
+      currencyA === ETHER ||
+      currencyA === KLAYTN ||
+      currencyB === ETHER ||
+      currencyB === KLAYTN
+    ) {
+      const tokenBIsBNB = currencyB === ETHER || currencyB === KLAYTN;
       estimate = router.estimateGas.addLiquidityETH;
       method = router.addLiquidityETH;
       args = [
@@ -382,27 +388,29 @@ export default function AddLiquidity({
     (currA: Currency) => {
       const newCurrencyIdA = currencyId(currA);
       if (newCurrencyIdA === currencyIdB) {
-        history.push(`/add/${currencyIdB}/${currencyIdA}`);
+        history.push(`/add/${curChainId}/${currencyIdB}/${currencyIdA}`);
       } else {
-        history.push(`/add/${newCurrencyIdA}/${currencyIdB}`);
+        history.push(`/add/${curChainId}/${newCurrencyIdA}/${currencyIdB}`);
       }
     },
-    [currencyIdB, history, currencyIdA]
+    [currencyIdB, history, currencyIdA, curChainId]
   );
   const handleCurrencyBSelect = useCallback(
     (currB: Currency) => {
       const newCurrencyIdB = currencyId(currB);
       if (currencyIdA === newCurrencyIdB) {
         if (currencyIdB) {
-          history.push(`/add/${currencyIdB}/${newCurrencyIdB}`);
+          history.push(`/add/${curChainId}/${currencyIdB}/${newCurrencyIdB}`);
         } else {
-          history.push(`/add/${newCurrencyIdB}`);
+          history.push(`/add/${curChainId}/${newCurrencyIdB}`);
         }
       } else {
-        history.push(`/add/${currencyIdA || ethStr}/${newCurrencyIdB}`);
+        history.push(
+          `/add/${curChainId}/${currencyIdA || ethStr}/${newCurrencyIdB}`
+        );
       }
     },
-    [currencyIdA, history, currencyIdB, ethStr]
+    [currencyIdA, history, currencyIdB, ethStr, curChainId]
   );
 
   const handleDismissConfirmation = useCallback(() => {
@@ -414,9 +422,9 @@ export default function AddLiquidity({
     setTxHash('');
   }, [onFieldAInput, txHash]);
 
-    const getSymbol = (str: string | undefined) => {
-        return str !== undefined ? str : '';
-    };
+  const getSymbol = (str: string | undefined) => {
+    return str !== undefined ? str : '';
+  };
 
   return (
     <Container>

@@ -89,17 +89,17 @@ export default function Pool() {
     { placement: 'top-end', tooltipOffset: [20, 10] }
   );
 
-  let CURRENCY
-  switch(chainId) {
+  let CURRENCY;
+  switch (chainId) {
     case ChainId.MAINNET:
     case ChainId.ROPSTEN:
     case ChainId.RINKEBY:
-      CURRENCY = '/add/ETH'
+      CURRENCY = '/add/3/ETH/0x00';
       break;
     case ChainId.KLAYTN:
     case ChainId.BAOBAB:
-      CURRENCY = '/add/KLAY'
-      break
+      CURRENCY = '/add/1001/KLAY/0x00';
+      break;
   }
 
   return (
