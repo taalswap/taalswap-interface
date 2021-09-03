@@ -73,7 +73,8 @@ const useAuth = () => {
       })
 
       if (refresh === 'true' && changeNet) {
-        window.location.href = getNewURL()
+        // window.location.href = getNewURL()
+        window.location.reload()
         window.localStorage.setItem("refresh", 'false')
       }
       if (!changeNet) {

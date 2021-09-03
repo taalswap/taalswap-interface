@@ -492,6 +492,7 @@ function Swap({
     [onCurrencySelection, checkForWarning]
   );
 
+  const { chainId } = useActiveWeb3React();
   return (
     <Container>
       {/* <Teaser /> */}
@@ -512,7 +513,8 @@ function Swap({
       {/* <CardNav /> */}
       <PageHeader
           title={t('Swap')}
-          description={t('Trade your token on the spot')}
+          // description={t('Trade your token on the spot')}
+          description={chainId}
         />
       <SwapBody>
         <Wrapper id="swap-page">
