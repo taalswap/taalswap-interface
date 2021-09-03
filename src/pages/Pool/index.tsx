@@ -43,6 +43,7 @@ export default function Pool() {
   const { t } = useTranslation();
   const theme = useContext(ThemeContext);
   const { account, chainId } = useActiveWeb3React();
+  const curChainId = localStorage.getItem('chainId');
 
   // fetch the user's balances of all tracked V2 LP tokens
   const trackedTokenPairs = useTrackedTokenPairs();
@@ -94,11 +95,13 @@ export default function Pool() {
     case ChainId.MAINNET:
     case ChainId.ROPSTEN:
     case ChainId.RINKEBY:
-      CURRENCY = '/add/3/ETH/0x00';
+      // CURRENCY = '/add/3/ETH/0x00';
+      CURRENCY = `/add/${curChainId}/ETH/0x00`;
       break;
     case ChainId.KLAYTN:
     case ChainId.BAOBAB:
-      CURRENCY = '/add/1001/KLAY/0x00';
+      // CURRENCY = '/add/1001/KLAY/0x00';
+      CURRENCY = `/add/${curChainId}/KLAY/0x00`;
       break;
   }
 
