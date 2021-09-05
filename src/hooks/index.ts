@@ -27,7 +27,6 @@ export function useEagerConnect() {
     injected.isAuthorized().then(async (isAuthorized) => {
       const hasSignedIn = window.localStorage.getItem(connectorLocalStorageKey)
       if (isAuthorized && hasSignedIn) {
-        console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!')
         const hasSetup = await setupNetwork(chainId)
         if (hasSetup) {
           activate(injected, undefined, true).catch((error) => {
@@ -35,7 +34,6 @@ export function useEagerConnect() {
           })
         }
       } else if (isMobile && window.ethereum && hasSignedIn) {
-        console.log('@@@@@@@@@@@@@@@@@@@@')
         const hasSetup = await setupNetwork(chainId)
         if (hasSetup) {
           activate(injected, undefined, true).catch((error) => {

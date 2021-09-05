@@ -21,7 +21,6 @@ export function RedirectSwapTokenIds(
     const hasSetup = setupNetwork(parseInt(chainId))
     if (hasSetup) {
       window.localStorage.setItem("chainId", chainId)
-      console.log('22222222222222222')
     }
   }
   if (currencyIdA.toLowerCase() === currencyIdB.toLowerCase()) {

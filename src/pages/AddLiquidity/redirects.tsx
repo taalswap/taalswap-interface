@@ -39,7 +39,6 @@ export function RedirectDuplicateTokenIds(
     const hasSetup = setupNetwork(parseInt(chainId));
     if (hasSetup) {
       window.localStorage.setItem('chainId', chainId);
-      console.log('11111111111111111')
     }
   }
   if (currencyIdA.toLowerCase() === currencyIdB.toLowerCase()) {

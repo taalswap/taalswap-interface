@@ -19,7 +19,6 @@ import recoverChainId from "../utils/recoverChainId";
 const getNewURL = () => {
   const url = new URL(window.location.href)
   let newUrl
-  console.log(url.port)
   if (window.location.href.includes('/add/')) {             // http://localhost:3000/#/1001/add/KLAY/0x6C27d9F6C4067212797794CD931596C2917F7Bf7
     newUrl = `http://${url.hostname}:${url.port}${url.pathname}#/liquidity`
   } else if (window.location.href.includes('/swap/')) {     // http://localhost:3000/#/3/swap/0xdAC17F958D2ee523a2206206994597C13D831ec7/ETH
@@ -27,7 +26,6 @@ const getNewURL = () => {
   } else {
     newUrl = window.location.href
   }
-  console.log(newUrl)
   return newUrl
 }
 
@@ -78,7 +76,6 @@ const useAuth = () => {
         window.localStorage.setItem("refresh", 'false')
       }
       if (!changeNet) {
-        console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
         recoverChainId()
       }
     } else {
