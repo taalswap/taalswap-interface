@@ -32,6 +32,7 @@ const Menu: React.FC = (props) => {
       cakePriceUsd={cakeBusdPrice}
       profile={profile}
       blockchain={process.env.REACT_APP_CHAIN_ID ?? "1"}
+      klaytn={process.env.REACT_APP_KLAYTN_ID ?? "8217"}
       {...props}
     />
   );

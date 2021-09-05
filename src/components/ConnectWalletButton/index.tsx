@@ -6,7 +6,7 @@ import { useTranslation } from '../../contexts/Localization';
 const UnlockButton: React.FC<ButtonProps> = (props) => {
   const { t } = useTranslation();
   const { login, logout } = useAuth()
-  const { onPresentConnectModal } = useWalletModal(login, logout, undefined, process.env.REACT_APP_CHAIN_ID)
+  const { onPresentConnectModal } = useWalletModal(login, logout, undefined, process.env.REACT_APP_CHAIN_ID, process.env.REACT_APP_KLAYTN_ID)
 
   return (
     <Button onClick={onPresentConnectModal} {...props} style={{ backgroundColor: '#00ab55' }}>
