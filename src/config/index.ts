@@ -8,3 +8,10 @@ export const SCAN_URL = {
   [ChainId.KLAYTN]: 'https://scope.klaytn.com',
   [ChainId.BAOBAB]: 'https://baobab.scope.klaytn.com',
 }
+export const NETWORK_NAME = {
+  [ChainId.MAINNET]: 'Ethereum Mainnet',
+  [ChainId.ROPSTEN]: 'Ethereum Ropsten',
+  [ChainId.RINKEBY]: 'Ethereum Rinkeby',
+  [ChainId.KLAYTN]: 'Klaytn Cypress',
+  [ChainId.BAOBAB]: 'Klaytn Baobab',
+}

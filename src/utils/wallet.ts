@@ -1,25 +1,25 @@
 // Set of helper functions to facilitate wallet setup
 import { ChainId } from 'taalswap-sdk'
-import { BASE_BSC_SCAN_URL } from '../config'
+import { BASE_BSC_SCAN_URL, SCAN_URL, NETWORK_NAME } from '../config'
 
 const addNetwork = async (chainId: number) => {
   const provider = (window as Window).ethereum
   if (provider && provider.request) {
     try {
-      if (chainId === ChainId.MAINNET) {
+      if (chainId === ChainId.MAINNET || chainId === ChainId.ROPSTEN || chainId === ChainId.RINKEBY) {
         await provider.request({
           method: 'wallet_addEthereumChain',
           params: [
             {
               chainId: `0x${chainId.toString(16)}`,
-              chainName: 'Ethereum Mainnet',
+              chainName: NETWORK_NAME[chainId],
               nativeCurrency: {
                 name: 'ETH',
                 symbol: 'ETH',
                 decimals: 18,
               },
               rpcUrls: [`${process.env.REACT_APP_NETWORK_URL}`],
-              blockExplorerUrls: [`${BASE_BSC_SCAN_URL}/`],
+              blockExplorerUrls: [`${SCAN_URL[chainId]}/`],
             },
           ],
         });
