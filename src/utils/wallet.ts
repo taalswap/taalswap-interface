@@ -4,6 +4,7 @@ import { BASE_BSC_SCAN_URL, SCAN_URL, NETWORK_NAME } from '../config'
 
 const addNetwork = async (chainId: number) => {
   const provider = (window as Window).ethereum
+  console.log('===============>', NETWORK_NAME[chainId])
   if (provider && provider.request) {
     try {
       if (chainId === ChainId.MAINNET || chainId === ChainId.ROPSTEN || chainId === ChainId.RINKEBY) {
