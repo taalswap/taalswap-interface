@@ -513,8 +513,7 @@ function Swap({
       {/* <CardNav /> */}
       <PageHeader
           title={t('Swap')}
-          // description={t('Trade your token on the spot')}
-          description={chainId}
+          description={t('Trade your token on the spot')}
         />
       <SwapBody>
         <Wrapper id="swap-page">
