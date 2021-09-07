@@ -89,6 +89,7 @@ export const setupNetwork = async (chainId: number) => {
 
   result = await addNetwork(chainId)   // Talken
 
+  // TODO : 네트워크 스위칭을 취소한 경우... 다시 스위칭이 뜨는 경우 해결할 필요...
   if (provider && provider.request) {
     try {
       await provider.request({
