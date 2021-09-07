@@ -65,6 +65,9 @@ const addNetwork = async (chainId: number) => {
       // handle "add" error
       console.error(addError)
       switch (addError.code) {
+        case 4001:
+          recoverChainId()
+          return false
         case -32602:
           return true;
           break;
