@@ -15783,10 +15783,10 @@ taalswap-sdk@^2.3.0:
     tiny-warning "^1.0.3"
     toformat "^2.0.0"
 
-taalswap-uikit@^0.36.1:
-  version "0.36.1"
-  resolved "https://registry.yarnpkg.com/taalswap-uikit/-/taalswap-uikit-0.36.1.tgz#60a0b0733ef2630ce3a564000da563979d4cdf35"
-  integrity sha512-LcR6kUCyTWt84OlMj0E0qfkgghYnTqJtrTP8cHbthtGy17vI2t/c8jZnwpjRNAU4VNNfADjAaVz9pZEKa6LaKQ==
+taalswap-uikit@^0.36.2:
+  version "0.36.2"
+  resolved "https://registry.yarnpkg.com/taalswap-uikit/-/taalswap-uikit-0.36.2.tgz#60ea433af4465e70527b6517ae880af0b1f83132"
+  integrity sha512-fd7gqf9leqQlR8vVu4ii99Ks4GOVsFXChzKYEBMtekC66Ft6ZWAQNle0Uy7xpNKRuj+Rv3Ylqqy2yjfElztWQQ==
   dependencies:
     "@emotion/cache" "^11.1.3"
     "@emotion/react" "^11.1.5"
