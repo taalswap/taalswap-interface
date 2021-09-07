@@ -172,6 +172,7 @@ export default function App() {
                         </>
                       ) : (
                         <>
+                          <Route exact strict path="/" component={Swap} />
                           <Route exact strict path="/swap" component={Swap} />
                           <Route
                             exact
