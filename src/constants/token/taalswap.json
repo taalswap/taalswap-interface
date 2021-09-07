@@ -138,7 +138,7 @@
       "symbol": "KUSDT",
       "address": "0x06cb1c92cc93d617aed37811783708ac6370cca5",
       "chainId": 1001,
-      "decimals": 18,
+      "decimals": 6,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
     },
     {
@@ -170,7 +170,7 @@
       "symbol": "KUSDT",
       "address": "0xcee8faf64bb97a73bb51e115aa89c17ffa8dd167",
       "chainId": 8217,
-      "decimals": 18,
+      "decimals": 6,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
     }
   ]
