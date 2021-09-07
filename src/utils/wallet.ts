@@ -1,4 +1,5 @@
 // Set of helper functions to facilitate wallet setup
+import { isMobile } from 'react-device-detect'
 import { ChainId } from 'taalswap-sdk'
 import { UserRejectedRequestError } from '@web3-react/injected-connector'
 import { BASE_BSC_SCAN_URL, SCAN_URL, NETWORK_NAME } from '../config'
@@ -87,7 +88,7 @@ export const setupNetwork = async (chainId: number) => {
   const provider = (window as Window).ethereum
   let result
 
-  result = await addNetwork(chainId)   // Talken
+  if (isMobile) result = await addNetwork(chainId)   // Talken
 
   // TODO : 네트워크 스위칭을 취소한 경우... 다시 스위칭이 뜨는 경우 해결할 필요...
   if (provider && provider.request) {
@@ -96,6 +97,7 @@ export const setupNetwork = async (chainId: number) => {
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: `0x${chainId.toString(16)}` }],
       })
+      result = true
     } catch (error) {
       // This error code indicates that the chain has not been added to MetaMask.
       if (error.code === 4902) {
