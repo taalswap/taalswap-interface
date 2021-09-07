@@ -1,10 +1,11 @@
 // Set of helper functions to facilitate wallet setup
 import { ChainId } from 'taalswap-sdk'
+import { UserRejectedRequestError } from '@web3-react/injected-connector'
 import { BASE_BSC_SCAN_URL, SCAN_URL, NETWORK_NAME } from '../config'
+import recoverChainId from './recoverChainId';
 
 const addNetwork = async (chainId: number) => {
   const provider = (window as Window).ethereum
-  console.log('===============>', NETWORK_NAME[chainId])
   if (provider && provider.request) {
     try {
       if (chainId === ChainId.MAINNET || chainId === ChainId.ROPSTEN || chainId === ChainId.RINKEBY) {
@@ -62,6 +63,13 @@ const addNetwork = async (chainId: number) => {
     } catch (addError) {
       // handle "add" error
       console.error(addError)
+      switch (addError.code) {
+        case -32602:
+          return true;
+          break;
+        default:
+          break;
+      }
       return false
     }
   } else {
@@ -77,27 +85,30 @@ const addNetwork = async (chainId: number) => {
  */
 export const setupNetwork = async (chainId: number) => {
   const provider = (window as Window).ethereum
+  let result
+
+  result = await addNetwork(chainId)   // Talken
+
   if (provider && provider.request) {
     try {
-      await addNetwork(chainId)   // Talken
       await provider.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: `0x${chainId.toString(16)}` }],
       })
-      return true
     } catch (error) {
       // This error code indicates that the chain has not been added to MetaMask.
       if (error.code === 4902) {
-        await addNetwork(chainId)
-      } else if (error.code === 4001) {
+        result = await addNetwork(chainId)
+      } else if (error.code === 4001 || error instanceof UserRejectedRequestError) {
+        recoverChainId()
         return false
       }
-      return true
     }
   } else {
     console.error("Can't setup the ethereum mainnet on metamask because window.ethereum is undefined")
     return false
   }
+  return result
 }
 
 /**

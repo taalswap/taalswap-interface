@@ -37,7 +37,7 @@ const useAuth = () => {
     const chainId = getChainId()
     const refresh = window.localStorage.getItem("refresh")
     const connector = connectorsByName[connectorID]
-    let changeNet = true
+    let changeNet
 
     if (connector) {
       if (refresh === 'true') {
@@ -47,8 +47,8 @@ const useAuth = () => {
         // window.localStorage.removeItem(connectorLocalStorageKey)
         if (error instanceof UnsupportedChainIdError) {
           // toastError('Unsupported Chain Id', 'Unsupported Chain Id Error. Check your chain Id.')
-          const hasSetup = await setupNetwork(chainId)
-          if (hasSetup) {
+          changeNet = await setupNetwork(chainId)
+          if (changeNet) {
             activate(connector)
           }
         } else {
@@ -71,12 +71,9 @@ const useAuth = () => {
       })
 
       if (refresh === 'true' && changeNet) {
-        window.location.href = getNewURL()
-        // window.location.reload()
-        window.localStorage.setItem("refresh", 'false')
-      }
-      if (!changeNet) {
-        recoverChainId()
+          window.location.href = getNewURL()
+          // window.location.reload()
+          window.localStorage.setItem("refresh", 'false')
       }
     } else {
       toastError('Can\'t find connector', 'The connector config is wrong')
