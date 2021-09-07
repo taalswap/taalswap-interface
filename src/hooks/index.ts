@@ -27,21 +27,21 @@ export function useEagerConnect() {
     injected.isAuthorized().then(async (isAuthorized) => {
       const hasSignedIn = window.localStorage.getItem(connectorLocalStorageKey)
       if (isAuthorized && hasSignedIn) {
-        const hasSetup = await setupNetwork(chainId)
-        if (hasSetup) {
+        // const hasSetup = await setupNetwork(chainId)
+        // if (hasSetup) {
           activate(injected, undefined, true).catch((error) => {
             setTried(true)
           })
-        }
+        // }
       } else if (isMobile && window.ethereum && hasSignedIn) {
-        const hasSetup = await setupNetwork(chainId)
-        if (hasSetup) {
+        // const hasSetup = await setupNetwork(chainId)
+        // if (hasSetup) {
           activate(injected, undefined, true).catch((error) => {
             setTried(true)
           })
-        } else {
+        // }
+      } else {
           setTried(true)
-        }
       }
     })
   }, [activate, chainId]) // intentionally only running on mount (make sure it's only mounted once :))
