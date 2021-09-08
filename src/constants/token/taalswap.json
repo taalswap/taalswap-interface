@@ -172,6 +172,14 @@
       "chainId": 8217,
       "decimals": 6,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
+    },
+    {
+      "name": "Orbit Bridge Klaytn Talken",
+      "symbol": "KTALK",
+      "address": "0xa6e559f2954c7e2c017bbbea85d8513f34d03d75",
+      "chainId": 8217,
+      "decimals": 18,
+      "logoURI": "https://swap.taalswap.finance/images/coins/ktalk.png"
     }
   ]
 }
