@@ -39,7 +39,7 @@ const TransactionSubmittedContent = ({
         <AutoColumn gap="8px" justify="center">
           {chainId && hash && (
             <LinkExternal href={getBscScanLink(chainId, hash, 'transaction')}>
-              {chainId > 1000 ? t('View on Scope') : t('View on Etherscan')}
+              {chainId > 1000 ? t('View on Klaycope') : t('View on Etherscan')}
             </LinkExternal>
           )}
           <Button onClick={onDismiss} mt="20px">

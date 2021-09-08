@@ -81,7 +81,7 @@ function TokenWarningCard({ token }: TokenWarningCardProps) {
                 href={getBscScanLink(chainId, token.address, 'token')}
             >
               <Text title={token.address}>
-                {shortenAddress(token.address)} {chainId > 1000 ? (t('View on Scope')) : (t('View on Etherscan'))}
+                {shortenAddress(token.address)} {chainId > 1000 ? (t('View on Klaycope')) : (t('View on Etherscan'))}
               </Text>
             </ExternalLink>
           )}
