@@ -102,6 +102,40 @@ const InputPanelBody = styled.div`
   // width: 10%;
 `;
 
+const CardPanelBody = styled(Card)`
+  /* marginTop: 1rem, */
+  padding: .25rem 0 .75rem;
+  border-radius: 20px;
+  max-width: 540px;
+  margin: 1rem auto 0;
+  line-height: 1.2;
+  border-radius: 0;
+
+  @media screen and (max-width: 500px) {
+    ${AutoColumn} {
+      grid-row-gap: 15px;
+    }
+  }
+`;
+
+const RowBetweenSub = styled(RowBetween)`
+    
+  @media screen and (max-width: 500px) {
+    display:block;
+
+    ${Text} {
+      display:block;
+    }
+    ${Text}:nth-child(2) {
+      display:block;
+      width:100% !important;
+      justify-content:flex-end !important;
+      text-align:right !important;
+    }
+  }
+`;
+
+
 // const Swap = () => {
 function Swap({
   match: {
@@ -620,35 +654,26 @@ function Swap({
             ) : null}
 
             {showWrap ? null : (
-              <Card
-                style={{
-                  /* marginTop: '1rem', */
-                  padding: '.25rem  0 .75rem',
-                  borderRadius: '20px',
-                  maxWidth: '540px',
-                  margin: '1rem auto 0',
-                  lineHeight: '1.2',
-                }}
-              >
+              <CardPanelBody>
                 <AutoColumn gap="4px">
                   {Boolean(trade) && (
-                    <RowBetween align="center">
+                    <RowBetweenSub align="center">
                       <Text fontSize="14px">{t('Price')}</Text>
                       <TradePrice
                         price={trade?.executionPrice}
                         showInverted={showInverted}
                         setShowInverted={setShowInverted}
                       />
-                    </RowBetween>
+                    </RowBetweenSub>
                   )}
                   {allowedSlippage !== INITIAL_ALLOWED_SLIPPAGE && (
-                    <RowBetween align="center">
+                    <RowBetweenSub align="center">
                       <Text fontSize="14px">{t('Slippage Tolerance')}</Text>
                       <Text fontSize="14px">{allowedSlippage / 100}%</Text>
-                    </RowBetween>
+                    </RowBetweenSub>
                   )}
                 </AutoColumn>
-              </Card>
+              </CardPanelBody>
             )}
 
             {trade !== undefined ? (
