@@ -98,7 +98,7 @@ export const USDT = {
   [ChainId.KLAYTN]: new Token(
     ChainId.KLAYTN,
     '0xcee8faf64bb97a73bb51e115aa89c17ffa8dd167',
-    18,
+    6,
     'KUSDT',
     'Orbit Bridge Klaytn USD Tether'
   ),
