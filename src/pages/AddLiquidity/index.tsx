@@ -488,7 +488,7 @@ export default function AddLiquidity({
 
                 <AddIcon
                   margin="10px 10px"
-                  color="textSubtle"
+                  color="teriary"
                   style={{
                     width: '2.188rem',
                     padding: '5px',
