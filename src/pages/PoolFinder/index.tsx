@@ -1,5 +1,6 @@
 import { Currency, ETHER, KLAYTN, JSBI, TokenAmount } from 'taalswap-sdk';
 import React, { useCallback, useEffect, useState } from 'react';
+import styled from 'styled-components';
 import {
   AddIcon,
   Button,
@@ -23,6 +24,40 @@ import { currencyId } from 'utils/currencyId';
 import AppBody from '../AppBody';
 import { Dots } from '../Pool/styleds';
 import { useTranslation } from '../../contexts/Localization';
+
+
+const AutoColumnDefault = styled(AutoColumn)`
+
+    &:nth-child(1){
+      display: flex;
+      flex-direction: column;
+    }
+
+    ${LightCard} {
+      border: 1px solid #eee;
+      margin-top: 1.875rem;
+    }
+`;
+
+const ColumnButtonBody = styled.div`
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+
+  ${ColumnCenter}{
+    width: 2.188rem;
+    padding: 5px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: rgb(243, 245, 247);
+    margin: 10px 20px;
+  }
+
+  @media screen and (max-width: 720px){
+    flex-direction: column;
+  }
+`;
+
 
 enum Fields {
   TOKEN0 = 0,
@@ -88,7 +123,7 @@ export default function PoolFinder() {
   }, [setShowSearch]);
 
   const prerequisiteMessage = (
-    <LightCard padding="45px 10px">
+    <LightCard padding="45px 10px" >
       <Text style={{ textAlign: 'center' }}>
         {!account
           ? t('Connect to a wallet to find pools')
@@ -103,49 +138,50 @@ export default function PoolFinder() {
       <AppBody>
         <FindPoolTabs />
         <CardBody>
-          <AutoColumn gap="md">
-            <Button
-              onClick={() => {
-                setShowSearch(true);
-                setActiveField(Fields.TOKEN0);
-              }}
-              startIcon={
-                currency0 ? (
-                  <CurrencyLogo
-                    currency={currency0}
-                    style={{ marginRight: '.5rem' }}
-                  />
-                ) : null
-              }
-              endIcon={<ChevronDownIcon width="24px" color="white" />}
-              width="100%"
-            >
-              {currency0 ? currency0.symbol : t('Select a Token')}
-            </Button>
+          <AutoColumnDefault gap="md">
+            <ColumnButtonBody>
+              <Button
+                onClick={() => {
+                  setShowSearch(true);
+                  setActiveField(Fields.TOKEN0);
+                }}
+                startIcon={
+                  currency0 ? (
+                    <CurrencyLogo
+                      currency={currency0}
+                      style={{ marginRight: '.5rem' }}
+                    />
+                  ) : null
+                }
+                endIcon={<ChevronDownIcon width="24px" color="white" />}
+                width="100%"
+              >
+                {currency0 ? currency0.symbol : t('Select a Token')}
+              </Button>
 
-            <ColumnCenter>
-              <AddIcon color="textSubtle" />
-            </ColumnCenter>
+              <ColumnCenter>
+                <AddIcon color="textSubtle" />
+              </ColumnCenter>
 
-            <Button
-              onClick={() => {
-                setShowSearch(true);
-                setActiveField(Fields.TOKEN1);
-              }}
-              startIcon={
-                currency1 ? (
-                  <CurrencyLogo
-                    currency={currency1}
-                    style={{ marginRight: '.5rem' }}
-                  />
-                ) : null
-              }
-              endIcon={<ChevronDownIcon width="24px" color="white" />}
-              width="100%"
-            >
-              {currency1 ? currency1.symbol : t('Select a Token')}
-            </Button>
-
+              <Button
+                onClick={() => {
+                  setShowSearch(true);
+                  setActiveField(Fields.TOKEN1);
+                }}
+                startIcon={
+                  currency1 ? (
+                    <CurrencyLogo
+                      currency={currency1}
+                      style={{ marginRight: '.5rem' }}
+                    />
+                  ) : null
+                }
+                endIcon={<ChevronDownIcon width="24px" color="white" />}
+                width="100%"
+              >
+                {currency1 ? currency1.symbol : t('Select a Token')}
+              </Button>
+            </ColumnButtonBody>
             {hasPosition && (
               <ColumnCenter
                 style={{
@@ -217,7 +253,7 @@ export default function PoolFinder() {
             ) : (
               prerequisiteMessage
             )}
-          </AutoColumn>
+          </AutoColumnDefault>
 
           <CurrencySearchModal
             isOpen={showSearch}

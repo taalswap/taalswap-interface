@@ -21,6 +21,65 @@ const ReferenceElement = styled.div`
   margin-left: 0.3rem;
 `;
 
+const ReCard = styled(Card)`
+
+@media screen and (max-width: 720px) {
+    width:100%;
+    border:0;
+    border-top:2px solid #eee;
+    border-bottom:2px solid #eee;
+    border-radius:0px;
+    box-shadow:none;
+  }
+`;
+
+const ReCardBody = styled(CardBody)`
+  max-width: 550px;
+  padding-left: 0;
+  padding-right: 0;
+  margin: 0 auto;
+
+  @media screen and (max-width: 500px) {
+   
+
+    ${RowBetween} {
+      display:block;
+      
+      ${RowFixed} {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+
+        &:nth-child(2){
+          justify-content: flex-end;
+          text-align: right;
+          width: 100%;
+        }
+      }
+      &:nth-child(2){
+        justify-content: flex-end;
+        text-align: right;
+        width: 100%;
+      }
+      &:last-child{
+        justify-content: flex-end;
+        text-align: right;
+        width: 100%;
+      }
+    }
+  }
+`;
+
+const AutoColumnSub = styled(AutoColumn)`
+  padding: 0 24px;
+
+  @media screen and (max-width: 500px) {
+    padding:0;
+
+    
+  }
+`;
+
 const Tip1 = () => {
   const { t } = useTranslation();
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
@@ -105,8 +164,8 @@ function TradeSummary({
     FEE = trade.inputAmount.currency.symbol ?? ''
   }
   return (
-    <Card>
-      <CardBody style={{ maxWidth:'550px', paddingLeft:'0',  paddingRight:'0', margin: '0 auto' }}>
+    <ReCard>
+      <ReCardBody>
         <RowBetween style={{ padding: '.25rem 0', }} >
           <RowFixed>
             <Text fontSize="14px">
@@ -146,8 +205,8 @@ function TradeSummary({
               : '-'}
           </Text>
         </RowBetween>
-      </CardBody>
-    </Card>
+      </ReCardBody>
+    </ReCard>
   );
 }
 
@@ -176,7 +235,7 @@ export function AdvancedSwapDetails({ trade }: AdvancedSwapDetailsProps) {
             {showRoute && (
               <>
                 <SectionBreak style={{ backgroundColor:"transparent" }}/>
-                <AutoColumn style={{ padding: '0 24px'}}>
+                <AutoColumnSub>
                   <RowFixed>
                     <Text fontSize="14px">Route</Text>
                     <ReferenceElement ref={targetRef}>
@@ -185,7 +244,7 @@ export function AdvancedSwapDetails({ trade }: AdvancedSwapDetailsProps) {
                     {tooltipVisible && tooltip}
                   </RowFixed>
                   <SwapRoute trade={trade}/>
-                </AutoColumn>
+                </AutoColumnSub>
               </>
             )}
           </>
