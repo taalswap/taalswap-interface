@@ -19,7 +19,7 @@
   "Settings": "설정",
   "Recipient": "수신인",
   "View on Etherscan": "Etherscan에서 보기",
-  "View on Klayscope": "Klaycope에서 보기",
+  "View on Klaytnscope": "Klaytnscope 보기",
   "Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.": "거래가 확정되기 전에 가격변동이 커 불리한 경우 거래가 취소됩니다.",
   "The difference between the market price and estimated price due to trade size.": "거래 규모로 인한 시장 가격과 예상 가격의 차이.",
   "Create Pool & Supply": "풀 생성 및 공급",

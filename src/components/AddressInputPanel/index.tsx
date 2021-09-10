@@ -78,13 +78,13 @@ const Input = styled.input<{ error?: boolean }>`
 export default function AddressInputPanel({
   id,
   value,
-  onChange
+  onChange,
 }: {
-  id?: string
+  id?: string;
   // the typed string value
-  value: string
+  value: string;
   // triggers whenever the typed value changes
-  onChange: (value: string) => void
+  onChange: (value: string) => void;
 }) {
   const { chainId } = useActiveWeb3React();
   const { t } = useTranslation();
@@ -105,17 +105,19 @@ export default function AddressInputPanel({
     <InputPanel id={id}>
       <ContainerRow error={error}>
         <InputContainer>
-          <AutoColumn gap='md'>
+          <AutoColumn gap="md">
             <RowBetween>
-              <Text color='textSubtle' fontWeight={500} fontSize='14px'>
+              <Text color="textSubtle" fontWeight={500} fontSize="14px">
                 {t('Recipient')}
               </Text>
               {address && chainId && (
                 <ExternalLink
-                    href={getBscScanLink(chainId, name ?? address, 'address')}
-                    style={{ fontSize: '14px' }}
+                  href={getBscScanLink(chainId, name ?? address, 'address')}
+                  style={{ fontSize: '14px' }}
                 >
-                  {chainId > 1000 ? (t('View on Klaycope')) : (t('View on Etherscan'))}
+                  {chainId > 1000
+                    ? t('View on Klaytnscope')
+                    : t('View on Etherscan')}
                 </ExternalLink>
               )}
             </RowBetween>

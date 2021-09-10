@@ -55,9 +55,9 @@ function TokenWarningCard({ token }: TokenWarningCardProps) {
         return false;
       }
       return (
-          userToken.symbol?.toLowerCase() === tokenSymbol ||
-          userToken.name?.toLowerCase() === tokenName
-        );
+        userToken.symbol?.toLowerCase() === tokenSymbol ||
+        userToken.name?.toLowerCase() === tokenName
+      );
     });
   }, [token, chainId, allTokens, tokenSymbol, tokenName]);
 
@@ -77,11 +77,14 @@ function TokenWarningCard({ token }: TokenWarningCardProps) {
           </Text>
           {chainId && (
             <ExternalLink
-                style={{ fontWeight: 400 }}
-                href={getBscScanLink(chainId, token.address, 'token')}
+              style={{ fontWeight: 400 }}
+              href={getBscScanLink(chainId, token.address, 'token')}
             >
               <Text title={token.address}>
-                {shortenAddress(token.address)} {chainId > 1000 ? (t('View on Klaycope')) : (t('View on Etherscan'))}
+                {shortenAddress(token.address)}{' '}
+                {chainId > 1000
+                  ? t('View on Klaytnscope')
+                  : t('View on Etherscan')}
               </Text>
             </ExternalLink>
           )}
@@ -94,27 +97,27 @@ function TokenWarningCard({ token }: TokenWarningCardProps) {
 export default function TokenWarningModal({
   isOpen,
   tokens,
-  onConfirm
+  onConfirm,
 }: {
-  isOpen: boolean
-  tokens: Token[]
-  onConfirm: () => void
+  isOpen: boolean;
+  tokens: Token[];
+  onConfirm: () => void;
 }) {
   const [understandChecked, setUnderstandChecked] = useState(false);
   const toggleUnderstand = useCallback(
-      () => setUnderstandChecked((uc) => !uc),
-      []
+    () => setUnderstandChecked((uc) => !uc),
+    []
   );
   const { t } = useTranslation();
 
   const handleDismiss = useCallback(() => null, []);
   return (
     <Modal isOpen={isOpen} onDismiss={handleDismiss} maxHeight={90}>
-      <WarningContainer className='token-warning-container'>
-        <AutoColumn gap='lg'>
-          <AutoRow gap='6px'>
+      <WarningContainer className="token-warning-container">
+        <AutoColumn gap="lg">
+          <AutoRow gap="6px">
             <StyledWarningIcon />
-            <Text color='failure'>{t('Token imported')}</Text>
+            <Text color="failure">{t('Token imported')}</Text>
           </AutoRow>
           <Text>
             {t(
@@ -137,26 +140,26 @@ export default function TokenWarningModal({
           <RowBetween>
             <div>
               <label
-                  htmlFor='understand-checkbox'
-                  style={{ cursor: 'pointer', userSelect: 'none' }}
+                htmlFor="understand-checkbox"
+                style={{ cursor: 'pointer', userSelect: 'none' }}
               >
                 <input
-                  id='understand-checkbox'
-                  type='checkbox'
-                  className='understand-checkbox'
+                  id="understand-checkbox"
+                  type="checkbox"
+                  className="understand-checkbox"
                   checked={understandChecked}
                   onChange={toggleUnderstand}
                 />{' '}
-                <Text as='span' ml='4px'>
+                <Text as="span" ml="4px">
                   {t('I understand')}
                 </Text>
               </label>
             </div>
             <Button
               disabled={!understandChecked}
-              variant='danger'
+              variant="danger"
               style={{ width: '140px' }}
-              className='token-dismiss-button'
+              className="token-dismiss-button"
               onClick={() => {
                 onConfirm();
               }}
