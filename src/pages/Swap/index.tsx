@@ -75,8 +75,10 @@ import useI18n from 'hooks/useI18n';
 import PageHeader from 'components/PageHeader';
 import ConnectWalletButton from 'components/ConnectWalletButton';
 import V2ExchangeRedirectModal from 'components/V2ExchangeRedirectModal';
+import getAPIUrl from 'utils/getAPIUrl';
 import AppBody from '../AppBody';
 import Teaser from '../LandingPageView/Teaser_page';
+import TOKEN_LIST from '../../constants/token/taalswap.json';
 
 // const CACHE_KEY = 'pancakeswap_language';
 const CACHE_KEY = 'taalswap_language';
@@ -104,7 +106,7 @@ const InputPanelBody = styled.div`
 
 const CardPanelBody = styled(Card)`
   /* marginTop: 1rem, */
-  padding: .25rem 0 .75rem;
+  padding: 0.25rem 0 0.75rem;
   border-radius: 20px;
   max-width: 540px;
   margin: 1rem auto 0;
@@ -119,22 +121,20 @@ const CardPanelBody = styled(Card)`
 `;
 
 const RowBetweenSub = styled(RowBetween)`
-    
   @media screen and (max-width: 500px) {
-    display:block;
+    display: block;
 
     ${Text} {
-      display:block;
+      display: block;
     }
     ${Text}:nth-child(2) {
-      display:block;
-      width:100% !important;
-      justify-content:flex-end !important;
-      text-align:right !important;
+      display: block;
+      width: 100% !important;
+      justify-content: flex-end !important;
+      text-align: right !important;
     }
   }
 `;
-
 
 // const Swap = () => {
 function Swap({
@@ -148,6 +148,8 @@ function Swap({
   const currencyB = useCurrency(currencyIdB);
   const [currencyAFlag, setCurrencyAFlag] = useState(currencyA !== undefined);
   const [currencyBFlag, setCurrencyBFlag] = useState(currencyB !== undefined);
+  const [currencyAPrice, setCurrencyAPrice] = useState(0);
+  const [currencyBPrice, setCurrencyBPrice] = useState(0);
   const { t } = useTranslation();
   const storedLangCode = localStorage.getItem(CACHE_KEY);
   const loadedUrlParams = useDefaultsFromURLSearch();
@@ -226,6 +228,67 @@ function Swap({
   );
   const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE;
   const trade = showWrap ? undefined : v2Trade;
+
+  const chainId = window.localStorage.getItem('chainId');
+
+  const getAddressBySymbol = useCallback(
+    (symbol: string | undefined) => {
+      const curToken =
+        symbol !== undefined
+          ? TOKEN_LIST.tokens.find(
+              (token) =>
+                token.symbol === symbol && token.chainId.toString() === chainId
+            )
+          : null;
+
+      return curToken?.address;
+    },
+    [chainId]
+  );
+
+  useEffect(() => {
+    async function fetchPrice() {
+      if (
+        currencies[Field.INPUT]?.symbol !== undefined &&
+        currencies[Field.OUTPUT]?.symbol !== undefined
+      ) {
+        await fetch(
+          `${getAPIUrl()}/tokens/${getAddressBySymbol(
+            currencies[Field.OUTPUT]?.symbol
+          )}`,
+          // 'https://taalswap-info-api-black.vercel.app/api/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7',
+          {
+            method: 'GET',
+            headers: {
+              'Content-type': 'application/json',
+            },
+          }
+        )
+          .then((response) => response.json())
+          .then((response) => {
+            setCurrencyAPrice(response.data.price);
+          });
+
+        await fetch(
+          `${getAPIUrl()}/tokens/${getAddressBySymbol(
+            currencies[Field.OUTPUT]?.symbol
+          )}`,
+          // 'https://taalswap-info-api-black.vercel.app/api/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7',
+          {
+            method: 'GET',
+            headers: {
+              'Content-type': 'application/json',
+            },
+          }
+        )
+          .then((response) => response.json())
+          .then((response) => {
+            setCurrencyBPrice(response.data.price);
+          });
+      }
+    }
+    fetchPrice();
+  }, [currencies, getAddressBySymbol]);
 
   // Manage disabled trading pairs that should redirect users to V2
   useEffect(() => {
@@ -526,7 +589,8 @@ function Swap({
     [onCurrencySelection, checkForWarning]
   );
 
-  const { chainId } = useActiveWeb3React();
+  // const { chainId } = useActiveWeb3React();
+
   return (
     <Container>
       {/* <Teaser /> */}
@@ -546,9 +610,9 @@ function Swap({
       />
       {/* <CardNav /> */}
       <PageHeader
-          title={t('Swap')}
-          description={t('Trade your token on the spot')}
-        />
+        title={t('Swap')}
+        description={t('Trade your token on the spot')}
+      />
       <SwapBody>
         <Wrapper id="swap-page">
           <ConfirmSwapModal
@@ -658,14 +722,38 @@ function Swap({
               <CardPanelBody>
                 <AutoColumn gap="4px">
                   {Boolean(trade) && (
-                    <RowBetweenSub align="center">
-                      <Text fontSize="14px">{t('Price')}</Text>
-                      <TradePrice
-                        price={trade?.executionPrice}
-                        showInverted={showInverted}
-                        setShowInverted={setShowInverted}
-                      />
-                    </RowBetweenSub>
+                    <>
+                      <RowBetweenSub align="center">
+                        <Text fontSize="14px">{t('Price')}</Text>
+                        <TradePrice
+                          price={trade?.executionPrice}
+                          showInverted={showInverted}
+                          setShowInverted={setShowInverted}
+                        />
+                      </RowBetweenSub>
+                      {/* <div style={{ textAlign: 'right', fontSize: '14px' }}>
+                        <Text fontSize="14px">{`${
+                          currencies[Field.INPUT]?.symbol
+                        } : $${currencyAPrice}`}</Text>
+                      </div>
+                      <div style={{ textAlign: 'right', fontSize: '14px' }}>
+                        <Text fontSize="14px">{`${
+                          currencies[Field.OUTPUT]?.symbol
+                        } : $${currencyBPrice}`}</Text>
+                      </div> */}
+                      <div style={{ textAlign: 'right', fontSize: '14px' }}>
+                        <Text fontSize="14px">
+                          {`${currencies[Field.INPUT]?.symbol} = $ `}
+                          {currencyAPrice === undefined ? '-' : currencyAPrice}
+                        </Text>
+                      </div>
+                      <div style={{ textAlign: 'right', fontSize: '14px' }}>
+                        <Text fontSize="14px">
+                          {`${currencies[Field.OUTPUT]?.symbol} = $ `}
+                          {currencyBPrice === undefined ? '-' : currencyBPrice}
+                        </Text>
+                      </div>
+                    </>
                   )}
                   {allowedSlippage !== INITIAL_ALLOWED_SLIPPAGE && (
                     <RowBetweenSub align="center">
@@ -683,7 +771,7 @@ function Swap({
 
             <BottomGrouping>
               {disableSwap && (
-                <Flex alignItems="center"  mb="1rem">
+                <Flex alignItems="center" mb="1rem">
                   <Text color="failure">
                     Please use{' '}
                     <StyledLink external href="https://swap.taalswap.finance">
