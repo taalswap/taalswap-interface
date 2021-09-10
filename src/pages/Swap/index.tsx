@@ -148,8 +148,8 @@ function Swap({
   const currencyB = useCurrency(currencyIdB);
   const [currencyAFlag, setCurrencyAFlag] = useState(currencyA !== undefined);
   const [currencyBFlag, setCurrencyBFlag] = useState(currencyB !== undefined);
-  const [currencyAPrice, setCurrencyAPrice] = useState(0);
-  const [currencyBPrice, setCurrencyBPrice] = useState(0);
+  const [currencyAPrice, setCurrencyAPrice] = useState('0');
+  const [currencyBPrice, setCurrencyBPrice] = useState('0');
   const { t } = useTranslation();
   const storedLangCode = localStorage.getItem(CACHE_KEY);
   const loadedUrlParams = useDefaultsFromURLSearch();
@@ -233,11 +233,17 @@ function Swap({
 
   const getAddressBySymbol = useCallback(
     (symbol: string | undefined) => {
+      let curSymbol;
+      if (symbol === 'ETH') curSymbol = 'WETH';
+      else if (symbol === 'KLAY') curSymbol = 'WKLAY';
+      else curSymbol = symbol;
+
       const curToken =
-        symbol !== undefined
+        curSymbol !== undefined
           ? TOKEN_LIST.tokens.find(
               (token) =>
-                token.symbol === symbol && token.chainId.toString() === chainId
+                token.symbol === curSymbol &&
+                token.chainId.toString() === chainId
             )
           : null;
 
@@ -254,7 +260,7 @@ function Swap({
       ) {
         await fetch(
           `${getAPIUrl()}/tokens/${getAddressBySymbol(
-            currencies[Field.OUTPUT]?.symbol
+            currencies[Field.INPUT]?.symbol
           )}`,
           // 'https://taalswap-info-api-black.vercel.app/api/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7',
           {
@@ -266,7 +272,7 @@ function Swap({
         )
           .then((response) => response.json())
           .then((response) => {
-            setCurrencyAPrice(response.data.price);
+            setCurrencyAPrice(parseFloat(response.data.price).toFixed(4));
           });
 
         await fetch(
@@ -283,7 +289,7 @@ function Swap({
         )
           .then((response) => response.json())
           .then((response) => {
-            setCurrencyBPrice(response.data.price);
+            setCurrencyBPrice(parseFloat(response.data.price).toFixed(4));
           });
       }
     }
