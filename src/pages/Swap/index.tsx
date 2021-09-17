@@ -93,9 +93,17 @@ const SwapBody = styled(UICard)`
   z-index: 5;
 `;
 
+const CardChildBody = styled(CardBody)`
+
+  @media screen and (max-width: 500px) {
+    padding:0.75rem 0.875rem;
+  }
+`;
+
 const InputPanelBody = styled.div`
   display: flex;
   flex-direction: column;
+  
   ${({ theme }) => theme.mediaQueries.md} {
     flex-direction: row;
   }
@@ -104,37 +112,62 @@ const InputPanelBody = styled.div`
 
 const CardPanelBody = styled(Card)`
   /* marginTop: 1rem, */
-  padding: .25rem 0 .75rem;
+  padding: .25rem 0 .625rem;
   border-radius: 20px;
   max-width: 540px;
   margin: 1rem auto 0;
   line-height: 1.2;
   border-radius: 0;
-
+  
   @media screen and (max-width: 500px) {
     ${AutoColumn} {
       grid-row-gap: 15px;
+      
     }
   }
 `;
 
+
 const RowBetweenSub = styled(RowBetween)`
     
   @media screen and (max-width: 500px) {
-    display:block;
+    //display:block;
 
     ${Text} {
-      display:block;
+      // display:block;
     }
     ${Text}:nth-child(2) {
-      display:block;
-      width:100% !important;
-      justify-content:flex-end !important;
+      // display:block;
+      //width:100% !important;
+      //justify-content:flex-end !important;
       text-align:right !important;
     }
   }
 `;
 
+const AutoRowAlign = styled(AutoRow)`
+
+  @media screen and (max-width: 500px) {
+    width: auto;
+    position:absolute;
+    top:-25px;
+    left: 50%;
+    margin: 0;
+    padding: 0 !important;
+    transform: translateX(-50%);
+    z-index: 100;
+  }
+
+`;
+
+
+const IconLineButton = styled(IconButton)`
+
+  @media screen and (max-width: 500px) {
+    border:1px solid #ddd;
+  }
+  
+`;
 
 // const Swap = () => {
 function Swap({
@@ -563,7 +596,7 @@ function Swap({
             swapErrorMessage={swapErrorMessage}
             onDismiss={handleConfirmDismiss}
           />
-          <CardBody>
+          <CardChildBody>
             <InputPanelBody>
               <CurrencyInputPanel
                 label={
@@ -583,14 +616,14 @@ function Swap({
               />
               <AutoColumn
                 justify="space-between"
-                style={{ margin: '0px 10px' }}
+                style={{ margin: '7px 10px', position: 'relative' }}
               >
-                <AutoRow
+                <AutoRowAlign
                   justify={isExpertMode ? 'space-between' : 'center'}
-                  style={{ padding: '0 1rem' }}
+                  style={{ padding: '0 1rem', }}
                 >
                   <ArrowWrapper clickable>
-                    <IconButton
+                    <IconLineButton
                       variant="tertiary"
                       onClick={() => {
                         setApprovalSubmitted(false); // reset 2 step UI for approvals
@@ -604,7 +637,7 @@ function Swap({
                       ) : (
                         <ArrowForwardIcon color="#00ab55" width="24px" />
                       )}
-                    </IconButton>
+                    </IconLineButton>
                   </ArrowWrapper>
                   {recipient === null && !showWrap && isExpertMode ? (
                     <LinkStyledButton
@@ -614,7 +647,7 @@ function Swap({
                       + Add a send (optional)
                     </LinkStyledButton>
                   ) : null}
-                </AutoRow>
+                </AutoRowAlign>
               </AutoColumn>
               <CurrencyInputPanel
                 value={formattedAmounts[Field.OUTPUT]}
@@ -822,7 +855,7 @@ function Swap({
                 <SwapCallbackError error={swapErrorMessage} />
               ) : null}
             </BottomGrouping>
-          </CardBody>
+          </CardChildBody>
         </Wrapper>
       </SwapBody>
       {/* <AdvancedSwapDetailsDropdown trade={trade} /> */}

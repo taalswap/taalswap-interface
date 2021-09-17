@@ -19,6 +19,10 @@ const StyledPageHeader = styled.div`
   padding: 0px 0px 24px 0px;
   width: 100%;
   max-width:1070px;
+
+  @media screen and (max-width: 500px) {
+    padding-bottom: 0.6875rem;
+  }
 `
 
 const Details = styled.div`

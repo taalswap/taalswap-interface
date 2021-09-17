@@ -9,7 +9,7 @@ const FlexBox = styled(Flex)`
    
   @media screen and (max-width:720px){   
     display:flex;
-    justify-content:flex-start;
+    justify-content: center;
     text-align:left;
   }
 `;
@@ -48,7 +48,7 @@ export default memo(function SwapRoute({ trade }: { trade: Trade }) {
         return (
           // eslint-disable-next-line react/no-array-index-key
           <Fragment key={i}>
-            <FlexBoxChild my='0.5rem' alignItems='center' justifyContent='center' style={{ flexShrink: 0, minWidth:'145px', }}>
+            <FlexBoxChild my='0.5rem' alignItems='center' justifyContent='center' style={{ flexShrink: 0, }}>
               <CurrencyLogo currency={token} size='1.5rem' />
               <Text fontSize='14px' color='text' ml='0.5rem'>
                 {SYMBOL}

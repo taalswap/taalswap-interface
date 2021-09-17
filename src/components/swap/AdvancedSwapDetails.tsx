@@ -25,11 +25,6 @@ const ReCard = styled(Card)`
 
 @media screen and (max-width: 720px) {
     width:100%;
-    border:0;
-    border-top:2px solid #eee;
-    border-bottom:2px solid #eee;
-    border-radius:0px;
-    box-shadow:none;
   }
 `;
 
@@ -39,21 +34,28 @@ const ReCardBody = styled(CardBody)`
   padding-right: 0;
   margin: 0 auto;
 
-  @media screen and (max-width: 500px) {
-   
+  @media screen and (max-width: 610px) {
+    
+    padding:0.812rem 0.625rem;;
 
     ${RowBetween} {
-      display:block;
+      //display:block;
       
       ${RowFixed} {
         display: flex;
         flex-direction: row;
         width: 100%;
+        text-align: left;
 
+        ${Text} {
+          font-size: 12px !Important;
+        }
+        
         &:nth-child(2){
           justify-content: flex-end;
           text-align: right;
           width: 100%;
+          font-size: 12px !Important;
         }
       }
       &:nth-child(2){
@@ -66,6 +68,7 @@ const ReCardBody = styled(CardBody)`
         text-align: right;
         width: 100%;
       }
+      
     }
   }
 `;
@@ -170,7 +173,7 @@ function TradeSummary({
           <RowFixed>
             <Text fontSize="14px">
               {isExactIn ? t('Minimum received') : t('Maximum sold')}
-            </Text>
+            </Text> 
             <Tip1 />
           </RowFixed>
           <RowFixed>

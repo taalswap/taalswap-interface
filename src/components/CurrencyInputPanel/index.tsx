@@ -17,10 +17,16 @@ const InputRow = styled.div<{ selected: boolean }>`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
+  
   padding: ${({ selected }) =>
     selected ? '0.75rem 0.5rem 0.75rem 1rem' : '0.75rem 0.75rem 0.75rem 1rem'};
-
+  
   // width: 100%;
+  
+  @media screen and (max-width: 500px) {
+    padding: 0;
+    justify-content: space-between;
+  }
 `;
 const CurrencySelect = styled.button<{ selected: boolean }>`
   align-items: center;
@@ -40,6 +46,7 @@ const CurrencySelect = styled.button<{ selected: boolean }>`
   :hover {
     background-color: ${({ theme }) => darken(0.05, theme.colors.input)};
   }
+
 `;
 const LabelRow = styled.div`
   display: flex;
@@ -48,11 +55,15 @@ const LabelRow = styled.div`
   color: ${({ theme }) => theme.colors.text};
   font-size: 0.75rem;
   line-height: 1rem;
-  padding: 0.75rem 1rem 0 1rem;
+ padding: 0.75rem 1rem 0 1rem;
 
   span:hover {
     cursor: pointer;
     color: ${({ theme }) => darken(0.2, theme.colors.textSubtle)};
+  }
+
+  @media screen and (max-width: 500px) {
+    padding:0;
   }
 `;
 const Aligner = styled.span`
@@ -68,12 +79,29 @@ const InputPanel = styled.div<{ hideInput?: boolean }>`
   background-color: ${({ theme }) => theme.colors.background};
   z-index: 1;
   width: 100%;
+
 `;
 const Container = styled.div<{ hideInput: boolean }>`
   border-radius: 8px;
   background-color: ${({ theme }) => theme.colors.tertiary};
   // box-shadow: ${({ theme }) => theme.shadows.inset};
   border: 1px solid rgb(74 74 104 / 10%);
+  padding: 24px 10px;
+  
+  @media screen and (max-width: 500px) {
+    padding: 0.625rem;
+  }
+`;
+
+const NumericalInputLine = styled( NumericalInput )`
+
+  
+  @media screen and (max-width: 500px) {
+    max-width: 160px;
+    background-color: ${({ theme }) => theme.colors.tertiary};
+    border-bottom:1px solid ${({ theme }) => theme.colors.text};
+  }
+
 `;
 
 interface CurrencyInputPanelProps {
@@ -122,7 +150,7 @@ export default function CurrencyInputPanel({
   }, [setModalOpen]);
   return (
     <InputPanel id={id}>
-      <Container hideInput={hideInput} style={{ padding:'24px 10px' }}>
+      <Container hideInput={hideInput}>
         {!hideInput && (
           <LabelRow >
             <RowBetween>
@@ -149,7 +177,7 @@ export default function CurrencyInputPanel({
         >
           {!hideInput && (
             <>
-              <NumericalInput
+              <NumericalInputLine
                 className="token-amount-input"
                 value={value}
                 onUserInput={(val) => {

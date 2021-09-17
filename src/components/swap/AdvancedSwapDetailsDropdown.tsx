@@ -19,6 +19,11 @@ const AdvancedDetailsFooter = styled.div<{ show: boolean }>`
 
   transform: ${({ show }) => (show ? 'translateY(0%)' : 'translateY(-100%)')};
   transition: transform 300ms ease-in-out;
+
+  @media screen and (max-width: 500px) {
+    margin-top: 0;
+    padding-top: 0;
+  }
 `;
 
 export default function AdvancedSwapDetailsDropdown({
