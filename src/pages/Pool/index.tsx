@@ -155,7 +155,7 @@ export default function Pool() {
                     </LightCard>
                   )}
 
-                  <div style={{ padding: '1.8rem 0rem 2.8rem 0rem' }}>
+                  <div style={{ padding: '1.8rem 0.25rem 2.8rem' }}>
                     <Text
                       fontSize="14px"
                       style={{ padding: '.5rem 0 .5rem 0' }}

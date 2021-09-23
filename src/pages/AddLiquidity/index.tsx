@@ -75,6 +75,7 @@ const AddLiquidetyBody = styled(UICard)`
   max-width: 1070px;
   width: 100%;
   z-index: 5;
+
 `;
 
 const InputPanelBody = styled.div`
@@ -92,6 +93,24 @@ const InputPanelBody = styled.div`
     margin-bottom: 0;
   }
   
+`;
+
+const CardBodyWrap = styled(CardBody)`
+
+  @media screen and (max-width: 500px) {
+    display: flex;
+    justify-content: center;
+    padding: 0.75rem 0.875rem;
+   
+  }
+`;
+
+const AutoColumnPanel = styled(AutoColumn)`
+  
+  @media screen and (max-width: 500px) {
+    width:100%;
+  }
+
 `;
 
 
@@ -133,6 +152,7 @@ const AutoColumnWrap = styled(AutoColumn)`
 
     @media screen and (max-width: 500px) {
       margin-top:0 !important;
+
     }
 `;
 
@@ -497,8 +517,8 @@ export default function AddLiquidity({
             )}
             pendingText={pendingText}
           />
-          <CardBody>
-            <AutoColumn gap="20px">
+          <CardBodyWrap>
+            <AutoColumnPanel gap="20px">
               {noLiquidity && (
                 <ColumnCenter>
                   <Pane>
@@ -699,8 +719,8 @@ export default function AddLiquidity({
                   />
                 </AutoColumnWrap>
               ) : null}
-            </AutoColumn>
-          </CardBody>
+            </AutoColumnPanel>
+          </CardBodyWrap>
         </Wrapper>
       </AddLiquidetyBody>
       {/* {pair && !noLiquidity && pairState !== PairState.INVALID ? (
