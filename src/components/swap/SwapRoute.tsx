@@ -4,6 +4,7 @@ import { ChevronRight } from 'react-feather'
 import { Flex, Text } from 'taalswap-uikit'
 import styled,{ ThemeContext } from 'styled-components'
 import CurrencyLogo from '../CurrencyLogo'
+import Next_route from '../../pages/Swap/images/route_next_arr.svg';
 
 const FlexBox = styled(Flex)`
    
@@ -21,6 +22,18 @@ const FlexBoxChild = styled(Flex)`
     justify-content:flex-start;
     text-align:left;
   }
+`;
+
+const NextRouteBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  margin:0 20px;
+  @media screen and (max-width:720px){
+    margin:0 2%;
+  }
+  
 `;
 
 export default memo(function SwapRoute({ trade }: { trade: Trade }) {
@@ -54,7 +67,7 @@ export default memo(function SwapRoute({ trade }: { trade: Trade }) {
                 {SYMBOL}
               </Text>
             </FlexBoxChild>
-            {isLastItem ? null : <ChevronRight color={theme.colors.textSubtle} size={24} />}
+            {isLastItem ? null : <NextRouteBox><img src={ Next_route } alt="" /></NextRouteBox>}
           </Fragment>
         )
       })}
