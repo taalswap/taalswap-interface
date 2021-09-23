@@ -90,7 +90,7 @@ const InputPanelBody = styled.div`
   }
 
   @media screen and (max-width: 500px) {
-    margin-bottom: 0;
+    margin-bottom: 1rem;
   }
   
 `;
@@ -109,6 +109,7 @@ const AutoColumnPanel = styled(AutoColumn)`
   
   @media screen and (max-width: 500px) {
     width:100%;
+    display:block;
   }
 
 `;
@@ -152,8 +153,24 @@ const AutoColumnWrap = styled(AutoColumn)`
 
     @media screen and (max-width: 500px) {
       margin-top:0 !important;
+      min-width:100% !important;
 
     }
+`;
+
+const AutoButtonColumn = styled(AutoColumn)`
+
+  @media screen and (max-width: 500px) {
+    padding-top:20px;
+    padding-bottom:20px;
+  }
+`;
+
+const ColumnAlertCenter = styled(ColumnCenter)`
+
+  @media screen and (max-width: 500px) {
+    margin-bottom: 1rem;
+  }
 `;
 
 export default function AddLiquidity({
@@ -520,7 +537,7 @@ export default function AddLiquidity({
           <CardBodyWrap>
             <AutoColumnPanel gap="20px">
               {noLiquidity && (
-                <ColumnCenter>
+                <ColumnAlertCenter>
                   <Pane>
                     <AutoColumn gap="12px">
                       <UIKitText>
@@ -538,7 +555,7 @@ export default function AddLiquidity({
                       </UIKitText>
                     </AutoColumn>
                   </Pane>
-                </ColumnCenter>
+                </ColumnAlertCenter>
               )}
               <InputPanelBody>
                 <CurrencyInputPanel
@@ -611,7 +628,7 @@ export default function AddLiquidity({
               {!account ? (
                 <ConnectWalletButton width="100%" />
               ) : (
-                <AutoColumn gap="md">
+                <AutoButtonColumn gap="md" >
                   {(approvalA === ApprovalState.NOT_APPROVED ||
                     approvalA === ApprovalState.PENDING ||
                     approvalB === ApprovalState.NOT_APPROVED ||
@@ -704,7 +721,7 @@ export default function AddLiquidity({
                   >
                     {error ?? t('Supply')}
                   </Button>
-                </AutoColumn>
+                </AutoButtonColumn>
               )}
               {pair && !noLiquidity && pairState !== PairState.INVALID ? (
                 <AutoColumnWrap
