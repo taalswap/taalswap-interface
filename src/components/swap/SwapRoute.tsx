@@ -54,7 +54,7 @@ export default memo(function SwapRoute({ trade }: { trade: Trade }) {
                 {SYMBOL}
               </Text>
             </FlexBoxChild>
-            {isLastItem ? null : <ChevronRight color='textSubtle' />}
+            {isLastItem ? null : <ChevronRight color={theme.colors.textSubtle} size={24} />}
           </Fragment>
         )
       })}

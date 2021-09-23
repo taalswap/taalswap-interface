@@ -78,12 +78,62 @@ const AddLiquidetyBody = styled(UICard)`
 `;
 
 const InputPanelBody = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 30px;
+
   ${({ theme }) => theme.mediaQueries.md} {
     flex-direction: row;
   }
+
+  @media screen and (max-width: 500px) {
+    margin-bottom: 0;
+  }
+  
+`;
+
+
+const CurrencyIconPanel = styled.div`
+  display:inline-block;
+
+  @media screen and (max-width: 500px) {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    position:relative;
+    width: 100%;
+    z-index:10;
+    margin-top:20px;
+  }
+`;
+
+const AddIconBox = styled(AddIcon)`
+  
+  border: 1px solid transparent;
+  background-color: #F3F5F7;
+
+  @media screen and (max-width: 500px) {
+    border: 1px solid #ddd;
+    position: absolute;
+    top:-40px;
+  }
+`;
+
+const PaneWrap = styled(Pane)`
+
+
+  @media screen and (max-width: 500px) {
+    padding: 0;
+  }
+`;
+
+const AutoColumnWrap = styled(AutoColumn)`
+
+    @media screen and (max-width: 500px) {
+      margin-top:0 !important;
+    }
 `;
 
 export default function AddLiquidity({
@@ -485,18 +535,17 @@ export default function AddLiquidity({
                   id="add-liquidity-input-tokena"
                   showCommonBases={false}
                 />
-
-                <AddIcon
-                  margin="10px 10px"
-                  color="teriary"
-                  style={{
-                    width: '2.188rem',
-                    padding: '5px',
-                    border: '1px solid transparent',
-                    borderRadius: '4px',
-                    backgroundColor: '#F3F5F7',
-                  }}
-                />
+                <CurrencyIconPanel>
+                  <AddIconBox
+                    margin="10px 10px"
+                    color="teriary"
+                    style={{
+                      width: '2.188rem',
+                      padding: '5px',
+                      borderRadius: '4px',
+                    }}
+                  />
+                </CurrencyIconPanel>
 
                 <CurrencyInputPanel
                   value={formattedAmounts[Field.CURRENCY_B]}
@@ -528,14 +577,14 @@ export default function AddLiquidity({
                         ? t('Initial prices and pool share')
                         : t('Prices and pool share')}
                     </UIKitText>
-                    <Pane>
+                    <PaneWrap>
                       <PoolPriceBar
                         currencies={currencies}
                         poolTokenPercentage={poolTokenPercentage}
                         noLiquidity={noLiquidity}
                         price={price}
                       />
-                    </Pane>
+                    </PaneWrap>
                   </div>
                 )}
 
@@ -638,7 +687,7 @@ export default function AddLiquidity({
                 </AutoColumn>
               )}
               {pair && !noLiquidity && pairState !== PairState.INVALID ? (
-                <AutoColumn
+                <AutoColumnWrap
                   style={{
                     minWidth: '20rem',
                     marginTop: '1rem',
@@ -648,7 +697,7 @@ export default function AddLiquidity({
                     showUnwrapped={oneCurrencyIsWBNB}
                     pair={pair}
                   />
-                </AutoColumn>
+                </AutoColumnWrap>
               ) : null}
             </AutoColumn>
           </CardBody>

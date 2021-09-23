@@ -48,27 +48,28 @@ const ReCardBody = styled(CardBody)`
         text-align: left;
 
         ${Text} {
-          font-size: 12px !Important;
+          font-size: 12px !important;
         }
-        
         &:nth-child(2){
           justify-content: flex-end;
           text-align: right;
-          width: 100%;
-          font-size: 12px !Important;
+          font-size: 12px !important;
         }
       }
+
       &:nth-child(2){
-        justify-content: flex-end;
-        text-align: right;
-        width: 100%;
+        ${Text} {
+          font-size: 12px !important;
+        }
       }
+
       &:last-child{
-        justify-content: flex-end;
-        text-align: right;
-        width: 100%;
+        ${Text} {
+          font-size: 12px !important;
+          text-align: right;
+          white-space: pre;
+        }
       }
-      
     }
   }
 `;

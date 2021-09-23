@@ -78,6 +78,7 @@ const Body = styled.div`
   padding-right: 24px;
 `;
 
+
 export default function RemoveLiquidity({
   history,
   match: {

@@ -47,6 +47,10 @@ const CurrencySelect = styled.button<{ selected: boolean }>`
     background-color: ${({ theme }) => darken(0.05, theme.colors.input)};
   }
 
+  @media screen and (max-width: 500px) {
+    padding: 0;
+  }
+
 `;
 const LabelRow = styled.div`
   display: flex;
