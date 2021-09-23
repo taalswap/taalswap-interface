@@ -22,7 +22,7 @@ const AdvancedDetailsFooter = styled.div<{ show: boolean }>`
 
   @media screen and (max-width: 500px) {
     margin-top: 0;
-    padding-top: 0;
+    padding: 0;
   }
 `;
 
