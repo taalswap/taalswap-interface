@@ -75,14 +75,101 @@ const AddLiquidetyBody = styled(UICard)`
   max-width: 1070px;
   width: 100%;
   z-index: 5;
+
 `;
 
 const InputPanelBody = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 30px;
+
   ${({ theme }) => theme.mediaQueries.md} {
     flex-direction: row;
+  }
+
+  @media screen and (max-width: 500px) {
+    margin-bottom: 1rem;
+  }
+  
+`;
+
+const CardBodyWrap = styled(CardBody)`
+
+  @media screen and (max-width: 500px) {
+    display: flex;
+    justify-content: center;
+    padding: 0.75rem 0.875rem;
+   
+  }
+`;
+
+const AutoColumnPanel = styled(AutoColumn)`
+  
+  @media screen and (max-width: 500px) {
+    width:100%;
+    display:block;
+  }
+
+`;
+
+
+const CurrencyIconPanel = styled.div`
+  display:inline-block;
+
+  @media screen and (max-width: 500px) {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    position:relative;
+    width: 100%;
+    z-index:10;
+    margin-top:20px;
+  }
+`;
+
+const AddIconBox = styled(AddIcon)`
+  
+  border: 1px solid transparent;
+  background-color: #F3F5F7;
+
+  @media screen and (max-width: 500px) {
+    border: 1px solid #ddd;
+    position: absolute;
+    top:-40px;
+  }
+`;
+
+const PaneWrap = styled(Pane)`
+
+
+  @media screen and (max-width: 500px) {
+    padding: 0;
+  }
+`;
+
+const AutoColumnWrap = styled(AutoColumn)`
+
+    @media screen and (max-width: 500px) {
+      margin-top:0 !important;
+      min-width:100% !important;
+
+    }
+`;
+
+const AutoButtonColumn = styled(AutoColumn)`
+
+  @media screen and (max-width: 500px) {
+    padding-top:20px;
+    padding-bottom:20px;
+  }
+`;
+
+const ColumnAlertCenter = styled(ColumnCenter)`
+
+  @media screen and (max-width: 500px) {
+    margin-bottom: 1rem;
   }
 `;
 
@@ -455,10 +542,10 @@ export default function AddLiquidity({
             )}
             pendingText={pendingText}
           />
-          <CardBody>
-            <AutoColumn gap="20px">
+          <CardBodyWrap>
+            <AutoColumnPanel gap="20px">
               {noLiquidity && (
-                <ColumnCenter>
+                <ColumnAlertCenter>
                   <Pane>
                     <AutoColumn gap="12px">
                       <UIKitText>
@@ -476,7 +563,7 @@ export default function AddLiquidity({
                       </UIKitText>
                     </AutoColumn>
                   </Pane>
-                </ColumnCenter>
+                </ColumnAlertCenter>
               )}
               <InputPanelBody>
                 <CurrencyInputPanel
@@ -493,18 +580,17 @@ export default function AddLiquidity({
                   id="add-liquidity-input-tokena"
                   showCommonBases={false}
                 />
-
-                <AddIcon
-                  margin="10px 10px"
-                  color="teriary"
-                  style={{
-                    width: '2.188rem',
-                    padding: '5px',
-                    border: '1px solid transparent',
-                    borderRadius: '4px',
-                    backgroundColor: '#F3F5F7',
-                  }}
-                />
+                <CurrencyIconPanel>
+                  <AddIconBox
+                    margin="10px 10px"
+                    color="teriary"
+                    style={{
+                      width: '2.188rem',
+                      padding: '5px',
+                      borderRadius: '4px',
+                    }}
+                  />
+                </CurrencyIconPanel>
 
                 <CurrencyInputPanel
                   value={formattedAmounts[Field.CURRENCY_B]}
@@ -536,21 +622,21 @@ export default function AddLiquidity({
                         ? t('Initial prices and pool share')
                         : t('Prices and pool share')}
                     </UIKitText>
-                    <Pane>
+                    <PaneWrap>
                       <PoolPriceBar
                         currencies={currencies}
                         poolTokenPercentage={poolTokenPercentage}
                         noLiquidity={noLiquidity}
                         price={price}
                       />
-                    </Pane>
+                    </PaneWrap>
                   </div>
                 )}
 
               {!account ? (
                 <ConnectWalletButton width="100%" />
               ) : (
-                <AutoColumn gap="md">
+                <AutoButtonColumn gap="md" >
                   {(approvalA === ApprovalState.NOT_APPROVED ||
                     approvalA === ApprovalState.PENDING ||
                     approvalB === ApprovalState.NOT_APPROVED ||
@@ -643,10 +729,10 @@ export default function AddLiquidity({
                   >
                     {error ?? t('Supply')}
                   </Button>
-                </AutoColumn>
+                </AutoButtonColumn>
               )}
               {pair && !noLiquidity && pairState !== PairState.INVALID ? (
-                <AutoColumn
+                <AutoColumnWrap
                   style={{
                     minWidth: '20rem',
                     marginTop: '1rem',
@@ -656,10 +742,10 @@ export default function AddLiquidity({
                     showUnwrapped={oneCurrencyIsWBNB}
                     pair={pair}
                   />
-                </AutoColumn>
+                </AutoColumnWrap>
               ) : null}
-            </AutoColumn>
-          </CardBody>
+            </AutoColumnPanel>
+          </CardBodyWrap>
         </Wrapper>
       </AddLiquidetyBody>
       {/* {pair && !noLiquidity && pairState !== PairState.INVALID ? (

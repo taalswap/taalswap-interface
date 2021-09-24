@@ -2,10 +2,20 @@ import React from 'react';
 import { Currency, Percent, Price } from 'taalswap-sdk';
 import { Text } from 'taalswap-uikit';
 import { useTranslation } from 'contexts/Localization';
+import styled from 'styled-components'
 import { AutoColumn } from '../../components/Column';
 import { AutoRow } from '../../components/Row';
 import { ONE_BIPS } from '../../constants';
 import { Field } from '../../state/mint/actions';
+
+
+
+const AutoTextColumn = styled(AutoColumn)`
+
+  @media screen and (max-width:720px){
+    width: 100%;
+  }
+`;
 
 export function PoolPriceBar({
   currencies,
@@ -35,7 +45,7 @@ export function PoolPriceBar({
   return (
     <AutoColumn gap="md" style={{ paddingTop: '15px', paddingBottom: '15px' }}>
       <AutoRow justify="center" gap="4px">
-        <AutoColumn justify="center" style={{ minWidth: '150px' }}>
+        <AutoTextColumn justify="center" style={{ minWidth: '150px' }}>
           <Text fontSize="18px" fontWeight="700">
             {price?.toSignificant(6) ?? '-'}
           </Text>
@@ -57,8 +67,8 @@ export function PoolPriceBar({
               symbol2: getSymbol(currencies[Field.CURRENCY_A]?.symbol),
             })}
           </Text>
-        </AutoColumn>
-        <AutoColumn justify="center" style={{ minWidth: '150px' }}>
+        </AutoTextColumn>
+        <AutoTextColumn justify="center" style={{ minWidth: '150px' }}>
           <Text fontSize="18px" fontWeight="700">
             {price?.invert()?.toSignificant(6) ?? '-'}
           </Text>
@@ -80,8 +90,8 @@ export function PoolPriceBar({
               symbol2: getSymbol(currencies[Field.CURRENCY_B]?.symbol),
             })}
           </Text>
-        </AutoColumn>
-        <AutoColumn justify="center" style={{ minWidth: '150px' }}>
+        </AutoTextColumn>
+        <AutoTextColumn justify="center" style={{ minWidth: '150px' }}>
           <Text fontSize="18px" fontWeight="700">
             {noLiquidity && price
               ? '100'
@@ -93,7 +103,7 @@ export function PoolPriceBar({
           <Text fontSize="14px" color="textSubtle" pt={1}>
             {t('Share of Pool')}
           </Text>
-        </AutoColumn>
+        </AutoTextColumn>
       </AutoRow>
     </AutoColumn>
   );
