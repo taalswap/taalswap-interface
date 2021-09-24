@@ -46,6 +46,7 @@ const ReCardBody = styled(CardBody)`
         flex-direction: row;
         width: 100%;
         text-align: left;
+        white-space: pre;
 
         ${Text} {
           font-size: 12px !important;
