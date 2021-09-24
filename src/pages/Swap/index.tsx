@@ -96,16 +96,15 @@ const SwapBody = styled(UICard)`
 `;
 
 const CardChildBody = styled(CardBody)`
-
   @media screen and (max-width: 500px) {
-    padding:0.75rem 0.875rem;
+    padding: 0.75rem 0.875rem;
   }
 `;
 
 const InputPanelBody = styled.div`
   display: flex;
   flex-direction: column;
-  
+
   ${({ theme }) => theme.mediaQueries.md} {
     flex-direction: row;
   }
@@ -114,21 +113,19 @@ const InputPanelBody = styled.div`
 
 const CardPanelBody = styled(Card)`
   /* marginTop: 1rem, */
-  padding: .25rem 0 .625rem;
+  padding: 0.25rem 0 0.625rem;
   border-radius: 20px;
   max-width: 540px;
   margin: 1rem auto 0;
   line-height: 1.2;
   border-radius: 0;
-  
+
   @media screen and (max-width: 500px) {
     ${AutoColumn} {
       grid-row-gap: 15px;
-      
     }
   }
 `;
-
 
 const RowBetweenSub = styled(RowBetween)`
   @media screen and (max-width: 500px) {
@@ -141,33 +138,28 @@ const RowBetweenSub = styled(RowBetween)`
       // display:block;
       //width:100% !important;
       //justify-content:flex-end !important;
-      text-align:right !important;
+      text-align: right !important;
     }
   }
 `;
 
 const AutoRowAlign = styled(AutoRow)`
-
   @media screen and (max-width: 500px) {
     width: auto;
-    position:absolute;
-    top:-25px;
+    position: absolute;
+    top: -25px;
     left: 50%;
     margin: 0;
     padding: 0 !important;
     transform: translateX(-50%);
     z-index: 100;
   }
-
 `;
 
-
 const IconLineButton = styled(IconButton)`
-
   @media screen and (max-width: 500px) {
-    border:1px solid #ddd;
+    border: 1px solid #ddd;
   }
-  
 `;
 
 // const Swap = () => {
@@ -692,7 +684,7 @@ function Swap({
               >
                 <AutoRowAlign
                   justify={isExpertMode ? 'space-between' : 'center'}
-                  style={{ padding: '0 1rem', }}
+                  style={{ padding: '0 1rem' }}
                 >
                   <ArrowWrapper clickable>
                     <IconLineButton
@@ -771,16 +763,7 @@ function Swap({
                           setShowInverted={setShowInverted}
                         />
                       </RowBetweenSub>
-                      {/* <div style={{ textAlign: 'right', fontSize: '14px' }}>
-                        <Text fontSize="14px">{`${
-                          currencies[Field.INPUT]?.symbol
-                        } : $${currencyAPrice}`}</Text>
-                      </div>
-                      <div style={{ textAlign: 'right', fontSize: '14px' }}>
-                        <Text fontSize="14px">{`${
-                          currencies[Field.OUTPUT]?.symbol
-                        } : $${currencyBPrice}`}</Text>
-                      </div> */}
+
                       <div style={{ textAlign: 'right', fontSize: '14px' }}>
                         <Text fontSize="14px">
                           {`${currencies[Field.INPUT]?.symbol} = $ `}
