@@ -162,6 +162,34 @@ const IconLineButton = styled(IconButton)`
   }
 `;
 
+const PriceInlineColumn = styled.div`
+
+  @media screen and (max-width: 500px) {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    &>div {
+      background-color: ${({ theme }) => theme.colors.tertiary};
+      color: ${({ theme }) => theme.colors.text};
+      border-width: 1px;
+      border-style: solid;
+      border-color: transparent;
+      border-radius: 16px;
+      padding: 0 .35rem;
+      font-size: 12px !important;
+      min-height: 20px;
+    }
+    &>div>div {
+      font-size: 12px !important;
+    }
+    &>div~div{
+      margin-left:0.25rem;
+    }
+    
+  }
+`;
+
 // const Swap = () => {
 function Swap({
   match: {
@@ -776,6 +804,15 @@ function Swap({
                           {currencyBPrice === undefined ? '-' : currencyBPrice}
                         </Text>
                       </div>
+
+                      <PriceInlineColumn>
+                        <div style={{ textAlign: 'right', fontSize: '14px' }}>
+                          <Text fontSize="14px">TAL = $1.822</Text>
+                        </div>
+                        <div style={{ textAlign: 'right', fontSize: '14px' }}>
+                          <Text fontSize="14px">USDT = $1.00021</Text>
+                        </div>
+                      </PriceInlineColumn>
                     </>
                   )}
                   {allowedSlippage !== INITIAL_ALLOWED_SLIPPAGE && (
@@ -794,7 +831,7 @@ function Swap({
 
             <BottomGrouping>
               {disableSwap && (
-                <Flex alignItems="center" mb="1rem">
+                <Flex alignItems="center"  mb="1rem">
                   <Text color="failure">
                     Please use{' '}
                     <StyledLink external href="https://swap.taalswap.finance">
