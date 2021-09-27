@@ -146,6 +146,7 @@ const PaneWrap = styled(Pane)`
 
   @media screen and (max-width: 500px) {
     padding: 0;
+    margin-bottom: 1rem;
   }
 `;
 
