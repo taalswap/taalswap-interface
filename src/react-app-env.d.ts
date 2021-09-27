@@ -9,6 +9,7 @@ declare module 'fortmatic'
 interface Window {
   ethereum?: {
     isMetaMask?: true
+    chainId?: number
     request?: (...args: any[]) => void
     on?: (...args: any[]) => void
     removeListener?: (...args: any[]) => void
