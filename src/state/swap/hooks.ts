@@ -27,6 +27,7 @@ import {
   setRecipient,
   switchCurrencies,
   typeInput,
+  setCrossChain,
 } from './actions';
 import { SwapState } from './reducer';
 
@@ -44,6 +45,7 @@ export function useSwapActionHandlers(): {
   onSwitchTokens: () => void;
   onUserInput: (field: Field, typedValue: string) => void;
   onChangeRecipient: (recipient: string | null) => void;
+  onSetCrossChain: (crossChain: number) => void;
 } {
   const dispatch = useDispatch<AppDispatch>();
   const onCurrencySelection = useCallback(
@@ -83,11 +85,19 @@ export function useSwapActionHandlers(): {
     [dispatch]
   );
 
+  const onSetCrossChain = useCallback(
+    (crossChain: number | 3) => {
+      dispatch(setCrossChain({ crossChain }));
+    },
+    [dispatch]
+  );
+
   return {
     onSwitchTokens,
     onCurrencySelection,
     onUserInput,
     onChangeRecipient,
+    onSetCrossChain,
   };
 }
 
@@ -292,6 +302,20 @@ function validatedRecipient(recipient: any): string | null {
   return null;
 }
 
+function validatedCrossChain(crossChain: any): number {
+  const defCrossChain = parseInt(process.env.REACT_APP_KLAYTN_ID ?? '8217', 10)
+  if (typeof crossChain !== 'number') return defCrossChain;
+  if (
+    crossChain === 1 ||        // Ethereum Mainnet
+    crossChain === 3 ||        // Ethereum Testnet Ropsten
+    crossChain === 8217 ||     // Klaytn Mainnet Cypress
+    crossChain === 1001        // Klaytn Testnet Baobab
+  ) {
+    return crossChain
+  }
+  return defCrossChain;
+}
+
 export function queryParametersToSwapState(parsedQs: ParsedQs): SwapState {
   let inputCurrency = parseCurrencyFromURLParameter(parsedQs.inputCurrency);
   let outputCurrency = parseCurrencyFromURLParameter(parsedQs.outputCurrency);
@@ -304,6 +328,7 @@ export function queryParametersToSwapState(parsedQs: ParsedQs): SwapState {
   }
 
   const recipient = validatedRecipient(parsedQs.recipient);
+  const crossChain = validatedCrossChain(parsedQs.crossChain);
 
   return {
     [Field.INPUT]: {
@@ -315,6 +340,7 @@ export function queryParametersToSwapState(parsedQs: ParsedQs): SwapState {
     typedValue: parseTokenAmountURLParameter(parsedQs.exactAmount),
     independentField: parseIndependentFieldURLParameter(parsedQs.exactField),
     recipient,
+    crossChain,
   };
 }
 
@@ -348,6 +374,7 @@ export function useDefaultsFromURLSearch():
         inputCurrencyId: parsed[Field.INPUT].currencyId,
         outputCurrencyId: parsed[Field.OUTPUT].currencyId,
         recipient: parsed.recipient,
+        crossChain: parsed.crossChain,
       })
     );
 

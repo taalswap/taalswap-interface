@@ -14,5 +14,7 @@ export const replaceSwapState = createAction<{
   inputCurrencyId?: string
   outputCurrencyId?: string
   recipient: string | null
+  crossChain: number
 }>('swap/replaceSwapState')
 export const setRecipient = createAction<{ recipient: string | null }>('swap/setRecipient')
+export const setCrossChain = createAction<{ crossChain: number }>('swap/setCrossChain')

@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { Field, replaceSwapState, selectCurrency, setRecipient, switchCurrencies, typeInput } from './actions'
+import { Field, replaceSwapState, selectCurrency, setRecipient, switchCurrencies, typeInput, setTargetChain } from './actions'
 
 export interface SwapState {
   readonly independentField: Field
@@ -12,6 +12,7 @@ export interface SwapState {
   }
   // the typed recipient address or ENS name, or null if swap should go to sender
   readonly recipient: string | null
+  readonly crossChain: number
 }
 
 const initialState: SwapState = {
@@ -24,13 +25,14 @@ const initialState: SwapState = {
     currencyId: '',
   },
   recipient: null,
+  crossChain: parseInt(process.env.REACT_APP_KLAYTN_ID ?? '8217', 10),
 }
 
 export default createReducer<SwapState>(initialState, (builder) =>
   builder
     .addCase(
       replaceSwapState,
-      (state, { payload: { typedValue, recipient, field, inputCurrencyId, outputCurrencyId } }) => {
+      (state, { payload: { typedValue, recipient, field, inputCurrencyId, outputCurrencyId, crossChain } }) => {
         return {
           [Field.INPUT]: {
             currencyId: inputCurrencyId,
@@ -41,6 +43,7 @@ export default createReducer<SwapState>(initialState, (builder) =>
           independentField: field,
           typedValue,
           recipient,
+          crossChain,
         }
       }
     )
@@ -78,5 +81,8 @@ export default createReducer<SwapState>(initialState, (builder) =>
     })
     .addCase(setRecipient, (state, { payload: { recipient } }) => {
       state.recipient = recipient
+    })
+    .addCase(setTargetChain, (state, { payload: { crossChain } }) => {
+      state.crossChain = crossChain
     })
 )
