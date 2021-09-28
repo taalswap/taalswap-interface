@@ -428,7 +428,7 @@ function Swap({
     onCurrencySelection,
     onUserInput,
     onChangeRecipient,
-    onSetTargetChain,
+    onSetCrossChain,
   } = useSwapActionHandlers();
   const isValid = !swapInputError;
   const dependentField: Field =
