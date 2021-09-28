@@ -16,6 +16,7 @@ import Pool from './Pool';
 import PoolFinder from './PoolFinder';
 import RemoveLiquidity from './RemoveLiquidity';
 import Swap from './Swap';
+import XSwap from './XSwap';
 import Migration from './Migration';
 // import LandingPageView from './LandingPageView';
 import { RedirectPathToSwapOnly, RedirectSwapTokenIds } from './Swap/redirects';
@@ -137,7 +138,7 @@ export default function App() {
               <Menu>
                 <BodyWrapper>
                   <Popups />
-                   <Web3ReactManager>
+                  <Web3ReactManager>
                     <Switch>
                       {process.env.REACT_APP_SITE_STOP === 'true' ? (
                         <>
@@ -174,6 +175,7 @@ export default function App() {
                         <>
                           <Route exact strict path="/" component={Swap} />
                           <Route exact strict path="/swap" component={Swap} />
+                          <Route exact strict path="/xswap" component={XSwap} />
                           <Route
                             exact
                             strict
@@ -221,7 +223,7 @@ export default function App() {
                       )}
                       {/* <Route component={RedirectPathToSwapOnly} /> */}
                     </Switch>
-                   </Web3ReactManager>
+                  </Web3ReactManager>
                 </BodyWrapper>
               </Menu>
             </Switch>
