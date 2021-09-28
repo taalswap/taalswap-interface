@@ -5,8 +5,9 @@ import styled from 'styled-components';
 import { darken } from 'polished';
 import useI18n from 'hooks/useI18n';
 import NetworkSelector from 'components/NetworkSelector';
+import CurrencySearchXSwapModal from 'components/SearchModal/CurrencySearchXSwapModal';
 import { useCurrencyBalance } from '../../state/wallet/hooks';
-import CurrencySearchModal from '../SearchModal/CurrencySearchModal';
+
 import CurrencyLogo from '../CurrencyLogo';
 import DoubleCurrencyLogo from '../DoubleLogo';
 import { RowBetween } from '../Row';
@@ -250,13 +251,14 @@ export default function CurrencyXSwapInputPanel({
         </InputRow>
       </Container>
       {!disableCurrencySelect && onCurrencySelect && (
-        <CurrencySearchModal
+        <CurrencySearchXSwapModal
           isOpen={modalOpen}
           onDismiss={handleDismissSearch}
           onCurrencySelect={onCurrencySelect}
           selectedCurrency={currency}
           otherSelectedCurrency={otherCurrency}
           showCommonBases={showCommonBases}
+          id={id}
         />
       )}
     </InputPanel>
