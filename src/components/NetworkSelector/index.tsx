@@ -21,12 +21,12 @@ const NetworkSelector = ({ onSetCrossChain, id }) => {
     {
       id: 1,
       name: 'Ethereum',
-      chainId: ChainId.MAINNET,
+      chainId: ChainId.ROPSTEN,
     },
     {
       id: 2,
       name: 'Klaytn',
-      chainId: ChainId.KLAYTN,
+      chainId: ChainId.BAOBAB,
     },
   ];
 

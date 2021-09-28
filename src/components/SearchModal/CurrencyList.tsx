@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, currencyEquals, ETHER, KLAYTN, Token } from 'taalswap-sdk'
+import { ChainId, Currency, CurrencyAmount, currencyEquals, ETHER, KLAYTN, Token } from 'taalswap-sdk';
 import React, { CSSProperties, MutableRefObject, useCallback, useMemo } from 'react'
 import { FixedSizeList } from 'react-window'
 import styled from 'styled-components'
@@ -16,6 +16,7 @@ import { MouseoverTooltip } from '../Tooltip'
 import { FadedSpan, MenuItem } from './styleds'
 import Loader from '../Loader'
 import { isTokenOnList } from '../../utils'
+import { useSwapState } from '../../state/swap/hooks';
 
 function currencyKey(currency: Currency): string {
   return currency instanceof Token ? currency.address : currency === ETHER ? 'ETHER' : currency === KLAYTN ? 'KLAYTN' : ''
@@ -160,6 +161,7 @@ export default function CurrencyList({
   otherCurrency,
   fixedListRef,
   showETH,
+  selectedChain,
 }: {
   height: number
   currencies: Currency[]
@@ -168,8 +170,12 @@ export default function CurrencyList({
   otherCurrency?: Currency | null
   fixedListRef?: MutableRefObject<FixedSizeList | undefined>
   showETH: boolean
+  selectedChain?: ChainId
 }) {
-  const { chainId } = useActiveWeb3React()
+  let { chainId } = useActiveWeb3React()
+  if (selectedChain) {
+    chainId = selectedChain
+  }
   let CURRENCY = Currency.ETHER
   if (chainId && chainId > 1000) CURRENCY = Currency.KLAYTN
   const itemData = useMemo(() => (showETH ? [CURRENCY, ...currencies] : [...currencies]), [currencies, showETH, CURRENCY])

@@ -1,15 +1,6 @@
-import { Currency, ETHER, KLAYTN, Token } from 'taalswap-sdk';
-import React, {
-  KeyboardEvent,
-  RefObject,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { Text, CloseIcon, useTooltip, HelpIcon } from 'taalswap-uikit';
+import { ChainId, Currency, ETHER, KLAYTN, Token } from 'taalswap-sdk';
+import React, { KeyboardEvent, RefObject, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { CloseIcon, HelpIcon, Text, useTooltip } from 'taalswap-uikit';
 import { useSelector } from 'react-redux';
 // import { useTranslation } from 'react-i18next'
 import { FixedSizeList } from 'react-window';
@@ -17,7 +8,8 @@ import styled, { ThemeContext } from 'styled-components';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { useActiveWeb3React } from '../../hooks';
 import { AppState } from '../../state';
-import { useAllTokens, useToken } from '../../hooks/Tokens';
+import { useAllTokensXswap, useTokenXswap } from '../../hooks/tokensXswap';
+// import { useAllTokens, useToken } from '../../hooks/Tokens';
 import { useSelectedListInfo } from '../../state/lists/hooks';
 import { LinkStyledButton } from '../Shared';
 import { isAddress } from '../../utils';
@@ -32,6 +24,7 @@ import SortButton from './SortButton';
 import { useTokenComparator } from './sorting';
 import { PaddedColumn, SearchInput, Separator } from './styleds';
 import { useTranslation } from '../../contexts/Localization';
+import { useSwapState } from '../../state/swap/hooks';
 
 interface CurrencySearchProps {
   isOpen: boolean;
@@ -59,19 +52,24 @@ export function CurrencySearchXSwap({
   onChangeList,
   id,
 }: CurrencySearchProps) {
-  console.log(`id : ${id}`);
   // const { t } = useTranslation()
-  const { chainId } = useActiveWeb3React();
+  let { chainId } = useActiveWeb3React();
+  const { crossChain } = useSwapState();
+  if (crossChain && id === 'swap-currency-output') {
+    chainId = crossChain as ChainId
+  }
+  console.log(`id : ${id} ${chainId}`);
+
   const theme = useContext(ThemeContext);
 
   const fixedList = useRef<FixedSizeList>();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [invertSearchOrder, setInvertSearchOrder] = useState<boolean>(false);
-  const allTokens = useAllTokens();
+  const allTokens = useAllTokensXswap(chainId);
 
   // if they input an address, use it
   const isAddressSearch = isAddress(searchQuery);
-  const searchToken = useToken(searchQuery);
+  const searchToken = useTokenXswap(searchQuery);
 
   const showETH: boolean = useMemo(() => {
     const s = searchQuery.toLowerCase().trim();
@@ -109,6 +107,8 @@ export function CurrencySearchXSwap({
       ),
     ];
   }, [filteredTokens, searchQuery, searchToken, tokenComparator]);
+
+  console.log('====>', filteredSortedTokens)
 
   const handleCurrencySelect = useCallback(
     (currency: Currency) => {
@@ -237,6 +237,7 @@ export function CurrencySearchXSwap({
               otherCurrency={otherSelectedCurrency}
               selectedCurrency={selectedCurrency}
               fixedListRef={fixedList}
+              selectedChain={chainId}
             />
           )}
         </AutoSizer>
