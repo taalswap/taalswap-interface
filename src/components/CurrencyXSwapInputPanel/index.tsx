@@ -214,7 +214,7 @@ export default function CurrencyXSwapInputPanel({
               if (!disableCurrencySelect) {
                 window.localStorage.setItem(
                   'xSwapCurrency',
-                  id === 'swap-currency-input' ? 'input' : 'ouput'
+                  id === 'swap-currency-input' ? 'input' : 'output'
                 );
                 setModalOpen(true);
               }
