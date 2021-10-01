@@ -1,3 +1,4 @@
+import { ethers } from 'ethers';
 import { Contract } from '@ethersproject/contracts';
 import { getAddress } from '@ethersproject/address';
 import { AddressZero } from '@ethersproject/constants';
@@ -87,7 +88,16 @@ export function getContract(address: string, ABI: any, library: Web3Provider, ac
     throw Error(`Invalid 'address' parameter '${address}'.`);
   }
 
-  return new Contract(address, ABI, getProviderOrSigner(library, account) as any);
+  let contract
+  const xSwapCurrency = window.localStorage.getItem('xSwapCurrency')
+  if (xSwapCurrency === 'output') {
+    const url = "https://api.baobab.klaytn.net:8651";
+    const crossChainProvider = new ethers.providers.JsonRpcProvider(url);
+    contract = new Contract(address, ABI, crossChainProvider);
+  } else {
+    contract = new Contract(address, ABI, getProviderOrSigner(library, account) as any);
+  }
+  return contract;
 }
 
 // account is optional
