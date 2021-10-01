@@ -151,6 +151,7 @@ export default function CurrencyXSwapInputPanel({
   const translatedLabel = label || t('Input');
   const handleDismissSearch = useCallback(() => {
     setModalOpen(false);
+    window.localStorage.removeItem('xSwapCurrency');
   }, [setModalOpen]);
 
   return (
