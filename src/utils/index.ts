@@ -5,7 +5,7 @@ import { AddressZero } from '@ethersproject/constants';
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers';
 import { BigNumber } from '@ethersproject/bignumber';
 import { abi as IUniswapV2Router02ABI } from '@uniswap/v2-periphery/build/IUniswapV2Router02.json';
-import { ChainId, Currency, CurrencyAmount, ETHER, KLAYTN, JSBI, Percent, Token } from 'taalswap-sdk';
+import { ChainId, Currency, CurrencyAmount, ETHER, JSBI, KLAYTN, Percent, Token } from 'taalswap-sdk';
 import { ROUTER_ADDRESS } from '../constants';
 import { TokenAddressMap } from '../state/lists/hooks';
 
@@ -24,6 +24,14 @@ const ETH_PREFIXES: { [chainId in ChainId]: string } = {
   4: 'rinkeby.etherscan.io',
   8217: 'scope.klaytn.com',
   1001: 'baobab.scope.klaytn.com'
+};
+
+const RPC_URL: { [chainId in ChainId]: string } = {
+  1: '',
+  3: '',
+  4: '',
+  8217: 'https://klaytn.taalswap.info:8651',
+  1001: 'https://api.baobab.klaytn.net:8651'
 };
 
 export function getBscScanLink(chainId: ChainId, data: string, type: 'transaction' | 'token' | 'address'): string {
@@ -83,16 +91,18 @@ export function getProviderOrSigner(library: Web3Provider, account?: string): We
 }
 
 // account is optional
-export function getContract(address: string, ABI: any, library: Web3Provider, account?: string): Contract {
+export function getContract(address: string, ABI: any, library: Web3Provider, account?: string, chainId?: ChainId): Contract {
   if (!isAddress(address) || address === AddressZero) {
     throw Error(`Invalid 'address' parameter '${address}'.`);
   }
 
   let contract
+  if (chainId === undefined) chainId = ChainId.BAOBAB
+
   const xSwapCurrency = window.localStorage.getItem('xSwapCurrency')
-  if (xSwapCurrency === 'output') {
-    const url = "https://api.baobab.klaytn.net:8651";
-    const crossChainProvider = new ethers.providers.JsonRpcProvider(url);
+  if (xSwapCurrency === 'output' && chainId > 1000) {
+    // const url = "https://api.baobab.klaytn.net:8651";
+    const crossChainProvider = new ethers.providers.JsonRpcProvider(RPC_URL[chainId]);
     contract = new Contract(address, ABI, crossChainProvider);
   } else {
     contract = new Contract(address, ABI, getProviderOrSigner(library, account) as any);
@@ -101,8 +111,8 @@ export function getContract(address: string, ABI: any, library: Web3Provider, ac
 }
 
 // account is optional
-export function getRouterContract(chainId: number, library: Web3Provider, account?: string): Contract {
-  return getContract(ROUTER_ADDRESS[chainId], IUniswapV2Router02ABI, library, account);
+export function getRouterContract(chainId: ChainId, library: Web3Provider, account?: string): Contract {
+  return getContract(ROUTER_ADDRESS[chainId], IUniswapV2Router02ABI, library, account, chainId);
 }
 
 export function escapeRegExp(string: string): string {

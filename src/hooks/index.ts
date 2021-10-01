@@ -14,14 +14,15 @@ export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> & 
   const context = useWeb3ReactCore<Web3Provider>()
   const contextNetwork = useWeb3ReactCore<Web3Provider>(NetworkContextName)
   const activeContext = context.active ? context : contextNetwork
+
   const xSwapCurrency = window.localStorage.getItem('xSwapCurrency')
-  if (xSwapCurrency === 'output') {
-    const crossChain = window.localStorage.getItem('crossChain') ?? ChainId.BAOBAB.toString()
-    activeContext.chainId = parseInt(crossChain, 10)
-  } else {
-    const currChain = window.localStorage.getItem('chainId') ?? ChainId.BAOBAB.toString()
-    activeContext.chainId = parseInt(currChain, 10)
+  const crossChain = window.localStorage.getItem('crossChain') ?? ChainId.BAOBAB.toString()
+  const crossChainId = parseInt(crossChain, 10)
+
+  if (xSwapCurrency === 'output' && crossChainId > 1000) {
+    activeContext.chainId = crossChainId as ChainId
   }
+
   return activeContext
 }
 

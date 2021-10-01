@@ -35,6 +35,7 @@ const NetworkSelector = ({ onSetCrossChain, id }) => {
       console.log(selectedChainId);
       setSelectedChainId(parseInt(e.target.value));
       onSetCrossChain(parseInt(e.target.value));
+      window.localStorage.setItem('crossChain', e.target.value);
     }
   };
 
