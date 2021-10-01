@@ -18,6 +18,9 @@ export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> & 
   if (xSwapCurrency === 'output') {
     const crossChain = window.localStorage.getItem('crossChain') ?? ChainId.BAOBAB.toString()
     activeContext.chainId = parseInt(crossChain, 10)
+  } else {
+    const currChain = window.localStorage.getItem('chainId') ?? ChainId.BAOBAB.toString()
+    activeContext.chainId = parseInt(currChain, 10)
   }
   return activeContext
 }
