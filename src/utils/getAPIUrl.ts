@@ -1,5 +1,10 @@
-const getAPIUrl = () => {
-  const chainId = window.localStorage.getItem('chainId');
+const getAPIUrl = (targetChainId?: string) => {
+  let chainId
+  if (targetChainId) {
+    chainId = targetChainId
+  } else {
+    chainId = window.localStorage.getItem('chainId');
+  }
   let apiUrl;
 
   switch (chainId) {

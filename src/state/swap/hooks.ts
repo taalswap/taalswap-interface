@@ -35,6 +35,7 @@ import { useUserSlippageTolerance } from '../user/hooks';
 import { computeSlippageAdjustedAmounts } from '../../utils/prices';
 import { useTranslation } from '../../contexts/Localization';
 import getChainId from "../../utils/getChainId";
+import { useCurrencyXswap } from '../../hooks/TokensXswap';
 
 export function useSwapState(): AppState['swap'] {
   return useSelector<AppState, AppState['swap']>((state) => state.swap);
@@ -169,7 +170,7 @@ export function useDerivedSwapInfo(
   } = useSwapState();
 
   const inputCurrency = useCurrency(inputCurrencyId);
-  const outputCurrency = useCurrency(outputCurrencyId);
+  const outputCurrency = useCurrencyXswap(outputCurrencyId);
   const recipientLookup = useENS(recipient ?? undefined);
   const to: string | null =
     (recipient === null ? account : recipientLookup.address) ?? null;

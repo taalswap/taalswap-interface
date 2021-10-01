@@ -55,13 +55,12 @@ function parseStringOrBytes32(str: string | undefined, bytes32: string | undefin
 // undefined if invalid or does not exist
 // null if loading
 // otherwise returns the token
-export function useTokenXswap(tokenAddress?: string, selectedChain?: ChainId): Token | undefined | null {
-  let { chainId } = useActiveWeb3React()
-  if (selectedChain) {
-    chainId = selectedChain
-  }
-  const tokens = useAllTokensXswap(chainId)
+export function useTokenXswap(tokenAddress?: string): Token | undefined | null {
+  // const { chainId } = useActiveWeb3React
+  const crossChain = window.localStorage.getItem('crossChain') ?? ChainId.BAOBAB.toString()
+  const chainId = parseInt(crossChain) as ChainId
 
+  const tokens = useAllTokensXswap(chainId)
   const address = isAddress(tokenAddress)
 
   const tokenContract = useTokenContract(address || undefined, false)
@@ -108,8 +107,8 @@ export function useTokenXswap(tokenAddress?: string, selectedChain?: ChainId): T
   ])
 }
 
-export function useCurrenyXswap(currencyId: string | undefined, selectedChain?: ChainId): Currency | null | undefined {
+export function useCurrencyXswap(currencyId: string | undefined): Currency | null | undefined {
   const isBNB = currencyId?.toUpperCase() === 'ETH' || currencyId?.toUpperCase() === 'KLAY'
-  const token = useTokenXswap(isBNB ? undefined : currencyId, selectedChain)
+  const token = useTokenXswap(isBNB ? undefined : currencyId)
   return isBNB ? currencyId?.toUpperCase() === 'ETH' ? ETHER : KLAYTN : token
 }

@@ -8,7 +8,7 @@ import styled, { ThemeContext } from 'styled-components';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { useActiveWeb3React } from '../../hooks';
 import { AppState } from '../../state';
-import { useAllTokensXswap, useTokenXswap } from '../../hooks/tokensXswap';
+import { useAllTokensXswap, useTokenXswap } from '../../hooks/TokensXswap';
 // import { useAllTokens, useToken } from '../../hooks/Tokens';
 import { useSelectedListInfo } from '../../state/lists/hooks';
 import { LinkStyledButton } from '../Shared';
@@ -108,8 +108,6 @@ export function CurrencySearchXSwap({
     ];
   }, [filteredTokens, searchQuery, searchToken, tokenComparator]);
 
-  console.log('====>', filteredSortedTokens)
-
   const handleCurrencySelect = useCallback(
     (currency: Currency) => {
       onCurrencySelect(currency);
@@ -184,6 +182,7 @@ export function CurrencySearchXSwap({
 
   const selectedListInfo = useSelectedListInfo();
   const { t } = useTranslation();
+
   return (
     <Column style={{ width: '100%', flex: '1 1' }}>
       <PaddedColumn gap="14px">

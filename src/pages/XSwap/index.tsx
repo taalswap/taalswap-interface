@@ -49,6 +49,7 @@ import Container from 'components/Container';
 import { INITIAL_ALLOWED_SLIPPAGE } from 'constants/index';
 import { useActiveWeb3React } from 'hooks';
 import { useCurrency } from 'hooks/Tokens';
+import { useCurrencyXswap } from 'hooks/TokensXswap';
 import {
   ApprovalState,
   useApproveCallbackFromTrade,
@@ -198,7 +199,7 @@ function XSwap({
 }: RouteComponentProps<{ currencyIdA?: string; currencyIdB?: string }>) {
   const { isSm, isXs, isMd } = useMatchBreakpoints();
   const currencyA = useCurrency(currencyIdA);
-  const currencyB = useCurrency(currencyIdB);
+  const currencyB = useCurrencyXswap(currencyIdB);
   const [currencyAFlag, setCurrencyAFlag] = useState(currencyA !== undefined);
   const [currencyBFlag, setCurrencyBFlag] = useState(currencyB !== undefined);
   const [currencyAPrice, setCurrencyAPrice] = useState('0');
@@ -223,7 +224,7 @@ function XSwap({
   // token warning stuff
   const [loadedInputCurrency, loadedOutputCurrency] = [
     useCurrency(loadedUrlParams?.inputCurrencyId),
-    useCurrency(loadedUrlParams?.outputCurrencyId),
+    useCurrencyXswap(loadedUrlParams?.outputCurrencyId),
   ];
   const [dismissTokenWarning, setDismissTokenWarning] =
     useState<boolean>(false);
@@ -312,7 +313,7 @@ function XSwap({
         currencies[Field.OUTPUT]?.symbol !== undefined
       ) {
         await fetch(
-          `${getAPIUrl()}/tokens/${getAddressBySymbol(
+          `${getAPIUrl('3')}/tokens/${getAddressBySymbol(
             currencies[Field.INPUT]?.symbol
           )}`,
           // 'https://taalswap-info-api-black.vercel.app/api/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7',
@@ -329,7 +330,7 @@ function XSwap({
           });
 
         await fetch(
-          `${getAPIUrl()}/tokens/${getAddressBySymbol(
+          `${getAPIUrl('1001')}/tokens/${getAddressBySymbol(
             currencies[Field.OUTPUT]?.symbol
           )}`,
           // 'https://taalswap-info-api-black.vercel.app/api/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7',
