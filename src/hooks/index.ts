@@ -9,6 +9,7 @@ import { isMobile } from 'react-device-detect'
 // import { setupNetwork } from 'utils/wallet'
 import { injected } from '../connectors'
 import { NetworkContextName } from '../constants'
+import getChainId from '../utils/getChainId';
 
 export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> & { chainId?: ChainId } {
   const context = useWeb3ReactCore<Web3Provider>()
@@ -21,6 +22,8 @@ export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> & 
 
   if (xSwapCurrency === 'output' && crossChainId > 1000) {
     activeContext.chainId = crossChainId as ChainId
+  } else {
+    activeContext.chainId = getChainId()
   }
 
   return activeContext
