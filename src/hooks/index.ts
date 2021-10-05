@@ -122,9 +122,9 @@ export function useInactiveListenerNew(suppress = false) {
       const handleChainChanged = (chainId) => {
         // eat errors
         const curChainId = parseInt(chainId, 16).toString()
-        const prevChainId = window.localStorage.getItem('chainId')
+        // const prevChainId = window.localStorage.getItem('chainId')
         window.localStorage.setItem('chainId', curChainId)
-        window.localStorage.setItem('prevChainId', prevChainId ?? curChainId)
+        // window.localStorage.setItem('prevChainId', prevChainId ?? curChainId)
 
         activate(injected, undefined, true).catch((e) => {
           console.error('Failed to activate after chain changed', e)
