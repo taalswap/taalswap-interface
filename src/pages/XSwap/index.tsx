@@ -656,9 +656,27 @@ function XSwap({
     [onCurrencySelection, checkForWarning]
   );
 
+  const [switched, setSwitched] = useState<boolean>(false);
+  const inputCurrency = window.localStorage.getItem('INPUT') ?? ''
+  const outputCurrency = window.localStorage.getItem('OUTPUT') ?? ''
+  const newCurrencyA = useCurrency(outputCurrency);
+  const newCurrencyB = useCurrencyXswap(inputCurrency);
+
+  useEffect(() => {
+    if (switched && newCurrencyA && newCurrencyB) {
+      onCurrencySelection(Field.INPUT, newCurrencyA)
+      onCurrencySelection(Field.OUTPUT, newCurrencyB)
+      // window.localStorage.removeItem('INPUT')
+      // window.localStorage.removeItem('OUTPUT')
+      setSwitched(false)
+    }
+  }, [switched, onCurrencySelection, inputCurrency, outputCurrency, newCurrencyA, newCurrencyB]);
+
+  const { INPUT, OUTPUT } = useSwapState()
+
   const handleSwitchNetwork = useCallback(() => {
-    window.localStorage.setItem('INPUT', JSON.stringify(currencies[Field.INPUT]))
-    window.localStorage.setItem('OUTPUT', JSON.stringify(currencies[Field.OUTPUT]))
+    window.localStorage.setItem('INPUT', INPUT.currencyId ?? '')
+    window.localStorage.setItem('OUTPUT', OUTPUT.currencyId ?? '')
 
     const prevChainId = window.localStorage.getItem('prevChainId') ?? '0';
     const crossChain = window.localStorage.getItem('crossChain') ?? '0';
@@ -687,26 +705,10 @@ function XSwap({
       window.localStorage.setItem('refresh', 'true');
       login(ConnectorNames.Injected)
         .then(() => {
-          const inputCurrency = window.localStorage.getItem('INPUT') ?? '{}'
-          const outputCurrency = window.localStorage.getItem('OUTPUT') ?? '{}'
-
-          setCurrencyAFlag(false);
-          setHasPoppedModal(false);
-          setInterruptRedirectCountdown(false);
-          setApprovalSubmitted(false); // reset 2 step UI for approvals
-          onCurrencySelection(Field.INPUT, JSON.parse(outputCurrency))
-
-          setCurrencyAFlag(false);
-          setHasPoppedModal(false);
-          setInterruptRedirectCountdown(false);
-          onCurrencySelection(Field.OUTPUT, JSON.parse(inputCurrency))
-
-          console.log('===========>', inputCurrency, outputCurrency)
-          // window.localStorage.removeItem('INPUT')
-          // window.localStorage.removeItem('OUTPUT')
+          setSwitched(true)
         });
     }
-  }, [onSetCrossChain, chainId, login, currencies, onCurrencySelection]);
+  }, [onSetCrossChain, chainId, login, INPUT.currencyId, OUTPUT.currencyId]);
   // const { chainId } = useActiveWeb3React();
 
   return (
