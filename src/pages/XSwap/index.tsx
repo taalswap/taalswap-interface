@@ -21,7 +21,10 @@ import {
   Link,
   Flex,
   useMatchBreakpoints,
+  ConnectorNames,
+  useWalletModal,
 } from 'taalswap-uikit';
+import useAuth from 'hooks/useAuth';
 import { RouteComponentProps } from 'react-router-dom';
 import styled, { ThemeContext } from 'styled-components';
 import AddressInputPanel from 'components/AddressInputPanel';
@@ -197,6 +200,8 @@ function XSwap({
   },
   history,
 }: RouteComponentProps<{ currencyIdA?: string; currencyIdB?: string }>) {
+  const { login } = useAuth();
+
   const { isSm, isXs, isMd } = useMatchBreakpoints();
   const currencyA = useCurrency(currencyIdA);
   const currencyB = useCurrencyXswap(currencyIdB);
@@ -459,6 +464,7 @@ function XSwap({
       setCurrencyBFlag(false);
       onCurrencySelection(Field.OUTPUT, currencyB);
     }
+    console.log(currencyB?.symbol);
   }, [currencyAFlag, currencyBFlag, currencyA, currencyB, onCurrencySelection]);
   // if (currencyA !== null && currencyA !== undefined) {
   //   onCurrencySelection(Field.INPUT, currencyA);
@@ -650,6 +656,35 @@ function XSwap({
     [onCurrencySelection, checkForWarning]
   );
 
+  const handleSwitchNetwork = useCallback(() => {
+    const prevChainId = window.localStorage.getItem('prevChainId') ?? '0';
+    const crossChain = window.localStorage.getItem('crossChain') ?? '0';
+
+    if (chainId !== crossChain.toString()) {
+      onSetCrossChain(
+        chainId !== null ? parseInt(chainId) : parseInt(prevChainId)
+      );
+
+      window.localStorage.setItem(
+        'chainId',
+        prevChainId !== undefined && prevChainId !== null
+          ? prevChainId.toString()
+          : '0'
+      );
+
+      window.localStorage.setItem(
+        'crossChain',
+        chainId !== undefined && chainId !== null ? chainId.toString() : '0'
+      );
+
+      window.localStorage.setItem(
+        'prevChainId',
+        chainId !== undefined && chainId !== null ? chainId.toString() : '0'
+      );
+      window.localStorage.setItem('refresh', 'true');
+      login(ConnectorNames.Injected);
+    }
+  }, [onSetCrossChain, chainId, login]);
   // const { chainId } = useActiveWeb3React();
 
   return (
@@ -720,7 +755,8 @@ function XSwap({
                   <ArrowWrapper clickable>
                     <IconLineButton
                       variant="tertiary"
-                      onClick={() => {
+                      onClick={async () => {
+                        handleSwitchNetwork();
                         setApprovalSubmitted(false); // reset 2 step UI for approvals
                         onSwitchTokens();
                       }}
@@ -744,6 +780,7 @@ function XSwap({
                   ) : null}
                 </AutoRowAlign>
               </AutoColumn>
+
               <CurrencyXSwapInputPanel
                 value={formattedAmounts[Field.OUTPUT]}
                 onUserInput={handleTypeOutput}

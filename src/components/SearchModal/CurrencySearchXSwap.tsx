@@ -1,5 +1,14 @@
 import { ChainId, Currency, ETHER, KLAYTN, Token } from 'taalswap-sdk';
-import React, { KeyboardEvent, RefObject, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  KeyboardEvent,
+  RefObject,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { CloseIcon, HelpIcon, Text, useTooltip } from 'taalswap-uikit';
 import { useSelector } from 'react-redux';
 // import { useTranslation } from 'react-i18next'
@@ -54,11 +63,11 @@ export function CurrencySearchXSwap({
 }: CurrencySearchProps) {
   // const { t } = useTranslation()
   let { chainId } = useActiveWeb3React();
-  const { crossChain } = useSwapState();
+  // const { crossChain } = useSwapState();
+  const crossChain = window.localStorage.getItem('crossChainId');
   if (crossChain && id === 'swap-currency-output') {
-    chainId = crossChain as ChainId
+    chainId = parseInt(crossChain, 10) as ChainId;
   }
-  console.log(`id : ${id} ${chainId}`);
 
   const theme = useContext(ThemeContext);
 

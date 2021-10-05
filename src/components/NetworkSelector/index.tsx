@@ -8,10 +8,14 @@ const NetworkSelectBox = styled.select``;
 const NetworkSelector = ({ onSetCrossChain, id }) => {
   const { crossChain } = useSwapState();
   const currentChainId = window.localStorage.getItem('chainId');
-  const [selectedChainId, setSelectedChainId] = useState(() =>
-    id === 'swap-currency-input' ? currentChainId : 0
-  );
+  const crossChainId = window.localStorage.getItem('crossChain') ?? 0;
+  // const [selectedChainId, setSelectedChainId] = useState(() =>
+  //   id === 'swap-currency-input' ? currentChainId : 0
+  // );
 
+  const [selectedChainId, setSelectedChainId] = useState(() =>
+    id === 'swap-currency-input' ? currentChainId : crossChainId
+  );
   const networkList = [
     {
       id: 0,
@@ -32,8 +36,8 @@ const NetworkSelector = ({ onSetCrossChain, id }) => {
 
   const handleSelect = (e) => {
     if (id === 'swap-currency-output') {
-      console.log(selectedChainId);
-      setSelectedChainId(parseInt(e.target.value));
+      // setSelectedChainId(parseInt(e.target.value));
+      setSelectedChainId(e.target.value);
       onSetCrossChain(parseInt(e.target.value));
       window.localStorage.setItem('crossChain', e.target.value);
     }
@@ -43,7 +47,19 @@ const NetworkSelector = ({ onSetCrossChain, id }) => {
     if (id === 'swap-currency-input') {
       setSelectedChainId(currentChainId);
     }
-  }, [currentChainId, id]);
+
+    if (id === 'swap-currency-output' && crossChainId !== null) {
+      setSelectedChainId(crossChainId);
+      onSetCrossChain(crossChainId);
+      window.localStorage.setItem('prevChainId', crossChainId?.toString());
+    }
+  }, [currentChainId, crossChainId, onSetCrossChain, id]);
+
+  useEffect(() => {
+    return () => {
+      window.localStorage.removeItem('crossChain');
+    };
+  }, []);
 
   return (
     <NetworkSelectBox
