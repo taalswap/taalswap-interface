@@ -60,10 +60,11 @@ export function useTokenBalancesWithLoadingIndicator(
   const validatedTokenAddresses = useMemo(() => validatedTokens.map(vt => vt.address), [validatedTokens])
 
   let chainId
-  if (tokens !== undefined && tokens[0] !== undefined) {
-    chainId = tokens[0].chainId
+  const xSwapCurrency = window.localStorage.getItem('xSwapCurrency')
+  if (xSwapCurrency === 'output') {
+    chainId = parseInt(window.localStorage.getItem('crossChain') ?? '', 10) as ChainId
   } else {
-    chainId = ChainId.BAOBAB
+    chainId = parseInt(window.localStorage.getItem('chainId') ?? '', 10) as ChainId
   }
 
   const balances = useMultipleContractSingleData(validatedTokenAddresses, ERC20_INTERFACE, 'balanceOf', chainId, [address])

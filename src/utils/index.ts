@@ -27,9 +27,9 @@ const ETH_PREFIXES: { [chainId in ChainId]: string } = {
 };
 
 const RPC_URL: { [chainId in ChainId]: string } = {
-  1: '',
-  3: '',
-  4: '',
+  1: process.env.REACT_APP_NETWORK_URL ?? '',
+  3: process.env.REACT_APP_NETWORK_URL ?? '',
+  4: process.env.REACT_APP_NETWORK_URL ?? '',
   8217: 'https://klaytn.taalswap.info:8651',
   1001: 'https://api.baobab.klaytn.net:8651'
 };
@@ -100,10 +100,15 @@ export function getContract(address: string, ABI: any, library: Web3Provider, ac
   if (chainId === undefined) chainId = ChainId.BAOBAB
 
   const xSwapCurrency = window.localStorage.getItem('xSwapCurrency')
-  if (xSwapCurrency === 'output' && chainId > 1000) {
-    // const url = "https://api.baobab.klaytn.net:8651";
-    const crossChainProvider = new ethers.providers.JsonRpcProvider(RPC_URL[chainId]);
-    contract = new Contract(address, ABI, crossChainProvider);
+  if (xSwapCurrency === 'output') {
+    if (chainId > 1000) {
+      const crossChainProvider = new ethers.providers.JsonRpcProvider(RPC_URL[chainId]);
+      contract = new Contract(address, ABI, crossChainProvider);
+    } else {
+      const crossChainProvider = new ethers.providers.InfuraProvider('ropsten', 'adb9c847d7114ee7bf83995e8f22e098')
+      contract = new Contract(address, ABI, crossChainProvider);
+    }
+    console.log('=== contract ===>', contract)
   } else {
     contract = new Contract(address, ABI, getProviderOrSigner(library, account) as any);
   }

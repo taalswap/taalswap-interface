@@ -17,10 +17,10 @@ export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> & 
   const activeContext = context.active ? context : contextNetwork
 
   const xSwapCurrency = window.localStorage.getItem('xSwapCurrency')
-  const crossChain = window.localStorage.getItem('crossChain') ?? ChainId.BAOBAB.toString()
+  const crossChain = window.localStorage.getItem('crossChain') ?? ''
   const crossChainId = parseInt(crossChain, 10)
 
-  if (xSwapCurrency === 'output' && crossChainId > 1000) {
+  if (xSwapCurrency === 'output') {
     activeContext.chainId = crossChainId as ChainId
   } else {
     activeContext.chainId = getChainId()
@@ -32,7 +32,7 @@ export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> & 
 export function useEagerConnect() {
   const { activate, active } = useWeb3ReactCore() // specifically using useWeb3ReactCore because of what this hook does
   const [tried, setTried] = useState(false)
-  const defaultChain = process.env.REACT_APP_CHAIN_ID ?? '1'
+  const defaultChain = process.env.REACT_APP_CHAIN_ID ?? ''
   const chainIdStr = window.localStorage.getItem("chainId") ?? defaultChain
   const chainId = parseInt(chainIdStr, 10)
 

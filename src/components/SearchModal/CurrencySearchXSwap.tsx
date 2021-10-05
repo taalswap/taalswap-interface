@@ -54,9 +54,10 @@ export function CurrencySearchXSwap({
 }: CurrencySearchProps) {
   // const { t } = useTranslation()
   let { chainId } = useActiveWeb3React();
-  const { crossChain } = useSwapState();
+  // const { crossChain } = useSwapState();
+  const crossChain = window.localStorage.getItem('crossChainId')
   if (crossChain && id === 'swap-currency-output') {
-    chainId = crossChain as ChainId
+    chainId = parseInt(crossChain, 10) as ChainId
   }
   console.log(`id : ${id} ${chainId}`);
 
