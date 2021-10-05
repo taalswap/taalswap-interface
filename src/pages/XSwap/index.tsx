@@ -1,4 +1,4 @@
-import { CurrencyAmount, JSBI, Token, Trade } from 'taalswap-sdk';
+import { Currency, CurrencyAmount, JSBI, Token, Trade } from 'taalswap-sdk';
 import React, {
   useCallback,
   useContext,
@@ -657,6 +657,9 @@ function XSwap({
   );
 
   const handleSwitchNetwork = useCallback(() => {
+    window.localStorage.setItem('INPUT', JSON.stringify(currencies[Field.INPUT]))
+    window.localStorage.setItem('OUTPUT', JSON.stringify(currencies[Field.OUTPUT]))
+
     const prevChainId = window.localStorage.getItem('prevChainId') ?? '0';
     const crossChain = window.localStorage.getItem('crossChain') ?? '0';
 
@@ -682,9 +685,28 @@ function XSwap({
         chainId !== undefined && chainId !== null ? chainId.toString() : '0'
       );
       window.localStorage.setItem('refresh', 'true');
-      login(ConnectorNames.Injected);
+      login(ConnectorNames.Injected)
+        .then(() => {
+          const inputCurrency = window.localStorage.getItem('INPUT') ?? '{}'
+          const outputCurrency = window.localStorage.getItem('OUTPUT') ?? '{}'
+
+          setCurrencyAFlag(false);
+          setHasPoppedModal(false);
+          setInterruptRedirectCountdown(false);
+          setApprovalSubmitted(false); // reset 2 step UI for approvals
+          onCurrencySelection(Field.INPUT, JSON.parse(outputCurrency))
+
+          setCurrencyAFlag(false);
+          setHasPoppedModal(false);
+          setInterruptRedirectCountdown(false);
+          onCurrencySelection(Field.OUTPUT, JSON.parse(inputCurrency))
+
+          console.log('===========>', inputCurrency, outputCurrency)
+          // window.localStorage.removeItem('INPUT')
+          // window.localStorage.removeItem('OUTPUT')
+        });
     }
-  }, [onSetCrossChain, chainId, login]);
+  }, [onSetCrossChain, chainId, login, currencies, onCurrencySelection]);
   // const { chainId } = useActiveWeb3React();
 
   return (

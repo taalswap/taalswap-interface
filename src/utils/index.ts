@@ -108,7 +108,6 @@ export function getContract(address: string, ABI: any, library: Web3Provider, ac
       const crossChainProvider = new ethers.providers.InfuraProvider('ropsten', 'adb9c847d7114ee7bf83995e8f22e098')
       contract = new Contract(address, ABI, crossChainProvider);
     }
-    console.log('=== contract ===>', contract)
   } else {
     contract = new Contract(address, ABI, getProviderOrSigner(library, account) as any);
   }
