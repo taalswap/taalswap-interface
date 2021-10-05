@@ -37,34 +37,34 @@ const initialState: MulticallState = {
 
 export default createReducer(initialState, builder =>
   builder
-    .addCase(addMulticallListeners, (state, { payload: { calls, chainId, options: { blocksPerFetch = 1 } = {} } }) => {
+    .addCase(addMulticallListeners, (state, { payload: { calls, selectedChainId, options: { blocksPerFetch = 1 } = {} } }) => {
       const listeners: MulticallState['callListeners'] = state.callListeners
         ? state.callListeners
         : (state.callListeners = {})
-      listeners[chainId] = listeners[chainId] ?? {}
+      listeners[selectedChainId] = listeners[selectedChainId] ?? {}
       calls.forEach(call => {
         const callKey = toCallKey(call)
-        listeners[chainId][callKey] = listeners[chainId][callKey] ?? {}
-        listeners[chainId][callKey][blocksPerFetch] = (listeners[chainId][callKey][blocksPerFetch] ?? 0) + 1
+        listeners[selectedChainId][callKey] = listeners[selectedChainId][callKey] ?? {}
+        listeners[selectedChainId][callKey][blocksPerFetch] = (listeners[selectedChainId][callKey][blocksPerFetch] ?? 0) + 1
       })
     })
     .addCase(
       removeMulticallListeners,
-      (state, { payload: { chainId, calls, options: { blocksPerFetch = 1 } = {} } }) => {
+      (state, { payload: { selectedChainId, calls, options: { blocksPerFetch = 1 } = {} } }) => {
         const listeners: MulticallState['callListeners'] = state.callListeners
           ? state.callListeners
           : (state.callListeners = {})
 
-        if (!listeners[chainId]) return
+        if (!listeners[selectedChainId]) return
         calls.forEach(call => {
           const callKey = toCallKey(call)
-          if (!listeners[chainId][callKey]) return
-          if (!listeners[chainId][callKey][blocksPerFetch]) return
+          if (!listeners[selectedChainId][callKey]) return
+          if (!listeners[selectedChainId][callKey][blocksPerFetch]) return
 
-          if (listeners[chainId][callKey][blocksPerFetch] === 1) {
-            delete listeners[chainId][callKey][blocksPerFetch]
+          if (listeners[selectedChainId][callKey][blocksPerFetch] === 1) {
+            delete listeners[selectedChainId][callKey][blocksPerFetch]
           } else {
-            listeners[chainId][callKey][blocksPerFetch]--
+            listeners[selectedChainId][callKey][blocksPerFetch]--
           }
         })
       }

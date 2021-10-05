@@ -3,6 +3,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { ChainId } from 'taalswap-sdk';
 import { useActiveWeb3React } from '../../hooks'
 import { useBlockNumber } from '../application/hooks'
 import { AppDispatch, AppState } from '../index'
@@ -49,8 +50,11 @@ export const NEVER_RELOAD: ListenerOptions = {
 }
 
 // the lowest level call for subscribing to contract data
-function useCallsData(calls: (Call | undefined)[], options?: ListenerOptions): CallResult[] {
-  const { chainId } = useActiveWeb3React()
+function useCallsData(calls: (Call | undefined)[], options?: ListenerOptions, targetChainId?: ChainId): CallResult[] {
+  let { chainId } = useActiveWeb3React()
+  if (targetChainId) {
+    chainId = targetChainId
+  }
   const callResults = useSelector<AppState, AppState['multicall']['callResults']>(
     (state) => state.multicall.callResults
   )
@@ -73,9 +77,10 @@ function useCallsData(calls: (Call | undefined)[], options?: ListenerOptions): C
     if (!chainId || callKeys.length === 0) return undefined
     // eslint-disable-next-line @typescript-eslint/no-shadow
     const calls = callKeys.map((key) => parseCallKey(key))
+    const selectedChainId = chainId as number
     dispatch(
       addMulticallListeners({
-        chainId,
+        selectedChainId,
         calls,
         options,
       })
@@ -84,7 +89,7 @@ function useCallsData(calls: (Call | undefined)[], options?: ListenerOptions): C
     return () => {
       dispatch(
         removeMulticallListeners({
-          chainId,
+          selectedChainId,
           calls,
           options,
         })
@@ -163,6 +168,7 @@ export function useSingleContractMultipleData(
   contract: Contract | null | undefined,
   methodName: string,
   callInputs: OptionalMethodInputs[],
+  chainId?: ChainId,
   options?: ListenerOptions
 ): CallState[] {
   const fragment = useMemo(() => contract?.interface?.getFunction(methodName), [contract, methodName])
@@ -180,7 +186,7 @@ export function useSingleContractMultipleData(
     [callInputs, contract, fragment]
   )
 
-  const results = useCallsData(calls, options)
+  const results = useCallsData(calls, options, chainId)
 
   const latestBlockNumber = useBlockNumber()
 
@@ -193,6 +199,7 @@ export function useMultipleContractSingleData(
   addresses: (string | undefined)[],
   contractInterface: Interface,
   methodName: string,
+  chainId: ChainId,
   callInputs?: OptionalMethodInputs,
   options?: ListenerOptions
 ): CallState[] {
@@ -220,7 +227,7 @@ export function useMultipleContractSingleData(
     [addresses, callData, fragment]
   )
 
-  const results = useCallsData(calls, options)
+  const results = useCallsData(calls, options, chainId)
 
   const latestBlockNumber = useBlockNumber()
 

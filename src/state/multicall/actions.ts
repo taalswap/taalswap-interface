@@ -33,10 +33,10 @@ export interface ListenerOptions {
   readonly blocksPerFetch?: number
 }
 
-export const addMulticallListeners = createAction<{ chainId: number; calls: Call[]; options?: ListenerOptions }>(
+export const addMulticallListeners = createAction<{ selectedChainId: number; calls: Call[]; options?: ListenerOptions }>(
   'multicall/addMulticallListeners'
 )
-export const removeMulticallListeners = createAction<{ chainId: number; calls: Call[]; options?: ListenerOptions }>(
+export const removeMulticallListeners = createAction<{ selectedChainId: number; calls: Call[]; options?: ListenerOptions }>(
   'multicall/removeMulticallListeners'
 )
 export const fetchingMulticallResults = createAction<{ chainId: number; calls: Call[]; fetchingBlockNumber: number }>(

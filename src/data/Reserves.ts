@@ -1,11 +1,11 @@
-import { TokenAmount, Pair, Currency } from 'taalswap-sdk'
-import { useMemo } from 'react'
-import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json'
-import { Interface } from '@ethersproject/abi'
-import { useActiveWeb3React } from '../hooks'
+import { ChainId, Currency, Pair, TokenAmount } from 'taalswap-sdk';
+import { useMemo } from 'react';
+import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json';
+import { Interface } from '@ethersproject/abi';
+import { useActiveWeb3React } from '../hooks';
 
-import { useMultipleContractSingleData } from '../state/multicall/hooks'
-import { wrappedCurrency } from '../utils/wrappedCurrency'
+import { useMultipleContractSingleData } from '../state/multicall/hooks';
+import { wrappedCurrency } from '../utils/wrappedCurrency';
 
 const PAIR_INTERFACE = new Interface(IUniswapV2PairABI)
 
@@ -36,7 +36,7 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
     [tokens]
   )
 
-  const results = useMultipleContractSingleData(pairAddresses, PAIR_INTERFACE, 'getReserves')
+  const results = useMultipleContractSingleData(pairAddresses, PAIR_INTERFACE, 'getReserves', chainId ?? ChainId.BAOBAB)
 
   return useMemo(() => {
     return results.map((result, i) => {

@@ -60,7 +60,10 @@ export function usePairContract(pairAddress?: string, withSignerIfPossible?: boo
   return useContract(pairAddress, IUniswapV2PairABI, withSignerIfPossible);
 }
 
-export function useMulticallContract(): Contract | null {
-  const { chainId } = useActiveWeb3React();
+export function useMulticallContract(selectedChianId?: ChainId): Contract | null {
+  let { chainId } = useActiveWeb3React();
+  if (selectedChianId) {
+    chainId = selectedChianId
+  }
   return useContract(chainId && MULTICALL_NETWORKS[chainId], MULTICALL_ABI, false);
 }

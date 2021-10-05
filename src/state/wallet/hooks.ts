@@ -1,20 +1,20 @@
-import { Currency, CurrencyAmount, ETHER, KLAYTN, JSBI, Token, TokenAmount } from 'taalswap-sdk'
-import { useMemo } from 'react'
-import ERC20_INTERFACE from '../../constants/abis/erc20'
-import { useAllTokens } from '../../hooks/Tokens'
-import { useActiveWeb3React } from '../../hooks'
-import { useMulticallContract } from '../../hooks/useContract'
-import { isAddress } from '../../utils'
-import { useSingleContractMultipleData, useMultipleContractSingleData } from '../multicall/hooks'
-import getChainId from "../../utils/getChainId";
+import { ChainId, Currency, CurrencyAmount, ETHER, JSBI, KLAYTN, Token, TokenAmount } from 'taalswap-sdk';
+import { useMemo } from 'react';
+import ERC20_INTERFACE from '../../constants/abis/erc20';
+import { useAllTokens } from '../../hooks/Tokens';
+import { useActiveWeb3React } from '../../hooks';
+import { useMulticallContract } from '../../hooks/useContract';
+import { isAddress } from '../../utils';
+import { useMultipleContractSingleData, useSingleContractMultipleData } from '../multicall/hooks';
 
 /**
  * Returns a map of the given addresses to their eventually consistent ETH balances.
  */
 export function useETHBalances(
-  uncheckedAddresses?: (string | undefined)[]
+  uncheckedAddresses?: (string | undefined)[],
+  chainId?: ChainId
 ): { [address: string]: CurrencyAmount | undefined } {
-  const multicallContract = useMulticallContract()
+  const multicallContract = useMulticallContract(chainId)
 
   const addresses: string[] = useMemo(
     () =>
@@ -30,18 +30,18 @@ export function useETHBalances(
   const results = useSingleContractMultipleData(
     multicallContract,
     'getEthBalance',
-    addresses.map(address => [address])
+    addresses.map(address => [address]),
+    chainId
   )
 
   return useMemo(
     () =>
       addresses.reduce<{ [address: string]: CurrencyAmount }>((memo, address, i) => {
-        const chainId = getChainId()
         const value = results?.[i]?.result?.[0]
-        if (value) memo[address] = chainId > 1000 ? CurrencyAmount.klaytn(JSBI.BigInt(value.toString())) : CurrencyAmount.ether(JSBI.BigInt(value.toString()))
+        if (value) memo[address] = chainId ?? ChainId.ROPSTEN > 1000 ? CurrencyAmount.klaytn(JSBI.BigInt(value.toString())) : CurrencyAmount.ether(JSBI.BigInt(value.toString()))
         return memo
       }, {}),
-    [addresses, results]
+    [addresses, results, chainId]
   )
 }
 
@@ -59,7 +59,14 @@ export function useTokenBalancesWithLoadingIndicator(
 
   const validatedTokenAddresses = useMemo(() => validatedTokens.map(vt => vt.address), [validatedTokens])
 
-  const balances = useMultipleContractSingleData(validatedTokenAddresses, ERC20_INTERFACE, 'balanceOf', [address])
+  let chainId
+  if (tokens !== undefined && tokens[0] !== undefined) {
+    chainId = tokens[0].chainId
+  } else {
+    chainId = ChainId.BAOBAB
+  }
+
+  const balances = useMultipleContractSingleData(validatedTokenAddresses, ERC20_INTERFACE, 'balanceOf', chainId, [address])
 
   const anyLoading: boolean = useMemo(() => balances.some(callState => callState.loading), [balances])
 
@@ -106,7 +113,17 @@ export function useCurrencyBalances(
 
   const tokenBalances = useTokenBalances(account, tokens)
   const containsETH: boolean = useMemo(() => currencies?.some(currency => (currency === ETHER || currency === KLAYTN)) ?? false, [currencies])
-  const ethBalance = useETHBalances(containsETH ? [account] : [])
+  let ethChainId = ChainId.ROPSTEN
+  if (containsETH) {
+    if (currencies && currencies[0] === ETHER) {
+      ethChainId = ChainId.ROPSTEN
+    }
+    if (currencies && currencies[0] === KLAYTN) {
+      ethChainId = ChainId.BAOBAB
+    }
+  }
+
+  const ethBalance = useETHBalances(containsETH ? [account] : [], ethChainId)
 
   return useMemo(
     () =>
