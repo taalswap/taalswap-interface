@@ -59,12 +59,13 @@ export function useTokenBalancesWithLoadingIndicator(
 
   const validatedTokenAddresses = useMemo(() => validatedTokens.map(vt => vt.address), [validatedTokens])
 
-  let chainId
-  if (tokens !== undefined && tokens[0] !== undefined) {
-    chainId = tokens[0].chainId
+  let tokenChainId
+  if (tokens && tokens[0]) {
+    tokenChainId = tokens[0].chainId
   } else {
-    chainId = ChainId.BAOBAB
+    tokenChainId = parseInt(window.localStorage.getItem('crossChain') ?? '', 10) as ChainId
   }
+  const chainId = tokenChainId
 
   const balances = useMultipleContractSingleData(validatedTokenAddresses, ERC20_INTERFACE, 'balanceOf', chainId, [address])
 
@@ -112,6 +113,7 @@ export function useCurrencyBalances(
   ])
 
   const tokenBalances = useTokenBalances(account, tokens)
+
   const containsETH: boolean = useMemo(() => currencies?.some(currency => (currency === ETHER || currency === KLAYTN)) ?? false, [currencies])
   let ethChainId = ChainId.ROPSTEN
   if (containsETH) {
@@ -122,7 +124,6 @@ export function useCurrencyBalances(
       ethChainId = ChainId.BAOBAB
     }
   }
-
   const ethBalance = useETHBalances(containsETH ? [account] : [], ethChainId)
 
   return useMemo(

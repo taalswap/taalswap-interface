@@ -199,7 +199,7 @@ export function useMultipleContractSingleData(
   addresses: (string | undefined)[],
   contractInterface: Interface,
   methodName: string,
-  chainId: ChainId,
+  chainId?: ChainId,
   callInputs?: OptionalMethodInputs,
   options?: ListenerOptions
 ): CallState[] {
