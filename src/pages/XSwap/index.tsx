@@ -1,4 +1,4 @@
-import { CurrencyAmount, JSBI, Token, Trade } from 'taalswap-sdk';
+import { Currency, CurrencyAmount, JSBI, Token, Trade } from 'taalswap-sdk';
 import React, {
   useCallback,
   useContext,
@@ -656,7 +656,28 @@ function XSwap({
     [onCurrencySelection, checkForWarning]
   );
 
+  const [switched, setSwitched] = useState<boolean>(false);
+  const inputCurrency = window.localStorage.getItem('INPUT') ?? ''
+  const outputCurrency = window.localStorage.getItem('OUTPUT') ?? ''
+  const newCurrencyA = useCurrency(outputCurrency);
+  const newCurrencyB = useCurrencyXswap(inputCurrency);
+
+  useEffect(() => {
+    if (switched && newCurrencyA && newCurrencyB) {
+      onCurrencySelection(Field.INPUT, newCurrencyA)
+      onCurrencySelection(Field.OUTPUT, newCurrencyB)
+      // window.localStorage.removeItem('INPUT')
+      // window.localStorage.removeItem('OUTPUT')
+      setSwitched(false)
+    }
+  }, [switched, onCurrencySelection, inputCurrency, outputCurrency, newCurrencyA, newCurrencyB]);
+
+  const { INPUT, OUTPUT } = useSwapState()
+
   const handleSwitchNetwork = useCallback(() => {
+    window.localStorage.setItem('INPUT', INPUT.currencyId ?? '')
+    window.localStorage.setItem('OUTPUT', OUTPUT.currencyId ?? '')
+
     const prevChainId = window.localStorage.getItem('prevChainId') ?? '0';
     const crossChain = window.localStorage.getItem('crossChain') ?? '0';
 
@@ -682,9 +703,12 @@ function XSwap({
         chainId !== undefined && chainId !== null ? chainId.toString() : '0'
       );
       window.localStorage.setItem('refresh', 'true');
-      login(ConnectorNames.Injected);
+      login(ConnectorNames.Injected)
+        .then(() => {
+          setSwitched(true)
+        });
     }
-  }, [onSetCrossChain, chainId, login]);
+  }, [onSetCrossChain, chainId, login, INPUT.currencyId, OUTPUT.currencyId]);
   // const { chainId } = useActiveWeb3React();
 
   return (
