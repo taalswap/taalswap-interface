@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { ChainId } from 'taalswap-sdk';
 import { ethers } from 'ethers';
-import { useActiveWeb3React } from '../../hooks'
-import useDebounce from '../../hooks/useDebounce'
-import useIsWindowVisible from '../../hooks/useIsWindowVisible'
-import { updateBlockNumber } from './actions'
+import { useActiveWeb3React } from '../../hooks';
+import useDebounce from '../../hooks/useDebounce';
+import useIsWindowVisible from '../../hooks/useIsWindowVisible';
+import { updateBlockNumber } from './actions';
 
 export default function Updater(): null {
   const { library, chainId } = useActiveWeb3React()
@@ -16,6 +16,11 @@ export default function Updater(): null {
   const windowVisible = useIsWindowVisible()
 
   const [state, setState] = useState<{ chainId: number | undefined; blockNumber: number | null }>({
+    chainId,
+    blockNumber: null,
+  })
+
+  const [state2, setState2] = useState<{ chainId: number | undefined; blockNumber: number | null }>({
     chainId,
     blockNumber: null,
   })
@@ -33,28 +38,45 @@ export default function Updater(): null {
     [chainId, setState]
   )
 
+  const blockNumberCallbackOther = useCallback(
+    (blockNumber: number) => {
+      let xChainId = ChainId.BAOBAB
+      if (chainId === ChainId.BAOBAB) {
+        xChainId = ChainId.ROPSTEN
+      }
+      dispatch(updateBlockNumber({ chainId: xChainId, blockNumber }))
+    },
+    [dispatch, chainId]
+  )
+
   // attach/detach listeners
   useEffect(() => {
     if (!library || !chainId || !windowVisible) return undefined
 
     setState({ chainId, blockNumber: null })
 
-    if (xSwapCurrency === 'output' && crossChain < 1000) {
+    library
+      .getBlockNumber()
+      .then(blockNumberCallback)
+      .catch((error) => console.error(`Failed to get block number for chainId: ${chainId}`, error))
+
+    if (chainId === ChainId.BAOBAB) {
       const crossChainProvider = new ethers.providers.InfuraProvider('ropsten', 'adb9c847d7114ee7bf83995e8f22e098')
       crossChainProvider.getBlockNumber()
-        .then(blockNumberCallback)
+        .then(blockNumberCallbackOther)
         .catch((error) => console.error(`Failed to get block number for chainId: ${chainId}`, error))
     } else {
-      library
-        .getBlockNumber()
-        .then(blockNumberCallback)
+      const crossChainProvider = new ethers.providers.JsonRpcProvider('https://api.baobab.klaytn.net:8651');
+      crossChainProvider.getBlockNumber()
+        .then(blockNumberCallbackOther)
         .catch((error) => console.error(`Failed to get block number for chainId: ${chainId}`, error))
     }
+
     library.on('block', blockNumberCallback)
     return () => {
       library.removeListener('block', blockNumberCallback)
     }
-  }, [dispatch, chainId, library, blockNumberCallback, windowVisible, crossChain, xSwapCurrency])
+  }, [dispatch, chainId, library, blockNumberCallback, blockNumberCallbackOther, windowVisible, crossChain, xSwapCurrency])
 
   const debouncedState = useDebounce(state, 100)
 
