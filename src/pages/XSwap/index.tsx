@@ -336,6 +336,7 @@ function XSwap({
         currencies[Field.INPUT]?.symbol !== undefined &&
         currencies[Field.OUTPUT]?.symbol !== undefined
       ) {
+        console.log('== fetchPrice ==>', chainId, crossChain)
         await fetch(
           `${getAPIUrl(chainId)}/tokens/${getAddressBySymbol(
             currencies[Field.INPUT]?.symbol,

@@ -136,6 +136,7 @@ function useAllCommonPairsXswap(currencyA?: Currency, currencyB?: Currency): Pai
     [tokenA, tokenB, bases, basePairs, chainId]
   )
 
+  console.log('== allPairCombinations ==>', allPairCombinations)
   const allPairs = usePairsXswap(allPairCombinations)
   console.log('== allPairs ==>', allPairs)
 

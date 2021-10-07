@@ -63,8 +63,10 @@ export function usePair(tokenA?: Currency, tokenB?: Currency): [PairState, Pair 
 
 export function usePairsXswap(currencies: [Currency | undefined, Currency | undefined][]): [PairState, Pair | null][] {
   // const { chainId } = useActiveWeb3React()
-  const chainId = parseInt(window.localStorage.getItem('crossChain') ?? '3') as ChainId
+  const chainId = parseInt(window.localStorage.getItem('crossChain') ?? '') as ChainId
+  console.log('== usePairsXswap ==>', chainId)
 
+  // TODO : 이게 미리 안돌때가 있구만... ㅋㅋ
   const tokens = useMemo(
     () =>
       currencies.map(([currencyA, currencyB]) => [
@@ -73,6 +75,7 @@ export function usePairsXswap(currencies: [Currency | undefined, Currency | unde
       ]),
     [chainId, currencies]
   )
+  console.log('== usePairsXswap tokens ==>', tokens)
 
   const pairAddresses = useMemo(
     () =>
@@ -81,6 +84,7 @@ export function usePairsXswap(currencies: [Currency | undefined, Currency | unde
       }),
     [tokens]
   )
+  console.log('== usePairsXswap tokens ==>', pairAddresses)
 
   const results = useMultipleContractSingleData(pairAddresses, PAIR_INTERFACE, 'getReserves', chainId ?? ChainId.BAOBAB)
 
