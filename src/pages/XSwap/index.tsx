@@ -276,26 +276,13 @@ function XSwap({
   const swapInfo = useDerivedSwapInfo(currencyA ?? undefined, currencyB ?? undefined);
   const xSwapInfo = useDerivedXswapInfo(currencyA ?? undefined, currencyB ?? undefined);
 
-  let v2Trade;
-  let currencyBalances;
-  let parsedAmount;
-  let currencies;
-  let inputError;
-
-  if (chainId !== crossChain) {
-    v2Trade = xSwapInfo.v2Trade;
-    currencyBalances = xSwapInfo.currencyBalances;
-    parsedAmount = xSwapInfo.parsedAmount;
-    currencies = xSwapInfo.currencies;
-    inputError = xSwapInfo.inputError;
-  } else {
-    v2Trade = swapInfo.v2Trade;
-    currencyBalances = swapInfo.currencyBalances;
-    parsedAmount = swapInfo.parsedAmount;
-    currencies = swapInfo.currencies;
-    inputError = swapInfo.inputError;
-  }
-  const swapInputError = inputError;
+  const {
+    v2Trade,
+    currencyBalances,
+    parsedAmount,
+    currencies,
+    inputError: swapInputError,
+  } = (chainId !== crossChain) ? xSwapInfo : swapInfo;
 
   const {
     wrapType,
