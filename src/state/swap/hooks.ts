@@ -412,7 +412,6 @@ export function useDerivedXswapInfo(
   }
 
   const [allowedSlippage] = useUserSlippageTolerance();
-  console.log('== allowedSlippage ==>', allowedSlippage)
 
   const slippageAdjustedAmounts =
     v2Trade &&
