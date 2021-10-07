@@ -1,11 +1,13 @@
 import { useCallback, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { ChainId } from 'taalswap-sdk';
 import { useActiveWeb3React } from '../../hooks'
 import { addPopup, PopupContent, removePopup, toggleWalletModal, toggleSettingsMenu } from './actions'
 import { AppState } from '../index'
 
-export function useBlockNumber(): number | undefined {
-  const { chainId } = useActiveWeb3React()
+export function useBlockNumber(selectedChainId?: ChainId): number | undefined {
+  let { chainId } = useActiveWeb3React()
+  if (selectedChainId) chainId = selectedChainId
 
   return useSelector((state: AppState) => state.application.blockNumber[chainId ?? -1])
 }

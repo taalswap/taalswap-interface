@@ -6,6 +6,7 @@ import App from './pages/App';
 import ApplicationUpdater from './state/application/updater';
 import ListsUpdater from './state/lists/updater';
 import MulticallUpdater from './state/multicall/updater';
+import MulticallUpdaterXswap from './state/multicall/updaterX';
 import TransactionUpdater from './state/transactions/updater';
 import ToastListener from './components/ToastListener';
 import Providers from './Providers';
@@ -27,6 +28,7 @@ ReactDOM.render(
         <ListsUpdater />
         <ApplicationUpdater />
         <TransactionUpdater />
+        <MulticallUpdaterXswap />
         <MulticallUpdater />
         <ToastListener />
       </>

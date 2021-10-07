@@ -136,9 +136,7 @@ function useAllCommonPairsXswap(currencyA?: Currency, currencyB?: Currency): Pai
     [tokenA, tokenB, bases, basePairs, chainId]
   )
 
-  console.log('== allPairCombinations ==>', allPairCombinations)
   const allPairs = usePairsXswap(allPairCombinations)
-  console.log('== allPairs ==>', allPairs)
 
   // only pass along valid pairs, non-duplicated pairs
   return useMemo(
@@ -175,7 +173,6 @@ export function useTradeExactIn(currencyAmountIn?: CurrencyAmount, currencyOut?:
 
 export function useTradeExactInXswap(currencyAmountIn?: CurrencyAmount, currencyOut?: Currency): Trade | null {
   const allowedPairs = useAllCommonPairsXswap(currencyAmountIn?.currency, currencyOut)
-  console.log('== allowedPairs ==>', allowedPairs.length, allowedPairs)
 
   return useMemo(() => {
     if (currencyAmountIn && currencyOut && allowedPairs.length > 0) {

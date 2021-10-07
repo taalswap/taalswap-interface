@@ -20,11 +20,6 @@ export default function Updater(): null {
     blockNumber: null,
   })
 
-  const [state2, setState2] = useState<{ chainId: number | undefined; blockNumber: number | null }>({
-    chainId,
-    blockNumber: null,
-  })
-
   const blockNumberCallback = useCallback(
     (blockNumber: number) => {
       setState((s) => {

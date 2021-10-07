@@ -100,7 +100,7 @@ export function getContract(address: string, ABI: any, library: Web3Provider, ac
   if (chainId === undefined) chainId = ChainId.BAOBAB
 
   const xSwapCurrency = window.localStorage.getItem('xSwapCurrency')
-  if (xSwapCurrency === 'output') {
+  if (xSwapCurrency === 'output' || ChainId) {
     if (chainId > 1000) {
       const crossChainProvider = new ethers.providers.JsonRpcProvider(RPC_URL[chainId]);
       contract = new Contract(address, ABI, crossChainProvider);

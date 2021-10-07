@@ -322,7 +322,6 @@ export function useDerivedXswapInfo(
   let crossChain = parseInt(window.localStorage.getItem('crossChain') ?? '', 10)  as ChainId    // TODO: 상수 처리 ? 디폴트값
 
   if (Number.isNaN(crossChain)) crossChain = chainId
-  console.log('== chainId, crossChain ==>', chainId, crossChain)
 
   const outputCurrencyTAL = useCurrency(TAL_ADDRESS[chainId]);
   const inputCurrencyTAL = useCurrencyXswap(TAL_ADDRESS[crossChain]);
@@ -358,7 +357,6 @@ export function useDerivedXswapInfo(
       (isExactIn ? inputCurrencyTAL : outputCurrencyTAL) ?? undefined
     );
 
-    console.log('===>', bestTradeExactInXswap?.outputAmount.toSignificant(6))
     const bestTradeExactIn = useTradeExactInXswap(
       isExactIn ? parsedAmountInTAL : undefined,
       outputCurrency ?? undefined
@@ -369,7 +367,6 @@ export function useDerivedXswapInfo(
   //     outputCurrency ?? undefined
   //   );
   // }
-    console.log('===>', bestTradeExactIn)
 
   // let bestTradeExactOut
   // if (chainId !== crossChain) {

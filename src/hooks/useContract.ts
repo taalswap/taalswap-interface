@@ -12,8 +12,10 @@ import { getContract } from '../utils';
 import { useActiveWeb3React } from './index';
 
 // returns null on errors
-function useContract(address: string | undefined, ABI: any, withSignerIfPossible = true): Contract | null {
-  const { library, account, chainId } = useActiveWeb3React();
+function useContract(address: string | undefined, ABI: any, withSignerIfPossible = true, selectedChainId?: ChainId): Contract | null {
+  const { library, account } = useActiveWeb3React();
+  let { chainId } = useActiveWeb3React();
+  if (selectedChainId) chainId = selectedChainId;
 
   return useMemo(() => {
     if (!address || !ABI || !library) return null;
@@ -65,5 +67,5 @@ export function useMulticallContract(selectedChianId?: ChainId): Contract | null
   if (selectedChianId) {
     chainId = selectedChianId
   }
-  return useContract(chainId && MULTICALL_NETWORKS[chainId], MULTICALL_ABI, false);
+  return useContract(chainId && MULTICALL_NETWORKS[chainId], MULTICALL_ABI, false, chainId);
 }
