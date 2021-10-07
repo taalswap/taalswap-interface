@@ -330,10 +330,10 @@ export function useDerivedXswapInfo(
   const to: string | null =
     (recipient === null ? account : recipientLookup.address) ?? null;
 
-  const relevantTokenBalances = useCurrencyBalances(account ?? undefined, [
-    inputCurrency ?? undefined,
-    outputCurrency ?? undefined,
-  ]);
+  // const relevantTokenBalances = useCurrencyBalances(account ?? undefined, [
+  //   inputCurrency ?? undefined,
+  //   outputCurrency ?? undefined,
+  // ]);
 
   const isExactIn: boolean = independentField === Field.INPUT;
   const parsedAmount = tryParseAmount(
@@ -341,55 +341,39 @@ export function useDerivedXswapInfo(
     (isExactIn ? inputCurrency : outputCurrency) ?? undefined
   );
 
-  /*
-   * React Hook "useTradeExactOut" is called conditionally.
-   * React Hooks must be called in the exact same order in every component render
-   */
-  // let bestTradeExactIn
-  // if (chainId !== crossChain) {
-    const bestTradeExactInXswap = useTradeExactIn(
-      isExactIn ? parsedAmount : undefined,
-      outputCurrencyTAL ?? undefined
-    );
+  // input -> TAL -> TAL -> output
+  const bestTradeExactInXswap = useTradeExactIn(
+    isExactIn ? parsedAmount : undefined,
+    outputCurrencyTAL ?? undefined
+  );
+  const parsedAmountInTAL = tryParseAmountXswap(
+    bestTradeExactInXswap?.outputAmount.toSignificant(6),
+    (isExactIn ? inputCurrencyTAL : outputCurrencyTAL) ?? undefined
+  );
+  const bestTradeExactIn = useTradeExactInXswap(
+    isExactIn ? parsedAmountInTAL : undefined,
+    outputCurrency ?? undefined
+  );
 
-    const parsedAmountInTAL = tryParseAmountXswap(
-      bestTradeExactInXswap?.outputAmount.toSignificant(6),
-      (isExactIn ? inputCurrencyTAL : outputCurrencyTAL) ?? undefined
-    );
+  // output -> TAL -> TAL -> input
+  const bestTradeExactOutXswap = useTradeExactOut(
+    inputCurrencyTAL ?? undefined,
+    !isExactIn ? parsedAmount : undefined
+  );
+  const parsedAmountOutTAL = tryParseAmountXswap(
+    bestTradeExactOutXswap?.outputAmount.toSignificant(6),
+    (isExactIn ? inputCurrencyTAL : outputCurrencyTAL) ?? undefined
+  );
+  const bestTradeExactOut = useTradeExactOut(
+    inputCurrency ?? undefined,
+    !isExactIn ? parsedAmountOutTAL : undefined
+  );
 
-    const bestTradeExactIn = useTradeExactInXswap(
-      isExactIn ? parsedAmountInTAL : undefined,
-      outputCurrency ?? undefined
-    );
-  // } else {
-  //   bestTradeExactIn = useTradeExactIn(
-  //     isExactIn ? parsedAmount : undefined,
-  //     outputCurrency ?? undefined
-  //   );
-  // }
-
-  // let bestTradeExactOut
-  // if (chainId !== crossChain) {
-    const bestTradeExactOutXswap = useTradeExactOut(
-      inputCurrencyTAL ?? undefined,
-      !isExactIn ? parsedAmount : undefined
-    );
-
-    const parsedAmountOutTAL = tryParseAmountXswap(
-      bestTradeExactOutXswap?.outputAmount.toSignificant(6),
-      (isExactIn ? inputCurrencyTAL : outputCurrencyTAL) ?? undefined
-    );
-
-    const bestTradeExactOut = useTradeExactOut(
-      inputCurrency ?? undefined,
-      !isExactIn ? parsedAmountOutTAL : undefined
-    );
-  // } else {
-  //   bestTradeExactOut = useTradeExactOut(
-  //     inputCurrency ?? undefined,
-  //     !isExactIn ? parsedAmount : undefined
-  //   );
-  // }
+  const relevantTokenBalances = useCurrencyBalances(account ?? undefined, [
+    inputCurrencyTAL ?? undefined,
+    outputCurrency ?? undefined,
+  ]);
+  // console.log('== relevantTokenBalances ==>', relevantTokenBalances)
 
   const v2Trade = isExactIn ? bestTradeExactIn : bestTradeExactOut;
 
@@ -428,6 +412,7 @@ export function useDerivedXswapInfo(
   }
 
   const [allowedSlippage] = useUserSlippageTolerance();
+  console.log('== allowedSlippage ==>', allowedSlippage)
 
   const slippageAdjustedAmounts =
     v2Trade &&
