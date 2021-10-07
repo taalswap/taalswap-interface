@@ -568,6 +568,7 @@ export function useDefaultsFromURLSearch():
     if (!chainId) return;
     if (xSwapCurreny === undefined || xSwapCurreny === 'output') return;
     const parsed = queryParametersToSwapState(parsedQs);
+    if (parsed[Field.INPUT].currencyId !== undefined) return;
 
     dispatch(
       replaceSwapState({
