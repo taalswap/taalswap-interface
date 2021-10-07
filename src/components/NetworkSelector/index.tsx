@@ -44,6 +44,17 @@ const NetworkSelector = ({ onSetCrossChain, id }) => {
   };
 
   useEffect(() => {
+    window.addEventListener('beforeunload', removeCrossChainId);
+    return () => {
+      window.removeEventListener('beforeunload', removeCrossChainId);
+    };
+  }, []);
+
+  const removeCrossChainId = (e) => {
+    window.localStorage.removeItem('crossChain');
+  };
+
+  useEffect(() => {
     if (id === 'swap-currency-input') {
       setSelectedChainId(currentChainId);
     }
@@ -55,11 +66,11 @@ const NetworkSelector = ({ onSetCrossChain, id }) => {
     }
   }, [currentChainId, crossChainId, onSetCrossChain, id]);
 
-  useEffect(() => {
-    return () => {
-      window.localStorage.removeItem('crossChain');
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     window.localStorage.removeItem('crossChain');
+  //   };
+  // }, []);
 
   return (
     <NetworkSelectBox
