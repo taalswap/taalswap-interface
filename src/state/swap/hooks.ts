@@ -552,6 +552,7 @@ export function useDefaultsFromURLSearch():
     }
   | undefined {
   const { chainId } = useActiveWeb3React();
+  const refresh = window.localStorage.getItem('refresh')
   const xSwapCurreny = window.localStorage.getItem('xSwapCurreny')
   const dispatch = useDispatch<AppDispatch>();
   const parsedQs = useParsedQueryString();
@@ -568,7 +569,8 @@ export function useDefaultsFromURLSearch():
     if (!chainId) return;
     if (xSwapCurreny === undefined || xSwapCurreny === 'output') return;
     const parsed = queryParametersToSwapState(parsedQs);
-    if (parsed[Field.INPUT].currencyId !== undefined) return;
+    // TODO : 네트웤트가 스위치 된 경우에는 replace 되도록 처리할 것...
+    if (refresh === 'false' && parsed[Field.INPUT].currencyId !== undefined) return;
 
     dispatch(
       replaceSwapState({
@@ -586,7 +588,7 @@ export function useDefaultsFromURLSearch():
       outputCurrencyId: parsed[Field.OUTPUT].currencyId,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, chainId]);
+  }, [dispatch, chainId, refresh]);
 
   return result;
 }
