@@ -288,10 +288,12 @@ function XSwap({
   const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE;
   const trade = showWrap ? undefined : v2Trade;
 
-  const chainId = window.localStorage.getItem('chainId');
+  const chainId = window.localStorage.getItem('chainId') ?? '0';
+  const prevChainId = window.localStorage.getItem('prevChainId') ?? '0';
+  const crossChain = window.localStorage.getItem('crossChain') ?? '0';
 
   const getAddressBySymbol = useCallback(
-    (symbol: string | undefined) => {
+    (symbol: string | undefined, targetChainId: string) => {
       let curSymbol;
       if (symbol === 'ETH') curSymbol = 'WETH';
       else if (symbol === 'KLAY') curSymbol = 'WKLAY';
@@ -302,13 +304,13 @@ function XSwap({
           ? TOKEN_LIST.tokens.find(
               (token) =>
                 token.symbol === curSymbol &&
-                token.chainId.toString() === chainId
+                token.chainId.toString() === targetChainId
             )
           : null;
 
       return curToken?.address;
     },
-    [chainId]
+    []
   );
 
   useEffect(() => {
@@ -318,8 +320,9 @@ function XSwap({
         currencies[Field.OUTPUT]?.symbol !== undefined
       ) {
         await fetch(
-          `${getAPIUrl('3')}/tokens/${getAddressBySymbol(
-            currencies[Field.INPUT]?.symbol
+          `${getAPIUrl(chainId)}/tokens/${getAddressBySymbol(
+            currencies[Field.INPUT]?.symbol,
+            chainId
           )}`,
           // 'https://taalswap-info-api-black.vercel.app/api/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7',
           {
@@ -335,9 +338,11 @@ function XSwap({
           });
 
         await fetch(
-          `${getAPIUrl('1001')}/tokens/${getAddressBySymbol(
-            currencies[Field.OUTPUT]?.symbol
+          `${getAPIUrl(crossChain)}/tokens/${getAddressBySymbol(
+            currencies[Field.OUTPUT]?.symbol,
+            crossChain
           )}`,
+
           // 'https://taalswap-info-api-black.vercel.app/api/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7',
           {
             method: 'GET',
@@ -353,7 +358,7 @@ function XSwap({
       }
     }
     fetchPrice();
-  }, [currencies, getAddressBySymbol]);
+  }, [currencies, getAddressBySymbol, chainId, crossChain]);
 
   // Manage disabled trading pairs that should redirect users to V2
   useEffect(() => {
@@ -657,29 +662,36 @@ function XSwap({
   );
 
   const [switched, setSwitched] = useState<boolean>(false);
-  const inputCurrency = window.localStorage.getItem('INPUT') ?? ''
-  const outputCurrency = window.localStorage.getItem('OUTPUT') ?? ''
+  const inputCurrency = window.localStorage.getItem('INPUT') ?? '';
+  const outputCurrency = window.localStorage.getItem('OUTPUT') ?? '';
   const newCurrencyA = useCurrency(outputCurrency);
   const newCurrencyB = useCurrencyXswap(inputCurrency);
 
   useEffect(() => {
     if (switched && newCurrencyA && newCurrencyB) {
-      onCurrencySelection(Field.INPUT, newCurrencyA)
-      onCurrencySelection(Field.OUTPUT, newCurrencyB)
+      onCurrencySelection(Field.INPUT, newCurrencyA);
+      onCurrencySelection(Field.OUTPUT, newCurrencyB);
       // window.localStorage.removeItem('INPUT')
       // window.localStorage.removeItem('OUTPUT')
-      setSwitched(false)
+      setSwitched(false);
     }
-  }, [switched, onCurrencySelection, inputCurrency, outputCurrency, newCurrencyA, newCurrencyB]);
+  }, [
+    switched,
+    onCurrencySelection,
+    inputCurrency,
+    outputCurrency,
+    newCurrencyA,
+    newCurrencyB,
+  ]);
 
-  const { INPUT, OUTPUT } = useSwapState()
+  const { INPUT, OUTPUT } = useSwapState();
 
   const handleSwitchNetwork = useCallback(() => {
-    window.localStorage.setItem('INPUT', INPUT.currencyId ?? '')
-    window.localStorage.setItem('OUTPUT', OUTPUT.currencyId ?? '')
+    window.localStorage.setItem('INPUT', INPUT.currencyId ?? '');
+    window.localStorage.setItem('OUTPUT', OUTPUT.currencyId ?? '');
 
-    const prevChainId = window.localStorage.getItem('prevChainId') ?? '0';
-    const crossChain = window.localStorage.getItem('crossChain') ?? '0';
+    // const prevChainId = window.localStorage.getItem('prevChainId') ?? '0';
+    // const crossChain = window.localStorage.getItem('crossChain') ?? '0';
 
     if (chainId !== crossChain.toString()) {
       onSetCrossChain(
@@ -703,12 +715,19 @@ function XSwap({
         chainId !== undefined && chainId !== null ? chainId.toString() : '0'
       );
       window.localStorage.setItem('refresh', 'true');
-      login(ConnectorNames.Injected)
-        .then(() => {
-          setSwitched(true)
-        });
+      login(ConnectorNames.Injected).then(() => {
+        setSwitched(true);
+      });
     }
-  }, [onSetCrossChain, chainId, login, INPUT.currencyId, OUTPUT.currencyId]);
+  }, [
+    onSetCrossChain,
+    chainId,
+    login,
+    INPUT.currencyId,
+    OUTPUT.currencyId,
+    crossChain,
+    prevChainId,
+  ]);
   // const { chainId } = useActiveWeb3React();
 
   return (
