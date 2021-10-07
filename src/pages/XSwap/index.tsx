@@ -61,10 +61,10 @@ import { useSwapCallback } from 'hooks/useSwapCallback';
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback';
 import { Field } from 'state/swap/actions';
 import {
-  useDefaultsFromURLSearch,
-  useDerivedSwapInfo,
+  useDefaultsFromURLSearch, useDerivedSwapInfo,
+  useDerivedXswapInfo,
   useSwapActionHandlers,
-  useSwapState,
+  useSwapState
 } from 'state/swap/hooks';
 import {
   useExpertModeManager,
@@ -261,6 +261,10 @@ function XSwap({
   const { account } = useActiveWeb3React();
   const theme = useContext(ThemeContext);
 
+  const chainId = window.localStorage.getItem('chainId') ?? '0';
+  const prevChainId = window.localStorage.getItem('prevChainId') ?? '0';
+  const crossChain = window.localStorage.getItem('crossChain') ?? '0';
+
   const [isExpertMode] = useExpertModeManager();
 
   // get custom setting values for user
@@ -269,13 +273,30 @@ function XSwap({
 
   // swap state
   const { independentField, typedValue, recipient } = useSwapState();
-  const {
-    v2Trade,
-    currencyBalances,
-    parsedAmount,
-    currencies,
-    inputError: swapInputError,
-  } = useDerivedSwapInfo(currencyA ?? undefined, currencyB ?? undefined);
+  const swapInfo = useDerivedSwapInfo(currencyA ?? undefined, currencyB ?? undefined);
+  const xSwapInfo = useDerivedXswapInfo(currencyA ?? undefined, currencyB ?? undefined);
+
+  let v2Trade;
+  let currencyBalances;
+  let parsedAmount;
+  let currencies;
+  let inputError;
+
+  if (chainId !== crossChain) {
+    v2Trade = xSwapInfo.v2Trade;
+    currencyBalances = xSwapInfo.currencyBalances;
+    parsedAmount = xSwapInfo.parsedAmount;
+    currencies = xSwapInfo.currencies;
+    inputError = xSwapInfo.inputError;
+  } else {
+    v2Trade = swapInfo.v2Trade;
+    currencyBalances = swapInfo.currencyBalances;
+    parsedAmount = swapInfo.parsedAmount;
+    currencies = swapInfo.currencies;
+    inputError = swapInfo.inputError;
+  }
+  const swapInputError = inputError;
+
   const {
     wrapType,
     execute: onWrap,
@@ -287,10 +308,6 @@ function XSwap({
   );
   const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE;
   const trade = showWrap ? undefined : v2Trade;
-
-  const chainId = window.localStorage.getItem('chainId') ?? '0';
-  const prevChainId = window.localStorage.getItem('prevChainId') ?? '0';
-  const crossChain = window.localStorage.getItem('crossChain') ?? '0';
 
   const getAddressBySymbol = useCallback(
     (symbol: string | undefined, targetChainId: string) => {
@@ -469,7 +486,7 @@ function XSwap({
       setCurrencyBFlag(false);
       onCurrencySelection(Field.OUTPUT, currencyB);
     }
-    console.log(currencyB?.symbol);
+    // console.log(currencyB?.symbol);
   }, [currencyAFlag, currencyBFlag, currencyA, currencyB, onCurrencySelection]);
   // if (currencyA !== null && currencyA !== undefined) {
   //   onCurrencySelection(Field.INPUT, currencyA);

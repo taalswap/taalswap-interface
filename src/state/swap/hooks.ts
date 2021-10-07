@@ -7,7 +7,7 @@ import {
   JSBI,
   Token,
   TokenAmount,
-  Trade,
+  Trade, ChainId
 } from 'taalswap-sdk';
 import { ParsedQs } from 'qs';
 import { useCallback, useEffect, useState } from 'react';
@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useENS from '../../hooks/useENS';
 import { useActiveWeb3React } from '../../hooks';
 import { useCurrency } from '../../hooks/Tokens';
-import { useTradeExactIn, useTradeExactOut } from '../../hooks/Trades';
+import { useTradeExactIn, useTradeExactOut, useTradeExactInXswap } from '../../hooks/Trades';
 import useParsedQueryString from '../../hooks/useParsedQueryString';
 import { isAddress } from '../../utils';
 import { AppDispatch, AppState } from '../index';
@@ -36,6 +36,7 @@ import { computeSlippageAdjustedAmounts } from '../../utils/prices';
 import { useTranslation } from '../../contexts/Localization';
 import getChainId from "../../utils/getChainId";
 import { useCurrencyXswap } from '../../hooks/TokensXswap';
+import { TAL_ADDRESS } from '../../constants';
 
 export function useSwapState(): AppState['swap'] {
   return useSelector<AppState, AppState['swap']>((state) => state.swap);
@@ -128,6 +129,32 @@ export function tryParseAmount(
   return undefined;
 }
 
+export function tryParseAmountXswap(
+  value?: string,
+  currency?: Currency
+): CurrencyAmount | undefined {
+  if (!value || !currency) {
+    return undefined;
+  }
+  try {
+    // const chainId = getChainId();
+    const chainId = parseInt(window.localStorage.getItem('crossChain') ?? '3') as ChainId
+    const typedValueParsed = parseUnits(value, currency.decimals).toString();
+    if (typedValueParsed !== '0') {
+      return currency instanceof Token
+        ? new TokenAmount(currency, JSBI.BigInt(typedValueParsed))
+        : chainId > 1000
+          ? CurrencyAmount.klaytn(JSBI.BigInt(typedValueParsed))
+          : CurrencyAmount.ether(JSBI.BigInt(typedValueParsed));
+    }
+  } catch (error) {
+    // should fail if the user specifies too many decimal places of precision (or maybe exceed max uint?)
+    console.info(`Failed to parse input amount: "${value}"`, error);
+  }
+  // necessary for all paths to return a value
+  return undefined;
+}
+
 const BAD_RECIPIENT_ADDRESSES: string[] = [
   '0xBCfCcbde45cE874adCB698cC183deBcF17952812', // v2 factory
   '0xf164fC0Ec4E93095b804a4795bBe1e041497b92a', // v2 router 01
@@ -170,7 +197,7 @@ export function useDerivedSwapInfo(
   } = useSwapState();
 
   const inputCurrency = useCurrency(inputCurrencyId);
-  const outputCurrency = useCurrencyXswap(outputCurrencyId);
+  const outputCurrency = useCurrency(outputCurrencyId);
   const recipientLookup = useENS(recipient ?? undefined);
   const to: string | null =
     (recipient === null ? account : recipientLookup.address) ?? null;
@@ -247,6 +274,178 @@ export function useDerivedSwapInfo(
   if (balanceIn && amountIn && balanceIn.lessThan(amountIn)) {
     // inputError = `Insufficient ${amountIn.currency.symbol} balance`;
     const chainId = parseInt(window.localStorage.getItem("chainId") ?? "1")
+    let SYMBOL = 'ETH'
+    if (amountIn.currency.symbol === 'ETH') {
+      if (chainId > 1000) SYMBOL = 'KLAY'
+    } else {
+      SYMBOL = amountIn.currency.symbol ?? ''
+    }
+    inputError = t(`Insufficient %symbol% balance`, {
+      symbol: SYMBOL
+    });
+  }
+
+  return {
+    currencies,
+    currencyBalances,
+    parsedAmount,
+    v2Trade: v2Trade ?? undefined,
+    inputError,
+  };
+}
+
+// compute the best cross chain trade and return it. input -> TAL -> TAL -> output
+export function useDerivedXswapInfo(
+  currencyA: Currency | undefined,
+  currencyB: Currency | undefined
+): {
+  currencies: { [field in Field]?: Currency };
+  currencyBalances: { [field in Field]?: CurrencyAmount };
+  parsedAmount: CurrencyAmount | undefined;
+  v2Trade: Trade | undefined;
+  inputError?: string;
+} {
+  const { account } = useActiveWeb3React();
+  const { t } = useTranslation();
+  const {
+    independentField,
+    typedValue,
+    [Field.INPUT]: { currencyId: inputCurrencyId },
+    [Field.OUTPUT]: { currencyId: outputCurrencyId },
+    recipient,
+  } = useSwapState();
+
+  const inputCurrency = useCurrency(inputCurrencyId);
+  const outputCurrency = useCurrencyXswap(outputCurrencyId);
+
+  const chainId = parseInt(window.localStorage.getItem('chainId') ?? '', 10) as ChainId           // TODO: 상수 처리 ? 디폴트값
+  let crossChain = parseInt(window.localStorage.getItem('crossChain') ?? '', 10)  as ChainId    // TODO: 상수 처리 ? 디폴트값
+
+  if (Number.isNaN(crossChain)) crossChain = chainId
+  console.log('== chainId, crossChain ==>', chainId, crossChain)
+
+  const outputCurrencyTAL = useCurrency(TAL_ADDRESS[chainId]);
+  const inputCurrencyTAL = useCurrencyXswap(TAL_ADDRESS[crossChain]);
+
+  const recipientLookup = useENS(recipient ?? undefined);
+  const to: string | null =
+    (recipient === null ? account : recipientLookup.address) ?? null;
+
+  const relevantTokenBalances = useCurrencyBalances(account ?? undefined, [
+    inputCurrency ?? undefined,
+    outputCurrency ?? undefined,
+  ]);
+
+  const isExactIn: boolean = independentField === Field.INPUT;
+  const parsedAmount = tryParseAmount(
+    typedValue,
+    (isExactIn ? inputCurrency : outputCurrency) ?? undefined
+  );
+
+  /*
+   * React Hook "useTradeExactOut" is called conditionally.
+   * React Hooks must be called in the exact same order in every component render
+   */
+  // let bestTradeExactIn
+  // if (chainId !== crossChain) {
+    const bestTradeExactInXswap = useTradeExactIn(
+      isExactIn ? parsedAmount : undefined,
+      outputCurrencyTAL ?? undefined
+    );
+
+    const parsedAmountInTAL = tryParseAmountXswap(
+      bestTradeExactInXswap?.outputAmount.toSignificant(6),
+      (isExactIn ? inputCurrencyTAL : outputCurrencyTAL) ?? undefined
+    );
+
+    console.log('===>', bestTradeExactInXswap?.outputAmount.toSignificant(6))
+    const bestTradeExactIn = useTradeExactInXswap(
+      isExactIn ? parsedAmountInTAL : undefined,
+      outputCurrency ?? undefined
+    );
+  // } else {
+  //   bestTradeExactIn = useTradeExactIn(
+  //     isExactIn ? parsedAmount : undefined,
+  //     outputCurrency ?? undefined
+  //   );
+  // }
+    console.log('===>', bestTradeExactIn)
+
+  // let bestTradeExactOut
+  // if (chainId !== crossChain) {
+    const bestTradeExactOutXswap = useTradeExactOut(
+      inputCurrencyTAL ?? undefined,
+      !isExactIn ? parsedAmount : undefined
+    );
+
+    const parsedAmountOutTAL = tryParseAmountXswap(
+      bestTradeExactOutXswap?.outputAmount.toSignificant(6),
+      (isExactIn ? inputCurrencyTAL : outputCurrencyTAL) ?? undefined
+    );
+
+    const bestTradeExactOut = useTradeExactOut(
+      inputCurrency ?? undefined,
+      !isExactIn ? parsedAmountOutTAL : undefined
+    );
+  // } else {
+  //   bestTradeExactOut = useTradeExactOut(
+  //     inputCurrency ?? undefined,
+  //     !isExactIn ? parsedAmount : undefined
+  //   );
+  // }
+
+  const v2Trade = isExactIn ? bestTradeExactIn : bestTradeExactOut;
+
+  const currencyBalances = {
+    [Field.INPUT]: relevantTokenBalances[0],
+    [Field.OUTPUT]: relevantTokenBalances[1],
+  };
+
+  const currencies: { [field in Field]?: Currency } = {
+    [Field.INPUT]: inputCurrency ?? undefined,
+    [Field.OUTPUT]: outputCurrency ?? undefined,
+  };
+
+  let inputError: string | undefined;
+  if (!account) {
+    inputError = t('Connect Wallet');
+  }
+
+  if (!parsedAmount) {
+    inputError = inputError ?? t('Enter an amount');
+  }
+
+  if (!currencies[Field.INPUT] || !currencies[Field.OUTPUT]) {
+    inputError = inputError ?? t('Select a token');
+  }
+
+  const formattedTo = isAddress(to);
+  if (!to || !formattedTo) {
+    inputError = inputError ?? t('Enter a recipient');
+  } else if (
+    BAD_RECIPIENT_ADDRESSES.indexOf(formattedTo) !== -1 ||
+    (bestTradeExactIn && involvesAddress(bestTradeExactIn, formattedTo)) ||
+    (bestTradeExactOut && involvesAddress(bestTradeExactOut, formattedTo))
+  ) {
+    inputError = inputError ?? 'Invalid recipient';
+  }
+
+  const [allowedSlippage] = useUserSlippageTolerance();
+
+  const slippageAdjustedAmounts =
+    v2Trade &&
+    allowedSlippage &&
+    computeSlippageAdjustedAmounts(v2Trade, allowedSlippage);
+
+  // compare input balance to max input based on version
+  const [balanceIn, amountIn] = [
+    currencyBalances[Field.INPUT],
+    slippageAdjustedAmounts ? slippageAdjustedAmounts[Field.INPUT] : null,
+  ];
+
+  if (balanceIn && amountIn && balanceIn.lessThan(amountIn)) {
+    // inputError = `Insufficient ${amountIn.currency.symbol} balance`;
+    // const chainId = parseInt(window.localStorage.getItem("chainId") ?? "1")
     let SYMBOL = 'ETH'
     if (amountIn.currency.symbol === 'ETH') {
       if (chainId > 1000) SYMBOL = 'KLAY'
