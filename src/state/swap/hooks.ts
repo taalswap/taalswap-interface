@@ -552,6 +552,7 @@ export function useDefaultsFromURLSearch():
     }
   | undefined {
   const { chainId } = useActiveWeb3React();
+  const xSwapCurreny = window.localStorage.getItem('xSwapCurreny')
   const dispatch = useDispatch<AppDispatch>();
   const parsedQs = useParsedQueryString();
   const [result, setResult] =
@@ -565,6 +566,7 @@ export function useDefaultsFromURLSearch():
 
   useEffect(() => {
     if (!chainId) return;
+    if (xSwapCurreny === undefined || xSwapCurreny === 'output') return;
     const parsed = queryParametersToSwapState(parsedQs);
 
     dispatch(
