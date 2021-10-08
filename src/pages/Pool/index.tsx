@@ -19,6 +19,7 @@ import { Dots } from 'components/swap/styleds';
 import PageHeader from 'components/PageHeader';
 import AppBody from '../AppBody';
 import Teaser from '../LandingPageView/Teaser_page';
+import resetXswap from '../../utils/resetXswap';
 
 const ReferenceElement = styled.div`
   display: flex;
@@ -40,6 +41,7 @@ const CardBodyWrap = styled.div`
 `;
 
 export default function Pool() {
+  resetXswap();
   const { t } = useTranslation();
   const theme = useContext(ThemeContext);
   const { account, chainId } = useActiveWeb3React();
