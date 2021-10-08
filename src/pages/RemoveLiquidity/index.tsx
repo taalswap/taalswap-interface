@@ -66,7 +66,6 @@ import {
 } from '../../state/user/hooks';
 import { useTranslation } from '../../contexts/Localization';
 import getRouterAddress from '../../utils/getRouterAddress';
-import resetXswap from '../../utils/resetXswap';
 
 const OutlineCard = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.disabled};
@@ -86,7 +85,6 @@ export default function RemoveLiquidity({
     params: { currencyIdA, currencyIdB },
   },
 }: RouteComponentProps<{ currencyIdA: string; currencyIdB: string }>) {
-  resetXswap();
   const [currencyA, currencyB] = [
     useCurrency(currencyIdA) ?? undefined,
     useCurrency(currencyIdB) ?? undefined,

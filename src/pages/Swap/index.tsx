@@ -79,7 +79,6 @@ import getAPIUrl from 'utils/getAPIUrl';
 import AppBody from '../AppBody';
 import Teaser from '../LandingPageView/Teaser_page';
 import TOKEN_LIST from '../../constants/token/taalswap.json';
-import resetXswap from '../../utils/resetXswap';
 
 // const CACHE_KEY = 'pancakeswap_language';
 const CACHE_KEY = 'taalswap_language';
@@ -196,7 +195,6 @@ function Swap({
   },
   history,
 }: RouteComponentProps<{ currencyIdA?: string; currencyIdB?: string }>) {
-  resetXswap();
   const { isSm, isXs, isMd } = useMatchBreakpoints();
   const currencyA = useCurrency(currencyIdA);
   const currencyB = useCurrency(currencyIdB);

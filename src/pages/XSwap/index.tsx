@@ -735,6 +735,16 @@ function XSwap({
   ]);
   // const { chainId } = useActiveWeb3React();
 
+  // When leaves XSwap menu clear localStorage items...
+  useEffect(() => {
+    history.listen((location, action) => {
+      console.log(`The current URL is ${location.pathname}`)
+      if (location.pathname !== '/Xswap') {
+        window.localStorage.removeItem('crossChain');
+      }
+    })
+  }, [history]);
+
   return (
     <Container>
       {/* <Teaser /> */}

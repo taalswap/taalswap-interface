@@ -66,7 +66,6 @@ import { PoolPriceBar } from './PoolPriceBar';
 import { ROUTER_ADDRESS } from '../../constants';
 import { useTranslation } from '../../contexts/Localization';
 import getRouterAddress from '../../utils/getRouterAddress';
-import resetXswap from '../../utils/resetXswap';
 
 // const CACHE_KEY = 'pancakeswap_language';
 const CACHE_KEY = 'taalswap_language';
@@ -180,7 +179,6 @@ export default function AddLiquidity({
   },
   history,
 }: RouteComponentProps<{ currencyIdA?: string; currencyIdB?: string }>) {
-  resetXswap();
   const { account, chainId, library } = useActiveWeb3React();
   const currencyA = useCurrency(currencyIdA);
   const currencyB = useCurrency(currencyIdB);
