@@ -25,7 +25,7 @@ describe('multicall reducer', () => {
     it('adds listeners', () => {
       store.dispatch(
         addMulticallListeners({
-          chainId: 1,
+          selectedChainId: 1,
           calls: [
             {
               address: DAI_ADDRESS,
@@ -57,7 +57,7 @@ describe('multicall reducer', () => {
               callData: '0x'
             }
           ],
-          chainId: 1
+          selectedChainId: 1
         })
       )
       expect(store.getState()).toEqual({ callResults: {}, callListeners: {} })
@@ -65,7 +65,7 @@ describe('multicall reducer', () => {
     it('removes listeners', () => {
       store.dispatch(
         addMulticallListeners({
-          chainId: 1,
+          selectedChainId: 1,
           calls: [
             {
               address: DAI_ADDRESS,
@@ -82,7 +82,7 @@ describe('multicall reducer', () => {
               callData: '0x'
             }
           ],
-          chainId: 1
+          selectedChainId: 1
         })
       )
       expect(store.getState()).toEqual({
