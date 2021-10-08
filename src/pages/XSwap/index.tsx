@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, JSBI, Token, Trade } from 'taalswap-sdk';
+import { ChainId, Currency, CurrencyAmount, JSBI, Token, Trade } from 'taalswap-sdk';
 import React, {
   useCallback,
   useContext,
@@ -261,9 +261,10 @@ function XSwap({
   const { account } = useActiveWeb3React();
   const theme = useContext(ThemeContext);
 
+  // TODO: 상수 처리 ... 디폴트 값 ?
   const chainId = window.localStorage.getItem('chainId') ?? '0';
   const prevChainId = window.localStorage.getItem('prevChainId') ?? '0';
-  const crossChain = window.localStorage.getItem('crossChain') ?? '0';
+  const crossChain = window.localStorage.getItem('crossChain') ?? process.env.REACT_APP_CHAIN_ID ?? ChainId.ROPSTEN.toString();
 
   const [isExpertMode] = useExpertModeManager();
 
@@ -323,7 +324,6 @@ function XSwap({
         currencies[Field.INPUT]?.symbol !== undefined &&
         currencies[Field.OUTPUT]?.symbol !== undefined
       ) {
-        // console.log('== fetchPrice ==>', chainId, crossChain)
         await fetch(
           `${getAPIUrl(chainId)}/tokens/${getAddressBySymbol(
             currencies[Field.INPUT]?.symbol,

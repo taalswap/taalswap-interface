@@ -200,3 +200,18 @@ export function useTradeExactOut(currencyIn?: Currency, currencyAmountOut?: Curr
     return null
   }, [allowedPairs, currencyIn, currencyAmountOut])
 }
+
+export function useTradeExactOutXswap(currencyIn?: Currency, currencyAmountOut?: CurrencyAmount): Trade | null {
+  const allowedPairs = useAllCommonPairsXswap(currencyIn, currencyAmountOut?.currency)
+
+  return useMemo(() => {
+    if (currencyIn && currencyAmountOut && allowedPairs.length > 0) {
+      return (
+        Trade.bestTradeExactOut(allowedPairs, currencyIn, currencyAmountOut, { maxHops: 3, maxNumResults: 1 })[0] ??
+        null
+      )
+    }
+    return null
+  }, [allowedPairs, currencyIn, currencyAmountOut])
+
+}

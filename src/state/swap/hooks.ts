@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useENS from '../../hooks/useENS';
 import { useActiveWeb3React } from '../../hooks';
 import { useCurrency } from '../../hooks/Tokens';
-import { useTradeExactIn, useTradeExactOut, useTradeExactInXswap } from '../../hooks/Trades';
+import { useTradeExactIn, useTradeExactOut, useTradeExactInXswap, useTradeExactOutXswap } from '../../hooks/Trades';
 import useParsedQueryString from '../../hooks/useParsedQueryString';
 import { isAddress } from '../../utils';
 import { AppDispatch, AppState } from '../index';
@@ -351,7 +351,7 @@ export function useDerivedXswapInfo(
   );
 
   // output -> TAL -> TAL -> input
-  const bestTradeExactOutXswap = useTradeExactOut(
+  const bestTradeExactOutXswap = useTradeExactOutXswap(
     inputCurrencyTAL ?? undefined,
     !isExactIn ? parsedAmount : undefined
   );
