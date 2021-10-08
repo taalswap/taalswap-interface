@@ -330,11 +330,6 @@ export function useDerivedXswapInfo(
   const to: string | null =
     (recipient === null ? account : recipientLookup.address) ?? null;
 
-  // const relevantTokenBalances = useCurrencyBalances(account ?? undefined, [
-  //   inputCurrency ?? undefined,
-  //   outputCurrency ?? undefined,
-  // ]);
-
   const isExactIn: boolean = independentField === Field.INPUT;
   const parsedAmount = tryParseAmount(
     typedValue,
@@ -375,7 +370,10 @@ export function useDerivedXswapInfo(
   ]);
   // console.log('== relevantTokenBalances ==>', relevantTokenBalances)
 
-  const v2Trade = isExactIn ? bestTradeExactIn : bestTradeExactOut;
+  const v2Trade = isExactIn
+    ? (outputCurrency?.symbol === 'ETH' || outputCurrency?.symbol === 'KTAL')
+    ? bestTradeExactInXswap : bestTradeExactIn
+    : bestTradeExactOut;
 
   const currencyBalances = {
     [Field.INPUT]: relevantTokenBalances[0],
