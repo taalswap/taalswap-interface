@@ -279,6 +279,7 @@ function XSwap({
 
   const {
     v2Trade,
+    v2TradeX,
     currencyBalances,
     currencyBalancesOrg,
     parsedAmount,
@@ -297,6 +298,7 @@ function XSwap({
   );
   const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE;
   const trade = showWrap ? undefined : v2Trade;
+  const tradeX = showWrap ? undefined : v2TradeX;
 
   const getAddressBySymbol = useCallback(
     (symbol: string | undefined, targetChainId: string) => {
@@ -745,6 +747,9 @@ function XSwap({
       }
     })
   }, [history]);
+
+  console.log('== trade ===>', trade);
+  console.log('== tradeX ===>', tradeX);
 
   return (
     <Container>

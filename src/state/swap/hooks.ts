@@ -185,6 +185,7 @@ export function useDerivedSwapInfo(
   currencyBalancesOrg: { [field in Field]?: CurrencyAmount };
   parsedAmount: CurrencyAmount | undefined;
   v2Trade: Trade | undefined;
+  v2TradeX: Trade | undefined;
   inputError?: string;
 } {
   const { account } = useActiveWeb3React();
@@ -224,6 +225,7 @@ export function useDerivedSwapInfo(
   );
 
   const v2Trade = isExactIn ? bestTradeExactIn : bestTradeExactOut;
+  const v2TradeX = v2Trade;
 
   const currencyBalances = {
     [Field.INPUT]: relevantTokenBalances[0],
@@ -294,6 +296,7 @@ export function useDerivedSwapInfo(
     currencyBalancesOrg,
     parsedAmount,
     v2Trade: v2Trade ?? undefined,
+    v2TradeX: v2TradeX ?? undefined,
     inputError,
   };
 }
@@ -308,6 +311,7 @@ export function useDerivedXswapInfo(
   currencyBalancesOrg: { [field in Field]?: CurrencyAmount };
   parsedAmount: CurrencyAmount | undefined;
   v2Trade: Trade | undefined;
+  v2TradeX: Trade | undefined;
   inputError?: string;
 } {
   const { account } = useActiveWeb3React();
@@ -380,10 +384,12 @@ export function useDerivedXswapInfo(
   ]);
   // console.log('== relevantTokenBalances ==>', relevantTokenBalances)
 
-  const v2Trade = isExactIn
-    ? (outputCurrency?.symbol === 'ETH' || outputCurrency?.symbol === 'KTAL')
-    ? bestTradeExactInXswap : bestTradeExactIn
-    : bestTradeExactOutXswap;
+  // const v2Trade = isExactIn
+  //   ? (outputCurrency?.symbol === 'ETH' || outputCurrency?.symbol === 'KTAL')
+  //   ? bestTradeExactInXswap : bestTradeExactIn
+  //   : bestTradeExactOutXswap;
+  const v2Trade = isExactIn ? bestTradeExactInXswap : bestTradeExactOutXswap;
+  const v2TradeX = isExactIn ? bestTradeExactIn : bestTradeExactOut;
 
   const currencyBalances = {
     [Field.INPUT]: relevantTokenBalances[0],
@@ -457,6 +463,7 @@ export function useDerivedXswapInfo(
     currencyBalancesOrg,
     parsedAmount,
     v2Trade: v2Trade ?? undefined,
+    v2TradeX: v2TradeX ?? undefined,
     inputError,
   };
 }
