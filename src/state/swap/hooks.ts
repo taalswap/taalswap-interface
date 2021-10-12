@@ -383,7 +383,7 @@ export function useDerivedXswapInfo(
   const v2Trade = isExactIn
     ? (outputCurrency?.symbol === 'ETH' || outputCurrency?.symbol === 'KTAL')
     ? bestTradeExactInXswap : bestTradeExactIn
-    : bestTradeExactOut;
+    : bestTradeExactOutXswap;
 
   const currencyBalances = {
     [Field.INPUT]: relevantTokenBalances[0],
