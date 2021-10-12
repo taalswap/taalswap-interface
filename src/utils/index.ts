@@ -119,7 +119,7 @@ export function getContract(address: string, ABI: any, library: Web3Provider, ac
 // account is optional
 export function getRouterContract(chainId: ChainId, library: Web3Provider, account?: string): Contract {
   const crossChain = window.localStorage.getItem('crossChain') ?? chainId.toString();
-  if (crossChain === chainId.toString()) {
+  if (crossChain !== chainId.toString()) {
     return getContract(BRIDGE_ADDRESS[chainId], IUniswapV2Router02ABI, library, account, chainId, false);
   }
   return getContract(ROUTER_ADDRESS[chainId], IUniswapV2Router02ABI, library, account, chainId, false);
