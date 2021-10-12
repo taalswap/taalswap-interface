@@ -9,6 +9,14 @@ export const ROUTER_ADDRESS = {
   [ChainId.BAOBAB]: '0xF532e0589D477DB6D36591612B0ee42D038019C2'
 }
 
+export const BRIDGE_ADDRESS = {
+  [ChainId.MAINNET]: '0x913cf96b805221e1631de21cd22b7a93099c00b7',
+  [ChainId.ROPSTEN]: '0x43807616f5c7d51a9c83f63e6740f76349669800',
+  [ChainId.RINKEBY]: '0x43807616f5C7d51a9c83F63e6740f76349669800',
+  [ChainId.KLAYTN]: '0x913cf96b805221e1631de21cd22b7a93099c00b7',
+  [ChainId.BAOBAB]: '0xF532e0589D477DB6D36591612B0ee42D038019C2'
+}
+
 // a list of tokens by chain
 type ChainTokenList = {
   readonly [chainId in ChainId]: Token[]

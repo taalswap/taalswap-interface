@@ -6,7 +6,7 @@ import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers';
 import { BigNumber } from '@ethersproject/bignumber';
 import { abi as IUniswapV2Router02ABI } from '@uniswap/v2-periphery/build/IUniswapV2Router02.json';
 import { ChainId, Currency, CurrencyAmount, ETHER, JSBI, KLAYTN, Percent, Token } from 'taalswap-sdk';
-import { ROUTER_ADDRESS } from '../constants';
+import { BRIDGE_ADDRESS, ROUTER_ADDRESS } from '../constants';
 import { TokenAddressMap } from '../state/lists/hooks';
 
 // returns the checksummed address if the address is valid, otherwise returns false
@@ -118,6 +118,10 @@ export function getContract(address: string, ABI: any, library: Web3Provider, ac
 
 // account is optional
 export function getRouterContract(chainId: ChainId, library: Web3Provider, account?: string): Contract {
+  const crossChain = window.localStorage.getItem('crossChain') ?? chainId.toString();
+  if (crossChain === chainId.toString()) {
+    return getContract(BRIDGE_ADDRESS[chainId], IUniswapV2Router02ABI, library, account, chainId, false);
+  }
   return getContract(ROUTER_ADDRESS[chainId], IUniswapV2Router02ABI, library, account, chainId, false);
 }
 
