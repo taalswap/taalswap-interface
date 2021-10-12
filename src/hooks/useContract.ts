@@ -20,12 +20,12 @@ function useContract(address: string | undefined, ABI: any, withSignerIfPossible
   return useMemo(() => {
     if (!address || !ABI || !library) return null;
     try {
-      return getContract(address, ABI, library, withSignerIfPossible && account ? account : undefined, chainId);
+      return getContract(address, ABI, library, withSignerIfPossible && account ? account : undefined, chainId, !!selectedChainId );
     } catch (error) {
       console.error('Failed to get contract', error);
       return null;
     }
-  }, [address, ABI, library, withSignerIfPossible, account, chainId]);
+  }, [address, ABI, library, withSignerIfPossible, account, chainId, selectedChainId]);
 }
 
 export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: boolean): Contract | null {

@@ -91,7 +91,7 @@ export function getProviderOrSigner(library: Web3Provider, account?: string): We
 }
 
 // account is optional
-export function getContract(address: string, ABI: any, library: Web3Provider, account?: string, chainId?: ChainId): Contract {
+export function getContract(address: string, ABI: any, library: Web3Provider, account?: string, chainId?: ChainId, xFlag?: boolean): Contract {
   if (!isAddress(address) || address === AddressZero) {
     throw Error(`Invalid 'address' parameter '${address}'.`);
   }
@@ -101,7 +101,8 @@ export function getContract(address: string, ABI: any, library: Web3Provider, ac
 
   const xSwapCurrency = window.localStorage.getItem('xSwapCurrency')
   const crossChain = window.localStorage.getItem('crossChain')
-  if (xSwapCurrency === 'output' || crossChain !== null) {
+  // if (xSwapCurrency === 'output' || crossChain !== null) {     // xSwap 메뉴에서 다른 메뉴로 이동 시 crossChain 값을 삭제함. 타 메뉴에서 getContract 호출 시 사용 갸능...
+  if (xSwapCurrency === 'output' || xFlag) {
     if (chainId > 1000) {
       const crossChainProvider = new ethers.providers.JsonRpcProvider(RPC_URL[chainId]);
       contract = new Contract(address, ABI, crossChainProvider);
@@ -117,7 +118,7 @@ export function getContract(address: string, ABI: any, library: Web3Provider, ac
 
 // account is optional
 export function getRouterContract(chainId: ChainId, library: Web3Provider, account?: string): Contract {
-  return getContract(ROUTER_ADDRESS[chainId], IUniswapV2Router02ABI, library, account, chainId);
+  return getContract(ROUTER_ADDRESS[chainId], IUniswapV2Router02ABI, library, account, chainId, false);
 }
 
 export function escapeRegExp(string: string): string {
