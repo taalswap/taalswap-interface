@@ -280,6 +280,7 @@ function XSwap({
   const {
     v2Trade,
     currencyBalances,
+    currencyBalancesOrg,
     parsedAmount,
     currencies,
     inputError: swapInputError,
@@ -534,7 +535,7 @@ function XSwap({
   }, [approval, approvalSubmitted]);
 
   const maxAmountInput: CurrencyAmount | undefined = maxAmountSpend(
-    currencyBalances[Field.INPUT]
+    currencyBalancesOrg[Field.INPUT]
   );
   const atMaxAmountInput = Boolean(
     maxAmountInput && parsedAmounts[Field.INPUT]?.equalTo(maxAmountInput)

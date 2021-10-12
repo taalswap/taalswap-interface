@@ -182,6 +182,7 @@ export function useDerivedSwapInfo(
 ): {
   currencies: { [field in Field]?: Currency };
   currencyBalances: { [field in Field]?: CurrencyAmount };
+  currencyBalancesOrg: { [field in Field]?: CurrencyAmount };
   parsedAmount: CurrencyAmount | undefined;
   v2Trade: Trade | undefined;
   inputError?: string;
@@ -228,6 +229,8 @@ export function useDerivedSwapInfo(
     [Field.INPUT]: relevantTokenBalances[0],
     [Field.OUTPUT]: relevantTokenBalances[1],
   };
+
+  const currencyBalancesOrg = currencyBalances;
 
   const currencies: { [field in Field]?: Currency } = {
     [Field.INPUT]: inputCurrency ?? undefined,
@@ -288,6 +291,7 @@ export function useDerivedSwapInfo(
   return {
     currencies,
     currencyBalances,
+    currencyBalancesOrg,
     parsedAmount,
     v2Trade: v2Trade ?? undefined,
     inputError,
@@ -301,6 +305,7 @@ export function useDerivedXswapInfo(
 ): {
   currencies: { [field in Field]?: Currency };
   currencyBalances: { [field in Field]?: CurrencyAmount };
+  currencyBalancesOrg: { [field in Field]?: CurrencyAmount };
   parsedAmount: CurrencyAmount | undefined;
   v2Trade: Trade | undefined;
   inputError?: string;
@@ -368,6 +373,11 @@ export function useDerivedXswapInfo(
     inputCurrencyTAL ?? undefined,
     outputCurrency ?? undefined,
   ]);
+
+  const relevantTokenBalancesOrg = useCurrencyBalances(account ?? undefined, [
+    inputCurrency ?? undefined,
+    outputCurrency ?? undefined,
+  ]);
   // console.log('== relevantTokenBalances ==>', relevantTokenBalances)
 
   const v2Trade = isExactIn
@@ -378,6 +388,11 @@ export function useDerivedXswapInfo(
   const currencyBalances = {
     [Field.INPUT]: relevantTokenBalances[0],
     [Field.OUTPUT]: relevantTokenBalances[1],
+  };
+
+  const currencyBalancesOrg = {
+    [Field.INPUT]: relevantTokenBalancesOrg[0],
+    [Field.OUTPUT]: relevantTokenBalancesOrg[1],
   };
 
   const currencies: { [field in Field]?: Currency } = {
@@ -439,6 +454,7 @@ export function useDerivedXswapInfo(
   return {
     currencies,
     currencyBalances,
+    currencyBalancesOrg,
     parsedAmount,
     v2Trade: v2Trade ?? undefined,
     inputError,
