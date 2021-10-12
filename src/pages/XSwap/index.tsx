@@ -440,7 +440,7 @@ function XSwap({
         [Field.OUTPUT]:
           independentField === Field.OUTPUT
             ? parsedAmount
-            : trade?.outputAmount,
+            : tradeX?.outputAmount,
       };
 
   const {

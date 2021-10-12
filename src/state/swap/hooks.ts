@@ -346,15 +346,15 @@ export function useDerivedXswapInfo(
   );
 
   // input -> TAL -> TAL -> output
-  const bestTradeExactInXswap = useTradeExactIn(
+  const bestTradeExactIn = useTradeExactIn(
     isExactIn ? parsedAmount : undefined,
     outputCurrencyTAL ?? undefined
   );
   const parsedAmountInTAL = tryParseAmountXswap(
-    bestTradeExactInXswap?.outputAmount.toSignificant(6),
+    bestTradeExactIn?.outputAmount.toSignificant(6),
     (isExactIn ? inputCurrencyTAL : outputCurrencyTAL) ?? undefined
   );
-  const bestTradeExactIn = useTradeExactInXswap(
+  const bestTradeExactInXswap = useTradeExactInXswap(
     isExactIn ? parsedAmountInTAL : undefined,
     outputCurrency ?? undefined
   );
@@ -365,7 +365,7 @@ export function useDerivedXswapInfo(
     !isExactIn ? parsedAmount : undefined
   );
   const parsedAmountOutTAL = tryParseAmountXswap(
-    bestTradeExactOutXswap?.outputAmount.toSignificant(6),
+    bestTradeExactOutXswap?.inputAmount.toSignificant(6),
     (isExactIn ? inputCurrencyTAL : outputCurrencyTAL) ?? undefined
   );
   const bestTradeExactOut = useTradeExactOut(
@@ -388,8 +388,8 @@ export function useDerivedXswapInfo(
   //   ? (outputCurrency?.symbol === 'ETH' || outputCurrency?.symbol === 'KTAL')
   //   ? bestTradeExactInXswap : bestTradeExactIn
   //   : bestTradeExactOutXswap;
-  const v2Trade = isExactIn ? bestTradeExactInXswap : bestTradeExactOutXswap;
-  const v2TradeX = isExactIn ? bestTradeExactIn : bestTradeExactOut;
+  const v2Trade = isExactIn ? bestTradeExactIn : bestTradeExactOut;
+  const v2TradeX = isExactIn ? bestTradeExactInXswap : bestTradeExactOutXswap;
 
   const currencyBalances = {
     [Field.INPUT]: relevantTokenBalances[0],
