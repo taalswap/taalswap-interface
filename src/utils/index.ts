@@ -6,6 +6,7 @@ import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers';
 import { BigNumber } from '@ethersproject/bignumber';
 import { abi as IUniswapV2Router02ABI } from '@uniswap/v2-periphery/build/IUniswapV2Router02.json';
 import { ChainId, Currency, CurrencyAmount, ETHER, JSBI, KLAYTN, Percent, Token } from 'taalswap-sdk';
+import BRIDGE_ABI from 'constants/abis/bridge.json';
 import { BRIDGE_ADDRESS, ROUTER_ADDRESS } from '../constants';
 import { TokenAddressMap } from '../state/lists/hooks';
 
@@ -121,7 +122,7 @@ export function getRouterContract(chainId: ChainId, library: Web3Provider, accou
   const crossChain = window.localStorage.getItem('crossChain') ?? chainId.toString();
   if (crossChain !== chainId.toString()) {
     // TODO : change IUniswapV2Router02ABI to Bridge contract ABI
-    return getContract(BRIDGE_ADDRESS[chainId], IUniswapV2Router02ABI, library, account, chainId, false);
+    return getContract(BRIDGE_ADDRESS[chainId], BRIDGE_ABI, library, account, chainId, false);
   }
   return getContract(ROUTER_ADDRESS[chainId], IUniswapV2Router02ABI, library, account, chainId, false);
 }

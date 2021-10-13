@@ -86,17 +86,73 @@ function useSwapCallArguments(
   }, [account, allowedSlippage, chainId, deadline, library, recipient, trade])
 }
 
-// returns a function that will execute a swap, if the parameters are all valid
-// and the user has approved the slippage adjusted input amount for the trade
-export function useSwapCallback(
+function useSwapXCallArguments(
   trade: Trade | undefined, // trade to execute, required
+  tradeX: Trade | undefined,
   allowedSlippage: number = INITIAL_ALLOWED_SLIPPAGE, // in bips
   deadline: number = DEFAULT_DEADLINE_FROM_NOW, // in seconds from now
   recipientAddressOrName: string | null // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
+): SwapCall[] {
+  const { account, chainId, library } = useActiveWeb3React()
+
+  const { address: recipientAddress } = useENS(recipientAddressOrName)
+  const recipient = recipientAddressOrName === null ? account : recipientAddress
+
+  return useMemo(() => {
+    if (!trade || !tradeX || !recipient || !library || !account || !chainId) return []
+
+    const contract: Contract | null = getRouterContract(chainId, library, account)
+    if (!contract) {
+      return []
+    }
+
+    const swapMethods = []
+
+    swapMethods.push(
+      // @ts-ignore
+      Router.swapXCallParameters(trade, tradeX, {
+        feeOnTransfer: false,
+        allowedSlippage: new Percent(JSBI.BigInt(Math.floor(allowedSlippage)), BIPS_BASE),
+        recipient,
+        ttl: deadline,
+      })
+    )
+
+    if (trade.tradeType === TradeType.EXACT_INPUT) {
+      swapMethods.push(
+        // @ts-ignore
+        Router.swapXCallParameters(trade, tradeX, {
+          feeOnTransfer: true,
+          allowedSlippage: new Percent(JSBI.BigInt(Math.floor(allowedSlippage)), BIPS_BASE),
+          recipient,
+          ttl: deadline,
+        })
+      )
+    }
+
+    return swapMethods.map((parameters) => ({ parameters, contract }))
+  }, [account, allowedSlippage, chainId, deadline, library, recipient, trade, tradeX])
+}
+
+// returns a function that will execute a swap, if the parameters are all valid
+// and the user has approved the slippage adjusted input amount for the trade
+export function useSwapCallback(
+  trade: Trade | undefined,                           // trade to execute, required
+  allowedSlippage: number = INITIAL_ALLOWED_SLIPPAGE, // in bips
+  deadline: number = DEFAULT_DEADLINE_FROM_NOW,       // in seconds from now
+  recipientAddressOrName: string | null,              // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
+  tradeX?: Trade | undefined
 ): { state: SwapCallbackState; callback: null | (() => Promise<string>); error: string | null } {
   const { account, chainId, library } = useActiveWeb3React()
 
-  const swapCalls = useSwapCallArguments(trade, allowedSlippage, deadline, recipientAddressOrName)
+  let xSwapFlag = false
+  const swapCallsOrg = useSwapCallArguments(trade, allowedSlippage, deadline, recipientAddressOrName)
+  if (tradeX === undefined) {
+    tradeX = trade
+    xSwapFlag = true
+  }
+  const swapXCalls = useSwapXCallArguments(trade, tradeX, allowedSlippage, deadline, recipientAddressOrName)
+  const swapCalls = xSwapFlag ? swapXCalls : swapCallsOrg
 
   const addTransaction = useTransactionAdder()
 
