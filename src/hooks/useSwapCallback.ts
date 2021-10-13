@@ -180,7 +180,6 @@ export function useSwapCallback(
               contract,
             } = call
             const options = !value || isZero(value) ? {} : { value }
-            console.log('=====>', methodName, args, value, options)
 
             return contract.estimateGas[methodName](...args, options)
               .then((gasEstimate) => {
