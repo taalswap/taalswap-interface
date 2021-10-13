@@ -244,8 +244,15 @@ export function AdvancedXSwapDetails({
                     </ReferenceElement>
                     {tooltipVisible && tooltip}
                   </RowFixed>
-                  <SwapRoute trade={trade} />
-                  {tradeX !== undefined && <SwapRoute trade={tradeX} />}
+                  {trade.route.input.symbol !== 'TAL' &&
+                    trade.route.input.symbol !== 'KTAL' && (
+                      <SwapRoute trade={trade} />
+                    )}
+                  {tradeX !== undefined &&
+                    tradeX?.route.output.symbol !== 'TAL' &&
+                    tradeX?.route.output.symbol !== 'KTAL' && (
+                      <SwapRoute trade={tradeX} />
+                    )}
                 </AutoColumnSub>
               </>
             )}
