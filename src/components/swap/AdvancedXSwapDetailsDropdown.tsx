@@ -33,7 +33,7 @@ export default function AdvancedXSwapDetailsDropdown({
 }: AdvancedXSwapDetailsProps) {
   const lastTrade = useLastTruthy(trade);
 
-  console.log(trade);
+  // console.log(trade);
   // console.log(tradeX);
 
   return (
