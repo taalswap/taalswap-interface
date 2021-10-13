@@ -548,7 +548,8 @@ function XSwap({
     trade,
     allowedSlippage,
     deadline,
-    recipient
+    recipient,
+    tradeX
   );
 
   const { priceImpactWithoutFee } = computeTradePriceBreakdown(trade);

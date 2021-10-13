@@ -145,11 +145,11 @@ export function useSwapCallback(
 ): { state: SwapCallbackState; callback: null | (() => Promise<string>); error: string | null } {
   const { account, chainId, library } = useActiveWeb3React()
 
-  let xSwapFlag = false
+  let xSwapFlag = true
   const swapCallsOrg = useSwapCallArguments(trade, allowedSlippage, deadline, recipientAddressOrName)
   if (tradeX === undefined) {
     tradeX = trade
-    xSwapFlag = true
+    xSwapFlag = false
   }
   const swapXCalls = useSwapXCallArguments(trade, tradeX, allowedSlippage, deadline, recipientAddressOrName)
   const swapCalls = xSwapFlag ? swapXCalls : swapCallsOrg
@@ -181,6 +181,8 @@ export function useSwapCallback(
             } = call
             const options = !value || isZero(value) ? {} : { value }
 
+            console.log('----->', methodName)
+            console.log('----->', args)
             return contract.estimateGas[methodName](...args, options)
               .then((gasEstimate) => {
                 return {
