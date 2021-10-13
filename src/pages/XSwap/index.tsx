@@ -1,4 +1,11 @@
-import { ChainId, Currency, CurrencyAmount, JSBI, Token, Trade } from 'taalswap-sdk';
+import {
+  ChainId,
+  Currency,
+  CurrencyAmount,
+  JSBI,
+  Token,
+  Trade,
+} from 'taalswap-sdk';
 import React, {
   useCallback,
   useContext,
@@ -34,7 +41,7 @@ import ConfirmSwapModal from 'components/swap/ConfirmSwapModal';
 import CurrencyInputPanel from 'components/CurrencyInputPanel';
 import CardNav from 'components/CardNav';
 import { AutoRow, RowBetween } from 'components/Row';
-import AdvancedSwapDetailsDropdown from 'components/swap/AdvancedSwapDetailsDropdown';
+import AdvancedXSwapDetailsDropdown from 'components/swap/AdvancedXSwapDetailsDropdown';
 import confirmPriceImpactWithoutFee from 'components/swap/confirmPriceImpactWithoutFee';
 import {
   ArrowWrapper,
@@ -61,10 +68,11 @@ import { useSwapCallback } from 'hooks/useSwapCallback';
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback';
 import { Field } from 'state/swap/actions';
 import {
-  useDefaultsFromURLSearch, useDerivedSwapInfo,
+  useDefaultsFromURLSearch,
+  useDerivedSwapInfo,
   useDerivedXswapInfo,
   useSwapActionHandlers,
-  useSwapState
+  useSwapState,
 } from 'state/swap/hooks';
 import {
   useExpertModeManager,
@@ -264,7 +272,10 @@ function XSwap({
   // TODO: 상수 처리 ... 디폴트 값 ?
   const chainId = window.localStorage.getItem('chainId') ?? '0';
   const prevChainId = window.localStorage.getItem('prevChainId') ?? '0';
-  const crossChain = window.localStorage.getItem('crossChain') ?? process.env.REACT_APP_CHAIN_ID ?? ChainId.ROPSTEN.toString();
+  const crossChain =
+    window.localStorage.getItem('crossChain') ??
+    process.env.REACT_APP_CHAIN_ID ??
+    ChainId.ROPSTEN.toString();
 
   const [isExpertMode] = useExpertModeManager();
 
@@ -274,8 +285,14 @@ function XSwap({
 
   // swap state
   const { independentField, typedValue, recipient } = useSwapState();
-  const swapInfo = useDerivedSwapInfo(currencyA ?? undefined, currencyB ?? undefined);
-  const xSwapInfo = useDerivedXswapInfo(currencyA ?? undefined, currencyB ?? undefined);
+  const swapInfo = useDerivedSwapInfo(
+    currencyA ?? undefined,
+    currencyB ?? undefined
+  );
+  const xSwapInfo = useDerivedXswapInfo(
+    currencyA ?? undefined,
+    currencyB ?? undefined
+  );
 
   const {
     v2Trade,
@@ -285,7 +302,7 @@ function XSwap({
     parsedAmount,
     currencies,
     inputError: swapInputError,
-  } = (chainId !== crossChain) ? xSwapInfo : swapInfo;
+  } = chainId !== crossChain ? xSwapInfo : swapInfo;
 
   const {
     wrapType,
@@ -742,15 +759,15 @@ function XSwap({
   // When leaves XSwap menu clear localStorage items...
   useEffect(() => {
     history.listen((location, action) => {
-      console.log(`The current URL is ${location.pathname}`)
+      console.log(`The current URL is ${location.pathname}`);
       if (location.pathname !== '/Xswap') {
         window.localStorage.removeItem('crossChain');
       }
-    })
+    });
   }, [history]);
 
-  console.log('== trade ===>', trade);
-  console.log('== tradeX ===>', tradeX);
+  // console.log('== trade ===>', trade);
+  // console.log('== tradeX ===>', tradeX);
 
   return (
     <Container>
@@ -928,8 +945,21 @@ function XSwap({
               </CardPanelBody>
             )}
 
-            {trade !== undefined ? (
-              <AdvancedSwapDetailsDropdown trade={trade} />
+            {/* {chainId !== crossChain &&
+            trade !== undefined &&
+            tradeX !== undefined ? (
+              <AdvancedXSwapDetailsDropdown trade={trade} tradeX={tradeX} />
+            ) : null} */}
+
+            {chainId === crossChain ? (
+              trade !== undefined ? (
+                <AdvancedXSwapDetailsDropdown
+                  trade={trade}
+                  tradeX={undefined}
+                />
+              ) : null
+            ) : trade !== undefined && tradeX !== undefined ? (
+              <AdvancedXSwapDetailsDropdown trade={trade} tradeX={tradeX} />
             ) : null}
 
             <BottomGrouping>
