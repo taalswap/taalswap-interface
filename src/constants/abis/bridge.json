@@ -5,57 +5,19 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "previousOwner",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      }
-    ],
-    "name": "OwnershipTransferred",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
         "name": "to",
         "type": "address"
       },
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
-        "name": "amount",
+        "name": "amountOut",
         "type": "uint256"
       },
       {
-        "indexed": true,
-        "internalType": "address[]",
-        "name": "pathx",
-        "type": "address[]"
-      }
-    ],
-    "name": "SwapETHForExactTokens",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
-        "name": "amount",
+        "name": "amountOutMin",
         "type": "uint256"
       },
       {
@@ -76,6 +38,18 @@
         "internalType": "address",
         "name": "to",
         "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amountOut",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amountOutMin",
+        "type": "uint256"
       },
       {
         "indexed": true,
@@ -109,203 +83,14 @@
         "type": "address[]"
       }
     ],
-    "name": "SwapExactTokensForETH",
+    "name": "XswapInfo",
     "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address[]",
-        "name": "pathx",
-        "type": "address[]"
-      }
-    ],
-    "name": "SwapExactTokensForETHSupportingFeeOnTransferTokens",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "address[]",
-        "name": "pathx",
-        "type": "address[]"
-      }
-    ],
-    "name": "SwapExactTokensForTokens",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address[]",
-        "name": "pathx",
-        "type": "address[]"
-      }
-    ],
-    "name": "SwapExactTokensForTokensSupportingFeeOnTransferTokens",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "address[]",
-        "name": "pathx",
-        "type": "address[]"
-      }
-    ],
-    "name": "SwapTokensForExactETH",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "address[]",
-        "name": "pathx",
-        "type": "address[]"
-      }
-    ],
-    "name": "SwapTokensForExactTokens",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "ercToken",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "Transit",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "ercToken",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "withdrawId",
-        "type": "string"
-      }
-    ],
-    "name": "Withdraw",
-    "type": "event"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_signer",
-        "type": "address"
-      }
-    ],
-    "name": "changeSigner",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "renounceOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
   },
   {
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "amountOutMin",
+        "name": "amountOut",
         "type": "uint256"
       },
       {
@@ -330,7 +115,13 @@
       }
     ],
     "name": "swapETHForExactTokens",
-    "outputs": [],
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      }
+    ],
     "stateMutability": "payable",
     "type": "function"
   },
@@ -363,7 +154,13 @@
       }
     ],
     "name": "swapExactETHForTokens",
-    "outputs": [],
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      }
+    ],
     "stateMutability": "payable",
     "type": "function"
   },
@@ -434,7 +231,13 @@
       }
     ],
     "name": "swapExactTokensForETH",
-    "outputs": [],
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -510,7 +313,13 @@
       }
     ],
     "name": "swapExactTokensForTokens",
-    "outputs": [],
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -586,7 +395,13 @@
       }
     ],
     "name": "swapTokensForExactETH",
-    "outputs": [],
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -624,66 +439,56 @@
       }
     ],
     "name": "swapTokensForExactTokens",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
+    "outputs": [
       {
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
       }
     ],
-    "name": "transferOwnership",
-    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
+    "stateMutability": "payable",
+    "type": "receive"
+  },
+  {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "amountIn",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountOutMin",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "path",
+        "type": "address[]"
+      },
+      {
         "internalType": "address",
-        "name": "_ercToken",
+        "name": "to",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "_amount",
+        "name": "deadline",
         "type": "uint256"
       }
     ],
-    "name": "transit",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
+    "name": "xswapExactTokensForTokens",
+    "outputs": [
       {
-        "internalType": "bytes",
-        "name": "_signature",
-        "type": "bytes"
-      },
-      {
-        "internalType": "string",
-        "name": "_withdrawId",
-        "type": "string"
-      },
-      {
-        "internalType": "address",
-        "name": "_ercToken",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
       }
     ],
-    "name": "withdraw",
-    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -691,17 +496,17 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_signer",
+        "name": "_factory",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_router",
+        "name": "_WETH",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_taal",
+        "name": "_WTAL",
         "type": "address"
       }
     ],
@@ -709,27 +514,156 @@
     "type": "constructor"
   },
   {
+    "inputs": [],
+    "name": "factory",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
+        "internalType": "uint256",
+        "name": "amountOut",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "reserveIn",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "reserveOut",
+        "type": "uint256"
       }
     ],
-    "name": "executed",
+    "name": "getAmountIn",
     "outputs": [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
+        "internalType": "uint256",
+        "name": "amountIn",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amountIn",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "reserveIn",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "reserveOut",
+        "type": "uint256"
+      }
+    ],
+    "name": "getAmountOut",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "amountOut",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amountOut",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "path",
+        "type": "address[]"
+      }
+    ],
+    "name": "getAmountsIn",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
       }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amountIn",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "path",
+        "type": "address[]"
+      }
+    ],
+    "name": "getAmountsOut",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amountA",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "reserveA",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "reserveB",
+        "type": "uint256"
+      }
+    ],
+    "name": "quote",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "amountB",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
     "inputs": [],
-    "name": "owner",
+    "name": "WETH",
     "outputs": [
       {
         "internalType": "address",
@@ -742,33 +676,7 @@
   },
   {
     "inputs": [],
-    "name": "router",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "signer",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "taal",
+    "name": "WTAL",
     "outputs": [
       {
         "internalType": "address",
