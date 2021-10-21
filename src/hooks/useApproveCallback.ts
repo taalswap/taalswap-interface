@@ -11,6 +11,7 @@ import { calculateGasMargin } from '../utils'
 import { useTokenContract } from './useContract'
 import { useActiveWeb3React } from './index'
 import getRouterAddress from '../utils/getRouterAddress';
+import getBridgeAddress from '../utils/getBridgeAddress';
 
 export enum ApprovalState {
   UNKNOWN,
@@ -108,4 +109,18 @@ export function useApproveCallbackFromTrade(trade?: Trade, allowedSlippage = 0) 
     [trade, allowedSlippage]
   )
   return useApproveCallback(amountToApprove, routerAddress)
+}
+
+export function useApproveCallbackFromTradeX(trade?: Trade, allowedSlippage = 0) {
+  const { chainId } = useActiveWeb3React()
+  const crossChain = parseInt(window.localStorage.getItem('crossChain') ?? '', 10)
+
+  const routerAddress = getRouterAddress(chainId);
+  const bridgeAddress = getBridgeAddress(chainId);
+
+  const amountToApprove = useMemo(
+    () => (trade ? computeSlippageAdjustedAmounts(trade, allowedSlippage)[Field.INPUT] : undefined),
+    [trade, allowedSlippage]
+  )
+  return useApproveCallback(amountToApprove, (crossChain !== 0 && crossChain !== chainId) ? bridgeAddress : routerAddress)
 }

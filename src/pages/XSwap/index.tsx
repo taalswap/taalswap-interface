@@ -62,7 +62,7 @@ import { useCurrency } from 'hooks/Tokens';
 import { useCurrencyXswap } from 'hooks/TokensXswap';
 import {
   ApprovalState,
-  useApproveCallbackFromTrade,
+  useApproveCallbackFromTradeX
 } from 'hooks/useApproveCallback';
 import { useSwapCallback } from 'hooks/useSwapCallback';
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback';
@@ -538,7 +538,7 @@ function XSwap({
   const noRoute = !route;
 
   // check whether the user has approved the router on the input token
-  const [approval, approveCallback] = useApproveCallbackFromTrade(
+  const [approval, approveCallback] = useApproveCallbackFromTradeX(
     trade,
     allowedSlippage
   );
