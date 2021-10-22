@@ -43,6 +43,10 @@ export default function SwapModalFooter({
     () => computeSlippageAdjustedAmounts(trade, allowedSlippage),
     [allowedSlippage, trade]
   );
+  const ouputSlippageAdjustedAmounts = useMemo(
+    () => computeSlippageAdjustedAmounts(tradeX, allowedSlippage),
+    [allowedSlippage, tradeX]
+  );
   const { priceImpactWithoutFee, realizedLPFee } = useMemo(
     () => computeTradePriceBreakdown(trade),
     [trade]
@@ -190,10 +194,12 @@ export default function SwapModalFooter({
               <RowFixed>
                 <Text fontSize="14px">
                   {tradeX.tradeType === TradeType.EXACT_INPUT
-                    ? slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(4) ??
-                      '-'
-                    : slippageAdjustedAmounts[Field.INPUT]?.toSignificant(4) ??
-                      '-'}
+                    ? ouputSlippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(
+                        4
+                      ) ?? '-'
+                    : ouputSlippageAdjustedAmounts[Field.INPUT]?.toSignificant(
+                        4
+                      ) ?? '-'}
                 </Text>
                 <Text fontSize="14px" marginLeft="4px">
                   {tradeX.tradeType === TradeType.EXACT_INPUT
