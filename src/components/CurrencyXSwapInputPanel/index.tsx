@@ -154,6 +154,9 @@ export default function CurrencyXSwapInputPanel({
     window.localStorage.removeItem('xSwapCurrency');
   }, [setModalOpen]);
 
+  const chainId = window.localStorage.getItem('chainId');
+  const crossChain = window.localStorage.getItem('crossChain');
+
   return (
     <InputPanel id={id}>
       <Container hideInput={hideInput}>
@@ -194,6 +197,9 @@ export default function CurrencyXSwapInputPanel({
                 onUserInput={(val) => {
                   onUserInput(val);
                 }}
+                disabled={
+                  id === 'swap-currency-output' && chainId !== crossChain
+                }
                 style={{}}
               />
               {account && currency && showMaxButton && label !== 'To' && (
