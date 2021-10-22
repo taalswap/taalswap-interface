@@ -2,7 +2,7 @@ import React, { useContext, useMemo } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { Trade, TradeType } from 'taalswap-sdk';
 import { Button, Text } from 'taalswap-uikit';
-import { AlertTriangle, ArrowDown } from 'react-feather';
+import { AlertTriangle, ArrowDown, Underline } from 'react-feather';
 import { useTranslation } from 'contexts/Localization';
 import { Field } from '../../state/swap/actions';
 import { isAddress, shortenAddress } from '../../utils';
@@ -16,9 +16,11 @@ import CurrencyLogo from '../CurrencyLogo';
 import { RowBetween, RowFixed } from '../Row';
 import { SwapShowAcceptChanges } from './styleds';
 
+const CACHE_KEY = 'taalswap_language';
+
 const PriceInfoText = styled(Text)`
-  font-style: italic;
-  line-height: 1.3;
+  // font-style: italic;
+  line-height: 1.5;
 
   span {
     color: ${({ theme }) => theme.colors.primary};
@@ -46,6 +48,10 @@ export default function SwapModalHeader({
     () => computeSlippageAdjustedAmounts(trade, allowedSlippage),
     [trade, allowedSlippage]
   );
+  const ouputSlippageAdjustedAmounts = useMemo(
+    () => computeSlippageAdjustedAmounts(tradeX, allowedSlippage),
+    [tradeX, allowedSlippage]
+  );
   const { priceImpactWithoutFee } = useMemo(
     () => computeTradePriceBreakdown(trade),
     [trade]
@@ -57,6 +63,9 @@ export default function SwapModalHeader({
   const chainId = window.localStorage.getItem('chainId');
   const crossChain = window.localStorage.getItem('crossChain');
 
+  const storedLangCode = localStorage.getItem(CACHE_KEY);
+  console.log(trade);
+  console.log(tradeX);
   return (
     <AutoColumn gap="md" style={{ marginTop: '20px' }}>
       {tradeX !== undefined && chainId !== crossChain ? (
@@ -308,9 +317,103 @@ export default function SwapModalHeader({
           </RowBetween>
         </SwapShowAcceptChanges>
       ) : null}
-      <AutoColumn justify="flex-start" gap="sm" style={{ padding: '16px 0 0' }}>
+      {tradeX !== undefined && chainId !== crossChain ? (
+        <>
+          <AutoColumn
+            justify="flex-start"
+            gap="sm"
+            style={{ padding: '16px 0 0' }}
+          >
+            {tradeX.tradeType === TradeType.EXACT_INPUT ? (
+              <PriceInfoText>
+                {storedLangCode === 'ko-KR' ? (
+                  <>
+                    <span>
+                      {trade.inputAmount.currency.symbol}-
+                      {trade.outputAmount.currency.symbol}-
+                      {tradeX.outputAmount.currency.symbol}
+                    </span>
+                    {' 의 추정 교환값입니다. 수령하게 될 최소량은 '}
+                    <span>
+                      {tradeX?.outputAmount.toSignificant(6)}{' '}
+                      {tradeX.outputAmount.currency.symbol}
+                    </span>
+                    {
+                      ' 이며, 그렇지 않은 경우 거래가 취소됩니다. 수령하게 되는 KDAI 수량은 TaalSwap 브릿지의 타 블록체인 이동 시 발생하는 가격변동으로 인해 '
+                    }
+                    <span>
+                      {tradeX?.outputAmount.toSignificant(6)}{' '}
+                      {tradeX.outputAmount.currency.symbol}
+                    </span>
+                    {' 보다 조금 많거나 적을 수도 있습니다.'}
+                  </>
+                ) : (
+                  <>
+                    {'Output is the estimated exchange rate of '}
+                    <span>
+                      {trade.inputAmount.currency.symbol}-
+                      {trade.outputAmount.currency.symbol}-
+                      {tradeX.outputAmount.currency.symbol}
+                    </span>
+                    {'. '}
+                    {'You will receive at least '}
+                    <span>
+                      {tradeX?.outputAmount.toSignificant(6)}{' '}
+                      {tradeX.outputAmount.currency.symbol}
+                    </span>
+
+                    {
+                      ', or the transaction will revert. The amount of KDAI you will get may slightly vary due to the price difference at the time of TaalSwap bridge &sbquo;s migration to other blockchain network.'
+                    }
+                  </>
+                )}
+              </PriceInfoText>
+            ) : (
+              <PriceInfoText>
+                {t(`Input is estimated. You will sell at most `)}
+                <span>
+                  {slippageAdjustedAmounts[Field.INPUT]?.toSignificant(6)}{' '}
+                  {trade.inputAmount.currency.symbol}
+                </span>
+                {t(' or the transaction will revert.')}
+              </PriceInfoText>
+            )}
+          </AutoColumn>
+        </>
+      ) : (
+        <>
+          <AutoColumn
+            justify="flex-start"
+            gap="sm"
+            style={{ padding: '16px 0 0' }}
+          >
+            {trade.tradeType === TradeType.EXACT_INPUT ? (
+              <PriceInfoText>
+                {tradeX !== undefined && chainId !== crossChain ? <></> : <></>}
+                {t(`Output is estimated. You will receive at least `)}
+                <span>
+                  {slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(6)}{' '}
+                  {trade.outputAmount.currency.symbol}
+                </span>
+                {t(' or the transaction will revert.')}
+              </PriceInfoText>
+            ) : (
+              <PriceInfoText>
+                {t(`Input is estimated. You will sell at most `)}
+                <span>
+                  {slippageAdjustedAmounts[Field.INPUT]?.toSignificant(6)}{' '}
+                  {trade.inputAmount.currency.symbol}
+                </span>
+                {t(' or the transaction will revert.')}
+              </PriceInfoText>
+            )}
+          </AutoColumn>
+        </>
+      )}
+      {/* <AutoColumn justify="flex-start" gap="sm" style={{ padding: '16px 0 0' }}>
         {trade.tradeType === TradeType.EXACT_INPUT ? (
           <PriceInfoText>
+            {tradeX !== undefined && chainId !== crossChain ? <></> : <></>}
             {t(`Output is estimated. You will receive at least `)}
             <span>
               {slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(6)}{' '}
@@ -328,7 +431,7 @@ export default function SwapModalHeader({
             {t(' or the transaction will revert.')}
           </PriceInfoText>
         )}
-      </AutoColumn>
+      </AutoColumn> */}
       {recipient !== null ? (
         <AutoColumn
           justify="flex-start"
