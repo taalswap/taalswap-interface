@@ -28,12 +28,14 @@ const PriceInfoText = styled(Text)`
 
 export default function SwapModalHeader({
   trade,
+  tradeX,
   allowedSlippage,
   recipient,
   showAcceptChanges,
   onAcceptChanges,
 }: {
   trade: Trade;
+  tradeX: Trade | undefined;
   allowedSlippage: number;
   recipient: string | null;
   showAcceptChanges: boolean;
@@ -52,9 +54,189 @@ export default function SwapModalHeader({
 
   const theme = useContext(ThemeContext);
 
+  const chainId = window.localStorage.getItem('chainId');
+  const crossChain = window.localStorage.getItem('crossChain');
+
   return (
     <AutoColumn gap="md" style={{ marginTop: '20px' }}>
-      <RowBetween align="flex-end">
+      {tradeX !== undefined && chainId !== crossChain ? (
+        <>
+          <RowBetween align="flex-end">
+            <RowFixed gap="0px">
+              <CurrencyLogo
+                currency={trade.inputAmount.currency}
+                size="24px"
+                style={{ marginRight: '12px' }}
+              />
+              <Text
+                fontSize="24px"
+                color={
+                  showAcceptChanges &&
+                  trade.tradeType === TradeType.EXACT_OUTPUT
+                    ? theme.colors.primary
+                    : 'text'
+                }
+              >
+                {trade.inputAmount.toSignificant(6)}
+              </Text>
+            </RowFixed>
+            <RowFixed gap="0px">
+              <Text
+                fontSize="24px"
+                style={{ marginLeft: '10px', fontWeight: 500 }}
+              >
+                {trade.inputAmount.currency.symbol}
+              </Text>
+            </RowFixed>
+          </RowBetween>
+          <RowFixed>
+            <ArrowDown
+              size="16"
+              color={theme.colors.textSubtle}
+              style={{ marginLeft: '4px', minWidth: '16px' }}
+            />
+          </RowFixed>
+          <RowBetween align="flex-end">
+            <RowFixed gap="0px">
+              <CurrencyLogo
+                currency={trade.outputAmount.currency}
+                size="24px"
+                style={{ marginRight: '12px' }}
+              />
+              <Text
+                fontSize="24px"
+                style={{ marginLeft: '10px', fontWeight: 500 }}
+                color={
+                  priceImpactSeverity > 2
+                    ? theme.colors.failure
+                    : showAcceptChanges &&
+                      trade.tradeType === TradeType.EXACT_INPUT
+                    ? theme.colors.primary
+                    : 'text'
+                }
+              >
+                {trade.outputAmount.toSignificant(6)}
+              </Text>
+            </RowFixed>
+            <RowFixed gap="0px">
+              <Text
+                fontSize="24px"
+                style={{ marginLeft: '10px', fontWeight: 500 }}
+              >
+                {trade.outputAmount.currency.symbol}
+              </Text>
+            </RowFixed>
+          </RowBetween>
+          <RowFixed>
+            <ArrowDown
+              size="16"
+              color={theme.colors.textSubtle}
+              style={{ marginLeft: '4px', minWidth: '16px' }}
+            />
+          </RowFixed>
+          <RowBetween align="flex-end">
+            <RowFixed gap="0px">
+              <CurrencyLogo
+                currency={tradeX?.outputAmount.currency}
+                size="24px"
+                style={{ marginRight: '12px' }}
+              />
+              <Text
+                fontSize="24px"
+                style={{ marginLeft: '10px', fontWeight: 500 }}
+                color={
+                  priceImpactSeverity > 2
+                    ? theme.colors.failure
+                    : showAcceptChanges &&
+                      tradeX?.tradeType === TradeType.EXACT_INPUT
+                    ? theme.colors.primary
+                    : 'text'
+                }
+              >
+                {tradeX?.outputAmount.toSignificant(6)}
+              </Text>
+            </RowFixed>
+            <RowFixed gap="0px">
+              <Text
+                fontSize="24px"
+                style={{ marginLeft: '10px', fontWeight: 500 }}
+              >
+                {tradeX?.outputAmount.currency.symbol}
+              </Text>
+            </RowFixed>
+          </RowBetween>
+        </>
+      ) : (
+        <>
+          <RowBetween align="flex-end">
+            <RowFixed gap="0px">
+              <CurrencyLogo
+                currency={trade.inputAmount.currency}
+                size="24px"
+                style={{ marginRight: '12px' }}
+              />
+              <Text
+                fontSize="24px"
+                color={
+                  showAcceptChanges &&
+                  trade.tradeType === TradeType.EXACT_OUTPUT
+                    ? theme.colors.primary
+                    : 'text'
+                }
+              >
+                {trade.inputAmount.toSignificant(6)}
+              </Text>
+            </RowFixed>
+            <RowFixed gap="0px">
+              <Text
+                fontSize="24px"
+                style={{ marginLeft: '10px', fontWeight: 500 }}
+              >
+                {trade.inputAmount.currency.symbol}
+              </Text>
+            </RowFixed>
+          </RowBetween>
+          <RowFixed>
+            <ArrowDown
+              size="16"
+              color={theme.colors.textSubtle}
+              style={{ marginLeft: '4px', minWidth: '16px' }}
+            />
+          </RowFixed>
+          <RowBetween align="flex-end">
+            <RowFixed gap="0px">
+              <CurrencyLogo
+                currency={trade.outputAmount.currency}
+                size="24px"
+                style={{ marginRight: '12px' }}
+              />
+              <Text
+                fontSize="24px"
+                style={{ marginLeft: '10px', fontWeight: 500 }}
+                color={
+                  priceImpactSeverity > 2
+                    ? theme.colors.failure
+                    : showAcceptChanges &&
+                      trade.tradeType === TradeType.EXACT_INPUT
+                    ? theme.colors.primary
+                    : 'text'
+                }
+              >
+                {trade.outputAmount.toSignificant(6)}
+              </Text>
+            </RowFixed>
+            <RowFixed gap="0px">
+              <Text
+                fontSize="24px"
+                style={{ marginLeft: '10px', fontWeight: 500 }}
+              >
+                {trade.outputAmount.currency.symbol}
+              </Text>
+            </RowFixed>
+          </RowBetween>
+        </>
+      )}
+      {/* <RowBetween align="flex-end">
         <RowFixed gap="0px">
           <CurrencyLogo
             currency={trade.inputAmount.currency}
@@ -111,7 +293,7 @@ export default function SwapModalHeader({
             {trade.outputAmount.currency.symbol}
           </Text>
         </RowFixed>
-      </RowBetween>
+      </RowBetween> */}
       {showAcceptChanges ? (
         <SwapShowAcceptChanges justify="flex-start" gap="0px">
           <RowBetween>

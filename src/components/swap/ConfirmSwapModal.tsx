@@ -30,6 +30,7 @@ const CACHE_KEY = 'taalswap_language';
 
 export default function ConfirmSwapModal({
   trade,
+  tradeX,
   originalTrade,
   onAcceptChanges,
   allowedSlippage,
@@ -43,6 +44,7 @@ export default function ConfirmSwapModal({
 }: {
   isOpen: boolean;
   trade: Trade | undefined;
+  tradeX: Trade | undefined;
   originalTrade: Trade | undefined;
   attemptingTxn: boolean;
   txHash: string | undefined;
@@ -67,13 +69,21 @@ export default function ConfirmSwapModal({
     return trade ? (
       <SwapModalHeader
         trade={trade}
+        tradeX={tradeX}
         allowedSlippage={allowedSlippage}
         recipient={recipient}
         showAcceptChanges={showAcceptChanges}
         onAcceptChanges={onAcceptChanges}
       />
     ) : null;
-  }, [allowedSlippage, onAcceptChanges, recipient, showAcceptChanges, trade]);
+  }, [
+    allowedSlippage,
+    onAcceptChanges,
+    recipient,
+    showAcceptChanges,
+    trade,
+    tradeX,
+  ]);
 
   const modalBottom = useCallback(() => {
     return trade ? (

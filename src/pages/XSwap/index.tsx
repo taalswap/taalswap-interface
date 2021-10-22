@@ -62,7 +62,7 @@ import { useCurrency } from 'hooks/Tokens';
 import { useCurrencyXswap } from 'hooks/TokensXswap';
 import {
   ApprovalState,
-  useApproveCallbackFromTradeX
+  useApproveCallbackFromTradeX,
 } from 'hooks/useApproveCallback';
 import { useSwapCallback } from 'hooks/useSwapCallback';
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback';
@@ -796,6 +796,7 @@ function XSwap({
           <ConfirmSwapModal
             isOpen={showConfirm}
             trade={trade}
+            tradeX={tradeX}
             originalTrade={tradeToConfirm}
             onAcceptChanges={handleAcceptChanges}
             attemptingTxn={attemptingTxn}

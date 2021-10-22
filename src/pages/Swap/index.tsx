@@ -677,6 +677,7 @@ function Swap({
           <ConfirmSwapModal
             isOpen={showConfirm}
             trade={trade}
+            tradeX={undefined}
             originalTrade={tradeToConfirm}
             onAcceptChanges={handleAcceptChanges}
             attemptingTxn={attemptingTxn}
