@@ -99,6 +99,10 @@ const Container = styled.div<{ hideInput: boolean }>`
 `;
 
 const NumericalInputLine = styled(NumericalInput)`
+  background-color: ${(props) =>
+    props.disabled
+      ? ({ theme }) => theme.colors.backgroundDisabled
+      : ({ theme }) => theme.colors.background};
   @media screen and (max-width: 500px) {
     max-width: 160px;
     background-color: ${({ theme }) => theme.colors.tertiary};
