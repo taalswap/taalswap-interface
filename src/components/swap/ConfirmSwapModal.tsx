@@ -90,12 +90,20 @@ export default function ConfirmSwapModal({
       <SwapModalFooter
         onConfirm={onConfirm}
         trade={trade}
+        tradeX={tradeX}
         disabledConfirm={showAcceptChanges}
         swapErrorMessage={swapErrorMessage}
         allowedSlippage={allowedSlippage}
       />
     ) : null;
-  }, [allowedSlippage, onConfirm, showAcceptChanges, swapErrorMessage, trade]);
+  }, [
+    allowedSlippage,
+    onConfirm,
+    showAcceptChanges,
+    swapErrorMessage,
+    trade,
+    tradeX,
+  ]);
 
   // text to show while loading
   // const pendingText = `Swapping ${trade?.inputAmount?.toSignificant(6)} ${
