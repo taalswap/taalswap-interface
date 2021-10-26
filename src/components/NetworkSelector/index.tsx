@@ -3,7 +3,21 @@ import { ChainId } from 'taalswap-sdk';
 import styled from 'styled-components';
 import { useSwapState } from 'state/swap/hooks';
 
-const NetworkSelectBox = styled.select``;
+const NetworkSelectBox = styled.select`
+  width: 180px;
+  height: auto;
+  min-height: 30px;
+  position: relative;
+  border: 1px solid #dce0e4;
+  border-radius: 5px;
+  background-color: #fff;
+  margin-left: 15px;
+
+  @media screen and (max-width: 500px) {
+    margin-left: 0px;
+    margin-bottom: 10px;
+  }
+`;
 
 const NetworkSelector = ({ onSetCrossChain, id }) => {
   const { crossChain } = useSwapState();
@@ -73,15 +87,21 @@ const NetworkSelector = ({ onSetCrossChain, id }) => {
   // }, []);
 
   return (
-    <NetworkSelectBox
-      onChange={handleSelect}
-      disabled={id === 'swap-currency-input'}
-      value={selectedChainId !== null ? selectedChainId : 0}
-    >
-      {networkList.map((network) => (
-        <option key={network.id} value={network.chainId} label={network.name} />
-      ))}
-    </NetworkSelectBox>
+    <>
+      <NetworkSelectBox
+        onChange={handleSelect}
+        disabled={id === 'swap-currency-input'}
+        value={selectedChainId !== null ? selectedChainId : 0}
+      >
+        {networkList.map((network) => (
+          <option
+            key={network.id}
+            value={network.chainId}
+            label={network.name}
+          />
+        ))}
+      </NetworkSelectBox>
+    </>
   );
 };
 
