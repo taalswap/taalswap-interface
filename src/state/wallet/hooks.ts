@@ -1,5 +1,6 @@
 import { ChainId, Currency, CurrencyAmount, ETHER, JSBI, KLAYTN, Token, TokenAmount } from 'taalswap-sdk';
 import { useMemo } from 'react';
+import { parseInt } from 'lodash';
 import ERC20_INTERFACE from '../../constants/abis/erc20';
 import { useAllTokens } from '../../hooks/Tokens';
 import { useActiveWeb3React } from '../../hooks';
@@ -115,13 +116,15 @@ export function useCurrencyBalances(
   const tokenBalances = useTokenBalances(account, tokens)
 
   const containsETH: boolean = useMemo(() => currencies?.some(currency => (currency === ETHER || currency === KLAYTN)) ?? false, [currencies])
-  let ethChainId = ChainId.ROPSTEN
+  const currentChainId = parseInt(window.localStorage.getItem('chainId') ?? '', 10) as ChainId;
+  const crossChainId = parseInt(window.localStorage.getItem('crossChain') ?? '', 10) as ChainId;
+  let ethChainId = currentChainId
   if (containsETH) {
     if (currencies && currencies[0] === ETHER) {
-      ethChainId = ChainId.ROPSTEN
+      ethChainId = currentChainId
     }
     if (currencies && currencies[0] === KLAYTN) {
-      ethChainId = ChainId.BAOBAB
+      ethChainId = crossChainId
     }
   }
   const ethBalance = useETHBalances(containsETH ? [account] : [], ethChainId)
