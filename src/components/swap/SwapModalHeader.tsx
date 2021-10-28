@@ -64,8 +64,7 @@ export default function SwapModalHeader({
   const crossChain = window.localStorage.getItem('crossChain');
 
   const storedLangCode = localStorage.getItem(CACHE_KEY);
-  console.log(trade);
-  console.log(tradeX);
+
   return (
     <AutoColumn gap="md" style={{ marginTop: '20px' }}>
       {tradeX !== undefined && chainId !== crossChain ? (
