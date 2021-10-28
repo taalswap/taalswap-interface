@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { ChainId } from 'taalswap-sdk';
+// import { ChainId } from 'taalswap-sdk';
 import { ethers } from 'ethers';
 import { useActiveWeb3React } from '../../hooks';
 import useDebounce from '../../hooks/useDebounce';
@@ -9,7 +9,7 @@ import { updateBlockNumber } from './actions';
 
 export default function Updater(): null {
   const { library, chainId } = useActiveWeb3React()
-  const crossChain = parseInt(window.localStorage.getItem('crossChain') ?? '', 10) as ChainId
+  // const crossChain = parseInt(window.localStorage.getItem('crossChain') ?? '', 10) as ChainId
   const ethChainId = process.env.REACT_APP_CHAIN_ID ?? '1';
   const klayChainId = process.env.REACT_APP_KLAYTN_ID ?? '8217';
   const xSwapCurrency = window.localStorage.getItem('xSwapCurrency')
@@ -38,14 +38,14 @@ export default function Updater(): null {
   const blockNumberCallbackOther = useCallback(
     (blockNumber: number) => {
       // let xChainId = ChainId.BAOBAB
-      let xChainId = crossChain
+      let xChainId = parseInt(klayChainId);
       // if (chainId === ChainId.BAOBAB) {
-      if (chainId === crossChain) {
-        xChainId = chainId
+      if (chainId !== undefined && chainId.toString() === klayChainId) {
+        xChainId = parseInt(ethChainId);
       }
       dispatch(updateBlockNumber({ chainId: xChainId, blockNumber }))
     },
-    [dispatch, chainId, crossChain]
+    [dispatch, chainId, ethChainId, klayChainId]
   )
 
   // attach/detach listeners
@@ -87,7 +87,7 @@ export default function Updater(): null {
     return () => {
       library.removeListener('block', blockNumberCallback)
     }
-  }, [dispatch, chainId, library, blockNumberCallback, blockNumberCallbackOther, windowVisible, crossChain, ethChainId, klayChainId, xSwapCurrency])
+  }, [dispatch, chainId, library, blockNumberCallback, blockNumberCallbackOther, windowVisible, ethChainId, klayChainId, xSwapCurrency])
 
   const debouncedState = useDebounce(state, 100)
 
