@@ -44,7 +44,7 @@ const NetworkSelector = ({ onSetCrossChain, id }) => {
     {
       id: 2,
       name: 'Klaytn',
-      chainId: ChainId.BAOBAB,
+      chainId: ChainId.KLAYTN,
     },
   ];
 
