@@ -23,6 +23,7 @@ const NetworkSelector = ({ onSetCrossChain, id }) => {
   const { crossChain } = useSwapState();
   const currentChainId = window.localStorage.getItem('chainId');
   const crossChainId = window.localStorage.getItem('crossChain') ?? 0;
+  const crossChainConf = parseInt(process.env.REACT_APP_KLAYTN_ID ?? '', 10) as ChainId;
   // const [selectedChainId, setSelectedChainId] = useState(() =>
   //   id === 'swap-currency-input' ? currentChainId : 0
   // );
@@ -44,7 +45,7 @@ const NetworkSelector = ({ onSetCrossChain, id }) => {
     {
       id: 2,
       name: 'Klaytn',
-      chainId: ChainId.KLAYTN,
+      chainId: crossChainConf,
     },
   ];
 
