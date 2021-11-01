@@ -337,6 +337,12 @@
         "internalType": "uint256",
         "name": "amountOut",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "txHash",
+        "type": "bytes32"
       }
     ],
     "name": "XswapExactTokensForETH",
@@ -362,6 +368,12 @@
         "internalType": "uint256",
         "name": "amountOut",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "txHash",
+        "type": "bytes32"
       }
     ],
     "name": "XswapExactTokensForTokens",
@@ -988,6 +1000,11 @@
         "internalType": "uint256",
         "name": "deadline",
         "type": "uint256"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "txHash",
+        "type": "bytes32"
       }
     ],
     "name": "xswapExactTokensForETH",
@@ -1027,6 +1044,11 @@
         "internalType": "uint256",
         "name": "deadline",
         "type": "uint256"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "txHash",
+        "type": "bytes32"
       }
     ],
     "name": "xswapExactTokensForTokens",
