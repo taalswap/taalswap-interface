@@ -145,7 +145,7 @@ export const USDC_ADDRESS = {
 export const KDAI = {
   [ChainId.KLAYTN]: new Token(
     ChainId.KLAYTN,
-    '0xa76639d69cfdbff27abf1d0abc22d5e30e73a07f',
+    '0x5c74070fdea071359b86082bd9f9b3deaafbe32b',
     18,
     'KDAI',
     'Klaytn DAI'
@@ -160,7 +160,7 @@ export const KDAI = {
 }
 
 export const KDAI_ADDRESS = {
-  [ChainId.KLAYTN]: '0xa76639d69cfdbff27abf1d0abc22d5e30e73a07f',
+  [ChainId.KLAYTN]: '0x5c74070fdea071359b86082bd9f9b3deaafbe32b',
   [ChainId.BAOBAB]: '0xa76639d69cfdbff27abf1d0abc22d5e30e73a07f'
 }
 

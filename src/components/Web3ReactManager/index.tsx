@@ -3,7 +3,7 @@ import { useWeb3React } from '@web3-react/core';
 import styled from 'styled-components';
 
 import { network } from '../../connectors';
-import { useEagerConnect, useInactiveListener } from '../../hooks';
+import { useEagerConnect, useInactiveListener, useInactiveListenerNew } from '../../hooks';
 import { NetworkContextName } from '../../constants';
 import Loader from '../Loader';
 
@@ -41,7 +41,9 @@ export default function Web3ReactManager({
   }, [triedEager, networkActive, networkError, activateNetwork, active]);
 
   // when there's no account connected, react to logins (broadly speaking) on the injected provider, if it exists
-  useInactiveListener(!triedEager);
+  // useInactiveListener(!triedEager);
+  // When roll back metamask listener just comment out the below line ans use the upper line
+  useInactiveListenerNew(false);
 
   // handle delayed loader state
   const [showLoader, setShowLoader] = useState(false);

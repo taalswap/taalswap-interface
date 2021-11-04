@@ -948,5 +948,8 @@
   "Your pool tokens": "LP 토큰 갯수",
   "Your pool share": "풀 점유율",
   "Amount": "토큰량",
-  "No recent transactions": "최근 거래 없음"
+  "No recent transactions": "최근 거래 없음",
+  "Swap failed": "스왑 실패",
+  "insufficient fees": "수수료 잔고 부족",
+  "Dismiss": "취소"
 }
