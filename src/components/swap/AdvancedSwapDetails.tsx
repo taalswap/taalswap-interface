@@ -22,9 +22,8 @@ const ReferenceElement = styled.div`
 `;
 
 const ReCard = styled(Card)`
-
-@media screen and (max-width: 720px) {
-    width:100%;
+  @media screen and (max-width: 720px) {
+    width: 100%;
   }
 `;
 
@@ -35,12 +34,11 @@ const ReCardBody = styled(CardBody)`
   margin: 0 auto;
 
   @media screen and (max-width: 610px) {
-    
-    padding:0.812rem 0.625rem;;
+    padding: 0.812rem 0.625rem;
 
     ${RowBetween} {
       //display:block;
-      
+
       ${RowFixed} {
         display: flex;
         flex-direction: row;
@@ -51,20 +49,20 @@ const ReCardBody = styled(CardBody)`
         ${Text} {
           font-size: 12px !important;
         }
-        &:nth-child(2){
+        &:nth-child(2) {
           justify-content: flex-end;
           text-align: right;
           font-size: 12px !important;
         }
       }
 
-      &:nth-child(2){
+      &:nth-child(2) {
         ${Text} {
           font-size: 12px !important;
         }
       }
 
-      &:last-child{
+      &:last-child {
         ${Text} {
           font-size: 12px !important;
           text-align: right;
@@ -79,9 +77,7 @@ const AutoColumnSub = styled(AutoColumn)`
   padding: 0 24px;
 
   @media screen and (max-width: 500px) {
-    padding:0;
-
-    
+    padding: 0;
   }
 `;
 
@@ -130,7 +126,7 @@ const Tip3 = () => {
       <Text mb="12px">{t('For each trade a 0.25% fee is paid')}</Text>
       <Text>{t('- 0.17% to LP token holders')}</Text>
       <Text>{t('- 0.03% to the Treasury')}</Text>
-      <Text>{t('- 0.05% towards TAL buyback & burn')}</Text>
+      <Text>{t('- 0.05% to SAFU address')}</Text>
     </>,
     { placement: 'right-end', tooltipOffset: [20, 10] }
   );
@@ -161,21 +157,21 @@ function TradeSummary({
   );
   const { t } = useTranslation();
 
-  const chainId = parseInt(window.localStorage.getItem("chainId") ?? "1")
-  let FEE = 'ETH'
+  const chainId = parseInt(window.localStorage.getItem('chainId') ?? '1');
+  let FEE = 'ETH';
   if (trade.inputAmount.currency.symbol === 'ETH') {
-    if (chainId > 1000) FEE = 'KLAY'
+    if (chainId > 1000) FEE = 'KLAY';
   } else {
-    FEE = trade.inputAmount.currency.symbol ?? ''
+    FEE = trade.inputAmount.currency.symbol ?? '';
   }
   return (
     <ReCard>
       <ReCardBody>
-        <RowBetween style={{ padding: '.25rem 0', }} >
+        <RowBetween style={{ padding: '.25rem 0' }}>
           <RowFixed>
             <Text fontSize="14px">
               {isExactIn ? t('Minimum received') : t('Maximum sold')}
-            </Text> 
+            </Text>
             <Tip1 />
           </RowFixed>
           <RowFixed>
@@ -190,24 +186,20 @@ function TradeSummary({
             </Text>
           </RowFixed>
         </RowBetween>
-        <RowBetween style={{ padding: '.25rem 0', }}>
+        <RowBetween style={{ padding: '.25rem 0' }}>
           <RowFixed>
             <Text fontSize="14px">{t('Price Impact')}</Text>
             <Tip2 />
           </RowFixed>
           <FormattedPriceImpact priceImpact={priceImpactWithoutFee} />
         </RowBetween>
-        <RowBetween style={{ padding: '.25rem 0', }}>
+        <RowBetween style={{ padding: '.25rem 0' }}>
           <RowFixed>
             <Text fontSize="14px">{t('Liquidity Provider Fee')}</Text>
             <Tip3 />
           </RowFixed>
           <Text fontSize="14px">
-            {realizedLPFee
-              ? `${realizedLPFee.toSignificant(4)} ${
-                  FEE
-                }`
-              : '-'}
+            {realizedLPFee ? `${realizedLPFee.toSignificant(4)} ${FEE}` : '-'}
           </Text>
         </RowBetween>
       </ReCardBody>
@@ -239,7 +231,7 @@ export function AdvancedSwapDetails({ trade }: AdvancedSwapDetailsProps) {
             <TradeSummary trade={trade} allowedSlippage={allowedSlippage} />
             {showRoute && (
               <>
-                <SectionBreak style={{ backgroundColor:"transparent" }}/>
+                <SectionBreak style={{ backgroundColor: 'transparent' }} />
                 <AutoColumnSub>
                   <RowFixed>
                     <Text fontSize="14px">Route</Text>
@@ -248,7 +240,7 @@ export function AdvancedSwapDetails({ trade }: AdvancedSwapDetailsProps) {
                     </ReferenceElement>
                     {tooltipVisible && tooltip}
                   </RowFixed>
-                  <SwapRoute trade={trade}/>
+                  <SwapRoute trade={trade} />
                 </AutoColumnSub>
               </>
             )}
