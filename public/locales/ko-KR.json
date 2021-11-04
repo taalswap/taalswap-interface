@@ -947,5 +947,6 @@
   "Pooled %symbol%": "풀에 예치된 %symbol%",
   "Your pool tokens": "LP 토큰 갯수",
   "Your pool share": "풀 점유율",
-  "Amount": "토큰량"
+  "Amount": "토큰량",
+  "No recent transactions": "최근 거래 없음"
 }
