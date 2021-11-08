@@ -116,18 +116,18 @@ export function useCurrencyBalances(
   const tokenBalances = useTokenBalances(account, tokens)
 
   const containsETH: boolean = useMemo(() => currencies?.some(currency => (currency === ETHER || currency === KLAYTN)) ?? false, [currencies])
-  const currentChainId = parseInt(window.localStorage.getItem('chainId') ?? '', 10) as ChainId;
-  const crossChainId = parseInt(window.localStorage.getItem('crossChain') ?? '', 10) as ChainId;
-  let ethChainId = currentChainId
+  const ethChainId = parseInt(process.env.REACT_APP_CHAIN_ID ?? '', 10) as ChainId;
+  const klayChainId = parseInt(process.env.REACT_APP_KLAYTN_ID ?? '', 10) as ChainId;
+  let balanceChainId = ethChainId
   if (containsETH) {
     if (currencies && currencies[0] === ETHER) {
-      ethChainId = currentChainId
+      balanceChainId = ethChainId
     }
     if (currencies && currencies[0] === KLAYTN) {
-      ethChainId = crossChainId
+      balanceChainId = klayChainId
     }
   }
-  const ethBalance = useETHBalances(containsETH ? [account] : [], ethChainId)
+  const ethBalance = useETHBalances(containsETH ? [account] : [], balanceChainId)
 
   return useMemo(
     () =>
