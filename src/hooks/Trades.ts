@@ -8,7 +8,7 @@ import { wrappedCurrency } from '../utils/wrappedCurrency'
 
 import { useActiveWeb3React } from './index'
 
-function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
+function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency, includeTAL?: boolean): Pair[] {
   const { chainId } = useActiveWeb3React()
 
   // Base tokens for building intermediary trading routes
@@ -41,7 +41,7 @@ function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
             ...basePairs,
           ]
             .filter((tokens): tokens is [Token, Token] => Boolean(tokens[0] && tokens[1]))
-            .filter(([t0, t1]) => t0.address !== t1.address)
+            .filter(([t0, t1]) => t0.address !== t1.address || includeTAL)
             // This filter will remove all the pairs that are not supported by the CUSTOM_BASES settings
             // This option is currently not used on Pancake swap
             .filter(([t0, t1]) => {
@@ -59,7 +59,7 @@ function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
               return true
             })
         : [],
-    [tokenA, tokenB, bases, basePairs, chainId]
+    [tokenA, tokenB, bases, basePairs, chainId, includeTAL]
   )
 
   const allPairs = usePairs(allPairCombinations)
@@ -81,7 +81,7 @@ function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
   )
 }
 
-function useAllCommonPairsXswap(currencyA?: Currency, currencyB?: Currency): Pair[] {
+function useAllCommonPairsXswap(currencyA?: Currency, currencyB?: Currency, includeTAL?: boolean): Pair[] {
   // const { chainId } = useActiveWeb3React()
   const chainId = parseInt(window.localStorage.getItem('crossChain') ?? '3') as ChainId     // TODO: 상수 처리 디폴트 값 ?
 
@@ -115,7 +115,7 @@ function useAllCommonPairsXswap(currencyA?: Currency, currencyB?: Currency): Pai
           ...basePairs,
         ]
           .filter((tokens): tokens is [Token, Token] => Boolean(tokens[0] && tokens[1]))
-          .filter(([t0, t1]) => t0.address !== t1.address)
+          .filter(([t0, t1]) => t0.address !== t1.address || includeTAL)
           // This filter will remove all the pairs that are not supported by the CUSTOM_BASES settings
           // This option is currently not used on Pancake swap
           .filter(([t0, t1]) => {
@@ -133,7 +133,7 @@ function useAllCommonPairsXswap(currencyA?: Currency, currencyB?: Currency): Pai
             return true
           })
         : [],
-    [tokenA, tokenB, bases, basePairs, chainId]
+    [tokenA, tokenB, bases, basePairs, chainId, includeTAL]
   )
 
   const allPairs = usePairsXswap(allPairCombinations)
@@ -158,17 +158,18 @@ function useAllCommonPairsXswap(currencyA?: Currency, currencyB?: Currency): Pai
 /**
  * Returns the best trade for the exact amount of tokens in to the given token out
  */
-export function useTradeExactIn(currencyAmountIn?: CurrencyAmount, currencyOut?: Currency): Trade | null {
-  const allowedPairs = useAllCommonPairs(currencyAmountIn?.currency, currencyOut)
+export function useTradeExactIn(currencyAmountIn?: CurrencyAmount, currencyOut?: Currency, isBridge?: boolean): Trade | null {
+  const allowedPairs = useAllCommonPairs(currencyAmountIn?.currency, currencyOut, isBridge)
+  const maxHops: number = isBridge ? 1 : 3
 
   return useMemo(() => {
     if (currencyAmountIn && currencyOut && allowedPairs.length > 0) {
       return (
-        Trade.bestTradeExactIn(allowedPairs, currencyAmountIn, currencyOut, { maxHops: 3, maxNumResults: 1 })[0] ?? null
+        Trade.bestTradeExactIn(allowedPairs, currencyAmountIn, currencyOut, { maxHops, maxNumResults: 1 })[0] ?? null
       )
     }
     return null
-  }, [allowedPairs, currencyAmountIn, currencyOut])
+  }, [allowedPairs, currencyAmountIn, currencyOut, maxHops])
 }
 
 export function useTradeExactInXswap(currencyAmountIn?: CurrencyAmount, currencyOut?: Currency): Trade | null {
@@ -201,17 +202,18 @@ export function useTradeExactOut(currencyIn?: Currency, currencyAmountOut?: Curr
   }, [allowedPairs, currencyIn, currencyAmountOut])
 }
 
-export function useTradeExactOutXswap(currencyIn?: Currency, currencyAmountOut?: CurrencyAmount): Trade | null {
-  const allowedPairs = useAllCommonPairsXswap(currencyIn, currencyAmountOut?.currency)
+export function useTradeExactOutXswap(currencyIn?: Currency, currencyAmountOut?: CurrencyAmount, isBridge?: boolean): Trade | null {
+  const allowedPairs = useAllCommonPairsXswap(currencyIn, currencyAmountOut?.currency, isBridge)
+  const maxHops: number = isBridge ? 1 : 3
 
   return useMemo(() => {
     if (currencyIn && currencyAmountOut && allowedPairs.length > 0) {
       return (
-        Trade.bestTradeExactOut(allowedPairs, currencyIn, currencyAmountOut, { maxHops: 3, maxNumResults: 1 })[0] ??
+        Trade.bestTradeExactOut(allowedPairs, currencyIn, currencyAmountOut, { maxHops, maxNumResults: 1 })[0] ??
         null
       )
     }
     return null
-  }, [allowedPairs, currencyIn, currencyAmountOut])
-
+  }, [allowedPairs, currencyIn, currencyAmountOut, maxHops])
 }
+

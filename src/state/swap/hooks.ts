@@ -15,7 +15,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import useENS from '../../hooks/useENS';
 import { useActiveWeb3React } from '../../hooks';
 import { useCurrency } from '../../hooks/Tokens';
-import { useTradeExactIn, useTradeExactOut, useTradeExactInXswap, useTradeExactOutXswap } from '../../hooks/Trades';
+import {
+  useTradeExactIn,
+  useTradeExactInXswap,
+  useTradeExactOut,
+  useTradeExactOutXswap
+} from '../../hooks/Trades';
 import useParsedQueryString from '../../hooks/useParsedQueryString';
 import { isAddress } from '../../utils';
 import { AppDispatch, AppState } from '../index';
@@ -345,33 +350,60 @@ export function useDerivedXswapInfo(
     (isExactIn ? inputCurrency : outputCurrency) ?? undefined
   );
 
+  const isBridge = inputCurrency?.symbol === 'TAL' || inputCurrency?.symbol === 'KTAL';
+
+  // XSwap Key Parts of Code >>
   // input -> TAL -> TAL -> output
+  const bestTALTradeExactIn = useTradeExactIn(
+    isExactIn ? parsedAmount : undefined,
+    outputCurrencyTAL ?? undefined,
+    isBridge
+  );  // TAL -> TAL
   const bestTradeExactIn = useTradeExactIn(
     isExactIn ? parsedAmount : undefined,
     outputCurrencyTAL ?? undefined
-  );
+  );  // Others -> TAL
+
+  const parsedTALAmountInTAL = tryParseAmountXswap(
+    parsedAmount?.toSignificant(6),
+    (isExactIn ? inputCurrencyTAL : outputCurrencyTAL) ?? undefined
+  );  // Keep TAL input amount
   const parsedAmountInTAL = tryParseAmountXswap(
     bestTradeExactIn?.outputAmount.toSignificant(6),
     (isExactIn ? inputCurrencyTAL : outputCurrencyTAL) ?? undefined
   );
+
   const bestTradeExactInXswap = useTradeExactInXswap(
-    isExactIn ? parsedAmountInTAL : undefined,
+    isExactIn ? isBridge ? parsedTALAmountInTAL : parsedAmountInTAL : undefined,
     outputCurrency ?? undefined
   );
 
   // output -> TAL -> TAL -> input
+  // 좀 더 면밀한 검토가 필요한 부분이나 XSwap의 경우 exactOut을 UI에서 차단해서 아래 코드는 사용되지 않음.
+  const bestTALTradeExactOutXswap = useTradeExactOutXswap(
+    inputCurrencyTAL ?? undefined,
+    !isExactIn ? parsedAmount : undefined,
+    isBridge
+  );
   const bestTradeExactOutXswap = useTradeExactOutXswap(
     inputCurrencyTAL ?? undefined,
     !isExactIn ? parsedAmount : undefined
+  );
+
+  const parsedTALAmountOutTAL = tryParseAmountXswap(
+    parsedAmount?.toSignificant(6),
+    (isExactIn ? inputCurrencyTAL : outputCurrencyTAL) ?? undefined
   );
   const parsedAmountOutTAL = tryParseAmountXswap(
     bestTradeExactOutXswap?.inputAmount.toSignificant(6),
     (isExactIn ? inputCurrencyTAL : outputCurrencyTAL) ?? undefined
   );
+
   const bestTradeExactOut = useTradeExactOut(
     inputCurrency ?? undefined,
-    !isExactIn ? parsedAmountOutTAL : undefined
+    !isExactIn ? isBridge ? parsedTALAmountOutTAL : parsedAmountOutTAL : undefined
   );
+  // << XSwap Key Parts of Code modified by Peter H. Nahm
 
   const relevantTokenBalances = useCurrencyBalances(account ?? undefined, [
     inputCurrencyTAL ?? undefined,
@@ -384,12 +416,14 @@ export function useDerivedXswapInfo(
   ]);
   // console.log('== relevantTokenBalances ==>', relevantTokenBalances)
 
-  // const v2Trade = isExactIn
-  //   ? (outputCurrency?.symbol === 'ETH' || outputCurrency?.symbol === 'KTAL')
-  //   ? bestTradeExactInXswap : bestTradeExactIn
-  //   : bestTradeExactOutXswap;
-  const v2Trade = isExactIn ? bestTradeExactIn : bestTradeExactOut;
-  const v2TradeX = isExactIn ? bestTradeExactInXswap : bestTradeExactOutXswap;
+  // // const v2Trade = isExactIn
+  // //   ? (outputCurrency?.symbol === 'ETH' || outputCurrency?.symbol === 'KTAL')
+  // //   ? bestTradeExactInXswap : bestTradeExactIn
+  // //   : bestTradeExactOutXswap;
+  // const v2Trade = isExactIn ? bestTradeExactIn : bestTradeExactOut;
+  // const v2TradeX = isExactIn ? bestTradeExactInXswap : bestTradeExactOutXswap;
+  const v2Trade = isExactIn ? isBridge ? bestTALTradeExactIn : bestTradeExactIn : bestTradeExactOut;
+  const v2TradeX = isExactIn ? bestTradeExactInXswap : isBridge ? bestTALTradeExactOutXswap : bestTradeExactOutXswap;
 
   const currencyBalances = {
     [Field.INPUT]: relevantTokenBalances[0],

@@ -43,12 +43,25 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
       const { result: reserves, loading } = result
       const tokenA = tokens[i][0]
       const tokenB = tokens[i][1]
+      const isBridge = (tokenA?.symbol === 'TAL' || tokenA?.symbol === 'KTAL') && (tokenB?.symbol === 'TAL' || tokenB?.symbol === 'KTAL')
 
       if (loading) return [PairState.LOADING, null]
-      if (!tokenA || !tokenB || tokenA.equals(tokenB)) return [PairState.INVALID, null]
-      if (!reserves) return [PairState.NOT_EXISTS, null]
-      const { reserve0, reserve1 } = reserves
+      // if (!tokenA || !tokenB || tokenA.equals(tokenB)) return [PairState.INVALID, null]
+      // if (!reserves) return [PairState.NOT_EXISTS, null]
+      // const { reserve0, reserve1 } = reserves
+      if (!tokenA || !tokenB || (tokenA.equals(tokenB) && !isBridge)) return [PairState.INVALID, null]
+      if (!reserves && !isBridge) return [PairState.NOT_EXISTS, null]
+      const { reserve0, reserve1 } = reserves ?? ['0', '0']
       const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA]
+      if (isBridge) {
+        return [
+          PairState.EXISTS,
+          new Pair(
+            new TokenAmount(token0, '30000000000000000000000000'),  // Default Max. TAL ?
+            new TokenAmount(token1, '30000000000000000000000000')
+          )
+        ]
+      }
       return [
         PairState.EXISTS,
         new Pair(new TokenAmount(token0, reserve0.toString()), new TokenAmount(token1, reserve1.toString()))
