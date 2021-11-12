@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
-import { JSBI, Percent, Router, SwapParameters, Trade, TradeType } from 'taalswap-sdk'
+import { ChainId, JSBI, Percent, Router, SwapParameters, Trade, TradeType } from 'taalswap-sdk';
 import { useMemo } from 'react'
 import { BIPS_BASE, DEFAULT_DEADLINE_FROM_NOW, INITIAL_ALLOWED_SLIPPAGE } from '../constants'
 import { useTransactionAdder } from '../state/transactions/hooks'
@@ -144,10 +144,11 @@ export function useSwapCallback(
   tradeX?: Trade | undefined
 ): { state: SwapCallbackState; callback: null | (() => Promise<string>); error: string | null } {
   const { account, chainId, library } = useActiveWeb3React()
+  const crossChain = parseInt(window.localStorage.getItem('crossChain') ?? '', 10) as ChainId
 
   let xSwapFlag = true
   const swapCallsOrg = useSwapCallArguments(trade, allowedSlippage, deadline, recipientAddressOrName)
-  if (tradeX === undefined) {
+  if (tradeX === undefined || chainId === crossChain) {
     tradeX = trade
     xSwapFlag = false
   }
