@@ -159,6 +159,7 @@ function useAllCommonPairsXswap(currencyA?: Currency, currencyB?: Currency, incl
  * Returns the best trade for the exact amount of tokens in to the given token out
  */
 export function useTradeExactIn(currencyAmountIn?: CurrencyAmount, currencyOut?: Currency, isBridge?: boolean): Trade | null {
+  if (isBridge === undefined) isBridge = false
   const allowedPairs = useAllCommonPairs(currencyAmountIn?.currency, currencyOut, isBridge)
   const maxHops: number = isBridge ? 1 : 3
 
