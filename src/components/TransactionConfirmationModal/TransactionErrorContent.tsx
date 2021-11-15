@@ -4,11 +4,13 @@ import { Button, Text } from 'taalswap-uikit'
 import { AlertTriangle } from 'react-feather'
 import { AutoColumn } from '../Column'
 import { Wrapper, Section, BottomSection, ContentHeader } from './helpers'
+import { useTranslation } from '../../contexts/Localization';
 
 type TransactionErrorContentProps = { message: string; onDismiss: () => void }
 
 const TransactionErrorContent = ({ message, onDismiss }: TransactionErrorContentProps) => {
   const theme = useContext(ThemeContext)
+  const { t } = useTranslation()
   return (
     <Wrapper>
       <Section>
@@ -21,7 +23,7 @@ const TransactionErrorContent = ({ message, onDismiss }: TransactionErrorContent
         </AutoColumn>
       </Section>
       <BottomSection gap="12px">
-        <Button onClick={onDismiss}>Dismiss</Button>
+        <Button onClick={onDismiss}>{t('Dismiss')}</Button>
       </BottomSection>
     </Wrapper>
   )

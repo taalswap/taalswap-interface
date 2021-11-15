@@ -8,8 +8,9 @@ import { calculateGasMargin, getRouterContract, isAddress, shortenAddress } from
 import isZero from '../utils/isZero'
 import { useActiveWeb3React } from './index'
 import useENS from './useENS'
+import { useTranslation } from '../contexts/Localization';
 
- enum SwapCallbackState {
+enum SwapCallbackState {
   INVALID,
   LOADING,
   VALID,
@@ -143,6 +144,7 @@ export function useSwapCallback(
   recipientAddressOrName: string | null,              // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
   tradeX?: Trade | undefined
 ): { state: SwapCallbackState; callback: null | (() => Promise<string>); error: string | null } {
+  const { t } = useTranslation()
   const { account, chainId, library } = useActiveWeb3React()
   const crossChain = parseInt(window.localStorage.getItem('crossChain') ?? '', 10) as ChainId
 
@@ -268,13 +270,14 @@ export function useSwapCallback(
             } else {
               // otherwise, the error was unexpected and we need to convey that
               console.error(`Swap failed`, error, methodName, args, value)
-              throw new Error(`Swap failed: ${error.message}`)
+              // throw new Error(`Swap failed: ${error.message}`)
+              throw new Error(`${t('Swap failed')}: ${t('insufficient fees')}`)
             }
           })
       },
       error: null,
     }
-  }, [trade, library, account, chainId, recipient, recipientAddressOrName, swapCalls, addTransaction])
+  }, [trade, library, account, chainId, recipient, recipientAddressOrName, swapCalls, addTransaction, t])
 }
 
 export default useSwapCallback

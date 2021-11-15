@@ -92,6 +92,7 @@
   "- 0.17% to LP token holders": "- 0.17%는 LP 토큰 보유자에게 지급",
   "- 0.03% to the Treasury": "- 0.03%는 Treasury에게 자급",
   "- 0.05% towards TAL buyback & burn": "- 0.05%는 TAL 재구매 및 소각에 사용",
+  "- 0.05% to SAFU address": "- SAFU 주소에 보관",
   "Farm": "파밍",
   "Staking": "예치",
   "Syrup Pool": "Syrup 풀",
@@ -947,5 +948,11 @@
   "Pooled %symbol%": "풀에 예치된 %symbol%",
   "Your pool tokens": "LP 토큰 갯수",
   "Your pool share": "풀 점유율",
-  "Amount": "토큰량"
+  "Amount": "토큰량",
+  "No recent transactions": "최근 거래 없음",
+  "Swap failed": "스왑 실패",
+  "insufficient fees": "수수료 잔고 부족",
+  "Dismiss": "취소",
+  "Wrap": "랩트(wrapped)토큰으로 교환",
+  "Unwrap": "랩트(wrapped)토큰 교환"
 }

@@ -44,7 +44,7 @@ const getRowStatus = (sortedRecentTransaction: TransactionDetails) => {
 };
 
 const RecentTransactionsModal = ({
-  onDismiss = defaultOnDismiss
+  onDismiss = defaultOnDismiss,
 }: RecentTransactionsModalProps) => {
   const { t } = useTranslation();
   const { account, chainId } = useActiveWeb3React();
@@ -112,7 +112,7 @@ const RecentTransactionsModal = ({
           alignItems="center"
         >
           <Text mb="8px" bold>
-            No recent transactions
+            {t('No recent transactions')}
           </Text>
           <div
             style={{

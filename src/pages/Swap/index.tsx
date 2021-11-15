@@ -848,9 +848,9 @@ function Swap({
                 >
                   {wrapInputError ??
                     (wrapType === WrapType.WRAP
-                      ? 'Wrap'
+                      ? t('Wrap')
                       : wrapType === WrapType.UNWRAP
-                      ? 'Unwrap'
+                      ? t('Unwrap')
                       : null)}
                 </Button>
               ) : noRoute && userHasSpecifiedInputOutput ? (
