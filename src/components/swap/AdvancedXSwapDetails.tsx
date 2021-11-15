@@ -126,7 +126,7 @@ const Tip3 = () => {
       <Text mb="12px">{t('For each trade a 0.25% fee is paid')}</Text>
       <Text>{t('- 0.17% to LP token holders')}</Text>
       <Text>{t('- 0.03% to the Treasury')}</Text>
-      <Text>{t('- 0.05% towards TAL buyback & burn')}</Text>
+      <Text>{t('- 0.05% to SAFU address')}</Text>
     </>,
     { placement: 'right-end', tooltipOffset: [20, 10] }
   );
