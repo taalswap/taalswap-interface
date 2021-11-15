@@ -472,8 +472,9 @@ export function useDerivedXswapInfo(
     computeSlippageAdjustedAmounts(v2Trade, allowedSlippage);
 
   // compare input balance to max input based on version
+  // currencyBalances -> currencyBalancesOrg : Peter H. Nahm
   const [balanceIn, amountIn] = [
-    currencyBalances[Field.INPUT],
+    currencyBalancesOrg[Field.INPUT],
     slippageAdjustedAmounts ? slippageAdjustedAmounts[Field.INPUT] : null,
   ];
 
