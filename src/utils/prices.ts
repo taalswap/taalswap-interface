@@ -1,4 +1,4 @@
-import { CurrencyAmount, Fraction, JSBI, Percent, TokenAmount, Trade } from 'taalswap-sdk'
+import { ChainId, CurrencyAmount, Fraction, JSBI, Percent, TokenAmount, Trade } from 'taalswap-sdk';
 import {
   BLOCKED_PRICE_IMPACT_NON_EXPERT,
   ALLOWED_PRICE_IMPACT_HIGH,
@@ -51,6 +51,46 @@ export function computeTradePriceBreakdown(
       : CurrencyAmount.ether(realizedLPFee.multiply(trade.inputAmount.raw).quotient))
 
   return { priceImpactWithoutFee: priceImpactWithoutFeePercent, realizedLPFee: realizedLPFeeAmount }
+}
+
+export function computeTradeXPriceBreakdown(
+  tradeX?: Trade,
+  crossChain?: string
+): { xpriceImpactWithoutFee?: Percent; xrealizedLPFee?: CurrencyAmount } {
+  // for each hop in our trade, take away the x*y=k price impact from 0.25% fees
+  // e.g. for 3 tokens/2 hops: 1 - ((1 - .025) * (1-.025))
+  const xrealizedLPFee = !tradeX
+    ? undefined
+    : ONE_HUNDRED_PERCENT.subtract(
+      tradeX.route.pairs.reduce<Fraction>(
+        (currentFee: Fraction): Fraction => currentFee.multiply(INPUT_FRACTION_AFTER_FEE),
+        ONE_HUNDRED_PERCENT
+      )
+    )
+
+  // remove lp fees from price impact
+  const xpriceImpactWithoutFeeFraction = tradeX && xrealizedLPFee ? tradeX.priceImpact.subtract(xrealizedLPFee) : undefined
+
+  // the x*y=k impact
+  const xpriceImpactWithoutFeePercent = xpriceImpactWithoutFeeFraction
+    ? new Percent(xpriceImpactWithoutFeeFraction?.numerator, xpriceImpactWithoutFeeFraction?.denominator)
+    : undefined
+
+  // const chainId = getChainId()
+  let chainId = getChainId()
+  if (crossChain !== undefined) chainId = parseInt(crossChain, 10) as ChainId
+
+  // the amount of the input that accrues to LPs
+  const xrealizedLPFeeAmount =
+    xrealizedLPFee &&
+    tradeX &&
+    (tradeX.inputAmount instanceof TokenAmount
+      ? new TokenAmount(tradeX.inputAmount.token, xrealizedLPFee.multiply(tradeX.inputAmount.raw).quotient)
+      : chainId > 1000
+        ? CurrencyAmount.klaytn(xrealizedLPFee.multiply(tradeX.inputAmount.raw).quotient)
+        : CurrencyAmount.ether(xrealizedLPFee.multiply(tradeX.inputAmount.raw).quotient))
+
+  return { xpriceImpactWithoutFee: xpriceImpactWithoutFeePercent, xrealizedLPFee: xrealizedLPFeeAmount }
 }
 
 // computes the minimum amount out and maximum amount in for a trade given a user specified allowed slippage in bips
