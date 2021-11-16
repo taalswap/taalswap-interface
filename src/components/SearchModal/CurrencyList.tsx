@@ -130,7 +130,6 @@ function CurrencyRow({
   const customAdded = useIsUserAddedToken(currency);
   const balance = useCurrencyBalance(account ?? undefined, currency);
 
-  console.log(balance);
   const removeToken = useRemoveUserAddedToken();
   const addToken = useAddUserToken();
 
