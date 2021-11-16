@@ -81,7 +81,11 @@ import {
 } from 'state/user/hooks';
 import { LinkStyledButton } from 'components/Shared';
 import { maxAmountSpend } from 'utils/maxAmountSpend';
-import { computeTradePriceBreakdown, computeTradeXPriceBreakdown, warningSeverity } from 'utils/prices';
+import {
+  computeTradePriceBreakdown,
+  computeTradeXPriceBreakdown,
+  warningSeverity,
+} from 'utils/prices';
 import Loader from 'components/Loader';
 import useI18n from 'hooks/useI18n';
 import PageHeader from 'components/PageHeader';
@@ -582,11 +586,15 @@ function XSwap({
   );
 
   const { priceImpactWithoutFee } = computeTradePriceBreakdown(trade);
-  const { xpriceImpactWithoutFee } = computeTradeXPriceBreakdown(tradeX, crossChain);
+  const { xpriceImpactWithoutFee } = computeTradeXPriceBreakdown(
+    tradeX,
+    crossChain
+  );
 
   const handleSwap = useCallback(() => {
     if (
-      priceImpactWithoutFee && xpriceImpactWithoutFee &&
+      priceImpactWithoutFee &&
+      xpriceImpactWithoutFee &&
       !confirmPriceImpactWithoutFee(priceImpactWithoutFee, storedLangCode) &&
       !confirmPriceImpactWithoutFee(xpriceImpactWithoutFee, storedLangCode)
     ) {
@@ -618,7 +626,13 @@ function XSwap({
           txHash: undefined,
         }));
       });
-  }, [priceImpactWithoutFee, xpriceImpactWithoutFee, swapCallback, setSwapState, storedLangCode]);
+  }, [
+    priceImpactWithoutFee,
+    xpriceImpactWithoutFee,
+    swapCallback,
+    setSwapState,
+    storedLangCode,
+  ]);
 
   // errors
   const [showInverted, setShowInverted] = useState<boolean>(false);
@@ -626,7 +640,10 @@ function XSwap({
   // warnings on slippage
   const priceImpactSeverityLeft = warningSeverity(priceImpactWithoutFee);
   const priceImpactSeverityRight = warningSeverity(xpriceImpactWithoutFee);
-  const priceImpactSeverity = priceImpactSeverityLeft >= priceImpactSeverityRight ? priceImpactSeverityLeft : priceImpactSeverityRight
+  const priceImpactSeverity =
+    priceImpactSeverityLeft >= priceImpactSeverityRight
+      ? priceImpactSeverityLeft
+      : priceImpactSeverityRight;
   // console.log('=== priceImpactSeverity ===>', priceImpactSeverityLeft, priceImpactSeverityRight, priceImpactSeverity )
 
   // show approve flow when: no error on inputs, not approved or pending, or approved in current session
@@ -776,7 +793,7 @@ function XSwap({
   // When leaves XSwap menu clear localStorage items...
   useEffect(() => {
     history.listen((location, action) => {
-      console.log(`The current URL is ${location.pathname}`);
+      // console.log(`The current URL is ${location.pathname}`);
       if (location.pathname !== '/Xswap') {
         window.localStorage.removeItem('crossChain');
       }
