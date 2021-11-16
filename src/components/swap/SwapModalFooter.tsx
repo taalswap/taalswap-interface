@@ -114,6 +114,13 @@ export default function SwapModalFooter({
   const chainId = parseInt(window.localStorage.getItem('chainId') ?? '1');
   const crossChain = parseInt(window.localStorage.getItem('crossChain') ?? '1');
 
+  const enabledCheck = () => {
+    const result =
+      chainId !== crossChain && tradeX === undefined ? true : disabledConfirm;
+
+    return result;
+  };
+
   let FEE = 'ETH';
   if (trade.inputAmount.currency.symbol === 'ETH') {
     if (chainId > 1000) FEE = 'KLAY';
@@ -231,7 +238,7 @@ export default function SwapModalFooter({
       <AutoRow>
         <Button
           onClick={onConfirm}
-          disabled={disabledConfirm}
+          disabled={enabledCheck()}
           variant={severity > 2 ? 'danger' : 'primary'}
           mt="10px"
           id="confirm-swap-or-send"
