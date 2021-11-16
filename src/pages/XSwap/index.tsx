@@ -340,46 +340,52 @@ function XSwap({
 
   useEffect(() => {
     async function fetchPrice() {
+      const inputToken = getAddressBySymbol(currencies[Field.INPUT]?.symbol, chainId)
+      const outputToken = getAddressBySymbol(currencies[Field.OUTPUT]?.symbol, crossChain)
       if (
         currencies[Field.INPUT]?.symbol !== undefined &&
         currencies[Field.OUTPUT]?.symbol !== undefined
       ) {
-        await fetch(
-          `${getAPIUrl(chainId)}/tokens/${getAddressBySymbol(
-            currencies[Field.INPUT]?.symbol,
-            chainId
-          )}`,
-          // 'https://taalswap-info-api-black.vercel.app/api/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7',
-          {
-            method: 'GET',
-            headers: {
-              'Content-type': 'application/json',
-            },
-          }
-        )
-          .then((response) => response.json())
-          .then((response) => {
-            setCurrencyAPrice(parseFloat(response.data.price).toFixed(4));
-          });
+        if (inputToken !== undefined) {
+          await fetch(
+            `${getAPIUrl(chainId)}/tokens/${getAddressBySymbol(
+              currencies[Field.INPUT]?.symbol,
+              chainId
+            )}`,
+            // 'https://taalswap-info-api-black.vercel.app/api/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7',
+            {
+              method: 'GET',
+              headers: {
+                'Content-type': 'application/json',
+              },
+            }
+          )
+            .then((response) => response.json())
+            .then((response) => {
+              setCurrencyAPrice(parseFloat(response.data.price).toFixed(4));
+            });
+        }
 
-        await fetch(
-          `${getAPIUrl(crossChain)}/tokens/${getAddressBySymbol(
-            currencies[Field.OUTPUT]?.symbol,
-            crossChain
-          )}`,
+        if (outputToken !== undefined) {
+          await fetch(
+            `${getAPIUrl(crossChain)}/tokens/${getAddressBySymbol(
+              currencies[Field.OUTPUT]?.symbol,
+              crossChain
+            )}`,
 
-          // 'https://taalswap-info-api-black.vercel.app/api/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7',
-          {
-            method: 'GET',
-            headers: {
-              'Content-type': 'application/json',
-            },
-          }
-        )
-          .then((response) => response.json())
-          .then((response) => {
-            setCurrencyBPrice(parseFloat(response.data.price).toFixed(4));
-          });
+            // 'https://taalswap-info-api-black.vercel.app/api/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7',
+            {
+              method: 'GET',
+              headers: {
+                'Content-type': 'application/json',
+              },
+            }
+          )
+            .then((response) => response.json())
+            .then((response) => {
+              setCurrencyBPrice(parseFloat(response.data.price).toFixed(4));
+            });
+        }
       }
     }
     fetchPrice();
