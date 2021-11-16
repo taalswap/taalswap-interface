@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ChainId } from 'taalswap-sdk';
 import styled from 'styled-components';
 import { useSwapState } from 'state/swap/hooks';
+import { useActiveWeb3React } from 'hooks';
 
 const NetworkSelectBox = styled.select`
   width: 180px;
@@ -21,9 +22,17 @@ const NetworkSelectBox = styled.select`
 
 const NetworkSelector = ({ onSetCrossChain, id }) => {
   const { crossChain } = useSwapState();
+  const { chainId } = useActiveWeb3React();
+
+  if (window.localStorage.getItem('chainId') === null && chainId !== undefined)
+    window.localStorage.setItem('chainId', chainId?.toString());
+
   const currentChainId = window.localStorage.getItem('chainId');
   const crossChainId = window.localStorage.getItem('crossChain') ?? 0;
-  const crossChainConf = parseInt(process.env.REACT_APP_KLAYTN_ID ?? '', 10) as ChainId;
+  const crossChainConf = parseInt(
+    process.env.REACT_APP_KLAYTN_ID ?? '',
+    10
+  ) as ChainId;
   // const [selectedChainId, setSelectedChainId] = useState(() =>
   //   id === 'swap-currency-input' ? currentChainId : 0
   // );
