@@ -340,8 +340,14 @@ function XSwap({
 
   useEffect(() => {
     async function fetchPrice() {
-      const inputToken = getAddressBySymbol(currencies[Field.INPUT]?.symbol, chainId)
-      const outputToken = getAddressBySymbol(currencies[Field.OUTPUT]?.symbol, crossChain)
+      const inputToken = getAddressBySymbol(
+        currencies[Field.INPUT]?.symbol,
+        chainId
+      );
+      const outputToken = getAddressBySymbol(
+        currencies[Field.OUTPUT]?.symbol,
+        crossChain
+      );
       if (
         currencies[Field.INPUT]?.symbol !== undefined &&
         currencies[Field.OUTPUT]?.symbol !== undefined
@@ -794,7 +800,7 @@ function XSwap({
       />
       {/* <CardNav /> */}
       <PageHeader
-        title={t('XSwap')}
+        title={t('X-Swap')}
         description={t('Trade your token on the spot')}
       />
       <SwapBody>

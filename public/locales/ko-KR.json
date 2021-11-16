@@ -954,5 +954,6 @@
   "insufficient fees": "수수료 잔고 부족",
   "Dismiss": "취소",
   "Wrap": "랩트(wrapped)토큰으로 교환",
-  "Unwrap": "랩트(wrapped)토큰 교환"
+  "Unwrap": "랩트(wrapped)토큰 교환",
+  "X-Swap": "X-스왑"
 }
