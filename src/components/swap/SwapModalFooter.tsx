@@ -134,7 +134,7 @@ export default function SwapModalFooter({
           <Text fontSize="14px">{t('SwapPrice')}</Text>
           <div>
             <Text
-              fontSize="15px"
+              fontSize="14px"
               style={{
                 justifyContent: 'end',
                 alignItems: 'center',
