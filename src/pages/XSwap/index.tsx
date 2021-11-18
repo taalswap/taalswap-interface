@@ -96,6 +96,9 @@ import CurrencyXSwapInputPanel from 'components/CurrencyXSwapInputPanel';
 import AppBody from '../AppBody';
 import Teaser from '../LandingPageView/Teaser_page';
 import TOKEN_LIST from '../../constants/token/taalswap.json';
+import { setupNetwork } from '../../utils/wallet';
+
+const { ethereum } = window;
 
 // const CACHE_KEY = 'pancakeswap_language';
 const CACHE_KEY = 'taalswap_language';
@@ -280,6 +283,17 @@ function XSwap({
     window.localStorage.getItem('crossChain') ??
     process.env.REACT_APP_CHAIN_ID ??
     ChainId.ROPSTEN.toString();
+
+  // Check local storage configurations
+  if (chainId !== process.env.REACT_APP_CHAIN_ID ||
+      chainId !== process.env.REACT_APP_CHAIN_ID) {
+    window.localStorage.setItem('chainId', process.env.REACT_APP_CHAIN_ID ?? '1')
+  }
+  // Check currently injected chain and switch network
+  const injected = ethereum ? ethereum.chainId ? ethereum.chainId : 0x1 : 0x1
+  if (chainId !== injected.toString(16)) {
+    setupNetwork(parseInt(chainId, 10))
+  }
 
   const [isExpertMode] = useExpertModeManager();
 
