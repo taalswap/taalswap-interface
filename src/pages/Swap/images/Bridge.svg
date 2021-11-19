@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
+<style type="text/css">
+	.st0{opacity:0;fill:#EFFAF4;}
+	.st1{fill:none;stroke:#00A04A;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+</style>
+<g>
+	<path id="패스_87" class="st0" d="M29.77,8.96c11.6,0,21,9.4,21,21s-9.4,21-21,21s-21-9.4-21-21S18.17,8.96,29.77,8.96z"/>
+	<g id="그룹_1014" transform="translate(5.361 13.212)">
+		<g id="그룹_1016" transform="translate(0.639 0.788)">
+			<line id="선_18" class="st1" x1="16.05" y1="9.96" x2="16.05" y2="22.06"/>
+			<line id="선_19" class="st1" x1="30.63" y1="9.96" x2="30.63" y2="22.06"/>
+			<line id="선_20" class="st1" x1="15.17" y1="22.09" x2="16.88" y2="22.09"/>
+			<line id="선_21" class="st1" x1="29.8" y1="22.09" x2="31.51" y2="22.09"/>
+			<path id="패스_530" class="st1" d="M16.05,8.96c0,5.24-7.29,9.54-7.29,9.54h29.14c0,0-7.29-4.3-7.29-9.54"/>
+			<path id="패스_531" class="st1" d="M30.5,8.96c0,3.64-3.35,7.56-5.51,8.33c-0.76,0.28-1.6,0.28-2.36,0
+				c-2.16-0.77-6.48-4.28-6.48-8.33"/>
+		</g>
+	</g>
+</g>
+</svg>
