@@ -21,6 +21,8 @@ import Loader from 'components/Loader';
 import axios from 'axios';
 import { useTranslation } from '../../contexts/Localization';
 import TOKEN_LIST from '../../constants/token/taalswap.json';
+import { SCAN_URL } from '../../config';
+import { BRIDGE_ADDRESS } from '../../constants/index';
 
 type RecentTransactionsModalProps = {
   onDismiss?: () => void;
@@ -56,9 +58,6 @@ const RecentXSwapTransactionsModal = ({
   const theme = useTheme();
   const btnColor = theme.isDark ? '#fff' : '#212b36';
 
-  const ethDefaultUrl = 'https://ropsten.etherscan.io/tx';
-  const klaytnDefaultUrl = 'https://baobab.scope.klaytn.com/tx';
-
   // Logic taken from Web3Status/index.tsx line 175
   const sortedRecentTransactions = useMemo(() => {
     const txs = Object.values(allTransactions);
@@ -67,14 +66,12 @@ const RecentXSwapTransactionsModal = ({
 
   useEffect(() => {
     const getXSWapTransactions = async () => {
-      //   if (account !== undefined) {
       const url = `http://localhost:4000/bridge/api/user/${account}`;
 
       await axios.get(url).then((response) => {
         setAllXSwapTransactions(response.data.data);
       });
     };
-    // };
 
     getXSWapTransactions();
   }, [account]);
@@ -100,16 +97,21 @@ const RecentXSwapTransactionsModal = ({
     []
   );
 
-  const getUrl = (txHash, fromChain) => {
-    let url;
+  const getUrl = (txHash, chainAddress, fromChain) => {
+    const urlChainId = Object.keys(BRIDGE_ADDRESS).find(
+      (key) => BRIDGE_ADDRESS[key] === chainAddress
+    );
 
-    switch (fromChain.toUpperCase()) {
-      case 'ETH':
-        url = `${ethDefaultUrl}/${txHash}`;
-        break;
-      case 'KLAYTN':
-        url = `${klaytnDefaultUrl}/${txHash}`;
-        break;
+    let url;
+    if (urlChainId !== undefined) {
+      switch (fromChain.toUpperCase()) {
+        case 'ETH':
+          url = `${SCAN_URL[urlChainId]}/tx/${txHash}`;
+          break;
+        case 'KLAYTN':
+          url = `${SCAN_URL[urlChainId]}/tx/${txHash}`;
+          break;
+      }
     }
 
     return url;
@@ -123,7 +125,9 @@ const RecentXSwapTransactionsModal = ({
     txHash,
     xTxHash,
     fromChain,
-    toChain
+    toChain,
+    to,
+    xFrom
   ) => {
     return (
       <div
@@ -138,13 +142,13 @@ const RecentXSwapTransactionsModal = ({
         <div style={{ marginRight: '0.3rem' }}>X-Swap</div>
         <Link
           style={{ marginRight: '0.3rem' }}
-          href={getUrl(txHash, fromChain)}
+          href={getUrl(txHash, to, fromChain)}
           target="_blank"
         >{`${parseFloat(formattedAmount?.toFixed(10))} ${fromSymbol}`}</Link>
         <div style={{ marginRight: '0.3rem' }}>for</div>
         <Link
           style={{ marginRight: '0.3rem' }}
-          href={getUrl(xTxHash, toChain)}
+          href={getUrl(xTxHash, xFrom, toChain)}
           target="_blank"
         >{`${parseFloat(formattedXAmount?.toFixed(10))} ${toSymbol}`}</Link>
       </div>
@@ -253,6 +257,8 @@ const RecentXSwapTransactionsModal = ({
             formattedXAmount,
             fromChain,
             toChain,
+            to,
+            xFrom,
           } = xswapTransaction;
 
           const fromSymbol = getSymbolByAddress(token, fromChain);
@@ -274,7 +280,9 @@ const RecentXSwapTransactionsModal = ({
                   txHash,
                   xTxHash,
                   fromChain,
-                  toChain
+                  toChain,
+                  to,
+                  xFrom
                 )}
               </Flex>
             </>
