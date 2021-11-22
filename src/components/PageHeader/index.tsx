@@ -6,7 +6,7 @@ import RecentTransactionsModal from './RecentTransactionsModal'
 import { useTranslation } from '../../contexts/Localization';
 import OptionIcon from "../../pages/Swap/images/option_icon.svg";
 import Disclosure from "../../pages/Swap/images/disclosure.svg"
-import Bridge from "../../pages/Swap/images/Bridge.svg"
+import bridge from "../../pages/Swap/images/bridge.svg"
 
 
 interface PageHeaderProps {
@@ -48,7 +48,7 @@ const PageHeader = ({ title, description, children }: PageHeaderProps) => {
         </Details>
         <IconButton variant='text' onClick={onPresentSettings} title={t('Bridge')}>
           {/* <TuneIcon width='24px' color='#00ab55' /> */}
-          <img src={ Bridge } alt="option_icon" className="" />
+          <img src={ bridge } alt="option_icon" className="" />
         </IconButton>
         <IconButton variant='text' onClick={onPresentSettings} title={t('Settings')}>
           {/* <TuneIcon width='24px' color='#00ab55' /> */}
