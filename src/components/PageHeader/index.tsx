@@ -58,14 +58,7 @@ const PageHeader = ({ title, description, children }: PageHeaderProps) => {
             </Text>
           )}
         </Details>
-        <IconButton
-          variant="text"
-          onClick={onPresentRecentXSwapTransactions}
-          title={t('Recent X-Swap transactions')}
-        >
-          {/* <HistoryIcon width='24px' color='#00ab55' /> */}
-          <img src={Bridge} alt="option_icon" className="" />
-        </IconButton>
+
         <IconButton
           variant="text"
           onClick={onPresentSettings}
@@ -81,6 +74,14 @@ const PageHeader = ({ title, description, children }: PageHeaderProps) => {
         >
           {/* <HistoryIcon width='24px' color='#00ab55' /> */}
           <img src={Disclosure} alt="option_icon" className="" />
+        </IconButton>
+        <IconButton
+          variant="text"
+          onClick={onPresentRecentXSwapTransactions}
+          title={t('Recent X-Swap transactions')}
+        >
+          {/* <HistoryIcon width='24px' color='#00ab55' /> */}
+          <img src={Bridge} alt="option_icon" className="" />
         </IconButton>
       </Flex>
       {children && <Text mt="16px">{children}</Text>}
