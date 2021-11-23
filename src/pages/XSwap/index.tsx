@@ -285,14 +285,12 @@ function XSwap({
     ChainId.ROPSTEN.toString();
 
   // Check local storage configurations
-  if (chainId !== process.env.REACT_APP_CHAIN_ID ||
-      chainId !== process.env.REACT_APP_CHAIN_ID) {
+  if (chainId === '0') {
     window.localStorage.setItem('chainId', process.env.REACT_APP_CHAIN_ID ?? '1')
-  }
-  // Check currently injected chain and switch network
-  const injected = ethereum ? ethereum.chainId ? ethereum.chainId : 0x1 : 0x1
-  if (chainId !== injected.toString(16)) {
-    setupNetwork(parseInt(chainId, 10))
+
+    // Check currently injected chain and switch network
+    const injected = ethereum ? ethereum.chainId ? ethereum.chainId : 0x1 : 0x1
+    setupNetwork(parseInt(process.env.REACT_APP_CHAIN_ID ?? '1', 10))
   }
 
   const [isExpertMode] = useExpertModeManager();
