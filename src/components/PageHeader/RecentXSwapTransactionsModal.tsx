@@ -48,6 +48,23 @@ const getRowStatus = (sortedRecentTransaction: TransactionDetails) => {
   return { icon: <ErrorIcon color="failure" />, color: 'failure' };
 };
 
+const getKlaytnApiUrl = () => {
+  const chainId = process.env.REACT_APP_KLAYTN_ID;
+  let apiUrl;
+
+  switch (chainId) {
+    case '1001':
+      apiUrl = 'https://api.taalswap.info/bridge/beta/api/user';
+      break;
+    case '8217':
+    default:
+      apiUrl = 'https://api.taalswap.info/bridge/api/user';
+      break;
+  }
+
+  return apiUrl;
+};
+
 const RecentXSwapTransactionsModal = ({
   onDismiss = defaultOnDismiss,
 }: RecentTransactionsModalProps) => {
@@ -66,7 +83,7 @@ const RecentXSwapTransactionsModal = ({
 
   useEffect(() => {
     const getXSWapTransactions = async () => {
-      const url = `http://localhost:4000/bridge/api/user/${account}`;
+      const url = `${getKlaytnApiUrl()}/${account}`;
 
       await axios.get(url).then((response) => {
         setAllXSwapTransactions(response.data.data);
