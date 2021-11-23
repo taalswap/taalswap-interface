@@ -87,7 +87,7 @@ const RecentXSwapTransactionsModal = ({
         address !== undefined
           ? TOKEN_LIST.tokens.find(
               (token) =>
-                token.address === address.toLowerCase() &&
+                token.address === address?.toLowerCase() &&
                 token.chainId === curChainId
             )
           : null;
