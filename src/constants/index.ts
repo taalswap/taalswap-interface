@@ -55,14 +55,14 @@ export const TAL = {
     ChainId.KLAYTN,
     '0x90a4a420732907b3c38b11058f9aa02b3f4121df',
     18,
-    'KTAL',
+    'TAL',
     'TaalSwap Token'
   ),
   [ChainId.BAOBAB]: new Token(
     ChainId.BAOBAB,
     '0x6C27d9F6C4067212797794CD931596C2917F7Bf7',
     18,
-    'KTAL',
+    'TAL',
     'TaalSwap Token'
   )
 }
