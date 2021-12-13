@@ -28,6 +28,10 @@ const NetworkSelector = ({ onSetCrossChain, id }) => {
     window.localStorage.setItem('chainId', chainId?.toString());
 
   const currentChainId = window.localStorage.getItem('chainId');
+  const currentChainConf = parseInt(
+      process.env.REACT_APP_CHAIN_ID ?? '',
+      10
+  ) as ChainId;
   const crossChainId = window.localStorage.getItem('crossChain') ?? 0;
   const crossChainConf = parseInt(
     process.env.REACT_APP_KLAYTN_ID ?? '',
@@ -49,7 +53,7 @@ const NetworkSelector = ({ onSetCrossChain, id }) => {
     {
       id: 1,
       name: 'Ethereum',
-      chainId: ChainId.ROPSTEN,
+      chainId: currentChainConf,
     },
     {
       id: 2,
