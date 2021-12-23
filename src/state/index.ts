@@ -11,6 +11,7 @@ import lists from './lists/reducer';
 import burn from './burn/reducer';
 import multicall from './multicall/reducer';
 import toasts from './toasts';
+import farms from './farms';
 import { getThemeCache } from '../utils/theme';
 
 type MergedState = {
@@ -39,6 +40,7 @@ const store = configureStore({
     multicall,
     lists,
     toasts,
+    farms,
   },
   middleware: [
     ...getDefaultMiddleware({ thunk: false }),
