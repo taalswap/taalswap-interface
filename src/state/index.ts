@@ -12,6 +12,13 @@ import burn from './burn/reducer';
 import multicall from './multicall/reducer';
 import toasts from './toasts';
 import farms from './farms';
+import pools from './pools';
+import block from './block';
+import achievements from './achievements';
+import collectibles from './collectibles';
+import predictions from './predictions';
+import profile from './profile';
+import teams from './teams';
 import { getThemeCache } from '../utils/theme';
 
 type MergedState = {
@@ -41,6 +48,13 @@ const store = configureStore({
     lists,
     toasts,
     farms,
+    pools,
+    block,
+    achievements,
+    collectibles,
+    predictions,
+    profile,
+    teams
   },
   middleware: [
     ...getDefaultMiddleware({ thunk: false }),
