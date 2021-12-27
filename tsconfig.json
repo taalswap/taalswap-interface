@@ -10,7 +10,7 @@
     "esModuleInterop": true,
     "module": "esnext",
     "strict": true,
-    "alwaysStrict": true,
+    "alwaysStrict": false,
     "strictNullChecks": false,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false,

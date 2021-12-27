@@ -2,7 +2,7 @@ import { MenuEntry } from 'taalswap-uikit';
 import { ContextApi } from 'contexts/Localization/types';
 
 const frontendBaseUrl =
-  process.env.REACT_APP_FRONTEND || 'http://localhost:3001';
+  process.env.REACT_APP_FRONTEND || 'http://localhost:3000';
 const interfaceBaseUrl =
   process.env.REACT_APP_INTERFACE || 'http://localhost:3000';
 
@@ -53,13 +53,13 @@ const config: (t: ContextApi['t']) => MenuEntry[] = (t) => [
     label: t('Farms Menu'),
     icon: 'FarmIcon',
     // href: 'http://localhost:3001/farms',
-    href: `${frontendBaseUrl}/farms`,
+    href: `${interfaceBaseUrl}/#/farms`,
   },
   {
     label: t('Staking'),
     icon: 'PoolIcon',
     // href: 'http://localhost:3001/staking',
-    href: `${frontendBaseUrl}/staking`,
+    href: `${interfaceBaseUrl}/#/staking`,
   },
   {
     label: t('Info'),

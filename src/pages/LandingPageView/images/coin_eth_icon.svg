@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
+  <g id="그룹_14" data-name="그룹 14" transform="translate(-1455 554)">
+    <circle id="타원_17" data-name="타원 17" cx="30" cy="30" r="30" transform="translate(1455 -554)" fill="#eceff0"/>
+    <g id="Ethereum-Logo.wine" transform="translate(1468.779 -550.203)">
+      <path id="패스_504" data-name="패스 504" d="M125.166,35.847l.351.351L141.6,26.69,125.517,0l-.351,1.194Z" transform="translate(-109.432)" fill="#343434"/>
+      <path id="패스_505" data-name="패스 505" d="M16.085,36.2V0L0,26.69Z" fill="#8c8c8c"/>
+      <path id="패스_506" data-name="패스 506" d="M126.386,258.676l.2.578,16.1-22.667-16.095,9.5-.2.241Z" transform="translate(-110.499 -206.847)" fill="#3c3c3b"/>
+      <path id="패스_507" data-name="패스 507" d="M0,236.585l16.085,22.667V246.088Z" transform="translate(0 -206.845)" fill="#8c8c8c"/>
+      <path id="패스_508" data-name="패스 508" d="M127.961,154.159v16.819l16.085-9.508Z" transform="translate(-111.876 -134.781)" fill="#141414"/>
+      <path id="패스_509" data-name="패스 509" d="M16.085,154.159,0,161.47l16.085,9.508Z" transform="translate(0 -134.781)" fill="#393939"/>
+    </g>
+  </g>
+</svg>

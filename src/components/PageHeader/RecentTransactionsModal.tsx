@@ -24,6 +24,7 @@ type RecentTransactionsModalProps = {
 };
 
 // TODO: Fix UI Kit typings
+// @ts-ignore
 const defaultOnDismiss = () => null;
 
 const newTransactionsFirst = (a: TransactionDetails, b: TransactionDetails) =>

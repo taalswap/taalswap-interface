@@ -1,0 +1,12 @@
+<svg id="ic_klay" xmlns="http://www.w3.org/2000/svg" width="60" height="60.571" viewBox="0 0 60 60.571">
+  <path id="패스_527" data-name="패스 527" d="M0,0H59.1V60.247H0Z" transform="translate(0.568 0.281)" fill="none"/>
+  <g id="그룹_985" data-name="그룹 985">
+    <rect id="Rectangle" width="58.973" height="60.119" transform="translate(0.513 0.226)" fill="none"/>
+    <g id="_64_64" data-name="64*64">
+      <path id="패스_172" d="M24.856,28,45.587,48.82A29.751,29.751,0,0,0,53.7,28,31.216,31.216,0,0,0,45.587,7.177Z" transform="translate(6.298 2.062)" fill="#6f6558"/>
+      <path id="패스_173" d="M27.786,24.681,7.7,45.187l20.084,8.563L47.87,45.187Z" transform="translate(2.213 6.822)" fill="#6f6558"/>
+      <path id="패스_174" d="M27.079,29.519,48.26,8.112,28.656,0,9.277,47.546Z" transform="translate(2.205)" fill="#6f6558"/>
+      <path id="패스_175" d="M0,29.893A30.524,30.524,0,0,0,8.112,50.624L28.618,1.05Z" transform="translate(0 0.302)" fill="#6f6558"/>
+    </g>
+  </g>
+</svg>

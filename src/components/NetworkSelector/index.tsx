@@ -20,6 +20,7 @@ const NetworkSelectBox = styled.select`
   }
 `;
 
+// @ts-ignore
 const NetworkSelector = ({ onSetCrossChain, id }) => {
   const { crossChain } = useSwapState();
   const { chainId } = useActiveWeb3React();
@@ -29,8 +30,8 @@ const NetworkSelector = ({ onSetCrossChain, id }) => {
 
   const currentChainId = window.localStorage.getItem('chainId');
   const currentChainConf = parseInt(
-      process.env.REACT_APP_CHAIN_ID ?? '',
-      10
+    process.env.REACT_APP_CHAIN_ID ?? '',
+    10
   ) as ChainId;
   const crossChainId = window.localStorage.getItem('crossChain') ?? 0;
   const crossChainConf = parseInt(
@@ -62,6 +63,7 @@ const NetworkSelector = ({ onSetCrossChain, id }) => {
     },
   ];
 
+  // @ts-ignore
   const handleSelect = (e) => {
     if (id === 'swap-currency-output') {
       // setSelectedChainId(parseInt(e.target.value));
@@ -78,6 +80,7 @@ const NetworkSelector = ({ onSetCrossChain, id }) => {
     };
   }, []);
 
+  // @ts-ignore
   const removeCrossChainId = (e) => {
     window.localStorage.removeItem('crossChain');
   };

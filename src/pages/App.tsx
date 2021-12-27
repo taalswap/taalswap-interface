@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { Credentials, StringTranslations } from '@crowdin/crowdin-api-client';
 import { Language, useModal } from 'taalswap-uikit';
 import VersionBar from 'components/VersionBar';
+import Pools from 'views/Pools';
+import Farms from 'views/Farms';
 import Popups from '../components/Popups';
 import Web3ReactManager from '../components/Web3ReactManager';
 import {
@@ -17,6 +19,7 @@ import PoolFinder from './PoolFinder';
 import RemoveLiquidity from './RemoveLiquidity';
 import Swap from './Swap';
 import XSwap from './XSwap';
+
 import Migration from './Migration';
 // import LandingPageView from './LandingPageView';
 import { RedirectPathToSwapOnly, RedirectSwapTokenIds } from './Swap/redirects';
@@ -27,6 +30,8 @@ import UseV2ExchangeModal from '../components/UseV2ExchangeModal';
 
 import Menu from '../components/Menu';
 import useGetDocumentTitlePrice from '../hooks/useGetDocumentTitlePrice';
+
+import LandingPageView from './LandingPageView';
 
 const AppWrapper = styled.div`
   display: flex;
@@ -49,7 +54,7 @@ const BodyWrapper = styled.div`
 const CACHE_KEY = 'taalswap_language';
 
 const frontendBaseUrl =
-  process.env.REACT_APP_FRONTEND || 'http://localhost:3001';
+  process.env.REACT_APP_FRONTEND || 'http://localhost:3000';
 
 export default function App() {
   const [selectedLanguage, setSelectedLanguage] = useState<any>(undefined);
@@ -134,7 +139,7 @@ export default function App() {
             value={{ translations, setTranslations }}
           >
             <Switch>
-              {/* <Route exact strict path="/" component={LandingPageView} /> */}
+              <Route exact strict path="/" component={LandingPageView} />
               <Menu>
                 <BodyWrapper>
                   <Popups />
@@ -181,6 +186,13 @@ export default function App() {
                             strict
                             path="/liquidity"
                             component={Pool}
+                          />
+                          <Route exact strict path="/farms" component={Farms} />
+                          <Route
+                            exact
+                            strict
+                            path="/staking"
+                            component={Pools}
                           />
                           <Route
                             exact

@@ -29,6 +29,7 @@ type RecentTransactionsModalProps = {
 };
 
 // TODO: Fix UI Kit typings
+// @ts-ignore
 const defaultOnDismiss = () => null;
 
 const newTransactionsFirst = (a: TransactionDetails, b: TransactionDetails) =>
@@ -95,6 +96,7 @@ const RecentXSwapTransactionsModal = ({
 
   const getSymbolByAddress = useCallback(
     (address: string | undefined, chain: string) => {
+      // @ts-ignore
       let curChainId;
 
       if (chain === 'ETH') curChainId = 3;
@@ -105,6 +107,7 @@ const RecentXSwapTransactionsModal = ({
           ? TOKEN_LIST.tokens.find(
               (token) =>
                 token.address === address?.toLowerCase() &&
+                // @ts-ignore
                 token.chainId === curChainId
             )
           : null;
@@ -114,8 +117,10 @@ const RecentXSwapTransactionsModal = ({
     []
   );
 
+  // @ts-ignore
   const getUrl = (txHash, chainAddress, fromChain) => {
     const urlChainId = Object.keys(BRIDGE_ADDRESS).find(
+      // @ts-ignore
       (key) => BRIDGE_ADDRESS[key] === chainAddress
     );
 
@@ -123,9 +128,11 @@ const RecentXSwapTransactionsModal = ({
     if (urlChainId !== undefined) {
       switch (fromChain.toUpperCase()) {
         case 'ETH':
+          // @ts-ignore
           url = `${SCAN_URL[urlChainId]}/tx/${txHash}`;
           break;
         case 'KLAYTN':
+          // @ts-ignore
           url = `${SCAN_URL[urlChainId]}/tx/${txHash}`;
           break;
       }
@@ -134,6 +141,7 @@ const RecentXSwapTransactionsModal = ({
     return url;
   };
 
+  // @ts-ignore
   const getSummary = (
     fromSymbol,
     toSymbol,
