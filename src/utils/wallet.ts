@@ -55,7 +55,7 @@ const addNetwork = async (chainId: number) => {
                 symbol: 'KLAY',
                 decimals: 18,
               },
-              rpcUrls: ['https://klaytn.taalswap.info:8651'],
+              rpcUrls: ['https://public-en.kaikas.io/v1/cypress'],
               blockExplorerUrls: ['https://scope.klaytn.com/'],
             },
           ],

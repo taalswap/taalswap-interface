@@ -35,7 +35,7 @@ export default function Updater(): null {
   if (chainId === 1001) {
     caver = new Caver('https://api.baobab.klaytn.net:8651')
   } else if (chainId === 8217) {
-    caver = new Caver('https://klaytn.taalswap.info:8651')
+    caver = new Caver('https://public-en.kaikas.io/v1/cypress')
   }
 
   const lastBlockNumber = useBlockNumber()
